@@ -6,7 +6,7 @@
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<driver-properties>
 			<property name="user" value="sam_gdcz31" />
-			<property name="password" value="sam_gdcz31" />
+			<property name="password" value="123456" />
 		</driver-properties>
 		
 		<house-keeping-sleep-time>50000</house-keeping-sleep-time>

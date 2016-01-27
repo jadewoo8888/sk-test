@@ -1,0 +1,69 @@
+<%@ page language="java" %>
+<%@ page isELIgnored="false" %>
+<%@page import="framework.sys.tools._Date"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/jsonfunction" prefix="json" %>
+<%@ taglib uri="/htmlfunction" prefix="html" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+ <!DOCTYPE HTML>
+<link rel="SHORTCUT ICON" href="">
+ 
+<script language="javascript">
+ var contextPath = "${contextPath}";
+ var serverDate = "<%=_Date.getSystemDate3()%>";
+ 
+</script>
+
+<link id='easyuiTheme' rel="stylesheet" type="text/css" href="${contextPath}/core/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/core/easyui/themes/icon.css">
+
+<link href="${contextPath}/core/style/css/ui/style.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/core/style/css/ui/common.css" rel="stylesheet" type="text/css" />
+<script src="${contextPath}/core/js/jquery/jquery.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/ui.js" language="javascript"></script>
+
+<script src="${contextPath}/core/js/tools/ajax.js" language="javascript"></script>
+<script src="${contextPath}/core/js/tools/json.js" language="javascript"></script>
+<script src="${contextPath}/core/js/tools/classcreate.js" language="javascript"></script>
+<script src="${contextPath}/core/js/tools/formattool.js" language="javascript"></script>
+<script src="${contextPath}/core/js/tools/date.js" language="javascript"></script>
+
+<script type="text/javascript" src="${contextPath}/core/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${contextPath}/core/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${contextPath}/core/easyui/easyuiwindowplugin.js"></script>
+<script type="text/javascript" src="${contextPath}/core/easyui/easyui_extends.js"></script>
+
+<script src="${contextPath}/core/js/ztree/jquery.ztree.core-3.5.min.js" language="javascript"></script>
+<script src="${contextPath}/core/js/ztree/jquery.ztree.excheck-3.5.min.js" language="javascript"></script>
+<link href="${contextPath}/core/js/ztree/zTreeStyle.css" rel="stylesheet"	type="text/css" />
+
+<script src="${contextPath}/core/js/otherjs/treeselect/base/treebase.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/treeselect/base/depttree.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/treeselect/base/orgtree.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/treeselect/base/actree.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/treeselect/base/eduactree.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/treeselect/functionality/outpathorgtree.js" language="javascript"></script>
+
+<script src="${contextPath}/core/js/otherjs/datagrid.js" language="javascript"></script>
+<link href="${contextPath}/core/style/css/ui/ourjquery.ui.css" rel="stylesheet" type="text/css" />
+
+<script src="${contextPath}/core/js/jquery/jquery.clever.listbox.min.js" language="javascript"></script>
+<script src="${contextPath}/core/js/jquery/jquery.form.js" language="javascript"></script>
+<script src="${contextPath}/core/js/jquery/jquery.cookie.min.js" language="javascript"></script>
+<script src="${contextPath}/core/js/jquery/jquery.loading.min.js" language="javascript"></script>
+<script src="${contextPath}/core/js/layer/layer.js" language="javascript"></script>
+ 
+<script src="${contextPath}/core/js/otherjs/placeholder_ie.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/typevalue/OperatorType.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/typevalue/RowStatus.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/typevalue/BusinessType.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/generalpage.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/querycomponenttool.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/listpage.js" language="javascript"></script>
+<script src="${contextPath}/core/js/otherjs/editpage.js" language="javascript"></script>
+
+<script src="${contextPath}/core/js/otherjs/typevalue/FileTypeConstant.js" language="javascript"></script>
+<link href="${contextPath}/core/componentmodule/picture/jquery.picmanager.css" rel="stylesheet" type="text/css" />
+<script src="${contextPath}/core/componentmodule/picture/jquery.picmanager.js" language="javascript"></script>
+
+  

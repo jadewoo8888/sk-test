@@ -1,0 +1,3 @@
+@CHARSET "UTF-8";
+.titleIcon-close{margin-top:7px;margin-right:5px;float:left;overflow: hidden;width: 15px;height: 15px;background: transparent url("img/close.gif") no-repeat scroll 0% 0%;}
+.titleIcon-open{margin-top:7px;margin-right:5px;float:left;overflow: hidden;width: 15px;height: 15px;background: transparent url("img/open.gif") no-repeat scroll 0% 0%;}

@@ -1,0 +1,203 @@
+@charset "utf-8";
+/*主页头部*/
+/*.header{width:100%; height:80px; background:url(../../images/ui/bg_top.png) center top no-repeat #00afe8; position:relative;}*/
+.header{
+  height: 80px;
+  background-color: #1fb5ad;
+  border-bottom:1px solid #ffffff;
+ /* position: fixed;*/
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9999;
+}
+.logo{
+	/*position:absolute; top:0; left:0;*/
+	position:relative;
+	display:inline-block;
+	top:0; left:0;
+	float:left;
+}
+
+/*系统切换*/
+.qiehuan{    
+	color: #fff;
+    font-size: 16px;
+    display:inline-block;
+    padding: 10px 14px;
+    width: 140px;
+    position:relative;
+    top:22px;
+    float:left;
+	/*position:absolute; top:22px; left:350px;*/
+    z-index: 1;
+    }
+.qiehuan:hover .menu-select{
+   display: inline-block;
+   -webkit-animation: menuAnim 0.4s;
+   -o-animation: menuAnim 0.4s;
+   animation: menuAnim 0.4s;
+}
+@keyframes menuAnim{
+	0%{top: -300%;opacity: 0;}
+    100%{top: 100%;opacity: 1;}
+}
+@-webkit-keyframes menuAnim{
+    0%{top: -300%;opacity: 0;}
+    100%{top: 100%;opacity: 1;}
+}
+.qiehuan:hover{
+    background-color: #13a49b;
+}
+.caret {
+    position: absolute;
+    top: 15px;    
+    height: 0;
+    width: 0;    
+    margin-top: 4px;
+    margin-left: 10px;
+    border-top: 8px solid #fff;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    bottom: 0;
+}
+.menu-select {
+	font-size: 16px;
+    display: none;
+    background-color: #13a49b;
+    left: 0;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: -1;
+}
+.menu-select > a { color: #fff;display: block;padding: 8px 20px;}
+.menu-select > a:hover{background-color: #0f9890;}
+    /*
+.qiehuan a{ color:#ffffff; font-size:16px; line-height:25px; }
+.sysicon{width:60px;}
+.qiehuan .sysbox a{margin-top:3px;margin-left:8px;padding-bottom:5px;}
+.syscontentbox{background: #0099FF;padding-top:8px;padding-bottom:8px;font-size:14px;font-weight:bold;}
+.syscontent_over{position: relative;top:-2px;background:#00CCFF !important;}
+*/
+/*导航*/
+.nav ul li span{
+  display:block;
+  height:100%;
+  background:url(/gdczsam/core/style/images/ui/nav2.gif) no-repeat 0 0;
+  text-indent:-9999px;
+  -webkit-transition: background-position 0.3s;
+  -moz-transition: background-position 0.3s;
+  -ms-transition: background-position 0.3s;
+  -o-transition: background-position 0.3s;
+  transition: background-position 0.3s;
+	}
+.nav ul  li{
+    float:right;
+	width:80px;
+	height:80px;
+	}
+.nav{display:inline-block;width:750px; position:relative;right:3%;margin-top:0px; float:right;}
+/**/
+.nav .Menu_view{ background-position:-4px -94px;}
+.nav .Menu_view:hover{background-position:-4px -4px;}
+.nav .Menu_view_on{background-position:-4px -4px;}
+/*卡片管理*/
+.nav .cardmg{background-position:-93px -94px;}
+.nav .cardmg:hover{background-position:-93px -4px;}
+.nav .cardmg_on{background-position:-93px -4px;}
+/*资产变动*/
+.nav .assetcg{background-position:-186px -94spx;}
+.nav .assetcg:hover{background-position:-186px -4px;}
+.nav .assetcg_on{background-position:-186px -4px;}
+/*财务管理*/
+.nav .accountmg{background-position:-186px -94px;}
+.nav .accountmg:hover{background-position:-186px -4px;}
+.nav .accountmg_on{background-position:-186px -4px;}
+/*日常使用 资产经营*/
+.nav .assetrun{background:url(/gdczsam/core/style/images/ui/nav3.gif) no-repeat 0 0;background-position:-186px -94px;}
+.nav .assetrun:hover{background-position:-186px -4px;}
+.nav .assetrun_on{background-position:-186px -4px;}
+/*
+.nav .assetrun{background-position:-273px -94px;}
+.nav .assetrun:hover{background-position:-273px -4px;}
+.nav .assetrun_on{background-position:-273px -4px;}
+*/
+/*日常管理  资产盘点*/
+.nav .assetinventory{background:url(/gdczsam/core/style/images/ui/nav3.gif) no-repeat 0 0;background-position:-273px -94px;}
+.nav .assetinventory:hover{background-position:-273px -4px;}
+.nav .assetinventory_on{background-position:-273px -4px;}
+/*
+.nav .assetinventory{background-position:-360px -94px;}
+.nav .assetinventory:hover{background-position:-360px -4px;}
+.nav .assetinventory_on{background-position:-360px -4px;}
+*/
+/*查询统计*/
+.nav .querysta{background-position:-447px -94px;}
+.nav .querysta:hover{background-position:-447px -4px;}
+.nav .querysta_on{background-position:-447px -4px;}
+/*基础数据*/
+.nav .report{background:url(/gdczsam/core/style/images/ui/nav3.gif) no-repeat 0 0;background-position:-360px -94px;}
+.nav .report:hover{background-position:-360px -4px;}
+.nav .report_on{background-position:-360px -4px;}
+/*
+.nav .report{background-position:-535px -94px;}
+.nav .report:hover{background-position:-535px -4px;}
+.nav .report_on{background-position:-535px -4px;}
+*/
+/*系统管理*/
+.nav .sysset{background:url(/gdczsam/core/style/images/ui/nav3.gif) no-repeat 0 0;background-position:-623px -94px;}
+.nav .sysset:hover{background-position:-623px -4px;}
+.nav .sysset_on{background-position:-623px -4px;}
+/*
+.nav .sysset{background-position:-623px -94px;}
+.nav .sysset:hover{background-position:-623px -4px;}
+.nav .sysset_on{background-position:-623px -4px;}*/
+/*系统配置*/
+.nav .sysmt{background:url(/gdczsam/core/style/images/ui/nav3.gif) no-repeat 0 0;background-position:-535px -94px;}
+.nav .sysmt:hover{background-position:-535px -4px;}
+.nav .sysmt_on{background-position:-535px -4px;}
+/*
+.nav .sysmt{background-position:-623px -94px;}
+.nav .sysmt:hover{background-position:-623px -4px;}
+.nav .sysmt_on{background-position:-623px -4px;}
+*/
+/*easyui panel*/
+.layout-panel-center{border:0px;}
+
+
+/*left菜单*/
+#id_div_test{background-color:#293038;width:180px;overflow:hidden; border:0px;}
+.left{width:180px;margin-top:0px;overflow-y: auto;}
+.title{color:#ffffff; font-size:12px; line-height:40px; display:block; padding-left:28px;cursor:pointer;position:relative;}
+.title:hover{background-color:#414d5c !important;}
+.title  i{
+background:url(../../images/ui/little_tri.gif);background-position: 0px 0px;
+position:absolute;
+left:10px;
+display: block;
+width: 11px;
+height: 10px;
+margin-top: 14px;
+}
+.title_down i{ 
+background:url(../../images/ui/little_tri.gif);background-position: 11px 0px;
+position:absolute;
+left:10px;
+display: block;
+width: 11px;
+height: 10px;
+margin-top:14px;
+}
+
+.leftmenu{display:none;}
+.leftmenu li{}
+.leftmenu li a{padding-left:40px;color:#ffffff; font-size:12px; line-height:40px; width:100%; display:block;}
+.leftbg_over{background-color:#414d5c;position:relative;top:0px;}/*background-color:#AD5A5A;*/
+.leftbgclick{background-color:#414d5c;}
+.left dd{margin-bottom:1px;}
+
+/*用户信息栏*/
+.location{height:34px;font-size:12px;line-height:34px;/*background:url(../../images/ui/bg_location_new.png) 0 0 repeat-x;*/}
+.location span{color: #577288; }/*color:#577288; color: #a6a6a6;*/
+.location a{color:#00afe8;}

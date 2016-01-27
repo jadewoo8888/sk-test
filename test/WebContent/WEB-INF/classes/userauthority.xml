@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:aop="http://www.springframework.org/schema/aop"
+         xmlns:tx="http://www.springframework.org/schema/tx"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+	
+	<!-- 用户服务器端权限 -->
+    <aop:aspectj-autoproxy/>
+	<aop:config proxy-target-class="true"/> 
+	
+	<!-- 
+	<aop:config>
+		<aop:aspect id="updatefk" ref="FKOper">
+			<aop:pointcut id="updatefkscut" expression="execution(* framework.core.orm.hibernate3.support.GenericHibernateDaoSupport.getListForPage(..)) or execution(* framework.core.orm.hibernate3.support.GenericHibernateDaoSupport.findAll(..)) or execution(* framework.core.orm.hibernate3.support.GenericHibernateDaoSupport.findAllByProperty(..)) "/>
+			<aop:around pointcut-ref="updatefkscut" method="doBasicProfiling"/>
+		</aop:aspect>
+	</aop:config>
+
+
+	<aop:config>
+		<aop:aspect id="updatefkcode" ref="FKOper">
+			<aop:pointcut id="updatefkscutcode" expression="execution(* cn.com.sendkey.dao..*.attachDirty(..)) or execution(* cn.com.sendkey.dao..*.save(..))"/>
+        	<aop:around pointcut-ref="updatefkscutcode" method="doBasicProfilingSend"/>
+		</aop:aspect>
+	</aop:config>-->
+	
+	<!-- 用户服务器端权限 
+    <aop:aspectj-autoproxy/>
+    <aop:config proxy-target-class="true"/> 
+     <bean id="authorityControl" class="cn.com.sendkey.bo.AuthorityControl">
+    	 <property name="loginlogDAO"> 
+            <ref bean="TloginlogDAO" />
+        </property>
+        <property name="operateLogDAO"> 
+            <ref bean="ToperatelogDAO" />
+        </property>
+        <property name="backgroundlogDAO"> 
+            <ref bean="TbackgroundlogDAO" />
+        </property>        
+    </bean>
+        <aop:config>
+        	<aop:aspect id="authority" ref="authorityControl">
+        		<aop:pointcut id="authoritycut" expression="execution(* cn.com.sendkey.service..*.*(..))"/>
+        		<aop:around pointcut-ref="authoritycut" method="doBasicProfilingAuthority"/>
+        	</aop:aspect>
+        </aop:config>-->
+
+     <!-- 公共字段的处理（更新人，更新时间） -->
+     <bean id="updateCommonFields" class="framework.sys.generalfieldprocessing.UpdateCommonFields"/>
+        <aop:config>
+        	<aop:aspect id="updateFields" ref="updateCommonFields">
+        		<aop:pointcut id="updateFieldscut" expression="execution(* framework.core.orm.hibernate3.support.GenericHibernateDaoSupport.attachDirty(..)) or execution(* framework.core.orm.hibernate3.support.GenericHibernateDaoSupport.save(..)) or execution(* framework.modules..*.dao.*.attachDirty(..)) or execution(* framework.modules..*.dao.*.save(..))"/>
+			  	<aop:around pointcut-ref="updateFieldscut" method="doBasicProfiling"/>
+        	</aop:aspect>
+     </aop:config>
+     
+	<bean id="LogOperateManager" class="framework.sys.log.LogOperateManager">
+		<property name="systemLogDao" ref="SystemLogDAO"/>
+	</bean>
+	<aop:config>
+		<aop:aspect id="logOperateAspect" ref="LogOperateManager">
+			<aop:pointcut id="logToDBCut" expression="execution(* framework.sys.basemodule.bo.BOBase.*_log*(..)) or execution(* framework.modules..*.bo.*.*_log*(..)) or execution(* framework.sys.cache.*.*_log*(..))"/>
+			<aop:around pointcut-ref="logToDBCut" method="logOperateHandle"/>
+		</aop:aspect>
+	</aop:config>
+</beans>

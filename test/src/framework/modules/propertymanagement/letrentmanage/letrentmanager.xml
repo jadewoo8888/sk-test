@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="LetRentDAO"
+		class="framework.modules.propertymanagement.letrentmanage.dao.LetRentDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="LetRentBO"
+		class="framework.modules.propertymanagement.letrentmanage.bo.LetRentBO">
+		<property name="entityDAO">
+			<ref bean="LetRentDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+		<property name="approvalDAO">
+			<ref bean="ApprovalDAO" />
+		</property>
+		<property name="approvalBO">
+			<ref bean="ApprovalBO" />
+		</property>
+	</bean>
+</beans>

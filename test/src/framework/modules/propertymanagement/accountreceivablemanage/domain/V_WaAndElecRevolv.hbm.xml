@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class
+		name="framework.modules.propertymanagement.accountreceivablemanage.domain.V_WaAndElecRevolv"
+		table="V_WaAndElecRevolv">
+
+		<id name="pk" type="java.lang.String">
+			<column name="PK" length="50" />
+			<generator class="uuid" />
+		</id>
+		<property name="revolvpk" type="java.lang.String">
+			<column name="revolvpk" length="50" unique="true" />
+		</property>
+		<property name="clientCode" type="java.lang.String">
+			<column name="ClientCode" length="50" unique="true" />
+		</property>
+		<property name="orgSysCode" type="java.lang.String">
+			<column name="OrgSysCode" length="50" />
+		</property>
+		<property name="unitAdress" type="java.lang.String">
+			<column name="UnitAdress" length="200" />
+		</property>
+		<property name="hlcFirstEnprName" type="java.lang.String">
+			<column name="HLCFirstEnprName" length="255" />
+		</property>
+		<property name="hlcSecondEnprName" type="java.lang.String">
+			<column name="HLCSecondEnprName" length="255" />
+		</property>
+		<property name="ifCollection" type="java.lang.String">
+			<column name="IfCollection" length="50" />
+		</property>
+		<property name="unitName" type="java.lang.String">
+			<column name="UnitName" length="50" />
+		</property>
+		<property name="clientStatus" type="java.lang.String">
+			<column name="clientStatus" length="10" />
+		</property>
+		<property name="invoice" type="java.lang.String">
+			<column name="Invoice" length="50" />
+		</property>
+		<property name="invoiceCode" type="java.lang.String">
+			<column name="InvoiceCode" length="50" />
+		</property>
+		<property name="waAndElecRevolv" type="java.lang.Double">
+			<column name="waAndElecRevolv" precision="12" />
+		</property>
+		<property name="checkFlag" type="java.lang.String">
+			<column name="CheckFlag" length="50" />
+		</property>
+		<property name="payType" type="java.lang.String">
+			<column name="PayType" length="50" />
+		</property>
+		<property name="realDate" type="java.lang.String">
+			<column name="RealDate" length="50" />
+		</property>
+		<property name="paydPerson" type="java.lang.String">
+			<column name="PaydPerson" length="50" />
+		</property>
+		<property name="lister" type="java.lang.String">
+			<column name="lister" length="50" />
+		</property>
+		<property name="retDate" type="java.lang.String">
+			<column name="retDate" length="200" />
+		</property>
+		<property name="retLister" type="java.lang.String">
+			<column name="retLister" length="50" />
+		</property>
+		<property name="remark" type="java.lang.String">
+			<column name="remark" length="50" />
+		</property>
+		<property name="lastestUpdate" type="java.lang.String">
+			<column name="LastestUpdate" length="40" />
+		</property>
+		<property name="updatePerson" type="java.lang.String">
+			<column name="UpdatePerson" length="20" />
+		</property>
+		<property name="insertTime" type="java.lang.String">
+			<column name="Inserttime" length="40" />
+		</property>
+	</class>
+
+
+</hibernate-mapping>

@@ -1,0 +1,394 @@
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td {
+	margin: 0;
+	padding: 0;
+	border-spacing:0px !important;
+	border-collapse:0px;
+	outline:medium;
+	word-break:break-word;
+}
+
+*{ font-family:"微软雅黑","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3",sans-serif;
+	}
+/*A*/
+a{
+	text-decoration:none;
+}
+a:hover{
+	text-decoration:none;
+}
+/*img*/
+img{ border:0 none; vertical-align:top;}
+/*li*/
+ul,li{list-style-type:none;}
+/*浮动*/
+.fl{
+	float:left;
+	display:inline;
+}
+.fr{
+	float:right;
+	display:inline;
+}
+.clr:after {
+	visibility: hidden;
+	display: block;
+	content: " ";
+	clear: both;
+	height: 0;
+	line-height: 0;
+}
+.clr {
+	zoom: 1;
+}
+img{boder:0;}
+a{blr:expression(this.onFocus=this.close());}
+a{blr:expression(this.onFocus=this.blur());}
+a:focus { -moz-outline-style: none; }
+a:focus { outline: none; }
+.hide{display:none;}
+/***********new style********************/
+/*浮动*/
+.float_left{float:left;display:inline;}
+.float_right{float:right;display:inline;}
+/*清除浮动及避免外层div的高度塌陷*/
+.clearfloat{zoom: 1;}
+.clearfloat:after {
+	visibility: hidden;
+	display: block;
+	content: " ";
+	clear: both;
+	height: 0;
+	line-height: 0;
+}
+/*字体颜色*/
+.font-red{color:red;}
+/*外边距*/
+.mleft0{margin-left:0px !important;}
+.mleft5{margin-left:5px;}
+.mleft30{margin-left:30px;}
+.mright12{margin-right:12px;}
+.mbottom7{margin-bottom:7px;}
+.mtop10{margin-top:10px;}
+.mtop20{margin-top:20px;}
+/*隐藏*/
+.hidden{display:none  !important;}
+/*内边距*/
+.pd10{padding:10px;}
+/*不可编辑文本样式*/
+.disableText{background-color:#ebecec !important;color:#000000;}
+/*按钮样式*/
+/*灰色平面按钮*/
+/*按钮类样式*/
+.bt_cancel[type="button"]{
+	/*width:50px;*/
+	width:auto;
+	height:26px;
+	margin-left:8px;
+	text-indent:0px;
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#ffffff;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none; 	 	 
+	border-radius:2px; 
+	background-color:#666666;
+	border: none;
+}
+/*取消按钮*/
+.bt_cancel{
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#ffffff;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none; 
+	background:#666666;
+	margin-left:5px;
+	border:none; 
+}
+.bt_cancel:hover{background:#999999 !important;}
+
+/*编辑功能按钮*/
+.bt_edit_function{
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#ffffff;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none; 	 	 
+	background-color:#1fb5ad;
+	border-radius:2px; 
+}
+.bt_edit_function:hover{background-color:#13a49b !important;}
+
+.bt_edit_function2{
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#ffffff;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none; 	 	 
+	background-color:rgb(0,165,255);
+	border-radius:2px; 
+}
+.bt_edit_function2:hover{background-color:rgb(0,155,255)!important;}
+/**********蓝色平面按钮*/
+.bt_blue{
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#ffffff;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none; 	 	 
+	background:#0099FF;
+	border-radius:2px; 
+}
+
+.bt_blue:hover{background:#00CCFF !important;}
+/*橙色平面按钮*/
+.bt_ora{
+	cursor:pointer;
+	padding:0 10px; 
+	display:inline-block; 
+	color:#ffffff; 
+	text-align:center; 
+	font-size:12px; 
+	line-height:24px; 
+	border:none; 
+	background:#FF6600;	 
+	border-radius:2px; 
+}
+.bt_ora:hover{background:#FF9900 !important;}
+/*绿色平面按钮*/
+/*选择树*/
+.bt_edit_treeselect[type="button"]{
+	width:auto;
+	text-indent: 0px;
+	height:26px;
+	margin-left:8px;
+	text-indent:0px;
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#ffffff;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none; 	 	 
+	border-radius:2px; 
+	background-color:#1fb5ad;
+	border: 1px solid #1fb5ad;
+}
+.bt_edit_treeselect[type="button"]:hover{background:#13a49b !important;}
+/*查询*/
+.bt_query{
+	cursor:pointer;
+	padding:0 10px; 
+	display:inline-block; 
+	color:#ffffff !important; 
+	text-align:center; 
+	font-size:12px; 
+	line-height:24px; 
+	border:none; 
+	background:#1fb5ad;
+	border-radius:2px; 
+}
+.bt_query:hover{background:#13a49b !important;}
+/*高级查询*/
+.bt_queryHeight{
+	cursor:pointer;
+	padding:0 10px; 
+	display:inline-block; 
+	color:#ffffff !important; 
+	text-align:center; 
+	font-size:12px; 
+	line-height:24px; 
+	border:none; 
+	background:#1fb5ad;
+	border-radius:2px; 
+}
+.bt_queryHeight:hover{background:#13a49b !important;}
+/*编辑局域按钮*/
+.bt_editpanel[type="button"]{
+	width:auto;
+	cursor:pointer;
+	height:26px;
+	text-indent: 0px;
+	padding:0 10px; 
+	display:inline-block; 
+	color:#ffffff !important; 
+	text-align:center; 
+	font-size:12px; 
+	line-height:24px; 
+	border:none; 
+	background:#1fb5ad;
+	border-radius:2px; 
+}
+.bt_editpanel[type="button"]:hover{background:#13a49b !important;}
+/*list功能按钮*/
+.bt_list_function{
+	cursor:pointer;
+	padding:0 10px; 
+	display:inline-block; 
+	color:#ffffff !important; 
+	text-align:center; 
+	font-size:12px; 
+	line-height:24px; 
+	border:none; 
+	background:#1fb5ad;
+	border-radius:2px; 
+}
+.bt_list_function:hover{background:#13a49b !important;}
+/*确定按钮*/
+.bt_ensure[type="button"]{
+	width:auto;
+    height: 26px;
+    margin-left: 8px;
+    text-indent: 0px;
+    cursor: pointer;
+    padding: 0px 10px;
+    display: inline-block;
+    color: #ffffff !important;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    border-radius: 2px;
+    background-color: #1fb5ad;
+    border: medium none;
+}
+}
+.bt_ensure{
+	cursor:pointer;
+	padding:0 10px; 
+	height:26px;
+	display:inline-block; 
+	color:#ffffff !important; 
+	text-align:center; 
+	font-size:12px; 
+	line-height:24px; 
+	border:none; 
+	background:#1fb5ad;
+	border-radius:2px; 
+}
+.bt_ensure:hover{background:#13a49b !important;}
+
+.bt_common[type="button"]{
+	height:26px;
+	margin-left:8px;
+	text-indent:0px;
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#333333;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none;
+	background-color:#F7F7F7;
+	border: 1px solid #DDDDDD;
+}
+.bt_common[type="button"]:hover{border: 1px solid #DDDDDD;background-color:#FFFFFF !important;}
+
+
+.bt_green{
+	cursor:pointer;
+	padding:0 10px; 
+	display:inline-block; 
+	color:#ffffff !important; 
+	text-align:center; 
+	font-size:12px; 
+	line-height:24px; 
+	border:none; 
+	background:#1fb5ad;
+	border-radius:2px; 
+}
+.bt_green:hover{background:#13a49b !important;}
+/*按钮移动*/
+.bt_clickdown{
+	position: relative;
+    top:2px !important;
+}
+/*边框阴影*/
+.c-border{
+	border-width:0px;
+	border-style:solid;
+	border-color:rgb(227, 227, 227) rgb(236, 236, 236) rgb(224, 224, 224) rgb(227, 227, 227);
+	-moz-border-top-colors:none;
+	-moz-border-right-colors:none;
+	-moz-border-bottom-colors:none;
+	-moz-border-left-colors:none;
+	-moz-border-image:none;
+	box-shadow:1px 2px 1px rgba(0, 0, 0, 0.07);
+}
+/*easyui下拉框样式*/
+.combo-p .panel-body{border-color: #E5E5E5;}
+.combobox-item-selected{background:#1fb5ad !important; color:white}
+.combobox-item-hover{background:rgb(142,142,151);color:white}
+.combo-arrow{background-color:white;background: url(/gdczsam/core/style/images/ui/down_arrow.png) no-repeat center center;vertical-align:middle;}
+/*easyui校验样式*/
+.validatebox-tip-content{
+	width:auto;
+	padding:5px 10px;
+	/*color: #2e2d2d;color:#FF7F24;*/
+	color:red;
+	border:none;
+	background:#FFD700;
+}
+.validatebox-tip-pointer {
+  height:0px;
+  width:0px;
+  border-width:  0px 8px 8px 8px;
+  border-style:  dashed  dashed solid dashed;          
+  border-color:  transparent   transparent  #FFD700  transparent;  
+  _font-size: 0;  
+  _line-height: 0;
+}
+.validatebox-invalid{background-color: #FFF3F3 !important;}
+/*easyui选择卡样式*/
+.easyui-tabs .tabs{height:31px;border:none;}
+.easyui-tabs .tabs li,.easyui-tabs .tabs li a.tabs-inner{height:30px;line-height: 28px;}
+.easyui-tabs .tabs-header,.easyui-tabs  .tabs-tool {background-color:white;}
+
+.tabs{background-color:rgb(242,242,242);padding:0px;}
+.tabs li{margin:0px;}
+.tabs li a.tabs-inner{border-radius:0px 0px 0px 0px;font-size: 13px;border-left:none;border-top:none;border-bottom:none;}
+.tabs li:first-child a{border-left:1px solid #CCCCCC!important;margin:0px;}
+.tabs li.tabs-selected a.tabs-inner{border-top:1px solid #CCCCCC!important;}
+/*去掉超链接或按钮点击时出现的虚线边框*/
+a,input,button{outline:none;}
+::-moz-focus-inner{border:0px;}
+/*按钮图标*/
+.icon_cz_up{
+  background-image: url(../../images/ui/menu_oper.png);
+  background-repeat:no-repeat;
+  background-position:18px -33px;
+
+}
+.icon_cz_down{
+  background-image: url(../../images/ui/menu_oper.png);
+  background-repeat:no-repeat;
+  background-position:18px -52px;
+}
+.icon_cz_right{
+  background-image: url(../../images/ui/menu_oper.png);
+  background-repeat:no-repeat;
+  background-position:18px 5px;
+}
+.icon_cz_left{
+  background-image: url(../../images/ui/menu_oper.png);
+  background-repeat:no-repeat;
+  background-position:18px -15px;
+}
+/*非空星号*/
+.asterisk_null{color:red;}

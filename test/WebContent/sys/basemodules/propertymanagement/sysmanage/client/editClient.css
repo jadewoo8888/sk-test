@@ -1,0 +1,39 @@
+.EditPanel{padding:10px 40px 10px 10px;background-color:white;}
+/*编辑页面样式star*/
+.EditPanel{padding:10px 40px 10px 10px;}
+.EditPanel tr{height:40px;}
+.EditPanel tr td{vertical-align:middle;} 
+.EditPanel td{border-bottom: 1px solid #F7F7F7;}
+.EditPanel textarea{width:910px;}
+/*编辑页面样式end*/
+.tabs-header,.tabs-panels{border:none !important;} 
+/**/
+.EditInput{width:100%;bottom:35px;}
+.innerLayer{margin:0 auto;width:250px;text-align:center}
+.EditInput input{margin-left:12px;}
+
+#dep_View:hover{background-color: #3C4151 !important;}
+
+.arrow-down{
+   width:0; 
+   height:0;
+   border-left:8px solid transparent;
+   border-right:8px solid transparent;
+   border-top:8px solid #ffffff;
+   position:relative;
+   top:16px;
+   left:8px;
+}
+.arrow-up{
+	overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    width:0px; 
+    height:0px; 
+    border-top:8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid #ffffff;
+    position:relative;
+    top:-5px;
+    left:15px;
+}

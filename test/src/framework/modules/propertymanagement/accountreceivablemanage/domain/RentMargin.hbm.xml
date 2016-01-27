@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="framework.modules.propertymanagement.accountreceivablemanage.domain.RentMargin" table="tRentMargin">
+          <id name="pk" type="java.lang.String">
+            <column name="PK" length="50" />
+            <generator class="uuid" />
+        </id>
+        <property name="serialNo" type="java.lang.String">
+            <column name="SerialNo" length="50"/>
+        </property>
+        <property name="contractCode" type="java.lang.String">
+            <column name="ContractCode" length="50"/>
+        </property>
+        <property name="contractBarCode" type="java.lang.String">
+            <column name="ContractBarCode" length="50" />
+        </property>
+        <property name="secondEnprName" type="java.lang.String">
+            <column name="SecondEnprName" length="255" />
+        </property>
+        <property name="firstEnprCode" type="java.lang.String">
+            <column name="FirstEnprCode" length="50" />
+        </property>
+        <property name="firstEnprName" type="java.lang.String">
+            <column name="FirstEnprName" length="255" />
+        </property>
+        <property name="unitSysCode" type="java.lang.String">
+            <column name="UnitSysCode" length="255" />
+        </property>
+        <property name="unitAdress" type="java.lang.String">
+            <column name="UnitAdress" length="50"/>
+        </property>
+        <property name="deposit" type="java.lang.Double">
+            <column name="Deposit" precision="18" />
+        </property>
+        <property name="realMargin" type="java.lang.Double">
+            <column name="realMargin" precision="18" />
+        </property>
+        <property name="realDate" type="java.lang.String">
+            <column name="RealDate" length="50" />
+        </property>
+        <property name="retDate" type="java.lang.String">
+            <column name="retDate" length="50" />
+        </property>
+        <property name="retLister" type="java.lang.String">
+            <column name="RetLister" length="50" />
+        </property>
+        <property name="invoice" type="java.lang.String">
+            <column name="Invoice" length="50" />
+        </property>
+        <property name="invoiceCode" type="java.lang.String">
+            <column name="InvoiceCode" length="50" />
+        </property>
+        <property name="payType" type="java.lang.String">
+            <column name="PayType" length="50" />
+        </property>
+        <property name="paydperson" type="java.lang.String">
+            <column name="Paydperson" length="50"/>
+        </property>
+        <property name="ifAdjunct" type="java.lang.String">
+            <column name="IfAdjunct" length="10"/>
+        </property>
+        <property name="lister" type="java.lang.String">
+            <column name="Lister" length="50"/>
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="Remark" length="500" />
+        </property>
+        <property name="checkFlag" type="java.lang.String">
+            <column name="CheckFlag" length="50" />
+        </property>
+        <property name="lastestUpdate" type="java.lang.String">
+            <column name="LastestUpdate" length="40" />
+        </property>
+        <property name="updatePerson" type="java.lang.String">
+            <column name="UpdatePerson" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

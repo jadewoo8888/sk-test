@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>json</short-name>
+	<uri>/jsonfunction</uri>
+	<function>
+		<name>classify</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String classify(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>ac</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String ac()</function-signature>
+	</function>
+	<function>
+		<name>cardField</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String cardField(java.lang.String,java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>listPublic</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String listPublic()</function-signature>
+	</function>
+	<function>
+		<name>listLand</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String listLand()</function-signature>
+	</function>
+	<function>
+		<name>listHouse</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String listHouse()</function-signature>
+	</function>
+	<function>
+		<name>listVehicle</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String listVehicle()</function-signature>
+	</function>
+	<function>
+		<name>listCommon</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String listCommon()</function-signature>
+	</function>
+	
+	<function>
+		<name>validateLand</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String validateLand()</function-signature>
+	</function>
+	<function>
+		<name>validateHouse</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String validateHouse()</function-signature>
+	</function>
+	<function>
+		<name>validateVehicle</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String validateVehicle()</function-signature>
+	</function>
+	<function>
+		<name>validateCommon</name>
+		<function-class>framework.sys.componetcontroller.taglibs.JsonFunction</function-class>
+		<function-signature>java.lang.String validateCommon()</function-signature>
+	</function>
+</taglib>

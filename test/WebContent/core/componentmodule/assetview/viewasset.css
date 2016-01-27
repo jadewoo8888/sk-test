@@ -1,0 +1,144 @@
+@CHARSET "UTF-8";
+
+.EditPanel {
+	padding-top:10px;
+	padding-left:10px;
+	padding-bottom:10px;
+}
+
+.EditPanel tr {
+	height: 34px;
+}
+
+.EditPanel td {border:1px solid #d3d3d3;}
+
+.EditCopies {
+	padding-left: 40px;
+}
+
+.EditCopies input {
+	width: 20px;
+	margin: 0px 5px 0px 5px;
+}
+
+#id_4 {
+	width: 640px;
+	height: 50px;
+}
+
+.standard{
+    text-align: center;
+    color:#000000;
+    font-size:12px;
+    background-color:#F7F7F7;
+}
+
+/**工具栏*/
+.toolbar{margin-top:10px;margin-bottom:10px;margin-left:10px;}
+/**工具栏按钮*/
+.toolbar-btn{
+	height:26px;
+	margin-left:8px;
+	text-indent:0px;
+	cursor:pointer;
+	padding:0 10px;
+	display:inline-block;
+	color:#333333;
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none;
+	background-color:#F7F7F7;
+	border: 1px solid #DDDDDD;
+}
+.toolbar-btn:hover{border: 1px solid #DDDDDD;background-color:#FFFFFF !important;}
+.toolbar-btn-disabled{
+	height:26px;
+	margin-left:8px;
+	text-indent:0px;
+	padding:0 10px;
+	display:inline-block;
+	color:rgb(213,210,197);
+	text-align:center;
+	font-size:12px; 
+	line-height:24px;
+	border:none;
+	background-color:#F7F7F7;
+	border: 1px solid #DDDDDD;
+}
+/**大标题*/
+.bigTitle{font-size:20px;font-weight:bold;padding-top:15px;}
+.bigTitle p{text-align: center;width:100%}
+/**小标题*/
+.divTitle {
+	/*margin:5px 40px 0 10px;*/
+	margin-top:5px;
+	margin-left:10px;
+	margin-right:10px;
+	background: none repeat scroll 0 0 #F1F1F1;
+	/*border-bottom: 1px solid #DDDDDD;*/
+	border-top: 1px solid #DDDDDD;
+	height: 34px;
+	line-height: 34px;
+	overflow: hidden;
+}
+.divTitle p {
+	font-size: 13px;
+	font-weight: bold;
+	padding-left:5px;
+}
+
+.View-Card-Table{border-collapse:collapse;border:none;}
+.View-Card-Td-Title1 {
+	width: 120px;
+	text-align: right;
+	padding-right: 8px;
+	font-size: 12px;
+	font-family:"宋体";
+	color: #3f3f3f;
+	/*border:1px solid #DDDDDD;*/
+}
+
+.View-Card-Td-Title2 {
+	width: 120px;
+	text-align: right;
+	padding-right: 8px;
+	font-size: 12px;
+	font-family:"宋体";
+	color: #3f3f3f;
+	/*border:1px solid #DDDDDD;*/
+}
+
+.View-Card-Td-MulRow {
+	width: 120px;
+	text-align: center;
+	font-size: 12px;
+	font-family:"宋体";
+	color: #3f3f3f;
+	/*border:1px solid #DDDDDD;*/
+}
+
+.View-Card-Td-Input1 {
+	padding-left:5px;
+	width: 315px;
+	font-size: 13px;
+	color: #000000;
+	/*border:1px solid #DDDDDD;*/
+}
+
+.View-Card-Td-Input2 {
+	padding-left:5px;
+	width: 315px;
+	font-size: 13px;
+	color: #000000;
+	/*border:1px solid #DDDDDD;*/
+}
+.View-Card-Td-Input-Merge {
+	padding-left:5px;
+	width: 315px;
+	font-size: 13px;
+	color: #000000;
+	/*border:1px solid #DDDDDD;*/
+} 
+.titleIcon-close{margin-top:10px;margin-left:10px;margin-right:5px;float:left;overflow: hidden;width: 15px;height: 15px;background: transparent url("close.gif") no-repeat scroll 0% 0%;}
+.titleIcon-open{margin-top:10px;margin-left:10px;margin-right:5px;float:left;overflow: hidden;width: 15px;height: 15px;background: transparent url("open.gif") no-repeat scroll 0% 0%;}

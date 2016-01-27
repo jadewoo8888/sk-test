@@ -1,0 +1,104 @@
+/* 审批栏主样式 */
+.ApprovalBar{
+	font-size:12px;
+	/*width:850px;*/
+	/*border:1px solid white#C9C9C9;*/
+}
+/* 审批意见默认样式 */
+.ApprovalBar textarea{
+	overflow: hidden;
+	resize:none;
+	float:left;
+	width:800px;
+	height:100px;
+	border: 1px solid #E1E1E1;
+	padding:0 5px;
+	background-color:white;
+	margin-left:0px;
+	font-size:12px;
+}
+.ApprovalBar textarea:hover{border: 1px solid #E1E1E1;}
+
+/* 审批人经办人等输入框样式（如需修改尺寸，需同时修改下面的日期样式尺寸） */
+.ApprovalBar input{
+	font-size:12px;
+	background-color:white;
+	height:26px;
+	width:120px;
+	border: 1px solid #E5E5E5;
+	text-indent:5px;
+	line-height:26px;
+	word-break:normal;
+}
+
+/* td基本样式 */
+.ApprovalBar tr td{
+	line-height:0;
+	color:#000000;
+	vertical-align:middle;
+	/*padding-top:3px;*/
+	/*padding-bottom:3px;*/
+	margin: 0;
+	padding-left: 0px;
+	border-spacing:0px !important;
+	border-collapse:0px;
+	outline:medium invert none;
+	word-break:break-word;
+}
+/* 审批栏标题外层td样式 */
+.ApprovalBar .ApprovalTitleTD{
+	width: 50px;
+	background-color: #A9A9A9/*#1FB5AD*/;
+	border-bottom:1px solid white;
+	text-align:center;
+}
+/* 审批栏标题样式 */
+.ApprovalBar .ApprovalTitle{
+	margin:0px auto;
+	width: 14px;
+	line-height: 14px;
+	word-break:normal;
+	text-align:center;
+	color:white;
+	font-size:13px;
+	letter-spacing: 1px;
+	/*font-weight:bold;*/
+}
+/* 审批栏“审批人”“经办人”等文字样式 */
+.ApprovalBar .ApprovalAttrName{
+	width:120px;
+	height:30px;
+	line-height:26px;
+	text-align:right;
+	padding-left:8px;
+	padding-right:2px;
+	color: #3F3F3F;
+	font-family:simsun;
+	letter-spacing: 1px;
+}
+/* 审批栏“审批人”“经办人”外层TD样式 */
+.ApprovalBar .ApprovalAttrTD{
+	background:#F1F1F1;
+}
+
+/* 当前审批栏-审批栏标题外层td样式 */
+.CurApprovalBar .ApprovalTitleTD{
+	width: 50px;
+	background-color: /*#A9A9A9*/#1FB5AD;
+	border-bottom:1px solid white;
+	text-align:center;
+}
+/* 当前审批栏-审批栏“审批人”“经办人”外层TD样式 */
+.CurApprovalBar .ApprovalAttrTD{
+	background:#F1F1F1;
+}
+.CurApprovalBar input:hover{border-color: #1fb5ad !important;}
+.CurApprovalBar textarea:hover{border-color: #1fb5ad !important;}
+
+/* 日期、下拉等控件easyui特殊样式 */
+.ApprovalBar .combo { !important;height:26px !important;overflow:visible !important;}
+.ApprovalBar .combo input{background-color:white; !important;height:26px !important;float:left;line-height:26px !important;}
+.ApprovalBar .combo-arrow {float:left;height:26px !important;}
+.ApprovalBar .combo:hover{border-color: #1fb5ad;}
+.ApprovalBar .combo{border-color:#E5E5E5;}
+

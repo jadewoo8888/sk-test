@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>html</short-name>
+	<uri>/htmlfunction</uri>
+	<function>
+		<name>cardEdit</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String cardEdit(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>cardView</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String cardView(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>cardField</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String cardField(java.lang.String,java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>cardName</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String cardName(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>cardTips</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String cardTips(java.lang.String,java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>javascriptAC</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String javascriptAC()</function-signature>
+	</function>
+	<function>
+		<name>menuname</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String menuname(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>menudesc</name>
+		<function-class>framework.sys.componetcontroller.taglibs.HtmlFunction</function-class>
+		<function-signature>java.lang.String menudesc(java.lang.String)</function-signature>
+	</function>
+</taglib>

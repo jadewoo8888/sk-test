@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="framework.modules.propertymanagement.accountreceivablemanage.domain.HlcrentInfo" table="tHlcrentInfo">
+          <id name="hlcrentInfoPK" type="java.lang.String">
+            <column name="HLCRentInfoPK" length="50" />
+            <generator class="uuid" />
+        </id>
+        <property name="hlcrentInfoSerialNo" type="java.lang.String">
+            <column name="HLCRentInfoSerialNo" length="50"/>
+        </property>
+        <property name="hlcrentInfoFirstEnprCode" type="java.lang.String">
+            <column name="HLCRentInfoFirstEnprCode" length="50" />
+        </property>
+        <property name="hlcrentInfoReceiveDate" type="java.lang.String">
+            <column name="HLCRentInfoReceiveDate" length="50" />
+        </property>
+        <property name="hlcrentInfoReceiveRent" type="java.lang.Double">
+            <column name="HLCRentInfoReceiveRent" precision="18" />
+        </property>
+        <property name="hlcrentInfoRealRecDate" type="java.lang.String">
+            <column name="HLCRentInfoRealRecDate" length="50" />
+        </property>
+        <property name="hlcrentInfoRealRecRent" type="java.lang.Double">
+            <column name="HLCRentInfoRealRecRent" precision="18" />
+        </property>
+        <property name="hlcrentInfoRealRecLateFee" type="java.lang.Double">
+            <column name="HLCRentInfoRealRecLateFee" precision="18" />
+        </property>
+        <property name="hlcrentInfoPayType" type="java.lang.String">
+            <column name="HLCRentInfoPayType" length="50" />
+        </property>
+        <property name="hlcrentInfoTax" type="java.lang.Double">
+            <column name="HLCRentInfoTax" precision="18" />
+        </property>
+        <property name="hlcrentInfoTurnIn" type="java.lang.Double">
+            <column name="HLCRentInfoTurnIn" precision="18" />
+        </property>
+        <property name="hlcrentInfoTurnInDate" type="java.lang.String">
+            <column name="HLCRentInfoTurnInDate" length="50" />
+        </property>
+        <property name="hlcrentInfoLister" type="java.lang.String">
+            <column name="HLCRentInfoLister" length="50" />
+        </property>
+        <property name="hlcrentInfoListDate" type="java.lang.String">
+            <column name="HLCRentInfoListDate" length="50" />
+        </property>
+        <property name="hlcrentInfoRentType" type="java.lang.String">
+            <column name="HLCRentInfoRentType" length="50" />
+        </property>
+        <property name="hlcrentInfoContractCode" type="java.lang.String">
+            <column name="HLCRentInfoContractCode" length="50" />
+        </property>
+        <property name="hlcrentInfoFirstEnprName" type="java.lang.String">
+            <column name="HLCRentInfoFirstEnprName" />
+        </property>
+        <property name="hlcrentInfoSecondEnprName" type="java.lang.String">
+            <column name="HLCRentInfoSecondEnprName" />
+        </property>
+        <property name="hlcrentInfoThirdEnprName" type="java.lang.String">
+            <column name="HLCRentInfoThirdEnprName" />
+        </property>
+        <property name="hlcrentInfoCheckFlag" type="java.lang.String">
+            <column name="HLCRentInfoCheckFlag" length="50" />
+        </property>
+        <property name="lastestUpdate" type="java.lang.String">
+            <column name="LastestUpdate" length="40" />
+        </property>
+        <property name="updatePerson" type="java.lang.String">
+            <column name="UpdatePerson" length="20" />
+        </property>
+        <property name="hlcrentInfoCurrencyType" type="java.lang.String">
+            <column name="HLCRentInfoCurrencyType" length="50" />
+        </property>
+        <property name="hlcrentInfoRemark" type="java.lang.String">
+            <column name="HLCRentInfoRemark" length="50" />
+        </property>
+        <property name="hlcrentInfoStyle" type="java.lang.String">
+            <column name="HLCRentInfoStyle" length="50" />
+        </property>
+        <property name="hlcrentInfoDiff" type="java.lang.Double">
+            <column name="HLCRentInfoDiff" precision="18" />
+        </property>
+        <property name="hlcrentInfoSalesTax" type="java.lang.Double">
+            <column name="HLCRentInfoSalesTax" precision="18" />
+        </property>
+        <property name="hlcrentInfoHouseTax" type="java.lang.Double">
+            <column name="HLCRentInfoHouseTax" precision="18" />
+        </property>
+        <property name="hlcrentInfoLandTax" type="java.lang.Double">
+            <column name="HLCRentInfoLandTax" precision="18" />
+        </property>
+        <property name="hlcrentInfoOtherTax" type="java.lang.Double">
+            <column name="HLCRentInfoOtherTax" precision="18" />
+        </property>
+        <property name="hlcrentInfoStyleNotice" type="java.lang.String">
+            <column name="HLCRentInfoStyleNotice" length="50" />
+        </property>
+        <property name="hlcrentInfoDecRRLateFee" type="java.lang.Double">
+            <column name="HLCRentInfoDecRRLateFee" precision="18" />
+        </property>
+        <property name="hlcrentInfoStyleNotice1" type="java.lang.String">
+            <column name="HLCRentInfoStyleNotice1" length="50" />
+        </property>
+        <property name="hlcrentInfoDiffTax" type="java.lang.Double">
+            <column name="HLCRentInfoDiffTax" precision="28" />
+        </property>
+        <property name="hlcrentInfoDiffOtherTax" type="java.lang.Double">
+            <column name="HLCRentInfoDiffOtherTax" precision="28" />
+        </property>
+        <property name="hlcrentInfoDiffSumTax" type="java.lang.Double">
+            <column name="HLCRentInfoDiffSumTax" precision="28" />
+        </property>
+        <property name="hlcrentInfoTurn" type="java.lang.Double">
+            <column name="HLCRentInfoTurn" precision="28" />
+        </property>
+        <property name="hlcrentInfoMoney" type="java.lang.Double">
+            <column name="HLCRentInfoMoney" precision="18" />
+        </property>
+        <property name="hlcrentInfoReason" type="java.lang.String">
+            <column name="HLCRentInfoReason" />
+        </property>
+        <property name="incomePaidCode" type="java.lang.String">
+            <column name="IncomePaidCode" length="50" />
+        </property>
+        <property name="hlcrentInfoContractBarCode" type="java.lang.String">
+            <column name="HLCRentInfoContractBarCode" length="50" />
+        </property>
+        <property name="hlcrentInfoOtherIn" type="java.lang.Double">
+            <column name="HLCRentInfoOtherIn" precision="18" />
+        </property>
+        <property name="hlcrentInfoRate" type="java.lang.String">
+            <column name="HLCRentInfoRate" length="40" />
+        </property>
+        <property name="IfAdjunct" type="java.lang.String">
+            <column name="IfAdjunct" length="10" />
+        </property>
+        <property name="unitSysCode" type="java.lang.String">
+            <column name="UnitSysCode" length="50" />
+        </property>
+        <property name="unitAdress" type="java.lang.String">
+            <column name="UnitAdress" length="200" />
+        </property>
+        <property name="invoice" type="java.lang.String">
+            <column name="Invoice" length="50" />
+        </property>
+        <property name="invoiceCode" type="java.lang.String">
+            <column name="InvoiceCode" length="50" />
+        </property>
+        <property name="invoiceNO" type="java.lang.String">
+            <column name="InvoiceNO" length="50" />
+        </property>
+        <property name="paydperson" type="java.lang.String">
+            <column name="Paydperson" length="50" />
+        </property>
+        <property name="ifToAccount" type="java.lang.String">
+            <column name="IfToAccount" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

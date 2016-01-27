@@ -1,0 +1,23 @@
+@charset "utf-8";
+textarea{resize:none;overflow:hidden;}
+/*编辑页面公共样式star*/
+
+/*编辑页面公共样式end*/
+.panel-header, .panel-body{border-color:#E5E5E5;}
+.biao .panel-body{border:1px solid rgb(180,180,180) !important;}
+/*编辑区域信息*/
+.editItem{height:26px;line-height:26px;vertical-align:middle;}
+.editlogo{width:3px;height:20px;display:inline-block;background-color:#1fb5ad;margin-top:2px;margin-right:10px;float:left;}
+.editTitle{display:inline-block;float:left;margin-right:20px;width:60px;font-size:13px;}
+.editline{height:1px;border:none;border-top:1px solid rgb(210,210,210);position:relative;top:12px;}
+.editTips{color:#666666;padding-left:90px;position:relative;top:-9px;}
+/*保存、返回按钮*/
+.Editinput{
+width:100%;
+position:fixed;
+bottom:38px;
+padding-top:5px;
+padding-bottom:5px;
+padding-left:400px;
+background-color:rgba(180,180,180,0.5);
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu id="MENU" name="系统菜单">
+	<menu id="MENU_01" name="基础数据">
+		<menu id="MENU_01_01" name="客户登记"  url="/sys/basemodules/propertymanagement/sysmanage/client/listClient.jsp" desc="用于登记合同"/>
+		<menu id="MENU_01_02" name="合同登记"  url="/sys/basemodules/propertymanagement/contractmanage/contractregist/listContractRegist.jsp" desc="用于管理客户信息"/>
+		<menu id='MENU_01_06_01' name='物业登记' url='/sys/basemodules/propertymanagement/houseunit/listHouseUnit.jsp' desc='用于登记物业的基本信息和使用情况' />
+		<menu id='MENU_01_06_02_01' name='出租申请' url='/sys/basemodules/propertymanagement/letrentmanage/letrentApply/listLetRent.jsp' desc='用于对物业进行出租申请' />
+		<menu id='MENU_01_06_02_02' name='出租审批' url='/sys/basemodules/propertymanagement/letrentmanage/letrentapproval/listLetRentApproval.jsp' desc='根据审批流程设置，各级审批人对出租申请进行审批' />
+		<menu id="MENU_85_01" name="外部审批路径设置"  url="/sys/basemodules/approval/outapprovalpath/listOutApprovalPath.jsp"/>
+		<menu id="MENU_85_02" name="内部审批路径设置"  url="/sys/basemodules/approval/inapprovalpath/listInApprovalPath.jsp"/>
+	</menu>
+	
+	<menu id="MENU_10" name="低值易耗品子系统">
+		<menu id="MENU_10_01" name="物品申领管理">
+			<menu id="MENU_10_01_01" name="申领登记" url="" desc=""/>
+    		<menu id="MENU_10_01_02" name="申领审批" url="" desc=""/>
+		</menu>
+		<menu id="MENU_10_02" name="物品发放管理" url="" desc=""/>
+		<menu id="MENU_10_03" name="物品采购管理">
+			<menu id="MENU_10_03_01" name="采购申请" url="" desc=""/>
+    		<menu id="MENU_10_03_02" name="采购审批" url="" desc=""/>
+		</menu>
+		<menu id="MENU_10_04" name="低值品仓库管理" url="" desc=""/>
+		<menu id="MENU_10_05" name="系统设置">
+			<menu id="MENU_10_05_01" name="类目管理" url="" desc=""/>
+    		<menu id="MENU_10_05_02" name="物品管理" url="" desc=""/>
+		</menu>
+	</menu>
+</menu>

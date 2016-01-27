@@ -1,0 +1,16 @@
+/** 
+ @Name: layer皮肤--sam默认的天蓝样式
+ @Date: 2015.07.23
+ @Author: xzb
+ @remark:
+    1.弹出层标题的背景颜色更改为天蓝色
+    2.按钮的背景颜色为橘黄色
+**/
+
+html #layui_layer_skinsamdefaultstylecss{display:none; position: absolute; width:1989px;}
+
+body .layer-ext-samdefault .layui-layer-content .layui-layer-ico{width:48px; height:48px;}
+body .layui-ext-samdefault .layui-layer-title{background-color:#00afe8;border: none;}
+body .layui-ext-samdefault .layui-layer-btn{border-top:1px solid #E9E7E7;}
+body .layui-ext-samdefault .layui-layer-btn a{width:54px; height:24px; color:#ffffff; display:block; text-align:center; font-size:12px; margin:auto; line-height:24px; background-color:#ff6900; border-radius:3px; margin-top:15px;}
+body .layui-ext-samdefault .layui-layer-btn .layui-layer-btn1{background:#999;}

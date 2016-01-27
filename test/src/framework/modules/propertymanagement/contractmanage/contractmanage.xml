@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="HouseLeaseContractDAO"
+		class="framework.modules.propertymanagement.contractmanage.dao.HouseLeaseContractDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+	
+	<bean id="HLCRentRlueDAO"
+		class="framework.modules.propertymanagement.contractmanage.dao.HLCRentRlueDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="HouseLeaseContractBO"
+		class="framework.modules.propertymanagement.contractmanage.bo.HouseLeaseContractBO">
+		<property name="entityDAO">
+			<ref bean="HouseLeaseContractDAO" />
+		</property>
+		<property name="hlcRentRlueDAO">
+			<ref bean="HLCRentRlueDAO" />
+		</property> 
+		<property name="hlcrentInfoDAO">
+			<ref bean="HlcrentInfoDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+	
+	<bean id="HouseLeaseContractChangeBO"
+		class="framework.modules.propertymanagement.contractmanage.bo.HouseLeaseContractChangeBO">
+		<property name="entityDAO">
+			<ref bean="HouseLeaseContractDAO" />
+		</property>
+		<property name="hlcRentRlueDAO">
+			<ref bean="HLCRentRlueDAO" />
+		</property> 
+		<property name="hlcrentInfoDAO">
+			<ref bean="HlcrentInfoDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+	
+	<bean id="HouseLeaseContractStopBO"
+		class="framework.modules.propertymanagement.contractmanage.bo.HouseLeaseContractStopBO">
+		<property name="entityDAO">
+			<ref bean="HouseLeaseContractDAO" />
+		</property>
+		<property name="hlcRentRlueDAO">
+			<ref bean="HLCRentRlueDAO" />
+		</property> 
+		<property name="hlcrentInfoDAO">
+			<ref bean="HlcrentInfoDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+	
+	<bean id="HLCRentRlueBO"
+		class="framework.modules.propertymanagement.contractmanage.bo.HLCRentRlueBO">
+		<property name="entityDAO">
+			<ref bean="HLCRentRlueDAO" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service id="remoting-service" 
+    class="flex.messaging.services.RemotingService">
+
+    <adapters>
+        <adapter-definition id="java-object" class="flex.messaging.services.remoting.adapters.JavaAdapter" default="true"/>
+    </adapters>
+
+    <default-channels>
+        <channel ref="my-amf"/>
+    </default-channels>
+	
+	<destination id="LoginService">
+		<properties>
+			<source>com.freeman.amshelper.services.LoginService</source>
+		</properties>
+	</destination>
+	<destination id="SynTakenService">
+		<properties>
+			<source>com.freeman.amshelper.services.SynTakenService</source>
+		</properties>
+	</destination>
+	<destination id="InformationService">
+		<properties>
+			<source>com.freeman.amshelper.services.InformationService</source>
+		</properties>
+	</destination>
+		<!-- 资产导入使用  -->
+	<destination id="AssetImportService">
+		<properties>
+			<source>com.freeman.fleximportexcel.importSql</source>
+		</properties>
+	</destination>
+</service>

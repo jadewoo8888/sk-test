@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="ClientDAO"
+		class="framework.modules.propertymanagement.sysmanage.dao.ClientDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="WaAndElectDAO"
+		class="framework.modules.propertymanagement.sysmanage.dao.WaAndElectDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="PhfeeInfoDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.PhfeeInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+
+
+
+
+
+	<bean id="WaterAndElectricityRegistBO"
+		class="framework.modules.propertymanagement.sysmanage.bo.WaterAndElectricityRegistBO">
+		<property name="entityDAO">
+			<ref bean="WaAndElectDAO" />
+		</property>
+		<property name="clientBO">
+			<ref bean="ClientBO" />
+		</property>
+	</bean>
+
+
+
+	<bean id="ClientBO"
+		class="framework.modules.propertymanagement.sysmanage.bo.ClientBO">
+		<property name="entityDAO">
+			<ref bean="ClientDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+	<bean id="WaterAndElectricityiniBO"
+		class="framework.modules.propertymanagement.sysmanage.bo.WaterAndElectricityiniBO">
+		<property name="entityDAO">
+			<ref bean="ClientDAO" />
+		</property>
+	</bean>
+	<bean id="HealthCostsBO"
+		class="framework.modules.propertymanagement.sysmanage.bo.HealthCostsBO">
+		<property name="entityDAO">
+			<ref bean="ClientDAO" />
+		</property>
+		<property name="phfeeInfoDAO">
+			<ref bean="PhfeeInfoDAO" />
+		</property>
+	</bean>
+
+
+
+
+
+</beans>

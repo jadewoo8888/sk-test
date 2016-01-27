@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<import resource="userauthority.xml" />
+	
+	<bean id="springContext" class="framework.sys.context.SpringContextHelper"/>
+	
+	<!-- 使用注解注入依赖对象 
+	<context:annotation-config></context:annotation-config>
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+	-->
+	
+	<bean id="dataSource" scope="singleton" class="com.p6spy.engine.spy.P6DataSource">
+		<constructor-arg>
+			<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				<property name="driverClassName" value="org.logicalcobwebs.proxool.ProxoolDriver"/>
+				<property name="url" value="proxool.dataSource"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	 <!--<bean id="dataSource" scope="singleton" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.logicalcobwebs.proxool.ProxoolDriver"/>
+		<property name="url" value="proxool.dataSource"/>
+	</bean> -->
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="lobHandler">
+			<bean class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
+		</property>
+		<property name="dataSource" ref="dataSource"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop> -->
+				<!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop> -->
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.connection.SetBigStringTryClob">true</prop>
+				<!-- 对比数据库表结构
+				  <prop key="hibernate.hbm2ddl.auto">validate</prop>  -->
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>framework/modules/assetregist/domain/AssetRegist.hbm.xml</value>
+				<value>framework/modules/assetregist/domain/AssetAppend.hbm.xml</value>
+				<value>framework/modules/assetregist/domain/AssetPicture.hbm.xml</value>
+				<value>framework/modules/assetregist/domain/AssetRegistAccessory.hbm.xml</value>
+				<value>framework/modules/assetbusiinfo/domain/AssetBusiInfo.hbm.xml</value>
+				<value>framework/modules/systemlog/domain/SystemLog.hbm.xml</value>
+				<value>framework/modules/organization/domain/Organization.hbm.xml</value>
+				<value>framework/modules/organization/domain/OrganizationAppend.hbm.xml</value>
+				<value>framework/modules/balancedate/domain/BalanceDate.hbm.xml</value>
+				<value>framework/modules/department/domain/Department.hbm.xml</value>
+				<value>framework/modules/favorites/domain/Favorites.hbm.xml</value>
+				<value>framework/modules/peopleandorgan/domain/PeopleAndOrgan.hbm.xml</value>
+				<value>framework/modules/peopleandorganwithdept/domain/PeopleAndOrganWithDept.hbm.xml</value>
+				<value>framework/modules/user/domain/User.hbm.xml</value>
+				<value>framework/modules/userdataauth/domain/UserDataAuth.hbm.xml</value>
+				<value>framework/modules/group/domain/Group.hbm.xml</value>
+				<value>framework/modules/formdesign/domain/FormDesign.hbm.xml</value>
+				<value>framework/modules/classify/domain/Classify.hbm.xml</value>
+				<value>framework/modules/assetclassify/domain/AssetClassify.hbm.xml</value>
+				<value>framework/modules/eduassetclassify/domain/EduAssetClassify.hbm.xml</value>
+				<value>framework/modules/loginlog/domain/LoginLog.hbm.xml</value>
+				<value>framework/modules/standard/domain/Standard.hbm.xml</value> 
+				<value>framework/modules/acl/domain/Acl.hbm.xml</value>
+				<value>framework/modules/cardtemplate/domain/CardTemplate.hbm.xml</value>
+				<value>framework/modules/cardtemplate/domain/CardField.hbm.xml</value>
+				<value>framework/modules/sysparameter/domain/SysParameter.hbm.xml</value>
+				<value>framework/modules/syslevelparam/domain/SysLevelParam.hbm.xml</value>
+				<value>framework/modules/loginuser/domain/LoginUser.hbm.xml</value>
+				<value>framework/modules/assetregistbill/domain/ArbAssetDetail.hbm.xml</value>
+				<value>framework/modules/assetregistbill/domain/AssetRegistBill.hbm.xml</value>
+				<value>framework/modules/exporttask/domain/ExportTask.hbm.xml</value>
+				<value>framework/modules/listexportqueryinfo/domain/ListExportQueryInfo.hbm.xml</value>
+				<value>framework/modules/exceptioninfo/domain/ExceptionInfo.hbm.xml</value>
+				<value>framework/modules/append/domain/Append.hbm.xml</value>
+				<value>framework/modules/assetgeneralinfochange/domain/AssetGeneralInfoChange.hbm.xml</value>
+				<value>framework/modules/assetgeneralinfochange/domain/AssetGCAssetDetail.hbm.xml</value>
+				<value>framework/modules/assetgeneralinfochange/domain/AssetGCFieldDetail.hbm.xml</value>
+				<value>framework/modules/information/domain/Information.hbm.xml</value>
+				<value>framework/modules/assetqueryset/domain/AssetQuerySet.hbm.xml</value>
+				<value>framework/modules/homepage/domain/HomePage.hbm.xml</value>
+				<value>framework/modules/grouptype/domain/GroupType.hbm.xml</value>
+				<value>framework/modules/assetfield/domain/AssetField.hbm.xml</value>
+				<value>framework/modules/deprparam/domain/DeprParam.hbm.xml</value>
+				<value>framework/modules/depr/domain/Depr.hbm.xml</value>
+				<value>framework/modules/depr/domain/DeprDetail.hbm.xml</value>
+				<value>framework/modules/approve/domain/Approval.hbm.xml</value>
+				<value>framework/modules/approve/domain/HisApproval.hbm.xml</value>
+				<value>framework/modules/approve/domain/InApprovalPath.hbm.xml</value>
+				<value>framework/modules/approve/domain/InApprovalProcess.hbm.xml</value>
+				<value>framework/modules/approve/domain/OutApprovalPath.hbm.xml</value>
+				<value>framework/modules/assetwriteoff/domain/AssetWriteoff.hbm.xml</value>
+				<value>framework/modules/assetwriteoff/domain/AssetWriteoffDetail.hbm.xml</value>
+				<value>framework/modules/customclassify/domain/CustomClassify.hbm.xml</value>
+				<value>framework/modules/assetage/domain/AssetAge.hbm.xml</value>
+				<value>framework/modules/sysaccesslog/domain/SysAccessLog.hbm.xml</value>
+				<value>framework/modules/usersettings/domain/UserSettings.hbm.xml</value>
+				<value>framework/modules/assetvaluechangeapply/domain/AssetValueChangeApply.hbm.xml</value>
+				<value>framework/modules/assetvaluechangeapply/domain/AssetValueChangeApplyDetail.hbm.xml</value>
+				<value>framework/modules/assetrepair/domain/AssetRepair.hbm.xml</value>
+				<value>framework\modules\assetsplit\domain\AssetSplit.hbm.xml</value>
+				<value>framework\modules\assetsplit\domain\AssetResolution.hbm.xml</value>
+				<value>framework\modules\assettypechange\domain\AssetTypeChange.hbm.xml</value>
+				<value>framework\modules\assettypechange\domain\AssetTypeChangeDetail.hbm.xml</value>
+				<value>framework\modules\busibilloperatelog\domain\BusiBillOperateLog.hbm.xml</value>
+				<value>framework\modules\propertymanagement\houseunit\domain\HouseUnit.hbm.xml</value>
+				<value>framework\modules\propertymanagement\sysmanage\domain\Client.hbm.xml</value>
+				<value>framework\modules\propertymanagement\contractmanage\domain\HouseLeaseContract.hbm.xml</value>
+				<value>framework\modules\propertymanagement\letrentmanage\domain\LetRent.hbm.xml</value>
+				<value>framework\modules\propertymanagement\sysmanage\domain\WaAndElec.hbm.xml</value>
+				<value>framework\modules\propertymanagement\accountreceivablemanage\domain\HlcrentInfo.hbm.xml</value>
+				<value>framework\modules\propertymanagement\accountreceivablemanage\domain\PhfeeInfo.hbm.xml</value>
+				<value>framework\modules\propertymanagement\accountreceivablemanage\domain\V_PhfeeInfo.hbm.xml</value>
+			    <value>framework/modules/propertymanagement/accountreceivablemanage/domain/WaAndElecRevolv.hbm.xml</value>
+			    <value>framework/modules/propertymanagement/accountreceivablemanage/domain/V_WaAndElecRevolv.hbm.xml</value>
+			    <value>framework/modules/propertymanagement/accountreceivablemanage/domain/V_RentMargin.hbm.xml</value>
+				<value>framework\modules\propertymanagement\contractmanage\domain\HLCRentRlue.hbm.xml</value>
+				<value>/framework/modules/propertymanagement/accountreceivablemanage/domain/RentMargin.hbm.xml</value>
+			</list> 
+		</property>   
+	</bean>
+	 
+	
+	<!--定义事务-->
+ 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+	<!--定义拦截器-->
+    <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager" ref="transactionManager"/>
+    	<property name="transactionAttributes">
+		    <props>
+			    <prop key="*_trans*">PROPAGATION_REQUIRED,-java.lang.Exception</prop>
+		    	<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+		    </props>
+	    </property>
+	</bean>
+ 
+ 	<!-- 定义BeanNameAutoProxyCreator 指定对满足哪些bean name的bean自动生成业务代理-->
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	    <property name="beanNames">
+            <list>
+            	<value>*BO</value>
+            	<value>*Service</value>
+            	<value>*ServiceImpl</value>
+            </list>
+	    </property>
+        <property name="interceptorNames" value="transactionInterceptor"/>
+        <property name="proxyTargetClass" value="true" /> 
+    </bean>
+	
+	<!-- 打开注解功能 
+	<context:annotation-config/>-->
+	<!-- 使用注解方式来配置事务，并指明这些事务注解由谁来管理 
+	<tx:annotation-driven transaction-manager="transactionManager"/>-->
+	
+	<import resource="framework/sys/foreignkeytranslation/fk.xml"/>
+	<import resource="framework/modules/systemlog/systemlog.xml"/>
+ 	<import resource="framework/modules/user/user.xml"/>
+ 	<import resource="framework/modules/userdataauth/userdataauth.xml"/>
+	<import resource="framework/modules/assetregist/assetregist.xml"/>
+	<import resource="framework/modules/assetbusiinfo/assetbusiinfo.xml"/>
+	<import resource="framework/modules/organization/organization.xml"/>
+	<import resource="framework/modules/balancedate/balancedate.xml"/>
+	<import resource="framework/modules/peopleandorgan/peopleandorgan.xml"/>
+	<import resource="framework/modules/peopleandorganwithdept/peopleandorganwithdept.xml"/>
+	<import resource="framework/modules/department/department.xml"/>
+	<import resource="framework/modules/favorites/favorites.xml"/>
+	<import resource="framework/modules/group/group.xml"/>
+	<import resource="framework/modules/acl/acl.xml"/>
+	<import resource="framework/modules/acldataauth/acldataauth.xml"/>
+	<import resource="framework/modules/formdesign/formdesign.xml"/>
+	<import resource="framework/modules/classify/classify.xml"/>
+	<import resource="framework/modules/assetclassify/assetclassify.xml"/>
+	<import resource="framework/modules/eduassetclassify/eduassetclassify.xml"/>
+	<import resource="framework/modules/loginlog/loginlog.xml"/>
+	<import resource="framework/modules/standard/standard.xml"/>
+	<import resource="framework/modules/cardtemplate/cardtemplate.xml"/>
+	<import resource="framework/modules/sysparameter/sysparameter.xml"/>
+	<import resource="framework/modules/syslevelparam/syslevelparam.xml"/>
+	<import resource="framework/modules/loginuser/loginuser.xml"/>
+	<import resource="framework/modules/assetregistbill/assetregistbill.xml"/>
+	<import resource="framework/modules/exporttask/exporttask.xml"/>
+	<import resource="framework/modules/listexportqueryinfo/listexportqueryinfo.xml"/>
+	<import resource="framework/modules/exceptioninfo/exceptioninfo.xml"/>
+	<import resource="framework/modules/append/append.xml"/>
+	<import resource="framework/modules/assetgeneralinfochange/assetgeneralinfochange.xml"/>
+	<import resource="framework/modules/information/information.xml"/>
+	<import resource="framework/modules/assetgeneralinfochange/assetgeneralinfochange.xml"/>
+   	<import resource="framework/modules/assetqueryset/assetqueryset.xml"/>
+   	<import resource="framework/modules/homepage/homepage.xml"/>
+   	<import resource="framework/modules/grouptype/grouptype.xml"/>
+   	<import resource="framework/modules/assetfield/assetfield.xml"/>
+   	<import resource="framework/modules/deprparam/deprparam.xml"/>
+   	<import resource="framework/modules/depr/depr.xml"/>
+   	<import resource="framework/modules/approve/approve.xml"/>
+   	<import resource="framework/modules/assetwriteoff/assetwriteoff.xml"/>
+   	<import resource="framework/modules/sysaccesslog/sysaccesslog.xml"/>
+   	<import resource="framework/modules/assetvaluechangeapply/assetvaluechangeapply.xml"/>
+   		
+    <import resource="framework/functionmodules/leaderpage/leaderpage.xml"/>
+  	<import resource="framework/functionmodules/assetstatistics/assetstatistics.xml"/>
+  	<import resource="framework/functionmodules/reportstatistics/reportstatistics.xml"/>
+  	
+ 	<import resource="framework/sys/publicfunc/assetvaluecalculate.xml"/> 
+ 	<import resource="framework/sys/listexport/listexporttaskservice.xml"/>
+	<import resource="framework/sys/upload/uploadservice.xml"/> 
+	<import resource="framework/sys/cache/orgservice.xml"/> 
+	<import resource="framework/sys/cache/classifyservice.xml"/>
+	<import resource="framework/sys/cache/assetclassifyservice.xml"/>
+	<import resource="framework/sys/cache/eduassetclassifyservice.xml"/>
+	<import resource="framework/sys/cache/userloginservice.xml"/>
+	<import resource="framework/sys/cache/sysmenuservice.xml"/>
+	<import resource="framework/sys/cache/businbillnofactoryservice.xml"/>
+	<import resource="framework/sys/cache/sysparamservice.xml"/>
+	<import resource="framework/sys/cache/assetcodegenerateservice.xml"/>
+	
+	<import resource="framework/modules/customclassify/customclassify.xml"/> 
+    <import resource="framework/modules/assetage/assetage.xml"/> 
+    <import resource="framework/modules/usersettings/usersettings.xml"/> 
+    <import resource="framework/modules/assetrepair/assetrepair.xml"/> 
+    <import resource="framework/modules/assetsplit/assetsplit.xml"/> 
+    <import resource="framework/modules/assettypechange/assettypechange.xml"/> 
+    <import resource="framework/modules/busibilloperatelog/busibilloperatelog.xml"/> 
+    <import resource="framework/modules/propertymanagement/houseunit/houseunit.xml"/> 
+    <import resource="framework/modules/propertymanagement/sysmanage/sysmanage.xml"/>
+    <import resource="framework/modules/propertymanagement/contractmanage/contractmanage.xml"/> 
+    <import resource="framework/modules/propertymanagement/letrentmanage/letrentmanager.xml"/>  
+    <import resource="framework/modules/propertymanagement/accountreceivablemanage/accountreceivablemanage.xml"/>  
+ </beans>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="HlcrentInfoDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.HlcrentInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="PhfeeInfoDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.PhfeeInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="V_PhfeeInfoDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.V_PhfeeInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="RentMarginDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.RentMarginDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="V_RentMarginDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.V_RentMarginDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="WaAndElectDAO"
+		class="framework.modules.propertymanagement.sysmanage.dao.WaAndElectDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="HlcrentInfoBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.HlcrentInfoBO">
+		<property name="entityDAO">
+			<ref bean="HlcrentInfoDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+		<property name="houseLeaseContractBO">
+			<ref bean="HouseLeaseContractBO" />
+		</property>
+	</bean>
+
+	<bean id="PhfeeInfoBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.PhfeeInfoBO">
+		<property name="entityDAO">
+			<ref bean="PhfeeInfoDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+
+	<bean id="V_PhfeeInfoBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.V_PhfeeInfoBO">
+		<property name="entityDAO">
+			<ref bean="V_PhfeeInfoDAO" />
+		</property>
+	</bean>
+
+	<bean id="WaterAndElectricManageBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.WaterAndElectricManageBO">
+		<property name="entityDAO">
+			<ref bean="WaAndElectDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+
+	<bean id="RentMarginBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.RentMarginBO">
+		<property name="entityDAO">
+			<ref bean="RentMarginDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+		<property name="houseLeaseContractDAO">
+			<ref bean="HouseLeaseContractDAO" />
+		</property>
+	</bean>
+
+	<bean id="V_RentMarginBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.V_RentMarginBO">
+		<property name="entityDAO">
+			<ref bean="V_RentMarginDAO" />
+		</property>
+	</bean>
+
+	<bean id="V_WaAndElecRevolvDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.V_WaAndElecRevolvDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="V_WaAndElecRevolvBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.V_WaAndElecRevolvBO">
+		<property name="entityDAO">
+			<ref bean="V_WaAndElecRevolvDAO" />
+		</property>
+	</bean>
+
+	<bean id="WaAndElecRevolvDAO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.dao.WaAndWlecRevolvDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="WaAndElecRevolvBO"
+		class="framework.modules.propertymanagement.accountreceivablemanage.bo.WaAndElecRevolvBO">
+		<property name="entityDAO">
+			<ref bean="WaAndElecRevolvDAO" />
+		</property>
+		<property name="clientDAO">
+			<ref bean="ClientDAO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+</beans>

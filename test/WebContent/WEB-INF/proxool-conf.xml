@@ -2,7 +2,7 @@
 <something-else-entirely>
 	<proxool>
 		<alias>dataSource</alias>
-		<driver-url>jdbc:oracle:thin:@192.168.2.230:1521:stest</driver-url>
+		<driver-url>jdbc:oracle:thin:@127.0.0.1:1521:orcl</driver-url>
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<driver-properties>
 			<property name="user" value="sam_gdcz31" />

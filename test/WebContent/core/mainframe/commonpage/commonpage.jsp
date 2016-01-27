@@ -111,10 +111,11 @@
 			style="width: expression(document .   body .   clientWidth &amp; lt; 1280 ? '1280 px ' : '100%'); min-width: 1280px; position: relative; z-index: 100">
 			<div class="header">
 				<div class="logo">
-					<img src="${contextPath}/core/style/images/ui/logo1.png">
+					<%-- <img src="${contextPath}/core/style/images/ui/logo1.png"> --%>
+				<img src="${contextPath}/core/style/images/ui/" width="348" height="80">
 				</div>
 				<div class="qiehuan" id="qiehuan">
-					主系统
+					<%-- 主系统
 					<i class="caret"></i>
 					<div class="menu-select">
 						<a id='id_a_bbsbzxt' href="#">报表上报子系统</a>
@@ -124,7 +125,7 @@
 						<a id='id_a_cqdjzxt' href="#">产权登记子系统</a>
 						<a id='id_a_jxyqzxt' href="#">教学仪器子系统</a>
 						<a href="${contextPath}/core/mainframe/propertymanagementpage/mainpage.jsp">物业经营子系统</a>
-					</div>
+					</div> --%>
 				</div>
 				<div class="nav"></div>
 			</div>

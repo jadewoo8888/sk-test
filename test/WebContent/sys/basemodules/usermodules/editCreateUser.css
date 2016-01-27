@@ -1,0 +1,13 @@
+body{ width:100%;height:100%;}
+form div{ margin-top:10px}
+label{ width:80px; display:block; text-align:right; float:left; margin:0 auto;font-size:14px;color: #555;}
+label span{color:red;}
+form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; padding:0 8px; height:26px; border:1px solid #95B8E7;}
+
+/*easyui控件样式*/
+.combo{margin-left:10px;}
+.validatebox-tip{margin-top: -2px}
+.shaixuan .numberbox-f{height: 32px !important;width: 203px;margin-left: 10px;}
+
+#submit{width:50px}
+#return{width:50px}

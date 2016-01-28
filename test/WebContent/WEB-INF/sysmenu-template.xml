@@ -31,4 +31,8 @@
 		<menu id="MENU_01_01" name="角色管理"  url="/sys/basemodules/rolemodules/listroleManager.jsp" desc="用于角色管理"/>
 		<menu id="MENU_01_02" name="用户管理"  url="/sys/basemodules/usermodules/listUserManager.jsp" desc="用于用户管理"/>
 	</menu>
+	
+	<menu id="MENU_12" name="测试">
+		<menu id="MENU_01_01" name="测试"  url="/test/test.jsp" desc="用于测试"/>
+	</menu>
 </menu>

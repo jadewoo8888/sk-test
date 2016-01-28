@@ -121,6 +121,8 @@
 			    <value>framework/modules/propertymanagement/accountreceivablemanage/domain/V_RentMargin.hbm.xml</value>
 				<value>framework\modules\propertymanagement\contractmanage\domain\HLCRentRlue.hbm.xml</value>
 				<value>/framework/modules/propertymanagement/accountreceivablemanage/domain/RentMargin.hbm.xml</value>
+				
+				<value>framework/modules/consumblemanagement/domain/Test.hbm.xml</value>
 			</list> 
 		</property>   
 	</bean>
@@ -232,5 +234,7 @@
     <import resource="framework/modules/propertymanagement/sysmanage/sysmanage.xml"/>
     <import resource="framework/modules/propertymanagement/contractmanage/contractmanage.xml"/> 
     <import resource="framework/modules/propertymanagement/letrentmanage/letrentmanager.xml"/>  
-    <import resource="framework/modules/propertymanagement/accountreceivablemanage/accountreceivablemanage.xml"/>  
+    <import resource="framework/modules/propertymanagement/accountreceivablemanage/accountreceivablemanage.xml"/>
+    
+    <import resource="framework/modules/consumblemanagement/test.xml"/>  
  </beans>

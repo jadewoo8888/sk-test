@@ -1,10 +1,10 @@
-package framework.modules.consumblemanagement.bo;
+package framework.modules.test.bo;
 
 import java.util.UUID;
 
 import framework.modules.append.bo.AppendBusinessType;
-import framework.modules.consumblemanagement.dao.TestDAO;
-import framework.modules.consumblemanagement.domain.Test;
+import framework.modules.test.dao.TestDAO;
+import framework.modules.test.domain.Test;
 import framework.sys.basemodule.bo.BOBase;
 import framework.sys.context.applicationworker.MethodID;
 import framework.sys.log.LogOperate;

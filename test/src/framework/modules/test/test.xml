@@ -4,13 +4,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 	
-	<bean id="TestDAO" class="framework.modules.consumblemanagement.dao.TestDAO">
+	<bean id="TestDAO" class="framework.modules.test.dao.TestDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
 	
-	<bean id="TestBO" class="framework.modules.consumblemanagement.bo.TestBO">
+	<bean id="TestBO" class="framework.modules.test.bo.TestBO">
 		<property name="entityDAO">
 			<ref bean="TestDAO" />
 		</property>

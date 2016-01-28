@@ -46,9 +46,9 @@ function getTestByIdFailureFunc() {
 }
 
 //数据封装 
-function dataPackage(busstype){
+function dataPackage(busitype){
 	var testObj = new Object();
-	if (busstype == 'add') {
+	if (busitype == 'add') {
 		testObj.name = $("#name").val();
 		testObj.sex = $("#sex").val();
 	} else {
@@ -98,15 +98,15 @@ function modifyucMassage(){
 
 //保存 
 function savedata(){
-	edit(busstype);
+	edit(busitype);
 }
 
 //新增角色修改 
-function edit(busstype){
+function edit(busitype){
 	// 验证通过则返回为true
 	if($("#ff").form("validate")){
-		var testObj=dataPackage(busstype);
-		if (busstype == 'add') {
+		var testObj=dataPackage(busitype);
+		if (busitype == 'add') {
 			submitAdd(testObj);
 		} else {
 			submitModify(testObj);

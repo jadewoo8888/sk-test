@@ -1,4 +1,4 @@
-package framework.modules.consumblemanagement.domain;
+package framework.modules.test.domain;
 
 import framework.sys.foreignkeytranslation.FK;
 import framework.sys.foreignkeytranslation.Ref;

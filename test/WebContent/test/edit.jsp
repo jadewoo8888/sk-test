@@ -12,9 +12,10 @@ User user =(User)session.getAttribute(SessionConstants.OPERATEUSER);
     <script type="text/javascript" src="${contextPath}/test/edit.js"></script> 
 <script type="text/javascript">
 //事务 
-var busstype="${param.busstype}";
+var busitype="${param.busitype}";
 var pk="${param.pk}";
-//var busstype="add";
+
+//var busitype="add";
 //操作用户  
 //var userAccount="<%=user.getUserAccount()%>";
 //单位级别 

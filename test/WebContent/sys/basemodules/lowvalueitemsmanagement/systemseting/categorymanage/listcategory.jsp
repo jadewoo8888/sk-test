@@ -17,13 +17,12 @@
 			<div class="clearfloat">
 				<input type="button" id="id_btn_addnew" class="bt_list_function" value="+ 新增" />
 				<input type="button" id="id_btn_delete" class="bt_list_function" value="删除" />
- 				<input type="button" id="id_btn_modify" class="bt_list_function" value="修改" />
+ 				<!-- <input type="button" id="id_btn_modify" class="bt_list_function" value="修改" /> -->
 				<input type="button" id="id_btn_selecteColumns" class="bt_list_function" value="列选" />
 				<input type="button" id="id_btn_export" class="bt_list_function" value="导出" />
 			</div>
 			<div class="clearfloat mtop10">
-				<input type="text" qc={fn:'name',oper:'3'} placeholder="姓名" class="shaixuan_txt float_left">
-				<input type="text" qc={fn:'sex',oper:'3'} placeholder="性别" class="shaixuan_txt float_left">
+				<input type="text" qc={fn:'categoryName',oper:'3'} placeholder="名称" class="shaixuan_txt float_left">
  				<input type="button" id="id_btn_query" value="查询"	 class="bt_query mleft5">
 			</div>
 		</div>

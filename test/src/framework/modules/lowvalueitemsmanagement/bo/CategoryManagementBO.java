@@ -12,7 +12,7 @@ import framework.sys.tools.DBOperation;
 @LogOperate(menu = "低值易耗品类目管理")
 public class CategoryManagementBO extends BOBase<CategoryManagementDAO, CategoryManagement>{
 
-	@MethodID("addCategoryManagement")
+	@MethodID("addCategory")
 	@LogOperate(operate = "新增类目")
 	public void addTest_log_trans(CategoryManagement categoryManagement) {
 		String pk = UUID.randomUUID().toString();
@@ -24,7 +24,7 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 		entityDAO.save(categoryManagement);
 	}
 	
-	@MethodID("modifyCategoryManagement")
+	@MethodID("modifyCategory")
 	@LogOperate(operate = "修改类目")
 	public void modifyTest_log_trans(CategoryManagement categoryManagement){
 		String[] updateInfo = DBOperation.getUpdateInfo();
@@ -33,7 +33,7 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 		entityDAO.attachDirty(categoryManagement);
 	}
 	
-	@MethodID("deleteCategoryManagement")
+	@MethodID("deleteCategory")
 	@LogOperate(operate = "删除类目")
 	public void deleteCategoryManagement_log_trans(String[] pkArr) {
 		if (pkArr == null || pkArr.length == 0) {

@@ -40,12 +40,6 @@ function dataFill(objdata){
 }
 </script>
 <style type="text/css">
-body{ width:100%;height:100%;}
-.functionTree{
- 	margin-top:10px;
- 	height:200px;
- 	overflow:auto;
- }
 </style>
 </head> 
 <body style="view_body"> 

@@ -121,8 +121,18 @@
 			    <value>framework/modules/propertymanagement/accountreceivablemanage/domain/V_RentMargin.hbm.xml</value>
 				<value>framework\modules\propertymanagement\contractmanage\domain\HLCRentRlue.hbm.xml</value>
 				<value>/framework/modules/propertymanagement/accountreceivablemanage/domain/RentMargin.hbm.xml</value>
-				
+				<!-- 测试，可删除 -->
 				<value>framework/modules/test/domain/Test.hbm.xml</value>
+				 <!-- 低值易耗品 -->
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/CategoryManagement.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemManage.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyManagement.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyMDetail.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsPurchase.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsPurchaseDetail.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/LowValueItems.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/LVIPopRecord.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/LVIStoreRecord.hbm.xml</value>
 			</list> 
 		</property>   
 	</bean>
@@ -235,6 +245,9 @@
     <import resource="framework/modules/propertymanagement/contractmanage/contractmanage.xml"/> 
     <import resource="framework/modules/propertymanagement/letrentmanage/letrentmanager.xml"/>  
     <import resource="framework/modules/propertymanagement/accountreceivablemanage/accountreceivablemanage.xml"/>
-    
+     <!-- 测试，可删除 -->
     <import resource="framework/modules/test/test.xml"/>  
+    <!-- 低值易耗品 -->
+    <import resource="/framework/modules/lowvalueitemsmanagement/lowvalueitemsmanagement.xml"/>  
+    
  </beans>

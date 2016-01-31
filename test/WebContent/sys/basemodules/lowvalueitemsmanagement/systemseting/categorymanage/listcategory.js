@@ -16,7 +16,7 @@ $(function () {
  * 初始化表格信息
  **/
 function initDataGrid() {
-	var _sortInfo = {"sortPK" : "id","sortSql" : "id Desc"};
+	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
 	 	{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
@@ -25,10 +25,9 @@ function initDataGrid() {
 			html += "<a class='table_a_css' href='javascript:viewone(\""+row.id+"\")' >查看</a>";
  			return html;
 		}}, 
-		{field:"id",title:'编号',minwidth:200, hidden:true},
-		{field:"sex",title:'性别',minwidth:150, hidden:true},
-        {field:"name",title:'姓名',minwidth:160},
-        {field:"sexDisplay",title:'性别',minwidth:150}
+		{field:"pk",title:'主键',minwidth:200, hidden:true},
+		{field:"categoryName",title:'名称',minwidth:150},
+        {field:"categoryRemark",title:'备注',minwidth:160}
 	]];
 	 var dataGridOptions ={};
 	 var customOptions = {tableID:'id_table_grid',classID:'TestBO',columns:_columns,sortInfo:_sortInfo};	 

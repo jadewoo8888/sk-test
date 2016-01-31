@@ -16,6 +16,7 @@
 		<div id="id_div_basequery" class="shaixuan clearfloat">
 			<div class="clearfloat">
 				<input type="button" id="id_btn_addnew" class="bt_list_function" value="+ 新增" />
+				<input type="button" id="id_btn_upreport" class="bt_list_function" value="上报" />
  				<input type="button" id="id_btn_print" class="bt_list_function" value="打印合同" />
 				<input type="button" id="id_btn_selecteColumns" class="bt_list_function" value="列选" />
 				<input type="button" id="id_btn_export" class="bt_list_function" value="导出" />

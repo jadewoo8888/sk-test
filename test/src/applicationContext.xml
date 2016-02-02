@@ -128,12 +128,12 @@
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemManage.hbm.xml</value>
 				 
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyManagement.hbm.xml</value>
-				 <!--<value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyMDetail.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyMDetail.hbm.xml</value>
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsPurchase.hbm.xml</value>
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsPurchaseDetail.hbm.xml</value>
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/LowValueItems.hbm.xml</value>
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/LVIPopRecord.hbm.xml</value>
-				 <value>/framework/modules/lowvalueitemsmanagement/domain/LVIStoreRecord.hbm.xml</value> -->
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/LVIStoreRecord.hbm.xml</value>
 			</list> 
 		</property>   
 	</bean>

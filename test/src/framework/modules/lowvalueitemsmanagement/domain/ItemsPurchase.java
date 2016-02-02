@@ -6,22 +6,22 @@ import framework.sys.foreignkeytranslation.Ref;
 public class ItemsPurchase implements java.io.Serializable, Cloneable{
 
 	private String pk = "";
-	private String iPCode = "";
+	private String ipCode = "";
 	//@FK(ref = Ref.Organization)
-	private String iPCategoryPK = "";
+	private String ipCategoryPK = "";
 	@FK(ref = Ref.Organization)
-	private String iPOrgCode = "";
+	private String ipOrgCode = "";
 	@FK(ref = Ref.Department)
-	private String iPDeptCode = "";
+	private String ipDeptCode = "";
 	@FK(ref = Ref.User)
-	private String iPApplyPerson = "";
-	private String iPPurchaseDate = "";
+	private String ipApplyPerson = "";
+	private String ipPurchaseDate = "";
 	private String applyPerson = "";
-	private Integer iPPurchaseCountSum = 0;
-	private Integer iPStoreCountSum = 0;
-	private String iPRemark = "";
+	private Integer ipPurchaseCountSum = 0;
+	private Integer ipStoreCountSum = 0;
+	private String ipRemark = "";
 	@FK(ref = Ref.Classify)
-	private String iPApprovalFlag = "";
+	private String ipApprovalFlag = "";
 	private String linkers = "";
 	private String allowApprPerson = ""; 
 	private String inserttime = "";
@@ -29,11 +29,11 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 	private String updatePerson = "";
 
 	// 外检翻译
-	private String iPCategoryPKDisplay = "";
-	private String iPOrgCodeDisplay = "";
-	private String iPDeptCodeDisplay = "";
-	private String iPApplyPersonDisplay = "";
-	private String iPApprovalFlagDisplay = "";
+	private String ipCategoryPKDisplay = "";
+	private String ipOrgCodeDisplay = "";
+	private String ipDeptCodeDisplay = "";
+	private String ipApplyPersonDisplay = "";
+	private String ipApprovalFlagDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -41,41 +41,41 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 	public void setPk(String pk) {
 		this.pk = pk;
 	}
-	public String getiPCode() {
-		return iPCode;
+	public String getIpCode() {
+		return ipCode;
 	}
-	public void setiPCode(String iPCode) {
-		this.iPCode = iPCode;
+	public void setIpCode(String ipCode) {
+		this.ipCode = ipCode;
 	}
-	public String getiPCategoryPK() {
-		return iPCategoryPK;
+	public String getIpCategoryPK() {
+		return ipCategoryPK;
 	}
-	public void setiPCategoryPK(String iPCategoryPK) {
-		this.iPCategoryPK = iPCategoryPK;
+	public void setIpCategoryPK(String ipCategoryPK) {
+		this.ipCategoryPK = ipCategoryPK;
 	}
-	public String getiPOrgCode() {
-		return iPOrgCode;
+	public String getIpOrgCode() {
+		return ipOrgCode;
 	}
-	public void setiPOrgCode(String iPOrgCode) {
-		this.iPOrgCode = iPOrgCode;
+	public void setIpOrgCode(String ipOrgCode) {
+		this.ipOrgCode = ipOrgCode;
 	}
-	public String getiPDeptCode() {
-		return iPDeptCode;
+	public String getIpDeptCode() {
+		return ipDeptCode;
 	}
-	public void setiPDeptCode(String iPDeptCode) {
-		this.iPDeptCode = iPDeptCode;
+	public void setIpDeptCode(String ipDeptCode) {
+		this.ipDeptCode = ipDeptCode;
 	}
-	public String getiPApplyPerson() {
-		return iPApplyPerson;
+	public String getIpApplyPerson() {
+		return ipApplyPerson;
 	}
-	public void setiPApplyPerson(String iPApplyPerson) {
-		this.iPApplyPerson = iPApplyPerson;
+	public void setIpApplyPerson(String ipApplyPerson) {
+		this.ipApplyPerson = ipApplyPerson;
 	}
-	public String getiPPurchaseDate() {
-		return iPPurchaseDate;
+	public String getIpPurchaseDate() {
+		return ipPurchaseDate;
 	}
-	public void setiPPurchaseDate(String iPPurchaseDate) {
-		this.iPPurchaseDate = iPPurchaseDate;
+	public void setIpPurchaseDate(String ipPurchaseDate) {
+		this.ipPurchaseDate = ipPurchaseDate;
 	}
 	public String getApplyPerson() {
 		return applyPerson;
@@ -83,79 +83,35 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 	public void setApplyPerson(String applyPerson) {
 		this.applyPerson = applyPerson;
 	}
-	
-	public String getiPRemark() {
-		return iPRemark;
+	public Integer getIpPurchaseCountSum() {
+		return ipPurchaseCountSum;
 	}
-	public void setiPRemark(String iPRemark) {
-		this.iPRemark = iPRemark;
+	public void setIpPurchaseCountSum(Integer ipPurchaseCountSum) {
+		this.ipPurchaseCountSum = ipPurchaseCountSum;
+	}
+	public Integer getIpStoreCountSum() {
+		return ipStoreCountSum;
+	}
+	public void setIpStoreCountSum(Integer ipStoreCountSum) {
+		this.ipStoreCountSum = ipStoreCountSum;
+	}
+	public String getIpRemark() {
+		return ipRemark;
+	}
+	public void setIpRemark(String ipRemark) {
+		this.ipRemark = ipRemark;
+	}
+	public String getIpApprovalFlag() {
+		return ipApprovalFlag;
+	}
+	public void setIpApprovalFlag(String ipApprovalFlag) {
+		this.ipApprovalFlag = ipApprovalFlag;
 	}
 	public String getLinkers() {
 		return linkers;
 	}
 	public void setLinkers(String linkers) {
 		this.linkers = linkers;
-	}
-	
-	public String getLastestUpdate() {
-		return lastestUpdate;
-	}
-	public void setLastestUpdate(String lastestUpdate) {
-		this.lastestUpdate = lastestUpdate;
-	}
-	public String getUpdatePerson() {
-		return updatePerson;
-	}
-	public void setUpdatePerson(String updatePerson) {
-		this.updatePerson = updatePerson;
-	}
-	public String getiPCategoryPKDisplay() {
-		return iPCategoryPKDisplay;
-	}
-	public void setiPCategoryPKDisplay(String iPCategoryPKDisplay) {
-		this.iPCategoryPKDisplay = iPCategoryPKDisplay;
-	}
-	public String getiPOrgCodeDisplay() {
-		return iPOrgCodeDisplay;
-	}
-	public void setiPOrgCodeDisplay(String iPOrgCodeDisplay) {
-		this.iPOrgCodeDisplay = iPOrgCodeDisplay;
-	}
-	public String getiPDeptCodeDisplay() {
-		return iPDeptCodeDisplay;
-	}
-	public void setiPDeptCodeDisplay(String iPDeptCodeDisplay) {
-		this.iPDeptCodeDisplay = iPDeptCodeDisplay;
-	}
-	public String getiPApplyPersonDisplay() {
-		return iPApplyPersonDisplay;
-	}
-	public void setiPApplyPersonDisplay(String iPApplyPersonDisplay) {
-		this.iPApplyPersonDisplay = iPApplyPersonDisplay;
-	}
-	public String getiPApprovalFlagDisplay() {
-		return iPApprovalFlagDisplay;
-	}
-	public void setiPApprovalFlagDisplay(String iPApprovalFlagDisplay) {
-		this.iPApprovalFlagDisplay = iPApprovalFlagDisplay;
-	}
-	public Integer getiPPurchaseCountSum() {
-		return iPPurchaseCountSum;
-	}
-	public void setiPPurchaseCountSum(Integer iPPurchaseCountSum) {
-		this.iPPurchaseCountSum = iPPurchaseCountSum;
-	}
-	public Integer getiPStoreCountSum() {
-		return iPStoreCountSum;
-	}
-	public void setiPStoreCountSum(Integer iPStoreCountSum) {
-		this.iPStoreCountSum = iPStoreCountSum;
-	}
-	public String getiPApprovalFlag() {
-		return iPApprovalFlag;
-	}
-	public void setiPApprovalFlag(String iPApprovalFlag) {
-		this.iPApprovalFlag = iPApprovalFlag;
 	}
 	public String getAllowApprPerson() {
 		return allowApprPerson;
@@ -169,6 +125,49 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 	public void setInserttime(String inserttime) {
 		this.inserttime = inserttime;
 	}
+	public String getLastestUpdate() {
+		return lastestUpdate;
+	}
+	public void setLastestUpdate(String lastestUpdate) {
+		this.lastestUpdate = lastestUpdate;
+	}
+	public String getUpdatePerson() {
+		return updatePerson;
+	}
+	public void setUpdatePerson(String updatePerson) {
+		this.updatePerson = updatePerson;
+	}
+	public String getIpCategoryPKDisplay() {
+		return ipCategoryPKDisplay;
+	}
+	public void setIpCategoryPKDisplay(String ipCategoryPKDisplay) {
+		this.ipCategoryPKDisplay = ipCategoryPKDisplay;
+	}
+	public String getIpOrgCodeDisplay() {
+		return ipOrgCodeDisplay;
+	}
+	public void setIpOrgCodeDisplay(String ipOrgCodeDisplay) {
+		this.ipOrgCodeDisplay = ipOrgCodeDisplay;
+	}
+	public String getIpDeptCodeDisplay() {
+		return ipDeptCodeDisplay;
+	}
+	public void setIpDeptCodeDisplay(String ipDeptCodeDisplay) {
+		this.ipDeptCodeDisplay = ipDeptCodeDisplay;
+	}
+	public String getIpApplyPersonDisplay() {
+		return ipApplyPersonDisplay;
+	}
+	public void setIpApplyPersonDisplay(String ipApplyPersonDisplay) {
+		this.ipApplyPersonDisplay = ipApplyPersonDisplay;
+	}
+	public String getIpApprovalFlagDisplay() {
+		return ipApprovalFlagDisplay;
+	}
+	public void setIpApprovalFlagDisplay(String ipApprovalFlagDisplay) {
+		this.ipApprovalFlagDisplay = ipApprovalFlagDisplay;
+	}
+	
 	
 	
 }

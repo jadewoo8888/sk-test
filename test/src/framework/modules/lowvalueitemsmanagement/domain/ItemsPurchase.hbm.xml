@@ -10,38 +10,38 @@
             <column name="PK" length="50" />
             <generator class="assigned" />
         </id>
-         <property name="iPCode" type="java.lang.String">
-            <column name="iPCode" length="50" />
+         <property name="ipCode" type="java.lang.String">
+            <column name="IPCode" length="50" />
         </property>
-         <property name="iPCategoryPK" type="java.lang.String">
-            <column name="iPCategoryPK" length="50" />
+         <property name="ipCategoryPK" type="java.lang.String">
+            <column name="IPCategoryPK" length="50" />
         </property>
-         <property name="iPOrgCode" type="java.lang.String">
-            <column name="iPOrgCode" length="50" />
+         <property name="ipOrgCode" type="java.lang.String">
+            <column name="IPOrgCode" length="50" />
         </property>
-         <property name="iPDeptCode" type="java.lang.String">
-            <column name="iPDeptCode" length="50" />
+         <property name="ipDeptCode" type="java.lang.String">
+            <column name="IPDeptCode" length="50" />
         </property>
-         <property name="iPApplyPerson" type="java.lang.String">
-            <column name="iPApplyPerson" length="50" />
+         <property name="ipApplyPerson" type="java.lang.String">
+            <column name="IPApplyPerson" length="50" />
         </property>
-         <property name="iPPurchaseDate" type="java.lang.String">
-            <column name="iPPurchaseDate" length="40" />
+         <property name="ipPurchaseDate" type="java.lang.String">
+            <column name="IPPurchaseDate" length="40" />
         </property>
         <property name="applyPerson" type="java.lang.String">
             <column name="applyPerson" length="50" />
         </property>
-         <property name="iPPurchaseCountSum" type="java.lang.Integer">
-            <column name="iPPurchaseCountSum" />
+         <property name="ipPurchaseCountSum" type="java.lang.Integer">
+            <column name="IPPurchaseCountSum" />
         </property>
-         <property name="iPStoreCountSum" type="java.lang.Integer">
-            <column name="iPStoreCountSum" />
+         <property name="ipStoreCountSum" type="java.lang.Integer">
+            <column name="IPStoreCountSum" />
         </property>
-         <property name="iPRemark" type="java.lang.String">
-            <column name="iPRemark" length="255" />
+         <property name="ipRemark" type="java.lang.String">
+            <column name="IPRemark" length="255" />
         </property>
-         <property name="iPApprovalFlag" type="java.lang.String">
-            <column name="iPApprovalFlag"  length="100" />
+         <property name="ipApprovalFlag" type="java.lang.String">
+            <column name="IPApprovalFlag"  length="100" />
         </property>
          <property name="linkers" type="java.lang.String">
             <column name="linkers" length="2000" />

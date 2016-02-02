@@ -7,7 +7,7 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 
 	private String pk = "";
 	//@FK(ref = Ref.Organization)
-	private String iMCategoryPK = "";
+	private String iMCategoryPK = "";//物品所属的类目对应的PK，对应D001的PK字段
 	private String iMType="";
 	private String iMName = "";
 	//@FK(ref = Ref.)
@@ -16,7 +16,7 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	private String iMSpecification = "";
 	private String iMMetricUnit = "";
 	private String iMRemark = "";
-	private String inserttime = "";
+	private String insertTime = "";
 	private String lastestUpdate="";
 	private String updatePerson = "";
 	
@@ -72,11 +72,12 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	public void setiMRemark(String iMRemark) {
 		this.iMRemark = iMRemark;
 	}
-	public String getInserttime() {
-		return inserttime;
+	
+	public String getInsertTime() {
+		return insertTime;
 	}
-	public void setInserttime(String inserttime) {
-		this.inserttime = inserttime;
+	public void setInsertTime(String insertTime) {
+		this.insertTime = insertTime;
 	}
 	public String getLastestUpdate() {
 		return lastestUpdate;

@@ -14,7 +14,7 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 
 	@MethodID("addCategory")
 	@LogOperate(operate = "新增类目")
-	public void addTest_log_trans(CategoryManagement categoryManagement) {
+	public void addCategory_log_trans(CategoryManagement categoryManagement) {
 		String pk = UUID.randomUUID().toString();
 		categoryManagement.setPk(pk);
 		String[] updateInfo = DBOperation.getUpdateInfo();
@@ -26,7 +26,7 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	
 	@MethodID("modifyCategory")
 	@LogOperate(operate = "修改类目")
-	public void modifyTest_log_trans(CategoryManagement categoryManagement){
+	public void modifyCategory_log_trans(CategoryManagement categoryManagement){
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		categoryManagement.setLastestUpdate(updateInfo[0]);
 		categoryManagement.setUpdatePerson(updateInfo[2]);
@@ -35,7 +35,7 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	
 	@MethodID("deleteCategory")
 	@LogOperate(operate = "删除类目")
-	public void deleteCategoryManagement_log_trans(String[] pkArr) {
+	public void deleteCategory_log_trans(String[] pkArr) {
 		if (pkArr == null || pkArr.length == 0) {
 			return;
 		}

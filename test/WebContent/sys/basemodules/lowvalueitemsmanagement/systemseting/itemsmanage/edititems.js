@@ -2,6 +2,8 @@
 //加载完成执行 
 $(function(){	
 	initData();
+	getMCategoryComboboxData();
+	getGroupTypeComboboxData();
 	//返回页面
 	$("#return").click(function(){
 		history.go(-1);
@@ -53,10 +55,12 @@ function getCategoryByPkFailureFunc() {
 //数据封装 
 function dataPackage(busitype){
 	var categoryObj = new Object();
-	categoryObj.categoryName = $("#categoryName").val();
-	categoryObj.categoryRemark = $("#categoryRemark").val();
-	categoryObj.groupCode = groupCode;
-	if (busitype == 'modify') {
+	if (busitype == 'add') {
+		categoryObj.categoryName = $("#categoryName").val();
+		categoryObj.categoryRemark = $("#categoryRemark").val();
+	} else {
+		categoryObj.categoryName = $("#categoryName").val();
+		categoryObj.categoryRemark = $("#categoryRemark").val();
 		categoryObj.pk = pk;
 	}
 	
@@ -144,4 +148,37 @@ function submitModify(submitPackage){
  					top.layer.alert('保存错误',{closeBtn :2,icon:5});
  			}
  	  );
+}
+
+function getMCategoryComboboxData() {
+	Ajax.service(
+		'CategoryManagementBO',
+		'findAll', 
+		[],
+		getMCategoryComboboxDataSuccFunc
+	);
+}
+
+function getMCategoryComboboxDataSuccFunc(result) {
+	$('#category').combobox("loadData",result);  
+}
+
+function getGroupTypeComboboxData() {
+	Ajax.service(
+		'GroupTypeBO',
+		'findAll', 
+		[],
+		getGroupTypeComboboxDataSuccFunc
+	);
+}
+
+function getGroupTypeComboboxDataSuccFunc(result) {
+	for(var i=0;i<result.length;i++){
+		if(result[i].groupTypeCode=="001"||result[i].groupTypeCode.substr(0,1)=="4"){
+			result.splice(i, 1);
+			i=i-1;
+		}
+	}
+	groupTypeData=result;
+	$('#groupTypeCode').combobox("loadData",result);  
 }

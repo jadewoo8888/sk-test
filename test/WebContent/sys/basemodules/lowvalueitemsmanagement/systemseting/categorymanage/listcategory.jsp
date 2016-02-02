@@ -7,7 +7,11 @@
 		<script src="listcategory.js" language="javascript"
 			type="text/javascript"></script>
 	</head>
-
+<style>
+		.combo {float:left}
+		.table_a_css:hover{ color:#00E8D8}
+	</style>
+	
 	<body class="list_body"> 
 		<div class="head" id="id_div_desc">
 			<span class="head-title">${html:menuname(null)}</span>
@@ -23,6 +27,7 @@
 			</div>
 			<div class="clearfloat mtop10">
 				<input type="text" qc={fn:'categoryName',oper:'3'} placeholder="名称" class="shaixuan_txt float_left">
+				<input id="role" class="easyui-combobox" placeholder="请选择角色" qc={fn:'groupCode',oper:'0'} name="role">
  				<input type="button" id="id_btn_query" value="查询"	 class="bt_query mleft5">
 			</div>
 		</div>

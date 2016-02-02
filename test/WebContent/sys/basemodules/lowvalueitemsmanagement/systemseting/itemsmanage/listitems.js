@@ -10,7 +10,6 @@ var datagrid = null;
 $(function () { 
 	initDataGrid();
 	initComBindFunc(); 
-	initRoleCombo();
 });
 
 /**
@@ -27,12 +26,16 @@ function initDataGrid() {
  			return html;
 		}}, 
 		{field:"pk",title:'主键',minwidth:200, hidden:true},
-		{field:"categoryName",title:'名称',minwidth:150},
-        {field:"categoryRemark",title:'备注',minwidth:160},
-        {field:"groupCodeDisplay",title:'所属角色组',minwidth:160}
+		{field:"iMitemPK",title:'类目pk',minwidth:150},
+        {field:"iMType",title:'类别',minwidth:160},
+        {field:"iMName",title:'物品名称',minwidth:200},
+		{field:"iMAssetType",title:'资产类别',minwidth:150},
+        {field:"iMSpecification",title:'规格型号',minwidth:160},
+		{field:"iMMetricUnit",title:'计量单位',minwidth:200},
+		{field:"iMRemark",title:'备注',minwidth:150}
 	]];
 	 var dataGridOptions ={};
-	 var customOptions = {tableID:'id_table_grid',classID:'CategoryManagementBO',columns:_columns,sortInfo:_sortInfo};	 
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
@@ -68,12 +71,12 @@ function addone() {
 	/*if(!judgeOpeCollectOrg()) {
 		return;
 	}*/
- 	window.location.href = "editcategroy.jsp?busitype=add";
+ 	window.location.href = "edititems.jsp?busitype=add";
 }
 
 //修改
 function modifyone(pk){
-		location.href='editcategroy.jsp?pk='+pk+'&busitype=modify';
+		location.href='edititems.jsp?pk='+pk+'&busitype=modify';
 
 }
 
@@ -92,24 +95,24 @@ function viewone(pk){
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/systemseting/categorymanage/viewcategory.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/systemseting/itemsmanage/viewitems.jsp?pk='+pk
 	});
 }
 
 function deleteMulti() {
 	//取得选中类目
-	var categoryList=datagrid.getSelectedData();
+	var itemList=datagrid.getSelectedData();
 	//没有选择类目，返回
 
-	if(categoryList.length==0){
+	if(itemList.length==0){
 			top.layer.alert('请选择要删除的记录 ',{icon: 5, closeBtn:2});
 			return;
 	}
 	var pkArr = [];
 	
 	//获取选中类目pk，生成数组 
-	for (var i in categoryList){
-		pkArr.push(categoryList[i].pk);
+	for (var i in itemList){
+		pkArr.push(itemList[i].pk);
 	}
 	$("#id_btn_delete").attr("disabled", true);                                                             //按钮不可点击
 	
@@ -129,8 +132,8 @@ function deleteMulti() {
 				$('body').addLoading({msg:'正在删除数据，请等待...'});			  //打开遮挡层
 
 				Ajax.service(
-						'CategoryManagementBO',
-						'deleteCategory', 
+						'ItemManageBO',
+						'deleteitem', 
 						 [pkArr],
 						function(result){
 							$('body').removeLoading();     // 关闭遮挡层
@@ -154,32 +157,4 @@ function deleteMulti() {
 
 		}
 	});
-}
-
-//初始化角色下拉列表
-function initRoleCombo() {
-	//选择角色
-	$('#role').combobox({
-		onBeforeLoad: function(param){
-			ajaxRole();
-		},
-		valueField:'groupCode',
-		textField:'groupName',
-		width:180,
-		height:26,
-		panelHeight:100,
-		editable:false
-	});
-}
-
-//角色加载
-function ajaxRole(){
-	Ajax.service(
-		'GroupBO',
-		'findAll', 
-		[],
-		function(result){
-			$('#role').combobox("loadData",result);
-		}
-	);
 }

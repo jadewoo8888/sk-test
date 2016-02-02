@@ -16,4 +16,18 @@
 			<ref bean="CategoryManagementDAO" />
 		</property>
 	</bean>
+	
+	<bean id="ItemManageDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.ItemManageDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="ItemManageBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.ItemManageBO">
+		<property name="entityDAO">
+			<ref bean="ItemManageDAO" />
+		</property>
+	</bean>
 </beans>

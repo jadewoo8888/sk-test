@@ -31,7 +31,7 @@
         <property name="itemsApplyDate" type="java.lang.String">
             <column name="ItemsApplyDate" length="40" />
         </property>
-         <property name="iAMCheckFlag" type="java.lang.String">
+         <property name="iamCheckFlag" type="java.lang.String">
             <column name="IAMCheckFlag " length="50" />
         </property>
          <property name="itemsApplyFlag" type="java.lang.String">

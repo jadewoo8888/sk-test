@@ -1,17 +1,21 @@
 package framework.modules.lowvalueitemsmanagement.domain;
 
+import framework.sys.foreignkeytranslation.FK;
+import framework.sys.foreignkeytranslation.Ref;
 
 public class CategoryManagement implements java.io.Serializable, Cloneable {
 
 	private String pk = "";
 	private String categoryName = "";
 	private String categoryRemark="";
+	@FK(ref = Ref.Group)
 	private String groupCode = "";
 	private String insertTime = "";
-	
 	private String lastestUpdate = "";
 	private String updatePerson = "";
 	
+	// 外检翻译
+	private String groupCodeDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -54,6 +58,12 @@ public class CategoryManagement implements java.io.Serializable, Cloneable {
 	}
 	public void setUpdatePerson(String updatePerson) {
 		this.updatePerson = updatePerson;
+	}
+	public String getGroupCodeDisplay() {
+		return groupCodeDisplay;
+	}
+	public void setGroupCodeDisplay(String groupCodeDisplay) {
+		this.groupCodeDisplay = groupCodeDisplay;
 	}
 	
 	

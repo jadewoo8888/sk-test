@@ -125,9 +125,10 @@
 				<value>framework/modules/test/domain/Test.hbm.xml</value>
 				 <!-- 低值易耗品 -->
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/CategoryManagement.hbm.xml</value>
-				 <!-- <value>/framework/modules/lowvalueitemsmanagement/domain/ItemManage.hbm.xml</value>
+				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemManage.hbm.xml</value>
+				 
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyManagement.hbm.xml</value>
-				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyMDetail.hbm.xml</value>
+				 <!--<value>/framework/modules/lowvalueitemsmanagement/domain/ItemsApplyMDetail.hbm.xml</value>
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsPurchase.hbm.xml</value>
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/ItemsPurchaseDetail.hbm.xml</value>
 				 <value>/framework/modules/lowvalueitemsmanagement/domain/LowValueItems.hbm.xml</value>

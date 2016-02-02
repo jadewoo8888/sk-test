@@ -18,7 +18,7 @@ public class ItemsApplyManagement implements java.io.Serializable, Cloneable {
 	private String applyPerson = "";
 	private String itemsApplyDate = "";
 	@FK(ref = Ref.Classify)
-	private String iAMCheckFlag = "";
+	private String iamCheckFlag = "";
 	@FK(ref = Ref.Classify)
 	private String itemsApplyFlag = "";
 	private String approvalFlag = "";
@@ -37,8 +37,10 @@ public class ItemsApplyManagement implements java.io.Serializable, Cloneable {
 	private String orgCodeDisplay = "";
 	private String itemsApplyDeptCodeDisplay = "";
 	private String applyPersonDisplay = "";
-	private String iAMCheckFlagDisplay = "";
+	private String iamCheckFlagDisplay = "";
 	private String itemsIssueListerDisplay = "";
+	private String itemsApplyFlagDisplay = "";
+	
 	public String getPk() {
 		return pk;
 	}
@@ -87,12 +89,7 @@ public class ItemsApplyManagement implements java.io.Serializable, Cloneable {
 	public void setItemsApplyDate(String itemsApplyDate) {
 		this.itemsApplyDate = itemsApplyDate;
 	}
-	public String getiAMCheckFlag() {
-		return iAMCheckFlag;
-	}
-	public void setiAMCheckFlag(String iAMCheckFlag) {
-		this.iAMCheckFlag = iAMCheckFlag;
-	}
+	
 	public String getItemsApplyFlag() {
 		return itemsApplyFlag;
 	}
@@ -177,17 +174,30 @@ public class ItemsApplyManagement implements java.io.Serializable, Cloneable {
 	public void setApplyPersonDisplay(String applyPersonDisplay) {
 		this.applyPersonDisplay = applyPersonDisplay;
 	}
-	public String getiAMCheckFlagDisplay() {
-		return iAMCheckFlagDisplay;
-	}
-	public void setiAMCheckFlagDisplay(String iAMCheckFlagDisplay) {
-		this.iAMCheckFlagDisplay = iAMCheckFlagDisplay;
-	}
+	
 	public String getItemsIssueListerDisplay() {
 		return itemsIssueListerDisplay;
 	}
 	public void setItemsIssueListerDisplay(String itemsIssueListerDisplay) {
 		this.itemsIssueListerDisplay = itemsIssueListerDisplay;
+	}
+	public String getIamCheckFlag() {
+		return iamCheckFlag;
+	}
+	public void setIamCheckFlag(String iamCheckFlag) {
+		this.iamCheckFlag = iamCheckFlag;
+	}
+	public String getIamCheckFlagDisplay() {
+		return iamCheckFlagDisplay;
+	}
+	public void setIamCheckFlagDisplay(String iamCheckFlagDisplay) {
+		this.iamCheckFlagDisplay = iamCheckFlagDisplay;
+	}
+	public String getItemsApplyFlagDisplay() {
+		return itemsApplyFlagDisplay;
+	}
+	public void setItemsApplyFlagDisplay(String itemsApplyFlagDisplay) {
+		this.itemsApplyFlagDisplay = itemsApplyFlagDisplay;
 	}
 	
 	

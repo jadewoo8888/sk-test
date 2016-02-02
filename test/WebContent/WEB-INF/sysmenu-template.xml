@@ -23,7 +23,7 @@
 		<menu id="MENU_10_04" name="低值品仓库管理" url="/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/listlowvalueitems.jsp" desc="用于低值品仓库管理"/>
 		<menu id="MENU_10_05" name="系统设置">
 			<menu id="MENU_10_05_01" name="类目管理" url="/sys/basemodules/lowvalueitemsmanagement/systemseting/categorymanage/listcategory.jsp" desc="用于类目管理"/>
-    		<menu id="MENU_10_05_02" name="物品管理" url="/sys/basemodules/lowvalueitemsmanagement/systemseting/itemssmanage/listitems.jsp" desc="用于物品管理"/>
+    		<menu id="MENU_10_05_02" name="物品管理" url="/sys/basemodules/lowvalueitemsmanagement/systemseting/itemsmanage/listitems.jsp" desc="用于物品管理"/>
 		</menu>
 	</menu>
 	

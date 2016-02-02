@@ -12,7 +12,7 @@
 	
 	<menu id="MENU_10" name="低值易耗品子系统">
 		<menu id="MENU_10_01" name="物品申领管理">
-			<menu id="MENU_10_01_01" name="申领登记" url="/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/listapplyregister.jsp" desc="用于申领登记物品"/>
+			<menu id="MENU_10_01_01" name="申领登记" url="/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/listapplyregister.jsp" desc="用于物品申领和查看申领结果"/>
     		<menu id="MENU_10_01_02" name="申领审批" url="/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/listapplyapprove.jsp" desc="用于申领审批"/>
 		</menu>
 		<menu id="MENU_10_02" name="物品发放管理" url="/sys/basemodules/lowvalueitemsmanagement/distributemange/listdistribute.jsp" desc="用于物品发放管理"/>

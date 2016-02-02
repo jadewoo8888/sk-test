@@ -30,4 +30,18 @@
 			<ref bean="ItemManageDAO" />
 		</property>
 	</bean>
+	
+	<bean id="ItemsApplyManagementDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.ItemsApplyManagementDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="ItemsApplyManagementBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.ItemsApplyManagementBO">
+		<property name="entityDAO">
+			<ref bean="ItemManageDAO" />
+		</property>
+	</bean>
 </beans>

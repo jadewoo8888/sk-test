@@ -10,7 +10,6 @@ var datagrid = null;
 $(function () { 
 	initDataGrid();
 	initComBindFunc(); 
-	getMCategoryComboboxData();
 });
 
 /**
@@ -61,47 +60,7 @@ function initComBindFunc() {
 		datagrid.showExport();
 	}); 
 	
-	//选择部门树
-	$("#department").click(function(){
-		var treeOption = {callBackFunction:departmentCallBack};
-		top.deptTree(treeOption);
-	});
-}
-
-function getMCategoryComboboxData() {
-	//角色加载
-	function ajaxRole(){
-		Ajax.service(
-			'CategoryManagementBO',
-			'findAll', 
-			[],
-			function(result){
-				$('#category').combobox("loadData",result);
-			}
-		);
-	}
-
-	//选择角色
-	$('#category').combobox({
-		onBeforeLoad: function(param){
-			ajaxRole();
-		},
-		valueField:'pk',
-		textField:'categoryName',
-		width:180,
-		height:26,
-		panelHeight:100,
-		editable:false
-	});
-}
-
-
-
-
-//部门树回调函数
-function departmentCallBack(code,codeAndName){
-	saveDepartmentCode = code;
-	$("#orgCode").val(codeAndName);
+	
 }
 
 /**
@@ -111,12 +70,12 @@ function addone() {
 	/*if(!judgeOpeCollectOrg()) {
 		return;
 	}*/
- 	window.location.href = "editapplyregister.jsp?busitype=add";
+ 	window.location.href = "editcategroy.jsp?busitype=add";
 }
 
 //修改
 function modifyone(pk){
-		location.href='editapplyregister.jsp?pk='+pk+'&busitype=modify';
+		location.href='editcategroy.jsp?pk='+pk+'&busitype=modify';
 
 }
 
@@ -176,5 +135,4 @@ function deleteone(pk){
 		}
 	});
 }
-
 

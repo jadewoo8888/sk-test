@@ -20,9 +20,9 @@
 		<div id="id_div_basequery" class="shaixuan clearfloat">
 			<div class="clearfloat">
 				<input type="button" id="id_btn_addnew" class="bt_list_function" value="+ 新增" />
-				<input type="button" id="id_btn_delete" class="bt_list_function" value="删除" />
+				<!-- <input type="button" id="id_btn_delete" class="bt_list_function" value="删除" /> -->
  				<!-- <input type="button" id="id_btn_modify" class="bt_list_function" value="修改" /> -->
-				<input type="button" id="id_btn_selecteColumns" class="bt_list_function" value="列选" />
+				<!-- <input type="button" id="id_btn_selecteColumns" class="bt_list_function" value="列选" /> -->
 				<input type="button" id="id_btn_export" class="bt_list_function" value="导出" />
 			</div>
 			<div class="clearfloat mtop10">

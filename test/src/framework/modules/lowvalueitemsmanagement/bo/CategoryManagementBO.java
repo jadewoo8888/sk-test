@@ -34,19 +34,27 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	}
 	
 	@MethodID("deleteCategory")
-	@LogOperate(operate = "删除类目")
-	public void deleteCategory_log_trans(String[] pkArr) {
+	@LogOperate(operate = "删除一条类目")
+	public String deleteCategory_log_trans(String pk) {
+		String return_tips = "";
+		entityDAO.delete(entityDAO.findById(pk));
+		return return_tips;
+	}
+	/*
+	@MethodID("deleteCategorys")
+	@LogOperate(operate = "删除多条类目")
+	public void deleteCategorys_log_trans(String[] pkArr) {
 		if (pkArr == null || pkArr.length == 0) {
 			return;
 		}
-		/** 第一步：遍历删除类目信息，更新对应的物业单元业务状态 * */
+		*//** 第一步：遍历删除类目信息，更新对应的物业单元业务状态 * *//*
 		for (int j = 0; j < pkArr.length; j++) {
 			CategoryManagement categoryManagement = entityDAO.findById(pkArr[j]);
 			// 更新单元定义表中的业务状态 未申请
 			entityDAO.delete(categoryManagement);
 		}
 
-		/** 第二步：删除类目对应的各种信息 * */
-	}
+		*//** 第二步：删除类目对应的各种信息 * *//*
+	}*/
 	
 }

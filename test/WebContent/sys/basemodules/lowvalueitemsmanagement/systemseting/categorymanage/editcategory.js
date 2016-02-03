@@ -2,6 +2,7 @@
 //加载完成执行 
 $(function(){	
 	initData();
+	initRoleCombo();
 	//返回页面
 	$("#return").click(function(){
 		history.go(-1);
@@ -51,11 +52,11 @@ function getCategoryByPkFailureFunc() {
 }
 
 //数据封装 
-function dataPackage(busitype){
+function dataPackage(busitype){debugger;
 	var categoryObj = new Object();
 	categoryObj.categoryName = $("#categoryName").val();
 	categoryObj.categoryRemark = $("#categoryRemark").val();
-	categoryObj.groupCode = groupCode;
+	categoryObj.groupCode = $("input[name = groupCode]").val();
 	if (busitype == 'modify') {
 		categoryObj.pk = pk;
 	}
@@ -144,4 +145,32 @@ function submitModify(submitPackage){
  					top.layer.alert('保存错误',{closeBtn :2,icon:5});
  			}
  	  );
+}
+
+//初始化角色下拉列表
+function initRoleCombo() {
+	//选择角色
+	$('#groupCode').combobox({
+		onBeforeLoad: function(param){
+			ajaxRole();
+		},
+		valueField:'groupCode',
+		textField:'groupName',
+		width:220,
+		//height:26,
+		//panelHeight:100,
+		editable:false
+	});
+}
+
+//角色加载
+function ajaxRole(){
+	Ajax.service(
+		'GroupBO',
+		'findAll', 
+		[],
+		function(result){
+			$('#groupCode').combobox("loadData",result);
+		}
+	);
 }

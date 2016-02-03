@@ -14,36 +14,18 @@ var groupCode="${param.groupCode}";
 </script>
 <style type="text/css">
 body{ width:100%;height:100%;}
+form div{ margin-top:10px}
+label{ width:80px; display:block; text-align:right; float:left; margin:0 auto;font-size:14px;color: #555;}
+label span{color:red;}
+form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; padding:0 8px; height:26px; border:1px solid #95B8E7;}
 
-.functioninput{
-	width:80px;
-	height:260px;
-	float:left;
-	margin-left:10px;
-}
-/*表单字体样式*/
-.table_edit{
-font-size: 14px;
-background-color:white;
-height:480px;
-margin-left:25px;
-}
-.table_edit label{
-width:100px;
-display:block;
-float:left; 
-margin:0 auto;
-text-align:right;
-color:#474747;
-}
-.tb_row input{margin-left:10px;}
-.tb_row label span{color:red;}
-.table_edit .tb_row{height:38px;line-height:36px;clear:both;}
-/*加入横线,不要横线去掉改样式*/
-/*
-.table_edit .tb_row{border-bottom:1px solid #F7F7F7;}
-*/
-.table_edit .tb_row_zd{height:260px;line-height:260px;clear:both;margin-top:5px;}
+/*easyui控件样式*/
+.combo{margin-left:10px;}
+.validatebox-tip{margin-top: -2px}
+.shaixuan .numberbox-f{height: 32px !important;width: 203px;margin-left: 10px;}
+
+#submit{width:50px}
+#return{width:50px}
 </style>
 </head> 
 <body class="edit_body"> 
@@ -52,21 +34,22 @@ color:#474747;
 		<span class="head-tx"></span>
 	</div>
 	
-	<div style="background-color:white;padding:10px;">
-	<div class="table_edit  EditPanel">
-		<form id="ff" method="post" class="easyui-form" data-options="novalidate:true">
-	     
-	    <div   class="tb_row">   
-	        <label>名称<span>*</span>:</label>
-	        <input type="text" id ="categoryName" name="categoryName"  class="easyui-validatebox" required="true" missingMessage="不能为空" />   
-	    </div> 
-	    
-	    <div   class="tb_row">   
-	        <label>备注<span>*</span>:</label>
-	        <input type="text" id="categoryRemark" name="categoryRemark" class="easyui-validatebox" required="true" missingMessage="不能为空"/>   
-	    </div> 
-	    	    
-	   
+	<div class="shaixuan clearfloat ">
+		  	<form id="ff" method="post" style="width:400px; margin-left:50px; margin-top:50px">   
+		  		<div class="EditPanel">
+				    <div>   
+				        <label for="type">名称<span>*</span>:</label>
+				        <input id="categoryName" name="categoryName" class="easyui-validatebox" required="true" missingMessage="不能为空" />   
+				    </div>   
+				    <div style="height:30px">   
+				        <label for="type">角色:</label>
+				        <input id="groupCode" name="groupCode"/>    
+				    </div>  
+				    <div>   
+				        <label for="type">备注:</label>
+				        <input type="text" id="categoryRemark" name="categoryRemark"  maxlength="125"/>   
+				    </div>   
+			    </div>
 	    </form>
 	</div>
 		<div class="tb_row">

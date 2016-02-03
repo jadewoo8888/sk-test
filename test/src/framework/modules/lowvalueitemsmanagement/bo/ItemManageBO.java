@@ -34,19 +34,28 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage>{
 			}
 			
 			@MethodID("deleteItem")
+			@LogOperate(operate = "删除一条物品")
+			public String deleteItem_log_trans(String pk) {
+				String return_tips = "";
+				entityDAO.delete(entityDAO.findById(pk));
+				return return_tips;
+
+			}
+			
+			/*@MethodID("deleteItems")
 			@LogOperate(operate = "删除物品")
-			public void deleteItem_log_trans(String[] pkArr) {
+			public void deleteItems_log_trans(String[] pkArr) {
 				if (pkArr == null || pkArr.length == 0) {
 					return;
 				}
-				/** 第一步：遍历删除类目信息，更新对应的物业单元业务状态 * */
+				*//** 第一步：遍历删除类目信息，更新对应的物业单元业务状态 * *//*
 				for (int j = 0; j < pkArr.length; j++) {
 					ItemManage itemManage = entityDAO.findById(pkArr[j]);
 					// 更新单元定义表中的业务状态 未申请
 					entityDAO.delete(itemManage);
 				}
 
-				/** 第二步：删除类目对应的各种信息 * */
-			}
+				*//** 第二步：删除类目对应的各种信息 * *//*
+			}*/
 			
 }

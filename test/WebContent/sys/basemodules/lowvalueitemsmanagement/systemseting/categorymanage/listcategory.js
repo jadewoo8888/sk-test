@@ -22,14 +22,14 @@ function initDataGrid() {
 	 [[
 	 	{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
 			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\")' >修改</a>";
-			//html += "<a class='table_a_css' href='javascript:deleteone(\""+row.id+"\")' >删除</a>";
-			html += "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
+			html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
+			//html += "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
  			return html;
 		}}, 
 		{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"categoryName",title:'名称',minwidth:150},
-        {field:"categoryRemark",title:'备注',minwidth:160},
-        {field:"groupCodeDisplay",title:'所属角色组',minwidth:160}
+		{field:"groupCodeDisplay",title:'适用角色组',minwidth:160},
+        {field:"categoryRemark",title:'备注',minwidth:160}
 	]];
 	 var dataGridOptions ={};
 	 var customOptions = {tableID:'id_table_grid',classID:'CategoryManagementBO',columns:_columns,sortInfo:_sortInfo};	 
@@ -44,16 +44,16 @@ function initComBindFunc() {
 	$("#id_btn_addnew").click(function () {
 		addone();
 	});
-	$("#id_btn_delete").click(function () {
+	/*$("#id_btn_delete").click(function () {
 		deleteMulti();
-	}); 
+	}); */
 	//查询按钮处理事件
 	$("#id_btn_query").click(function () {
 		datagrid.query();
 	});
-	$("#id_btn_selecteColumns").click(function () {
+	/*$("#id_btn_selecteColumns").click(function () {
 		datagrid.showSelectListItem();
-	});
+	});*/
 	$("#id_btn_export").click(function () {
 		datagrid.showExport();
 	}); 
@@ -80,7 +80,7 @@ function modifyone(pk){
 /**
  * 查看类目信息单
  **/
-function viewone(pk){
+/*function viewone(pk){
 	top.layer.open({
 		type:2,
 		title:'查看类目信息 ',
@@ -94,9 +94,9 @@ function viewone(pk){
 		},
 		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/systemseting/categorymanage/viewcategory.jsp?pk='+pk
 	});
-}
+}*/
 
-function deleteMulti() {
+/*function deleteMulti() {
 	//取得选中类目
 	var categoryList=datagrid.getSelectedData();
 	//没有选择类目，返回
@@ -154,7 +154,59 @@ function deleteMulti() {
 
 		}
 	});
+}*/
+
+/**
+ * 删除
+ **/
+function deleteone(pk) {
+	top.layer.open({
+		title:'删除数据',
+		icon: 3,
+		area:['300px','160px'],
+		btn:['确定', '取消'],
+		content:'确定要删除选中的数据吗？',
+		shift:1,
+		closeBtn :2,
+		yes: function(index){
+			top.layer.close(index);
+			deleteService(pk);		
+	    }
+	});	
 }
+
+/**
+ * 发送删除请求
+ **/
+function deleteService(pk) {
+	Ajax.service(
+		'CategoryManagementBO',
+		'deleteCategory', 
+		[pk],
+		deleteServiceSuccFunc,
+		serviceFailureFunc
+	);
+}
+
+/**
+ * 删除请求成功回调函数
+ **/
+function deleteServiceSuccFunc(data) {
+	if(data!="null"&&data.length>0){
+		top.layer.alert(data,{closeBtn :2,icon:5});
+		changeBtnDisabled(false);
+	}else{	    				
+		top.layer.alert('删除成功 ',{icon:6,closeBtn :2});
+		datagrid.query();
+	}	
+}
+
+/**
+ * 请求失败回调函数,删除，注销，撤销注销失败等均调用此方法
+ **/
+function serviceFailureFunc() {
+	top.layer.alert('删除数据出现错误，请联系管理员 ',{icon:5,closeBtn :2});
+} 
 
 //初始化角色下拉列表
 function initRoleCombo() {

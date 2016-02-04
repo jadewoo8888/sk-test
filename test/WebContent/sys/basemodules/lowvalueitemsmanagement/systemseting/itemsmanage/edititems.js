@@ -1,16 +1,15 @@
-
 //加载完成执行 
 $(function(){	
 	initData();
-	getMCategoryComboboxData();
-	getGroupTypeComboboxData();
+	getCategoryComboboxData();
+	initAssetTypeBox();
 	//返回页面
 	$("#return").click(function(){
 		history.go(-1);
 		});	
 	
 	//编辑事务读取数据 
-	if(busitype=="edit"){
+	if(busitype=="modify"){
 		$("#businesstext").html("修改类目 ");
 	}
 });
@@ -21,50 +20,104 @@ $(function(){
  **/
 function initData() {
 	if(pk) {
-		getCategoryByPk(pk);
+		getItemByPk(pk);
 	}
 }
 
 /** 
  * 根据编码获取信息
  **/
-function getCategoryByPk(pk) {debugger;
-	$("body").addLoading({msg:"正在获取信息，请稍后..."});
-	Ajax.service("CategoryManagementBO", "findByProperty", ['pk',pk], getCategoryByPkSuccFunc, getCategoryByPkFailureFunc);
+function getItemByPk(pk) {
+	Ajax.service(
+	  		'ItemManageBO',
+	  		'findById', 
+	  		[pk],
+	  		function(obj){
+				//数据填充 
+	      	 	dataFill(obj);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
 }
 
-function getCategoryByPkSuccFunc(data) {
-	callUpdateData(data);
-	$("body").removeLoading();
+//数据填充 (待完善 )
+function dataFill(obj){
+	  // 开始遍历赋值 
+	  for(var p in obj){
+		  if($("#id_"+p)&&obj[p]!=null){		     
+			     if($("#id_"+p).hasClass("combobox-f")){
+			    	$("#id_"+p).combobox('select',obj[p]);
+			     }else if($("#id_"+p).hasClass("datebox-f")){
+			    	$("#id_"+p).datebox('setValue',obj[p]);
+			     }else if($("#id_"+p).hasClass("numberbox-f")){
+			    	 $("#id_"+p).numberbox('setValue',obj[p]);
+			     }else if(obj[p+"Display"]){	
+			    	$("#id_"+p).attr('treevalue',obj[p]);
+			    	if($("#id_"+p).next().hasClass("searchbox")){
+			    		$("#id_"+p).searchbox('setValue',obj[p+"Display"]);
+			    	}else{
+			    		$("#id_"+p).val(obj[p+"Display"]);
+			    	}
+			     }else{
+		  		 	//特殊字段处理
+		  		 	if(p=='assetSysCode'){
+		  		 		getAssetInfo(obj[p]);
+		  		 		continue;
+		  		 	}
+		  		 	
+		  		 	$("#id_"+p).val(obj[p]);		  		 	
+			     }
+		  }
+	  }
+	  //修改赋值,加入隐藏字段(取数据库信息，不作修改)
+	  if(business==STR_REGISTER_MODIFY){
+		  dataPackage=obj;
+	  }
 }
 
-/**
- * 选择回调方法
- **/
-function callUpdateData(rows) {
-	var row = rows[0];
-	$("#categoryName").val(row.categoryName);
-	$("#categoryRemark").val(row.categoryRemark);
-}
-
-function getCategoryByPkFailureFunc() {
-	$("body").removeLoading();
-	top.layer.alert("\u83b7\u53d6\u5904\u7f6e\u5355\u57fa\u672c\u4fe1\u606f\u51fa\u73b0\u9519\u8bef\uff0c\u8bf7\u8054\u7cfb\u7ba1\u7406\u5458 ", {icon:5, closeBtn:2});
-}
-
-//数据封装 
-function dataPackage(busitype){
-	var categoryObj = new Object();
-	if (busitype == 'add') {
-		categoryObj.categoryName = $("#categoryName").val();
-		categoryObj.categoryRemark = $("#categoryRemark").val();
-	} else {
-		categoryObj.categoryName = $("#categoryName").val();
-		categoryObj.categoryRemark = $("#categoryRemark").val();
-		categoryObj.pk = pk;
+//基本信息数据封装 
+function getDataPackage(){	
+	var dataPackage={};
+	var inputs=$(".EditPanel input");
+	if(inputs.length>0){
+		for(var i=0;i<inputs.length;i++){			
+			if(inputs[i].type!="button"){
+				if(inputs[i].getAttribute('fieldname')!=undefined&&inputs[i].getAttribute('fieldname')!=""){
+					if(inputs[i].getAttribute('treevalue')!=undefined&&inputs[i].getAttribute('treevalue')!=""){
+								dataPackage[inputs[i].getAttribute('fieldname')]=inputs[i].getAttribute('treevalue');
+					}else if($(inputs[i]).hasClass('numberbox-f')){
+						  var num=$(inputs[i]).numberbox('getValue');
+						  if(num==undefined||num==null||num.length==0)num=0;
+						  		dataPackage[inputs[i].getAttribute('fieldname')]=num;
+					}else if($(inputs[i]).hasClass('combobox-f')){
+						  dataPackage[inputs[i].getAttribute('fieldname')]=$(inputs[i]).combobox("getValue");
+					}else if($(inputs[i]).hasClass('datebox-f')){
+						  dataPackage[inputs[i].getAttribute('fieldname')]=$(inputs[i]).datebox("getValue");
+					}				
+					else{
+							if(inputs[i].value==inputs[i].placeholder){
+								dataPackage[inputs[i].getAttribute('fieldname')]='';							
+							}else{
+								dataPackage[inputs[i].getAttribute('fieldname')]=inputs[i].value;
+							}
+					}	
+				}
+			}			
+		}
 	}
-	
-	return categoryObj;
+
+	var textareas=$(".EditPanel textarea");
+	if(textareas.length>0){
+		for(var i=0;i<textareas.length;i++){
+			if(textareas[i].getAttribute('fieldname')!=undefined&&textareas[i].getAttribute('fieldname')!=""){
+				dataPackage[textareas[i].getAttribute('fieldname')]=textareas[i].value;
+			}
+		}
+	}
+
+	return dataPackage;
 }
 
 //保存 
@@ -76,11 +129,12 @@ function savedata(){
 function edit(busitype){
 	// 验证通过则返回为true
 	if($("#ff").form("validate")){
-		var categoryObj = dataPackage(busitype);
+		var itemObj = getDataPackage();
 		if (busitype == 'add') {
-			submitAdd(categoryObj);
+			submitAdd(itemObj);
 		} else {
-			submitModify(categoryObj);
+			itemObj.pk = pk;
+			submitModify(itemObj);
 		}
 	}else{
 		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
@@ -90,8 +144,8 @@ function edit(busitype){
 //提交新增
 function submitAdd(submitPackage){
 	 Ajax.service(
- 			'CategoryManagementBO',
- 			'addCategory', 
+ 			'ItemManageBO',
+ 			'addItem', 
  			[submitPackage],
  			function(data){					
 	    			if(data!="null"&&data.length>0){
@@ -115,8 +169,8 @@ function submitAdd(submitPackage){
 //提交修改 
 function submitModify(submitPackage){
 	 Ajax.service(
- 			'CategoryManagementBO',
- 			'modifyCategory', 
+ 			'ItemManageBO',
+ 			'modifyItem', 
  			[submitPackage],
  			function(data){
  					$('body').removeLoading();     // 关闭遮挡层
@@ -150,35 +204,38 @@ function submitModify(submitPackage){
  	  );
 }
 
-function getMCategoryComboboxData() {
+function getCategoryComboboxData() {
 	Ajax.service(
 		'CategoryManagementBO',
 		'findAll', 
 		[],
-		getMCategoryComboboxDataSuccFunc
+		getCategoryComboboxDataSuccFunc
 	);
 }
 
-function getMCategoryComboboxDataSuccFunc(result) {
-	$('#category').combobox("loadData",result);  
+function getCategoryComboboxDataSuccFunc(result) {
+	$('#id_imCategoryPK').combobox("loadData",result);  
 }
 
-function getGroupTypeComboboxData() {
-	Ajax.service(
-		'GroupTypeBO',
-		'findAll', 
-		[],
-		getGroupTypeComboboxDataSuccFunc
-	);
-}
-
-function getGroupTypeComboboxDataSuccFunc(result) {
-	for(var i=0;i<result.length;i++){
-		if(result[i].groupTypeCode=="001"||result[i].groupTypeCode.substr(0,1)=="4"){
-			result.splice(i, 1);
-			i=i-1;
+/**
+ * 选择资产分类代码
+ **/
+function initAssetTypeBox(){
+	//资产分类代码搜索  
+	$('#id_imAssetType').searchbox({ 
+		prompt:'资产分类代码',
+		searcher:function(value,name){ 
+				//选择资产分类树
+		   		var treeValue = $('#id_imAssetType').attr('treevalue');  
+		 		var treeOption = {selType:'sgl',defaultSelecteds:treeValue,callBackFunction:acTreeCallBack};
+			  	top.acTree(treeOption);
 		}
+	});
+	//禁止输入
+	$('#id_imAssetType').searchbox('textbox').attr('readonly',true);//禁用输入
+	//资产分类树回调
+	function acTreeCallBack(code,codeAndName){
+		$('#id_imAssetType').searchbox('setValue',codeAndName);
+		$('#id_imAssetType').attr('treevalue',code);
 	}
-	groupTypeData=result;
-	$('#groupTypeCode').combobox("loadData",result);  
 }

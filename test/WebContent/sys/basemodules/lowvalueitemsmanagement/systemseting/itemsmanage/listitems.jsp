@@ -16,19 +16,12 @@
 		<div id="id_div_basequery" class="shaixuan clearfloat">
 			<div class="clearfloat">
 				<input type="button" id="id_btn_addnew" class="bt_list_function" value="+ 新增" />
-				<input type="button" id="id_btn_delete" class="bt_list_function" value="删除" />
- 				<!-- <input type="button" id="id_btn_modify" class="bt_list_function" value="修改" /> -->
-				<input type="button" id="id_btn_selecteColumns" class="bt_list_function" value="列选" />
 				<input type="button" id="id_btn_export" class="bt_list_function" value="导出" />
 			</div>
 			<div class="clearfloat mtop10">
-				<input type="text" qc={fn:'iMitemPK',oper:'3'} placeholder="类目pk" class="shaixuan_txt float_left">
-				<input type="text" qc={fn:'iMType',oper:'3'} placeholder="类别" class="shaixuan_txt float_left">
-				<input type="text" qc={fn:'iMName',oper:'3'} placeholder="物品名称" class="shaixuan_txt float_left">
-				<input type="text" qc={fn:'iMAssetType',oper:'3'} placeholder="资产类别" class="shaixuan_txt float_left">
-				<input type="text" qc={fn:'iMSpecification',oper:'3'} placeholder="规格型号" class="shaixuan_txt float_left">
-				<input type="text" qc={fn:'iMMetricUnit',oper:'3'} placeholder="计量单位" class="shaixuan_txt float_left">
-				<input type="text" qc={fn:'iMRemark',oper:'3'} placeholder="名称" class="shaixuan_txt float_left">
+				<input id="category" class="easyui-combobox" placeholder="类目" qc={fn:'imCategoryPK',oper:'0'} name="category">
+				<!-- <input  qc={fn:'imType',oper:'5'} class="easyui-combobox"  data-options="value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001,WPLB_002',classifyName:'全部'},{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" /> -->
+				<input type="text" qc={fn:'imName',oper:'3'} placeholder="名称" class="shaixuan_txt float_left">
  				<input type="button" id="id_btn_query" value="查询"	 class="bt_query mleft5">
 			</div>
 		</div>

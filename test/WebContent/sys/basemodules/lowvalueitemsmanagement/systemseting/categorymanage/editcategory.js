@@ -9,7 +9,7 @@ $(function(){
 		});	
 	
 	//编辑事务读取数据 
-	if(busitype=="edit"){
+	if(busitype=="modify"){
 		$("#businesstext").html("修改类目 ");
 	}
 });

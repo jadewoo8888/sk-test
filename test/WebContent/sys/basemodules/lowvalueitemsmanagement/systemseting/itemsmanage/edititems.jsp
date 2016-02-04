@@ -1,86 +1,98 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@include file="/core/jspf/head.jspf"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE HTML>
+<html> 
 <head>
-    <script type="text/javascript" src="edititems.js"></script> 
-<script type="text/javascript">
+<script type="text/javascript" src="edititems.js"></script> 
+<style>
+@charset "utf-8";
+textarea{resize:none;overflow:hidden;}
+/*编辑页面公共样式star*/
+
+/*编辑页面公共样式end*/
+.panel-header, .panel-body{border-color:#E5E5E5;}
+.biao .panel-body{border:1px solid rgb(180,180,180) !important;}
+/*编辑区域信息*/
+.editItem{height:26px;line-height:26px;vertical-align:middle;}
+.editlogo{width:3px;height:20px;display:inline-block;background-color:#1fb5ad;margin-top:2px;margin-right:10px;float:left;}
+.editTitle{display:inline-block;float:left;margin-right:20px;width:60px;font-size:13px;}
+.editline{height:1px;border:none;border-top:1px solid rgb(210,210,210);position:relative;top:12px;}
+.editTips{color:#666666;padding-left:90px;position:relative;top:-9px;}
+/*保存、返回按钮*/
+.Editinput{
+width:100%;
+position:fixed;
+bottom:38px;
+padding-top:5px;
+padding-bottom:5px;
+padding-left:400px;
+background-color:rgba(180,180,180,0.5);
+}
+.colorblack{color: #000000;}
+.notnullTip{color:red;vertical-align: middle;margin-left:3px;}
+.Edit-Title1{width:200px;}
+#id_unitAdress{width:638px;}
+.EditPanel{padding-left:10px;}
+
+.colorlink{color:#00afe8;cursor:pointer;}
+</style>
+<script>
 //事务 
 var busitype="${param.busitype}";
 var pk="${param.pk}";
-
+//var data_imType=${json:classify("STD_DYZT")};
 </script>
-<style type="text/css">
-body{ width:100%;height:100%;}
-
-.functioninput{
-	width:80px;
-	height:260px;
-	float:left;
-	margin-left:10px;
-}
-/*表单字体样式*/
-.table_edit{
-font-size: 14px;
-background-color:white;
-height:480px;
-margin-left:25px;
-}
-.table_edit label{
-width:100px;
-display:block;
-float:left; 
-margin:0 auto;
-text-align:right;
-color:#474747;
-}
-.tb_row input{margin-left:10px;}
-.tb_row label span{color:red;}
-.table_edit .tb_row{height:38px;line-height:36px;clear:both;}
-/*加入横线,不要横线去掉改样式*/
-/*
-.table_edit .tb_row{border-bottom:1px solid #F7F7F7;}
-*/
-.table_edit .tb_row_zd{height:260px;line-height:260px;clear:both;margin-top:5px;}
-</style>
-</head> 
-<body class="edit_body"> 
-	<div id="id_div_desc" class="head" >
-		<span id="businesstext" class="head-title">新增物品</span>
+</head>
+<body class="edit_body" style="background-color:white;" >
+	<div id="id_div_desc" class="head">
+		<span class="head-title"></span>
 		<span class="head-tx"></span>
 	</div>
 	
-	<div style="background-color:white;padding:10px;">
-	<div class="table_edit  EditPanel">
-		<form id="ff" method="post" class="easyui-form" data-options="novalidate:true">
+	<div  id="tabs" class="easyui-tabs clearfloat">	
+		<div title="基本信息" id="basic" > 
+			<div class="EditPanel" id="EditPanel" >			
+		           	<div class="editItem">
+						<hr  class="editline"/>
+		           	</div>
+                    <div   class="editTips">(以下用<span class="notnullTip" style="margin-right:3px;">*</span>标记为必填信息)</div> 	
+                       <table cellSpacing=1 cellPadding=0>
+                       		<tr>
+								<td   class="Edit-Title1">类目<span class="notnullTip">*</span></td>
+								<td   class="Edit-Input1"><input type="text" id="id_imCategoryPK" fieldname="imCategoryPK" class="easyui-combobox"  editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,valueField:'pk',textField:'categoryName'"/></td>
+								<td   class="Edit-Title2">类别<span class="notnullTip">*</span></td>
+								<td   class="Edit-Input2">
+								<input id="id_imType" fieldname="imType" class="easyui-combobox" editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001,WPLB_002',classifyName:'全部'},{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" />
+								</td>
+							</tr>
+							<tr>
+								<td   class="Edit-Title1">名称<span class="notnullTip">*</span></td>
+								<td   class="Edit-Input1"><input id="id_imName" fieldname="imName" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox"/></td>
+								<td   class="Edit-Title2">资产分类代码<span class="notnullTip">*</span></td>
+								<td   class="Edit-Input2"><input  id="id_imAssetType" fieldname="imAssetType"/></td>
+							</tr>
+							<tr> 
+								<td   class="Edit-Title1">规格</td>
+								<td   class="Edit-Input1"><input  id="id_imSpecification" fieldname="imSpecification" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>
+								<td   class="Edit-Title2">单位<span class="notnullTip">*</span></td>
+								<td   class="Edit-Input2"><input id="id_imMetricUnit" fieldname="imMetricUnit" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>					
+							</tr>
+							<tr>
+								<td   class="Edit-Title1">备注</td>
+								<td   class="Edit-Input-Merge" colspan="3"><textarea  id="id_imRemark" fieldname="imRemark" validType="length[1,125]" invalidMessage="不能超过125个字符" class="easyui-validatebox"></textarea></td>
+							</tr>
+					 </table> 
+					 <div style="height:50px;">
+					 </div>                           		
+			</div>
+		</div>
+		
+		
 	     
-	     <div  	class="tb_row">   
-	        <label>类目<span>*</span>:</label>
-	        <input type="text" id="category"  class="easyui-combobox "  editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,valueField:'pk',textField:'categoryName'"/>   
-	    </div>
-	    
-	    <!-- <div   class="tb_row">   
-	        <label>名称<span>*</span>:</label>
-	        <input type="text" id ="iMCategoryPK" name="categoryName"  class="easyui-validatebox" required="true" missingMessage="不能为空" />   
-	    </div> 
-	    
-	    <div   class="tb_row">   
-	        <label>备注<span>*</span>:</label>
-	        <input type="text" id="categoryRemark" name="categoryRemark" class="easyui-validatebox" required="true" missingMessage="不能为空"/>   
-	    </div>  -->
-	    	    
-	   <!-- <div  	class="tb_row">   
-	        <label>角色类型<span>*</span>:</label>
-	        <input type="text" id="groupTypeCode"  class="easyui-combobox "  editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,valueField:'groupTypeCode',textField:'groupTypeName'"/>   
-	    </div> -->
-	    </form>
 	</div>
-		<div class="tb_row">
-		    <div style="margin-left:150px;padding-top:15px;">
-		    	<input type="button" id="submit"  onclick="savedata()" class="bt_ensure" value="保存" />  
-		    	<input type="button" id="return" class="bt_cancel" value="返回" />
-	    	</div>
-	    </div>
-	</div>
-</body>
+	<div style="background-color:white;height:100px;"></div>
+	<div class="Editinput"><input type="button" id="save" class="bt_ensure" onclick="savedata()" value="保存"></input><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
+
+	</body>
 </html>
+

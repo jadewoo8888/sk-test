@@ -8,10 +8,35 @@ var datagrid = null;
  * 初始化方法
  **/ 
 $(function () { 
+	initApplyFlagCombo();
 	initDataGrid();
 	initComBindFunc(); 
-	getMCategoryComboboxData();
+	getCategoryComboboxData();
+	initDeptBox();
 });
+
+function initApplyFlagCombo(){
+	//申请单状态 查询条件控件初始化
+	
+	 $("#itemsApplyFlag").combobox({
+		 data:[
+			{classifyCode:'WPSLZT_001',classifyName:'全部'},
+		 	{classifyCode:'WPSLZT_002,WPSLZT_003',classifyName:'待审批'},
+		 	{classifyCode:'WPSLZT_001,WPSLZT_002,WPSLZT_003',classifyName:'已审批'}
+		 ],
+		 onSelect:function(data){
+		 	if(data.classifyName == "待审批"){
+		 		$("#itemsApplyFlag").attr('qc',"{fn:'itemsApplyFlag',oper:'"+ARY_STR_INCLUDE[0]+"'}");
+		 	}else if(data.classifyName == "已审批"){
+		 		$("#itemsApplyFlag").attr('qc',"{fn:'itemsApplyFlag',oper:'"+ARY_STR_NOTINCLUDE[0]+"'}");
+		 	}else if(data.classifyName == "全部"){
+		 		$("#itemsApplyFlag").attr('qc',"{fn:'itemsApplyFlag',oper:'"+ARY_STR_NOTEQUAL[0]+"'}");
+		 	}
+		 }
+	 })
+}
+
+
 
 /**
  * 初始化表格信息
@@ -38,7 +63,7 @@ function initDataGrid() {
         {field:"itemsApplyRemark",title:'备注',minwidth:160}
 	]];
 	 var dataGridOptions ={};
-	 var customOptions = {tableID:'id_table_grid',classID:'CategoryManagementBO',columns:_columns,sortInfo:_sortInfo};	 
+	 var customOptions = {tableID:'id_table_grid',classID:'CategoryManagementBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
@@ -61,16 +86,35 @@ function initComBindFunc() {
 		datagrid.showExport();
 	}); 
 	
-	//选择部门树
-	$("#department").click(function(){
-		var treeOption = {callBackFunction:departmentCallBack};
-		top.deptTree(treeOption);
-	});
 }
 
-function getMCategoryComboboxData() {
-	//角色加载
-	function ajaxRole(){
+//部门树回调函数
+
+/**
+ * 选择申领部门
+ **/
+function initDeptBox(){
+	//资产分类代码搜索  
+	$('#orgCode').searchbox({ 
+		prompt:'申领部门',
+		searcher:function(value,name){ 
+				//选择资产分类树
+		   		var treeValue = $('#orgCode').attr('treevalue');  
+		 		var treeOption = {selType:'sgl',defaultSelecteds:treeValue,callBackFunction:acTreeCallBack};
+			  	top.deptTree(treeOption);
+		}
+	});
+	//禁止输入
+	$('#orgCode').searchbox('textbox').attr('readonly',true);//禁用输入
+	//资产分类树回调
+	function acTreeCallBack(code,codeAndName){
+		$('#orgCode').searchbox('setValue',codeAndName);
+		$('#orgCode').attr('treevalue',code);
+	}
+}
+
+function getCategoryComboboxData() {
+	function ajaxCategory(){
 		Ajax.service(
 			'CategoryManagementBO',
 			'findAll', 
@@ -81,10 +125,9 @@ function getMCategoryComboboxData() {
 		);
 	}
 
-	//选择角色
 	$('#category').combobox({
 		onBeforeLoad: function(param){
-			ajaxRole();
+			ajaxCategory();
 		},
 		valueField:'pk',
 		textField:'categoryName',
@@ -93,15 +136,6 @@ function getMCategoryComboboxData() {
 		panelHeight:100,
 		editable:false
 	});
-}
-
-
-
-
-//部门树回调函数
-function departmentCallBack(code,codeAndName){
-	saveDepartmentCode = code;
-	$("#orgCode").val(codeAndName);
 }
 
 /**
@@ -177,4 +211,15 @@ function deleteone(pk){
 	});
 }
 
-
+//自定义查询条件
+function setCustomQueryCondition() {
+	var customQCArr = new Array();
+	//审批人条件
+	orgQc = new Object();
+	orgQc.fn = '';
+	orgQc.oper = ARY_STR_NULLOPER[0];
+	orgQc.value1 = 'AllowApprPerson like \'%|'+ top.strUserAccount +'|%\' or linkers like \'%|'+ top.strUserAccount +'|%\'';
+	customQCArr.push(orgQc);
+	
+    return customQCArr;
+}

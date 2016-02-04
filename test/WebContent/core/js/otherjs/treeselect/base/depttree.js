@@ -62,11 +62,7 @@ DeptTree.prototype.initTreeSet = function () {
 	if (this.options.selType == "mul") {
 		this.tree_setting.check = {enable:true, chkStyle:"checkbox", chkboxType:{"Y":"ps", "N":"ps"}};
 	}
-	//资产统计部门选择树处理
-	if (this.options.busiType == "statictis") {
-		this.tree_setting.check = {enable:true, chkStyle:"checkbox", chkboxType:{"Y":"", "N":""}};
-	}
-};
+}; 
 
 /**
  *处理树节点显示的数据 

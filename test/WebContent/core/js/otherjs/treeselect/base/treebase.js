@@ -24,12 +24,14 @@ TreeBase.prototype = {
 	 * busiType:业务类型
 	 * defaultSelecteds：默认选中数据，格式:(1)数组['001002','001003'] (2):以','分隔的字符串'001002','001003'
 	 * selType:选择类型 sgl(单选,默认) mul(多选)
+	 * checkLastNode:默认false，用于确定选中数据前的校验，true：标示选中节点(包括多选，单选)一定要是末级节点，否则提示非法，false：不需要是末级节点
 	 * callBackFunction:回调函数
 	 **/
     initialize: function(options) {
         this.options = $.extend({
             busiType: '',
             selType: 'sgl',
+            checkLastNode: false,
             defaultSelecteds: null,
             callBackFunction: null
         },
@@ -315,36 +317,33 @@ TreeBase.prototype = {
     getTreeSelectValue: function() {
         var returnValue = "";
         var returnDisplayValue = "";
+        var returnNodes = null;
         var selectNodes = null;
         if (this.options.selType == "sgl") {
             selectNodes = this.tree_zTreeObj.getSelectedNodes();
+            returnNodes = selectNodes;
             for (var i = 0; i < selectNodes.length; i++) {
                 returnValue += "," + selectNodes[i][this.tree_zTreeObj.setting.data.simpleData.idKey];
                 returnDisplayValue += "," + selectNodes[i].name;
             }
         } else {
-            if (this.options.busiType == "statictis") {
-                selectNodes = this.tree_zTreeObj.getCheckedNodes();
-                for (var i = 0; i < selectNodes.length; i++) {
-                    returnValue += "," + selectNodes[i][this.tree_zTreeObj.setting.data.simpleData.idKey];
-                    returnDisplayValue += "," + selectNodes[i].name;
-                }
-            } else {
-                /** 当为多选时，若某个节点下的所有节点均选中，则只需要返回这个节点。 **/
-                selectNodes = this.tree_zTreeObj.getCheckedNodes();
-                for (var i = 0; i < selectNodes.length; i++) {
-                    /** 当节点为全选（若有子节点，所有子节点也被选中则此节点为全选 **/
-                    if (selectNodes[i].getCheckStatus().half == false) {
-                        if (selectNodes[i].getParentNode() != null) {
-                            /** 父节点非全选，则此节点需返回 **/
-                            if (selectNodes[i].getParentNode().getCheckStatus().half == true) {
-                                returnValue += "," + selectNodes[i][this.tree_zTreeObj.setting.data.simpleData.idKey];
-                                returnDisplayValue += "," + selectNodes[i].name;
-                            }
-                        } else {
+        	/** 当为多选时，若某个节点下的所有节点均选中，则只需要返回这个节点。 **/
+            selectNodes = this.tree_zTreeObj.getCheckedNodes();
+            returnNodes = new Array();
+            for (var i = 0; i < selectNodes.length; i++) {
+            	/** 当节点为全选（若有子节点，所有子节点也被选中则此节点为全选 **/
+                if (selectNodes[i].getCheckStatus().half == false) {
+                	if (selectNodes[i].getParentNode() != null) {
+                    	/** 父节点非全选，则此节点需返回 **/
+                    	if (selectNodes[i].getParentNode().getCheckStatus().half == true) {
+                        	returnValue += "," + selectNodes[i][this.tree_zTreeObj.setting.data.simpleData.idKey];
+                        	returnDisplayValue += "," + selectNodes[i].name;
+                       		returnNodes.push(selectNodes[i]);
+                 		}
+                	} else {
                             returnValue += "," + selectNodes[i][this.tree_zTreeObj.setting.data.simpleData.idKey];
                             returnDisplayValue += "," + selectNodes[i].name;
-                        }
+                            returnNodes.push(selectNodes[i]);
                     }
                 }
             }
@@ -356,7 +355,7 @@ TreeBase.prototype = {
         var arr_return = new Array();
         arr_return.push(returnValue);
         arr_return.push(returnDisplayValue);
-        arr_return.push(selectNodes);
+        arr_return.push(returnNodes);
         return arr_return;
     },
     judgeAndTranArr: function(defaultSelecteds) {
@@ -370,14 +369,29 @@ TreeBase.prototype = {
      **/
     sure: function() {
         var arr_select = this.getTreeSelectValue();
-        //未选择任何节点则提示需要选择
-        if (arr_select[0].length == 0) {
-       		top.layer.alert(this.str_title,{shadeClose:true,shift: 6,icon:7,closeBtn :2,time:2000});
-            return;
-        }
+       	if(!this.checkBefroeSure(arr_select)) {
+       		return;
+       	}
         //关闭选择窗口，调用回调函数 
         this.windowClose();
         this.callCBFunc(arr_select);
+    },
+    checkBefroeSure:function(selectData) {
+     	//未选择任何节点则提示需要选择
+        if (selectData[0].length == 0) {
+       		top.layer.alert(this.str_title,{shadeClose:true,shift: 6,icon:7,closeBtn :2,time:2000});
+            return false;
+        }
+        if(this.options.checkLastNode) {
+        	var nodesLen = selectData[2].length;
+        	for(var i=0;i<nodesLen;i++) {
+        		if(selectData[2][i].isParent) {
+        			top.layer.alert('选中节点存在非末级节点，请重新选择',{shadeClose:true,shift: 6,icon:7,closeBtn :2,time:2000});
+            		return false;
+        		}
+        	}
+        }
+        return true;
     },
     /**
      * 调用回调函数

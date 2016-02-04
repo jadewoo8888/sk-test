@@ -4,8 +4,12 @@
 <!doctype html>
 <html>
 	<head>
-		<script src="listapplyregister.js" language="javascript"
-			type="text/javascript"></script>
+		<script src="listapplyregister.js" type="text/javascript"></script>
+<script >
+//单据状态
+//var data_itemsApplyFlag=${json:classify("WPSLZT")};
+//data_itemsApplyFlag.push({classifyCode:' ',classifyName:'全部'})
+</script>
 	</head>
 
 	<body class="list_body"> 
@@ -22,11 +26,13 @@
 			<div class="clearfloat mtop10">
 				<input id="category" class="easyui-combobox" placeholder="类目" qc={fn:'categoryManagementPK',oper:'0'} name="category"/>
 				<input type="text" qc={fn:'orgCode',oper:'3'} placeholder="申领部门" class="shaixuan_txt float_left"  readonly="readonly" id="orgCode" name="orgCode"/>
-				 <input class="shaixuan_txt float_left bt_edit_treeselect" style="width:50px" type="button" value="选择" id="department"/>
 				<input type="text" qc={fn:'applyPerson',oper:'3'} placeholder="申领人" class="shaixuan_txt float_left"/>
-				<input id="iamCheckFlag" class="easyui-combobox" placeholder="单据状态" qc={fn:'iamCheckFlag',oper:'0'} name="iamCheckFlag"/>	
+				<!-- <input id="iamCheckFlag" class="easyui-combobox" placeholder="单据状态" qc={fn:'iamCheckFlag',oper:'0'} name="iamCheckFlag"/>	 -->
+				<!-- <input type="text" qc={fn:'itemsApplyFlag',oper:'5'}  placeholder="单据状态"  id="itemsApplyFlag" class="shaixuan_txt float_left"/>  -->  
+				<input type="text" qc={fn:'itemsApplyFlag',oper:'0'}  placeholder="单据状态"  id="itemsApplyFlag" class="easyui-combobox "  editable="false"   data-options="panelHeight:200,height:28,width:120,valueField:'classifyCode',textField:'classifyName'"/>   
  				<input type="button" id="id_btn_query" value="查询"	 class="bt_query mleft5"/>
 			</div>
+			
 		</div>
 
 		<!--结束-->

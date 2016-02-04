@@ -6,23 +6,23 @@ import framework.sys.foreignkeytranslation.Ref;
 public class ItemManage implements java.io.Serializable, Cloneable {
 
 	private String pk = "";
-	//@FK(ref = Ref.Organization)
-	private String iMCategoryPK = "";//物品所属的类目对应的PK，对应D001的PK字段
-	private String iMType="";
-	private String iMName = "";
-	//@FK(ref = Ref.)
-	private String iMAssetType = "";
+	@FK(ref = Ref.Category)
+	private String imCategoryPK = "";//物品所属的类目对应的PK，对应D001的PK字段
+	private String imType="";
+	private String imName = "";
+	@FK(ref = Ref.AssetClassify)
+	private String imAssetType = "";
 	
-	private String iMSpecification = "";
-	private String iMMetricUnit = "";
-	private String iMRemark = "";
+	private String imSpecification = "";
+	private String imMetricUnit = "";
+	private String imRemark = "";
 	private String insertTime = "";
 	private String lastestUpdate="";
 	private String updatePerson = "";
 	
 	// 外检翻译
-	private String iMCategoryPKDisplay = "";
-	private String iMAssetTypeDisplay = "";
+	private String imCategoryPKDisplay = "";
+	private String imAssetTypeDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -30,49 +30,48 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	public void setPk(String pk) {
 		this.pk = pk;
 	}
-	public String getiMCategoryPK() {
-		return iMCategoryPK;
+	public String getImCategoryPK() {
+		return imCategoryPK;
 	}
-	public void setiMCategoryPK(String iMCategoryPK) {
-		this.iMCategoryPK = iMCategoryPK;
+	public void setImCategoryPK(String imCategoryPK) {
+		this.imCategoryPK = imCategoryPK;
 	}
-	public String getiMType() {
-		return iMType;
+	public String getImType() {
+		return imType;
 	}
-	public void setiMType(String iMType) {
-		this.iMType = iMType;
+	public void setImType(String imType) {
+		this.imType = imType;
 	}
-	public String getiMName() {
-		return iMName;
+	public String getImName() {
+		return imName;
 	}
-	public void setiMName(String iMName) {
-		this.iMName = iMName;
+	public void setImName(String imName) {
+		this.imName = imName;
 	}
-	public String getiMAssetType() {
-		return iMAssetType;
+	public String getImAssetType() {
+		return imAssetType;
 	}
-	public void setiMAssetType(String iMAssetType) {
-		this.iMAssetType = iMAssetType;
+	public void setImAssetType(String imAssetType) {
+		this.imAssetType = imAssetType;
 	}
-	public String getiMSpecification() {
-		return iMSpecification;
+	public String getImSpecification() {
+		return imSpecification;
 	}
-	public void setiMSpecification(String iMSpecification) {
-		this.iMSpecification = iMSpecification;
+	public void setImSpecification(String imSpecification) {
+		this.imSpecification = imSpecification;
 	}
-	public String getiMMetricUnit() {
-		return iMMetricUnit;
+	public String getImMetricUnit() {
+		return imMetricUnit;
 	}
-	public void setiMMetricUnit(String iMMetricUnit) {
-		this.iMMetricUnit = iMMetricUnit;
+	public void setImMetricUnit(String imMetricUnit) {
+		this.imMetricUnit = imMetricUnit;
 	}
-	public String getiMRemark() {
-		return iMRemark;
+	public String getImRemark() {
+		return imRemark;
 	}
-	public void setiMRemark(String iMRemark) {
-		this.iMRemark = iMRemark;
+	public void setImRemark(String imRemark) {
+		this.imRemark = imRemark;
 	}
-	
 	public String getInsertTime() {
 		return insertTime;
 	}
@@ -91,18 +90,21 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	public void setUpdatePerson(String updatePerson) {
 		this.updatePerson = updatePerson;
 	}
-	public String getiMCategoryPKDisplay() {
-		return iMCategoryPKDisplay;
+	public String getImCategoryPKDisplay() {
+		return imCategoryPKDisplay;
 	}
-	public void setiMCategoryPKDisplay(String iMCategoryPKDisplay) {
-		this.iMCategoryPKDisplay = iMCategoryPKDisplay;
+	public void setImCategoryPKDisplay(String imCategoryPKDisplay) {
+		this.imCategoryPKDisplay = imCategoryPKDisplay;
 	}
-	public String getiMAssetTypeDisplay() {
-		return iMAssetTypeDisplay;
+	public String getImAssetTypeDisplay() {
+		return imAssetTypeDisplay;
 	}
-	public void setiMAssetTypeDisplay(String iMAssetTypeDisplay) {
-		this.iMAssetTypeDisplay = iMAssetTypeDisplay;
+	public void setImAssetTypeDisplay(String imAssetTypeDisplay) {
+		this.imAssetTypeDisplay = imAssetTypeDisplay;
 	}
+	
+	
+	
 	
 	
 }

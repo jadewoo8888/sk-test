@@ -149,6 +149,21 @@ function ajaxCategory(){
 	);
 }
 
+function getImType() {
+	var checkedQc = new Object();
+	checkedQc.fn = '';
+	checkedQc.oper = 14;
+	var contratStatusDisplay=$('#imType').combobox('getValue');
+	
+	if (contratStatusDisplay== '2'){
+		checkedQc.value1 = "(IMType = 'WPLB_001')";
+	}else if(contratStatusDisplay== '3'){
+		checkedQc.value1 = "(IMType = 'WPLB_002')";
+	}else{
+		checkedQc.value1 = "(1=1)";
+	}
+    return checkedQc;
+}
 /*function initTypeCombo() {
 	$('#type').combobox({
 		onBeforeLoad: function(param){

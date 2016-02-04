@@ -8,7 +8,6 @@ $(function () {
 	initDataGrid();
 	initComBindFunc(); 
 	initCategoryCombo();
-	//initTypeCombo();
 });
 
 /**
@@ -21,7 +20,6 @@ function initDataGrid() {
 	 	{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
 			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\")' >修改</a>";
 			html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
-			/*html += "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";*/
  			return html;
 		}}, 
 		{field:"pk",title:'主键',minwidth:200, hidden:true},
@@ -164,27 +162,3 @@ function getImType() {
 	}
     return checkedQc;
 }
-/*function initTypeCombo() {
-	$('#type').combobox({
-		onBeforeLoad: function(param){
-			ajaxType();
-		},
-		valueField:'acCode',
-		textField:'acName',
-		width:180,
-		height:26,
-		panelHeight:100,
-		editable:false
-	});
-}
-
-function ajaxType(){
-	Ajax.service(
-		'AssetClassifyBO',
-		'findAll', 
-		[],
-		function(result){
-			$('#type').combobox("loadData",result);
-		}
-	);
-}*/

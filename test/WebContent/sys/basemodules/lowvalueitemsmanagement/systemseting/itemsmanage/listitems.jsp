@@ -23,7 +23,7 @@
 				<!-- <input  qc={fn:'imType',oper:'5'} class="easyui-combobox"  data-options="value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001,WPLB_002',classifyName:'全部'},{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" /> -->
 				<!-- <input type="text" qc={fn:'letRentFlag',oper:'0'}  placeholder="申请单状态"  id="letRentFlag" class="easyui-combobox "  editable="false"   data-options="panelHeight:200,height:28,width:120,valueField:'classifyCode',textField:'classifyName'"/>  -->
 				<input type="text" qc={js:'getImType'}  placeholder="类别"  id="imType" class="easyui-combobox "  editable="false"   
-			data-options="panelHeight:100,height:28,width:120,valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:1,classifyName:'全部'},{classifyCode:2,classifyName:'低值品'},{classifyCode:3,classifyName:'固定资产'}]"/>
+					data-options="panelHeight:100,height:28,width:120,valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:1,classifyName:'全部'},{classifyCode:2,classifyName:'低值品'},{classifyCode:3,classifyName:'固定资产'}]"/>
 				<input type="text" qc={fn:'imName',oper:'3'} placeholder="名称" class="shaixuan_txt float_left">
  				<input type="button" id="id_btn_query" value="查询"	 class="bt_query mleft5">
 			</div>

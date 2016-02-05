@@ -24,7 +24,7 @@ function initDataGrid() {
 		}}, 
 		{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"imCategoryPKDisplay",title:'类目',minwidth:150},
-        {field:"imAssetTypeDisplay",title:'类别',minwidth:160},
+        {field:"imTypeDisplay",title:'类别',minwidth:160},
         {field:"imName",title:'物品名称',minwidth:200},
         {field:"imSpecification",title:'规格型号',minwidth:160},
 		{field:"imMetricUnit",title:'计量单位',minwidth:200},

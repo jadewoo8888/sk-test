@@ -33,6 +33,8 @@
    /** 操作用户的信息  **/  
   var strUserOrgCode = "<%=OperateUserOrg.getOrgCode()%>";//用户所属单位
   var strUserOrgName = "<%=OperateUserOrg.getOrgName()%>";//用户所属单位名称
+  var strUserDeptCode = "<%=OperateUser.getUserDepartmentCode()%>";//用户所属部门
+  var strUserDeptName = "<%=OperateUser.getUserDepartmentCodeDisplay()%>";//用户所属部门名称
   var strUserAccount = "<%=OperateUser.getUserAccount()%>";//用户账号
   var strUserName = "<%=OperateUser.getUserName()%>";//用户名称
   var strOrgIsCollect = "<%=OperateUserOrg.getOrgIsCollect()%>";//是否汇总,YesNo_001:是，YesNo_002:否

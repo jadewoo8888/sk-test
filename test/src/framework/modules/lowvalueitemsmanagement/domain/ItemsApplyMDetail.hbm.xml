@@ -25,41 +25,41 @@
          <property name="itemsApplyDeptCode" type="java.lang.String">
             <column name="ItemsApplyDeptCode" length="50" />
         </property>
-         <property name="iMName" type="java.lang.String">
-            <column name="IMName" length="100" />
+         <property name="imName" type="java.lang.String">
+            <column name="ImName" length="100" />
         </property>
-        <property name="iMAssetType" type="java.lang.String">
+        <property name="imAssetType" type="java.lang.String">
             <column name="IMAssetType" length="50" />
         </property>
-         <property name="iMType" type="java.lang.String">
+         <property name="imType" type="java.lang.String">
             <column name="IMType " length="50" />
         </property>
-         <property name="iMSpecification" type="java.lang.String">
+         <property name="imSpecification" type="java.lang.String">
             <column name="IMSpecification" length="50" />
         </property>
-         <property name="iMMetricUnit" type="java.lang.String">
+         <property name="imMetricUnit" type="java.lang.String">
             <column name="IMMetricUnit" length="50" />
         </property>
-         <property name="iAMApplyCount" type="java.lang.Integer">
+         <property name="iamApplyCount" type="java.lang.Integer">
             <column name="IAMApplyCount" />
         </property>
-         <property name="iAMCheckFlag" type="java.lang.String">
+         <property name="iamCheckFlag" type="java.lang.String">
             <column name="IAMCheckFlag" length="50" />
         </property>
-         <property name="iAMListerCheckCount" type="java.lang.Integer">
+         <property name="iamListerCheckCount" type="java.lang.Integer">
             <column name="IAMListerCheckCount"/>
         </property>
-        <property name="iAMLeaderCheckCount" type="java.lang.Integer">
+        <property name="iamLeaderCheckCount" type="java.lang.Integer">
             <column name="IAMLeaderCheckCount" />
         </property>
          <property name="assetRegPK" type="java.lang.String">
             <column name="AssetRegPK " length="2000" />
         </property>
-         <property name="iAMItemManagePK" type="java.lang.String">
+         <property name="iamItemManagePK" type="java.lang.String">
             <column name="IAMItemManagePK" length="50" />
         </property>
-         <property name="inserttime" type="java.lang.String">
-            <column name="Inserttime" length="40" />
+         <property name="insertTime" type="java.lang.String">
+            <column name="InsertTime" length="40" />
         </property>
         <property name="lastestUpdate" type="java.lang.String">
             <column name="LastestUpdate" length="40" />

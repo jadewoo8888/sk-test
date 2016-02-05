@@ -41,7 +41,21 @@
 	<bean id="ItemsApplyManagementBO"
 		class="framework.modules.lowvalueitemsmanagement.bo.ItemsApplyManagementBO">
 		<property name="entityDAO">
-			<ref bean="ItemManageDAO" />
+			<ref bean="ItemsApplyManagementDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ItemsApplyMDetailDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="ItemsApplyMDetailBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.ItemsApplyMDetailBO">
+		<property name="entityDAO">
+			<ref bean="ItemsApplyMDetailDAO" />
 		</property>
 	</bean>
 </beans>

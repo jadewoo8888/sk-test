@@ -8,14 +8,14 @@ var datagrid = null;
  * 初始化方法
  **/ 
 $(function () { 
-	initApplyFlagCombo();
+	//initApplyFlagCombo();
 	initDataGrid();
 	initComBindFunc(); 
 	getCategoryComboboxData();
 	initDeptBox();
 });
 
-function initApplyFlagCombo(){
+/*function initApplyFlagCombo(){
 	//申请单状态 查询条件控件初始化
 	
 	 $("#itemsApplyFlag").combobox({
@@ -34,7 +34,7 @@ function initApplyFlagCombo(){
 		 	}
 		 }
 	 })
-}
+}*/
 
 
 
@@ -63,7 +63,7 @@ function initDataGrid() {
         {field:"itemsApplyRemark",title:'备注',minwidth:160}
 	]];
 	 var dataGridOptions ={};
-	 var customOptions = {tableID:'id_table_grid',classID:'CategoryManagementBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',columns:_columns,sortInfo:_sortInfo};
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
@@ -169,7 +169,7 @@ function viewone(pk){
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/systemseting/categorymanage/viewcategory.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/systemseting/applyregistermanagement/viewapplyregister.jsp?pk='+pk
 	});
 }
 
@@ -211,15 +211,34 @@ function deleteone(pk){
 	});
 }
 
+function getItemsApplyFlag() {
+	var checkedQc = new Object();
+	checkedQc.fn = '';
+	checkedQc.oper = 14;
+	var contratStatusDisplay=$('#itemsApplyFlag').combobox('getValue');
+	
+	if (contratStatusDisplay== '2'){
+		checkedQc.value1 = "(ItemsApplyFlag = 'WPSLZT_001')";
+	}else if(contratStatusDisplay== '3'){
+		checkedQc.value1 = "(ItemsApplyFlag = 'WPSLZT_002')";
+	}else if(contratStatusDisplay== '4'){
+		checkedQc.value1 = "(ItemsApplyFlag = 'WPSLZT_003')";
+	}else if(contratStatusDisplay== '5'){
+		checkedQc.value1 = "(ItemsApplyFlag Not In ('WPSLZT_004','WPSLZT_005') )";
+	}else{
+		checkedQc.value1 = "(1=1)";
+	}
+    return checkedQc;
+}
 //自定义查询条件
-function setCustomQueryCondition() {
+/*function setCustomQueryCondition() {
 	var customQCArr = new Array();
 	//审批人条件
 	orgQc = new Object();
 	orgQc.fn = '';
 	orgQc.oper = ARY_STR_NULLOPER[0];
-	orgQc.value1 = 'AllowApprPerson like \'%|'+ top.strUserAccount +'|%\' or linkers like \'%|'+ top.strUserAccount +'|%\'';
+	orgQc.value1 = 'AllowApprPerson like \'%|'+ top.strUserAccount +'|%\' or Linkers like \'%|'+ top.strUserAccount +'|%\'';
 	customQCArr.push(orgQc);
 	
     return customQCArr;
-}
+}*/

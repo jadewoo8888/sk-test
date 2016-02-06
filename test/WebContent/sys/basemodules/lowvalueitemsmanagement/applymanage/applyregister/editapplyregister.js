@@ -14,6 +14,7 @@ $(function () {
  * 初始化表格信息
  **/
 function initDataGrid() {
+	 var tempID1 = Math.random();
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
@@ -21,14 +22,26 @@ function initDataGrid() {
 		{field:"imName",title:'物品名称',minwidth:150},
         {field:"imTypeDisplay",title:'类别',minwidth:160},
         {field:"imSpecification",title:'规格型号',minwidth:160},
-		{field:"imMetricUnit",title:'单位',minwidth:200},
-		{field:"imRemark",title:'申领数量',minwidth:150},
-		{field:"imRemark",title:'经办人审核数量',minwidth:150},
-		{field:"imRemark",title:'行装科领导审核数量',minwidth:150}
+		{field:"imMetricUnit",title:'单位',minwidth:200,},
+		{field:"a",title:'申领数量',minwidth:150,formatter:function(value,row,index){return '<input id="'+tempID1+'" name="name_input_dayday" type="text" style="width:30px" value="1"  class="easyui-numberbox" data-options="maxWidth:30,min:1,max:31,precision:0"  >'}},
+		{field:"b",title:'经办人审核数量',minwidth:150},
+		{field:"c",title:'行装科领导审核数量',minwidth:150}
 	]];
-	 var dataGridOptions ={};
-	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo};	 
+	 var dataGridOptions ={rownumbers:false,checkbox:false,pagination:false,height:'auto',onLoadSuccess:null};
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
+}
+
+//自定义查询条件
+function setCustomQueryCondition() {
+	var customQCArr = new Array();
+	//单位条件
+	var categoryQc = new Object();
+	categoryQc.fn = 'imCategoryPK';
+	categoryQc.oper = ARY_STR_EQUAL[0];
+	categoryQc.value1 = "31fd2d39-49ab-42ec-bf2f-f1ff6d111e56";//31fd2d39-49ab-42ec-bf2f-f1ff6d111e56
+	customQCArr.push(categoryQc);
+    return customQCArr;
 }
 
 /**

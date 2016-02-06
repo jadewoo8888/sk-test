@@ -131,9 +131,9 @@ function clearRuleGridRow() {
  * 添加一行租金规则按钮点击处理方法
  **/
 function addRentRlueRow() {
- 	if(!checkBeforeAddRentRlueRow()) {
+ 	/*if(!checkBeforeAddRentRlueRow()) {
  		return;
- 	}
+ 	}*/
 	var rows = datagrid.dataGridObj.datagrid('getRows');
  	var lastIndex = rows.length;
  	var newHlcRentRuleStartDate = "";	

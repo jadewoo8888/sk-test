@@ -5,6 +5,8 @@
 <head>
 <link href="addapplyregister.css" rel="stylesheet" type="text/css" />
 <script src="addapplyregister.js" type="text/javascript"></script>
+<link href="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.css" rel="stylesheet" type="text/css" />
+<script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
 <script>
 //业务类型
 var business="${param.business}";
@@ -102,6 +104,8 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 	    </div> 
 	</div>
 	<div style="background-color:white;height:100px;"></div>
+	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
+	
 	<div class="Editinput">
 		<input type="button" id="id_btn_save" class="bt_ensure" value="保存"></input>
 		<input type="button" id="id_btn_report" class="bt_ensure" value="上报"></input>

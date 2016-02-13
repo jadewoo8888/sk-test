@@ -3,13 +3,14 @@
 <!DOCTYPE HTML>
 <html> 
 <head>
-<link href="editapplyregister.css" rel="stylesheet" type="text/css" />
-<script src="editapplyregister.js" type="text/javascript"></script>
+<link href="addapplyregister.css" rel="stylesheet" type="text/css" />
+<script src="addapplyregister.js" type="text/javascript"></script>
 <script>
 //业务类型
 var business="${param.business}";
 //
 var categoryPk="${param.categoryPk}";
+var pk="${param.pk}";
 //
 var categoryName = "";
 //var itemsApplyFlag = "WPSLZT_001";
@@ -57,18 +58,48 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 								<td   class="Edit-Title2">申领日期</td>
 								<td   class="Edit-Input2"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
 							</tr>
-					 </table> 
+							
+					<tr>
+						<td colspan="4">
+						<div class="biao" style="background-color: white;">
+							<table id="id_table_grid">
+							</table>
+						</div>
+						</td>
+					</tr>
 					
-					<div class="biao" style="background-color: white;">
-						<table id="id_table_grid">
-						</table>
-					</div>
+					<tr>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
+					</tr>
+					</table> 
 					
 					 <div style="height:50px;">
 					 </div>                           		
 			</div>
 		</div> 
 	     
+	      <div title="附件" id="attached">
+			<div class="pd10">
+			   <div class="editItem">
+			   		<div class="editlogo"></div>
+	           		<div class="editTitle">资产附件</div>						           			
+					<hr  class="editline"/>
+	           	</div>
+	            <div   class="editTips"></div> 
+	
+				<div style="margin-top:8px;margin-left:30px;">
+					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
+				</div>	
+			</div>	
+	    </div>  
+	    
+	    <div title="审批意见" id="id_div_approvaloption">
+
+	    </div>  
+	    
+	    <div title="审批路线图" id="approval_img">
+
+	    </div> 
 	</div>
 	<div style="background-color:white;height:100px;"></div>
 	<div class="Editinput">

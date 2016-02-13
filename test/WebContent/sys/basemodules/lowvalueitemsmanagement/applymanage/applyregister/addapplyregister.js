@@ -5,11 +5,29 @@ var datagrid = null;
  * 初始化方法
  **/ 
 $(function () { 
+	setAppenFrame();
 	initForm();
 	initDataGrid();
 	initComBindFunc(); 
 	initCategoryCombo();
 });
+
+/**
+ * 设置附件
+ **/
+function setAppenFrame() {    
+	var appendFrameObj = document.getElementById('id_iframe_append');
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_003&controltype='+business+'&businesscode='+pk;
+}
+
+/** 
+ * 获取附件数据
+ **/
+function getAppendData() {
+	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
+	var appendData = appendFrameObj.getAppendData();
+	return appendData;
+}
 
 function initForm() {
 	$("#id_itemsApplyDeptCode").val(top.strUserDeptName);
@@ -45,14 +63,13 @@ function initDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"pk",title:'主键',minwidth:200, hidden:true},
-		{field:"imName",title:'物品名称',minwidth:150},
-        {field:"imTypeDisplay",title:'类别',minwidth:160},
-        {field:"imSpecification",title:'规格型号',minwidth:160},
-		{field:"imMetricUnit",title:'单位',minwidth:200},
-		{field:"applyCount",title:'申领数量',minwidth:150,editor:{ type:'numberbox',align:'right',fmType:'int'}},
-		{field:"checkCount",title:'经办人审核数量',minwidth:150,editor:{ type:'numberbox',align:'right',fmType:'int'}},
-		{field:"leaderCheckCount",title:'行装科领导审核数量',minwidth:150,editor:{ type:'numberbox',align:'right',fmType:'int'}}
+		{field:"imName",title:'物品名称',minwidth:80},
+        {field:"imTypeDisplay",title:'类别',minwidth:80},
+        {field:"imSpecification",title:'规格型号',minwidth:80},
+		{field:"imMetricUnit",title:'单位',minwidth:80},
+		{field:"applyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{width:180},align:'right',fmType:'int'}},
+		{field:"checkCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:180},align:'right',fmType:'int'}},
+		{field:"leaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:180},align:'right',fmType:'int'}}
 	]];
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
@@ -145,6 +162,7 @@ function packageItemsApplyManData(itemsApplyFlag) {
  	itemsApplyMan.applyPerson = top.strUserAccount;
  	itemsApplyMan.itemsApplyFlag = itemsApplyFlag;
  	itemsApplyMan.approvalFlag = approvalFlag;
+ 	itemsApplyMan.itemsApplyRemark = $("#id_itemsApplyRemark").val();
  	return itemsApplyMan;
 }
 

@@ -12,8 +12,8 @@ $(function () {
 	//getCategoryData();
 	//initCategory();
 	//initApplyFlagCombo();
-	/*initComBindFunc(); 
-	getCategoryComboboxData();
+	initComBindFunc(); 
+	/*getCategoryComboboxData();
 	initDeptBox();*/
 });
 
@@ -33,59 +33,52 @@ function initDataGrid() {
  			return html;
 		}}, 
 		//{field:"pk",title:'主键',minwidth:200, hidden:true},
-		{field:"itemsApplyCode",title:'申领单号',minwidth:150}
-		/*{field:"categoryNameDisplay",title:'类目',minwidth:160},
+		{field:"itemsApplyCode",title:'申领单号',minwidth:150},
+		{field:"categoryManagementPKDisplay",title:'类目',minwidth:160},
         {field:"orgCodeDisplay",title:'申领部门',minwidth:160},
         {field:"applyPersonDisplay",title:'申领人',minwidth:150},
         {field:"iamCheckFlagDisplay",title:'单据状态',minwidth:160},
-        {field:"itemsIssueListerDisplay",title:'发放人',minwidth:160},*/
-        //{field:"itemsIssueDate",title:'发放日期',minwidth:150},
-        //{field:"itemsApplyRemark",title:'备注',minwidth:160}
+        {field:"itemsIssueListerDisplay",title:'发放人',minwidth:160},
+        {field:"itemsIssueDate",title:'发放日期',minwidth:150},
+        {field:"itemsApplyRemark",title:'备注',minwidth:160}
 	]];
 	 var dataGridOptions ={};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',columns:_columns,sortInfo:_sortInfo};
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
-function getCategoryData() {
+function showCategoryListLayer() {
 	Ajax.service(
 		'CategoryManagementBO',
 		'findAll', 
 		[],
-		getCategoryComboboxDataSuccFunc
+		showCategoryListSuccFunc
 	);
 }
 
-function getCategoryComboboxDataSuccFunc(result) {
-	
-	function toEditPage(pk,categoryName) {
-		alert();
-		location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
-	};
+function showCategoryListSuccFunc(result) {
 	
 	var html = "";
 	var len = result.length;
 	for (var i = 0; i < len;i++) {
-		var pk = "aa";
-		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toEditPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
-		//html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.id+"\")' >修改</a>";
+		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddApplyPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
 	}
-	$("#id_btn_addnew").click(function () {//alert();
-		//页面层
-		layer.open({
-			title:'选择类目',
-		    type: 1,
-		    skin: 'layui-layer-rim', //加上边框
-		    area: ['180px', '220px'], //宽高
-		    content: html
-		});
+	//页面层
+	layer.open({
+		title:'选择类目',
+	    type: 1,
+	    skin: 'layui-layer-rim', //加上边框
+	    area: ['180px', '220px'], //宽高
+	    content: html
 	});
-	
-}
+};
 
-function toEditPage(pk,categoryName) {
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
-}
+function toAddApplyPage(pk,categoryName) {
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/addapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
+};
+/*function toEditPage(pk,categoryName) {
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/addapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
+}*/
 
 /*function initApplyFlagCombo(){
 	//申请单状态 查询条件控件初始化
@@ -114,9 +107,11 @@ function toEditPage(pk,categoryName) {
  * 为页面上的组件添加事件处理方法
  **/
 function initComBindFunc() {
-	/*$("#id_btn_addnew").click(function () {
-		addone();
-	});*/
+	$("#id_btn_addnew").click(function () {
+		//addone();
+		showCategoryListLayer();
+		
+	});
 	//查询按钮处理事件
 	$("#id_btn_query").click(function () {
 		datagrid.query();
@@ -187,12 +182,12 @@ function addone() {
 	/*if(!judgeOpeCollectOrg()) {
 		return;
 	}*/
- 	window.location.href = "editapplyregister.jsp?busitype=add";
+ 	window.location.href = "addapplyregister.jsp?busitype=add";
 }
 
 //修改
 function modifyone(pk){
-		location.href='editapplyregister.jsp?pk='+pk+'&busitype=modify';
+		location.href='addapplyregister.jsp?pk='+pk+'&busitype=modify';
 
 }
 

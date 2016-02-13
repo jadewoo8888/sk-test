@@ -32,7 +32,7 @@
             <column name="ItemsApplyDate" length="40" />
         </property>
          <property name="iamCheckFlag" type="java.lang.String">
-            <column name="IAMCheckFlag " length="50" />
+            <column name="IAMCheckFlag" length="50" />
         </property>
          <property name="itemsApplyFlag" type="java.lang.String">
             <column name="ItemsApplyFlag" length="50" />
@@ -55,10 +55,10 @@
             <column name="Linkers" length="2000" />
         </property>
          <property name="allowApprPerson" type="java.lang.String">
-            <column name="AllowApprPerson " length="1000" />
+            <column name="AllowApprPerson" length="1000" />
         </property>
          <property name="insertTime" type="java.lang.String">
-            <column name="InsertTime" length="40" />
+            <column name="Inserttime" length="40" />
         </property>
          <property name="lastestUpdate" type="java.lang.String">
             <column name="LastestUpdate" length="40" />

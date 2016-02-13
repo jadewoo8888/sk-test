@@ -8,7 +8,7 @@ public class ItemsApplyManagement implements java.io.Serializable, Cloneable {
 	private String pk = "";
 	private String itemsApplyCode = "";
 	private String categoryName = "";
-	@FK(ref = Ref.Classify)
+	@FK(ref = Ref.Category)
 	private String categoryManagementPK = "";
 	@FK(ref = Ref.Organization)
 	private String orgCode = "";

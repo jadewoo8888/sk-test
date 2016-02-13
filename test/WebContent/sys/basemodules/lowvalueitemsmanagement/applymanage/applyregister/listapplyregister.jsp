@@ -24,11 +24,11 @@
 				<input type="button" id="id_btn_export" class="bt_list_function" value="导出" />
 			</div>
 			<div class="clearfloat mtop10">
-				<input id="category" class="easyui-combobox" placeholder="类目" qc={fn:'categoryManagementPK',oper:'0'} name="category"/>
-				<input type="text" qc={fn:'orgCode',oper:'3'} placeholder="申领部门" class="shaixuan_txt float_left"  readonly="readonly" id="orgCode" name="orgCode"/>
+				<!--<input id="category" class="easyui-combobox" placeholder="类目" qc={fn:'categoryManagementPK',oper:'0'} name="category"/>
+				 <input type="text" qc={fn:'orgCode',oper:'3'} placeholder="申领部门" class="shaixuan_txt float_left"  readonly="readonly" id="orgCode" name="orgCode"/>-->
 				<input type="text" qc={fn:'applyPerson',oper:'3'} placeholder="申领人" class="shaixuan_txt float_left"/>
- 				<input type="text" qc={js:'getItemsApplyFlag'}  placeholder="状态"  id="itemsApplyFlag" class="easyui-combobox "  editable="false"   
-					data-options="panelHeight:100,height:28,width:120,valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:1,classifyName:'全部'},{classifyCode:2,classifyName:'未提交'},{classifyCode:3,classifyName:'待审批'},{classifyCode:4,classifyName:'审批中'},{classifyCode:5,classifyName:'已审批'}]"/>
+ 				<!-- <input type="text" qc={js:'getItemsApplyFlag'}  placeholder="状态"  id="itemsApplyFlag" class="easyui-combobox "  editable="false"   
+					data-options="panelHeight:100,height:28,width:120,valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:1,classifyName:'全部'},{classifyCode:2,classifyName:'未提交'},{classifyCode:3,classifyName:'待审批'},{classifyCode:4,classifyName:'审批中'},{classifyCode:5,classifyName:'已审批'}]"/> -->
  				<input type="button" id="id_btn_query" value="查询"	 class="bt_query mleft5"/>
 			</div>
 			

@@ -8,11 +8,14 @@
 <script>
 //业务类型
 var business="${param.business}";
-//节点code
-var pk="${param.pk}";
-//物业pk
-var unitpk="${param.unitpk}";
-//招租方式
+//
+var categoryPk="${param.categoryPk}";
+//
+var categoryName = "";
+//var itemsApplyFlag = "WPSLZT_001";
+var approvalFlag = "佛山市禅城区人民法院部门领导驳回";
+//var categoryName="${param.categoryName}";
+/* //招租方式
 var data_letRentWay=${json:classify("STD_ZZFS")};
 //拟出租用途
 
@@ -20,7 +23,7 @@ var data_planLetPurpose=${json:classify("STD_DYYT")};
 //是、否 
 var data_YesNo=${json:classify("STD_YesNo")};
 //物业分类
-var data_unitClassify=${json:classify("STD_DYFL")};
+var data_unitClassify=${json:classify("STD_DYFL")}; */
 
 </script>
 </head>
@@ -36,22 +39,23 @@ var data_unitClassify=${json:classify("STD_DYFL")};
 		           	<div class="editItem">
 						<hr  class="editline"/>
 		           	</div>
-                    <div   class="editTips">(以下用<span class="notnullTip" style="margin-right:3px;">*</span>标记为必填信息)</div> 	
-                       <table cellSpacing=1 cellPadding=0>
+                    <table cellSpacing=1 cellPadding=0>
                        		<tr>
-								<td   class="Edit-Title1">类目<span class="notnullTip">*</span></td>
-								<td   class="Edit-Input1"><input type="text" id="id_imCategoryPK" fieldname="imCategoryPK" class="easyui-combobox"  editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,valueField:'pk',textField:'categoryName'"/></td>
-								<td   class="Edit-Title2">类别<span class="notnullTip">*</span></td>
+								<td   class="Edit-Title1">申领部门</td>
+								<td   class="Edit-Input1">
+								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
+								</td>
+								<td   class="Edit-Title2">申领类目</td>
 								<td   class="Edit-Input2">
-								<input id="id_imType" fieldname="imType" class="easyui-combobox" editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001,WPLB_002',classifyName:'全部'},{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" />
+								<input id="id_categoryManagementPK" fieldname="categoryManagementPK" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
-								<td   class="Edit-Title1">名称<span class="notnullTip">*</span></td>
-								<td   class="Edit-Input1"><input id="id_imName" fieldname="imName" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox"/></td>
+								<td   class="Edit-Title1">申领人</td>
+								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
 								
-								<td   class="Edit-Title2">资产分类代码<span class="notnullTip">*</span></td>
-								<td   class="Edit-Input2"><input  id="id_imAssetType" fieldname="imAssetType"/></td>
+								<td   class="Edit-Title2">申领日期</td>
+								<td   class="Edit-Input2"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
 							</tr>
 					 </table> 
 					
@@ -67,7 +71,11 @@ var data_unitClassify=${json:classify("STD_DYFL")};
 	     
 	</div>
 	<div style="background-color:white;height:100px;"></div>
-	<div class="Editinput"><input type="button" id="save" class="bt_ensure" value="保存"></input><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
+	<div class="Editinput">
+		<input type="button" id="id_btn_save" class="bt_ensure" value="保存"></input>
+		<input type="button" id="id_btn_report" class="bt_ensure" value="上报"></input>
+		<input id="return" type="button" class="bt_cancel" value="返回"></input>
+	</div>
 
 	</body>
 </html>

@@ -43,6 +43,10 @@
 		<property name="entityDAO">
 			<ref bean="ItemsApplyManagementDAO" />
 		</property>
+		
+		<property name="itemsApplyMDetailDAO">
+			<ref bean="ItemsApplyMDetailDAO" />
+		</property>
 	</bean>
 	
 	<bean id="ItemsApplyMDetailDAO"

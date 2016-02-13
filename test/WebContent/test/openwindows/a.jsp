@@ -22,7 +22,7 @@
 	
 	function test() {
 		//alert();
-		location.href=contextPath+'/test/openwindows/c.jsp?aa=test';
+		location.href=contextPath+'/test/openwindows/c.jsp?aa=中国';
 	}
 	
 	function changePassword() {
@@ -45,7 +45,8 @@
 				<input type="button" id="id_btn_addnew" class="bt_list_function" value="+ 新增" />
 			</div>
 		</div>
-
-
+		
+<div style="padding: 5px;text-align: center;">aa</div>
+<div style="padding: 5px;text-align: center;">bb</div>
 	</body>
 </html>

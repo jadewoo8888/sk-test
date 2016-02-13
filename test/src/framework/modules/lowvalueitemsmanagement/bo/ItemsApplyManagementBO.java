@@ -1,8 +1,11 @@
 package framework.modules.lowvalueitemsmanagement.bo;
 
+import java.util.List;
 import java.util.UUID;
 
+import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyManagementDAO;
+import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyMDetail;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyManagement;
 import framework.sys.basemodule.bo.BOBase;
 import framework.sys.context.applicationworker.MethodID;
@@ -12,7 +15,9 @@ import framework.sys.tools.DBOperation;
 @LogOperate(menu = "低值易耗品物品申领管理")
 public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, ItemsApplyManagement> {
 
-	@MethodID("addItemApply")
+	private ItemsApplyMDetailDAO itemsApplyMDetailDAO;
+	
+	/*@MethodID("addItemApply")
 	@LogOperate(operate = "新增物品申领")
 	public void addItemApply_log_trans(ItemsApplyManagement ItemsApplyManagement) {
 		String pk = UUID.randomUUID().toString();
@@ -22,6 +27,43 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		ItemsApplyManagement.setLastestUpdate(updateInfo[0]);
 		ItemsApplyManagement.setUpdatePerson(updateInfo[2]);
 		entityDAO.save(ItemsApplyManagement);
+	}*/
+	
+	@MethodID("addItemApply")
+	@LogOperate(operate = "新增物品申领")
+	public void addItemApply_log_trans(ItemsApplyManagement itemsApplyManagement, List<ItemsApplyMDetail> itemsApplyMdetailList) {
+		String applyManagementPk = UUID.randomUUID().toString();
+		itemsApplyManagement.setPk(applyManagementPk);
+		String applyCode = UUID.randomUUID().toString();
+		itemsApplyManagement.setItemsApplyCode(applyCode);
+		
+		String[] updateInfo = DBOperation.getUpdateInfo();
+		
+		itemsApplyManagement.setApplyPerson(updateInfo[2]);
+		itemsApplyManagement.setItemsApplyDate(updateInfo[0]);
+		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_002");
+		//itemsApplyManagement.setItemsApplyFlag("");
+		//itemsApplyManagement.setApprovalFlag("");
+		itemsApplyManagement.setItemsIssueLister("");
+		itemsApplyManagement.setItemsIssueDate("");
+		if ("WPSLZT_002".equals(itemsApplyManagement.getItemsApplyFlag())) {
+			itemsApplyManagement.setAllowApprPerson("");
+		}
+		
+		itemsApplyManagement.setInsertTime(updateInfo[0]);
+		itemsApplyManagement.setLastestUpdate(updateInfo[0]);
+		itemsApplyManagement.setUpdatePerson(updateInfo[2]);
+		
+		entityDAO.save(itemsApplyManagement);
+		
+		for (ItemsApplyMDetail itemsApplyMdetail : itemsApplyMdetailList) {
+			itemsApplyMdetail.setPk(UUID.randomUUID().toString());
+			itemsApplyMdetail.setItemsApplyMPK(applyManagementPk);
+			itemsApplyMdetail.setInsertTime(updateInfo[0]);
+			itemsApplyMdetail.setLastestUpdate(updateInfo[0]);
+			itemsApplyMdetail.setUpdatePerson(updateInfo[2]);
+			itemsApplyMDetailDAO.save(itemsApplyMdetail);
+		}
 	}
 	
 	@MethodID("modifyItemApply")
@@ -42,4 +84,13 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 
 	}
 
+	public ItemsApplyMDetailDAO getItemsApplyMDetailDAO() {
+		return itemsApplyMDetailDAO;
+	}
+
+	public void setItemsApplyMDetailDAO(ItemsApplyMDetailDAO itemsApplyMDetailDAO) {
+		this.itemsApplyMDetailDAO = itemsApplyMDetailDAO;
+	}
+
+	
 }

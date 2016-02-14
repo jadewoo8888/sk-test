@@ -6,29 +6,11 @@ var approvalBusiType = "SPYWLX_001";
  * 初始化方法
  **/ 
 $(function () { 
-	setAppenFrame();
 	initDefaultValue();
 	initDataGrid();
 	initComBindFunc(); 
-	//initCategoryCombo();
+	setAppenFrame();
 });
-
-/**
- * 设置附件
- **/
-function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_003&controltype='+business+'&businesscode='+pk;
-}
-
-/** 
- * 获取附件数据
- **/
-function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
-	return appendData;
-}
 
 function initDefaultValue() {
 	if (pk) {
@@ -44,85 +26,6 @@ function initDefaultValue() {
 		//getCategoryByPk(categoryPk);
 		$("#id_categoryManagementPK").val(categoryName);
 	}
-	
-}
-
-//审批数据初始化
-function setApprovalOption() {
-	var apprvalOption = {
-		funcType:"DrawApprovalBar", 
-		approvalBarDivID:"id_div_approvaloption", 
-		approvalButtonBarDivID:"id_span_buttonArea", 
-		isReadonly:false, 
-		busiDeptCode:"", 
-		busiType:approvalBusiType, 
-		busiPK:mainObj.pk, 
-		busiOrgCode:mainObj.orgCode, 
-		menuId:"MENU_01_06_02_02", 
-		approvalFunc:approvalsave,
-		validateFunc:function(){
-			$("#tabs").tabs("select",2);
-			return true;
-		},
-		busiDefaultValue:{
-			linker:top.strUserName,
-			operator:top.strUserName,
-			auditer:top.strUserName,
-			checker:top.strUserName
-		}
-	};
-	var am = new ApprovalModule(apprvalOption);
-	$("#tabs").tabs({
-		onSelect:function(title,index){
-			//切换标签时改变校验信息的显示/隐藏
-			if(index==2){
-				$("body").find(".validatebox-tip-content").css("display","block");
-				$("body").find(".validatebox-tip-content").next().css("display","block");
-			}else{
-				$("body").find(".validatebox-tip-content").css("display","none");
-				$("body").find(".validatebox-tip-content").next().css("display","none");
-			}
-		}
-	});
-}
-
-//审批操作
-function approvalsave(type,data){
-	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
-	Ajax.service(
- 			'LetRentBO',
- 			'approvalLetRent', 
- 			[mainObj,data,getAppendData(),type],
- 			function(data){		
-				var tips = "保存信息成功！";
-				if(data != null && type != "1"){
-					var nextOrgName = data.nextOrgCodeDisplay;//新生成的审批信息的审批单位名称
-					var nextSysOrgCode = data.nextOrgCode;//新生成的审批信息的审批单位
-					var Name = data.itemName;//审批栏名称
-					var applyStatus = data.applyStatus;//申请单状态
-					var approvalStatus = data.approvalStatus;//审批状态
-					
-					if(applyStatus == "审批中"){//审批中，提示信息
-						if(top.strFilterOrgCode == nextSysOrgCode){//审批时，如果下一个审批单位跟当前审批单位不是同一个单位时，提示：上报后将提交到XX审核；
-							tips = "上报后将提交到'"+nextOrgName+"'审核";
-						}else{//审批时，如果下一个审批单位跟当前审批单位是同一个单位时，提示：上报后将提交到“审批栏名称”；
-							tips = "上报后将提交到'"+ Name+"'";
-						}
-					}else if(applyStatus == "已审批通过"){//审批结束 1、退回到申请人 2、审批结束
-						strTips="申请单审批结束";
-					}else{
-						strTips="审批成功";
-					}
-				}
- 				top.layer.alert(tips,{closeBtn :2,icon:6});
-	    		$('body').removeLoading();     // 关闭遮挡层
-	    		history.go(-2);
-
- 			},function(){
-				$("body").removeLoading();
-				top.layer.alert('审批操作出问题了，请联系管理员。',{closeBtn :2,icon:5});
- 			}
- 	  );
 }
 
 function getItemsApplyByPk(pk) {
@@ -154,33 +57,7 @@ function dataFill(obj) {
 		itemsApplyDeptCode = obj.itemsApplyDeptCode;
 	 	applyPerson = obj.applyPerson;
 }
-/** 
- * 根据编码获取信息
- **/
-/*function getCategoryByPk(pk) {
-	Ajax.service(
-	  		'CategoryManagementBO',
-	  		'findById', 
-	  		[pk],
-	  		function(obj){
-				//数据填充 
-	      	 	//dataFill(obj);
-	  			categoryName = obj.categoryName;
-	  			$("#id_categoryManagementPK").val(categoryName);
-	  		},
-	  		function(data){
-	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
-	  		}
-	  	);
-}*/
 
-function initEditCell(){
-	var row = datagrid.dataGridObj.datagrid('getRows');
-	var rowLen = row.length;
-	for (var i = 0; i < rowLen; i++) {
-		datagrid.dataGridObj.datagrid('beginEdit', i);
-	}
-}
 /**
  * 初始化表格信息
  **/
@@ -211,7 +88,13 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
-
+function initEditCell(){
+	var row = datagrid.dataGridObj.datagrid('getRows');
+	var rowLen = row.length;
+	for (var i = 0; i < rowLen; i++) {
+		datagrid.dataGridObj.datagrid('beginEdit', i);
+	}
+}
 
 //自定义查询条件
 function setCustomQueryCondition1() {
@@ -242,10 +125,10 @@ function setCustomQueryCondition2() {
  **/
 function initComBindFunc() {
 	$("#id_btn_save").click(function () {
-		save();
+		save(false);
 	});
 	$("#id_btn_report").click(function () {
-		report();
+		save(true);
 	});
 	//查询按钮处理事件
 	$("#id_btn_query").click(function () {
@@ -260,23 +143,23 @@ function initComBindFunc() {
 	
 }
 
-function save() {
+function save(ifReport) {
 	var itemsApplyFlag = "WPSLZT_001";
 	var itemsApplyManagement = packageItemsApplyManData(itemsApplyFlag);
 	var itemsApplyMdetailList = packageItemsApplyMDetailData();
 	debugger;
 	if (pk) {
-		summitEdit(itemsApplyMdetailList);
+		summitEdit(itemsApplyMdetailList,ifReport);
 	} else {
-		summitAdd(itemsApplyManagement,itemsApplyMdetailList);
+		summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport);
 	}
 }
 
-function summitAdd(itemsApplyManagement,itemsApplyMdetailList) {
+function summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsApplyManagementBO',
 			'addItemApply', 
-			 [itemsApplyManagement,itemsApplyMdetailList],
+			 [itemsApplyManagement,itemsApplyMdetailList,ifReport],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
@@ -290,12 +173,12 @@ function summitAdd(itemsApplyManagement,itemsApplyMdetailList) {
 		);
 };
 
-function summitEdit(itemsApplyMdetailList) {
+function summitEdit(itemsApplyMdetailList,ifReport) {
 	var itemsApplyRemark = $("#id_itemsApplyRemark").val();
 	Ajax.service(
 			'ItemsApplyManagementBO',
 			'modifyItemApply', 
-			 [pk,itemsApplyRemark,itemsApplyMdetailList],
+			 [pk,itemsApplyRemark,itemsApplyMdetailList,ifReport],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
@@ -463,3 +346,98 @@ function ajaxCategory(){
 	}
     return checkedQc;
 }*/
+
+/**
+ * 设置附件
+ **/
+function setAppenFrame() {    
+	var appendFrameObj = document.getElementById('id_iframe_append');
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_003&controltype='+business+'&businesscode='+pk;
+}
+
+/** 
+ * 获取附件数据
+ **/
+function getAppendData() {
+	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
+	var appendData = appendFrameObj.getAppendData();
+	return appendData;
+}
+
+//审批数据初始化
+function setApprovalOption() {
+	var apprvalOption = {
+		funcType:"DrawApprovalBar", 
+		approvalBarDivID:"id_div_approvaloption", 
+		approvalButtonBarDivID:"id_span_buttonArea", 
+		isReadonly:false, 
+		busiDeptCode:mainObj.itemsApplyDeptCode, 
+		busiType:approvalBusiType, 
+		busiPK:mainObj.pk, 
+		busiOrgCode:mainObj.orgCode, 
+		menuId:"MENU_10_01_01", 
+		approvalFunc:approvalsave,
+		validateFunc:function(){
+			$("#tabs").tabs("select",2);
+			return true;
+		},
+		busiDefaultValue:{
+			linker:top.strUserName,
+			operator:top.strUserName,
+			auditer:top.strUserName,
+			checker:top.strUserName
+		}
+	};
+	var am = new ApprovalModule(apprvalOption);
+	$("#tabs").tabs({
+		onSelect:function(title,index){
+			//切换标签时改变校验信息的显示/隐藏
+			if(index==2){
+				$("body").find(".validatebox-tip-content").css("display","block");
+				$("body").find(".validatebox-tip-content").next().css("display","block");
+			}else{
+				$("body").find(".validatebox-tip-content").css("display","none");
+				$("body").find(".validatebox-tip-content").next().css("display","none");
+			}
+		}
+	});
+}
+
+//审批操作
+function approvalsave(type,data){
+	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
+	Ajax.service(
+ 			'LetRentBO',
+ 			'approvalLetRent', 
+ 			[mainObj,data,getAppendData(),type],
+ 			function(data){		
+				var tips = "保存信息成功！";
+				if(data != null && type != "1"){
+					var nextOrgName = data.nextOrgCodeDisplay;//新生成的审批信息的审批单位名称
+					var nextSysOrgCode = data.nextOrgCode;//新生成的审批信息的审批单位
+					var Name = data.itemName;//审批栏名称
+					var applyStatus = data.applyStatus;//申请单状态
+					var approvalStatus = data.approvalStatus;//审批状态
+					
+					if(applyStatus == "审批中"){//审批中，提示信息
+						if(top.strFilterOrgCode == nextSysOrgCode){//审批时，如果下一个审批单位跟当前审批单位不是同一个单位时，提示：上报后将提交到XX审核；
+							tips = "上报后将提交到'"+nextOrgName+"'审核";
+						}else{//审批时，如果下一个审批单位跟当前审批单位是同一个单位时，提示：上报后将提交到“审批栏名称”；
+							tips = "上报后将提交到'"+ Name+"'";
+						}
+					}else if(applyStatus == "已审批通过"){//审批结束 1、退回到申请人 2、审批结束
+						strTips="申请单审批结束";
+					}else{
+						strTips="审批成功";
+					}
+				}
+ 				top.layer.alert(tips,{closeBtn :2,icon:6});
+	    		$('body').removeLoading();     // 关闭遮挡层
+	    		history.go(-2);
+
+ 			},function(){
+				$("body").removeLoading();
+				top.layer.alert('审批操作出问题了，请联系管理员。',{closeBtn :2,icon:5});
+ 			}
+ 	  );
+}

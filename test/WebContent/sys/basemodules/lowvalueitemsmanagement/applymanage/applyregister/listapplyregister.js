@@ -26,10 +26,12 @@ function initDataGrid() {
 	 var _columns =  
 	 [[
 	 	{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
-			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.categoryManagementPK+"\")' >修改</a>";
-			html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
-			html += "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
-			html += "<a href='javascript:void(0);' onclick='reportone(\""+row.pk+"\")' >上报</a>  ";
+	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
+			if (row.itemsApplyFlag == 'WPSLZT_001') {
+				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.categoryManagementPK+"\")' >修改</a>";
+				html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
+				html += "<a href='javascript:void(0);' onclick='reportone(\""+row.pk+"\")' >上报</a>  ";
+			}
  			return html;
 		}}, 
 		//{field:"pk",title:'主键',minwidth:200, hidden:true},
@@ -200,7 +202,7 @@ function viewone(pk){
 		title:'查看登记信息 ',
 		shift:1,
 		closeBtn :2,
-		area:['1000px','680px'],
+		area:['900px','628px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){
@@ -240,6 +242,43 @@ function deleteone(pk){
 								top.layer.alert('删除成功 ',{icon: 6, closeBtn:2});
 						    	//刷新
 						    	 datagrid.query();
+							}		
+						}
+					);		
+		}
+	});
+}
+
+//上报 
+function reportone(pk){
+	top.layer.open({
+		title:'提示 ',
+		icon: 3,
+		area:['250px','150px'],
+		btn:['确定','取消'],
+		content:'确定上报吗？',
+		shift:1,
+		closeBtn :2,
+		yes: function(index){
+				//一般设定yes回调，必须进行手工关闭
+
+    	 		top.layer.close(index);	    	 		
+				$('body').addLoading({msg:'正在上报，请等待...'});			  //打开遮挡层
+
+				Ajax.service(
+						'ItemsApplyManagementBO',
+						'upreportItemsApply', 
+						 [pk],
+						function(result){
+							$('body').removeLoading();     // 关闭遮挡层
+
+							
+							if(result!=null&&result!=""){		
+								top.layer.alert(result,{icon: 5, closeBtn:2});
+							}else{
+								top.layer.alert('上报 成功 ',{icon: 6, closeBtn:2});
+						    	//刷新
+						    	datagrid.query();
 							}		
 						}
 					);		

@@ -46,8 +46,8 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 		           	</div>
                     <table cellSpacing=1 cellPadding=0>
                        		<tr>
-								<td   class="Edit-Title1">申领部门</td>
-								<td   class="Edit-Input1">
+								<td   class="Edit-Title2">申领部门</td>
+								<td   class="Edit-Input2">
 								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
 								</td>
 								<td   class="Edit-Title2">申领类目</td>
@@ -56,8 +56,8 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 								</td>
 							</tr>
 							<tr>
-								<td   class="Edit-Title1">申领人</td>
-								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
+								<td   class="Edit-Title2">申领人</td>
+								<td   class="Edit-Input2"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
 								
 								<td   class="Edit-Title2">申领日期</td>
 								<td   class="Edit-Input2"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
@@ -73,7 +73,7 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 					</tr>
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
+						<td class="Edit-Title2">备注</td><td  class="Edit-Input2" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
 					</tr>
 					</table> 
 					
@@ -104,9 +104,12 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 	    <div title="审批路线图" id="approval_img">
 
 	    </div> 
-	</div>
-	<div style="background-color:white;height:100px;"></div>
+	    <!--审批按钮栏  -->
 	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
+	</div>
+	
+	<div style="background-color:white;height:100px;"></div>
+	
 	
 	<div class="Editinput">
 		<input type="button" id="id_btn_save" class="bt_ensure" value="保存"></input>

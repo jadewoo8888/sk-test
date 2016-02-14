@@ -40,7 +40,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		
 		itemsApplyManagement.setApplyPerson(updateInfo[2]);
-		itemsApplyManagement.setItemsApplyDate(updateInfo[0]);
+		//itemsApplyManagement.setItemsApplyDate(updateInfo[0]);
 		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_002");
 		//itemsApplyManagement.setItemsApplyFlag("");
 		//itemsApplyManagement.setApprovalFlag("");
@@ -68,11 +68,24 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	
 	@MethodID("modifyItemApply")
 	@LogOperate(operate = "修改物品申领")
-	public void modifyItemApply_log_trans(ItemsApplyManagement ItemsApplyManagement){
+	public void modifyItemApply_log_trans(String pk, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList){
+		ItemsApplyManagement itemsApplyManagement = entityDAO.findById(pk);
 		String[] updateInfo = DBOperation.getUpdateInfo();
-		ItemsApplyManagement.setLastestUpdate(updateInfo[0]);
-		ItemsApplyManagement.setUpdatePerson(updateInfo[2]);
-		entityDAO.attachDirty(ItemsApplyManagement);
+		itemsApplyManagement.setLastestUpdate(updateInfo[0]);
+		itemsApplyManagement.setUpdatePerson(updateInfo[2]);
+		itemsApplyManagement.setItemsApplyRemark(itemsApplyRemark);
+		entityDAO.attachDirty(itemsApplyManagement);
+		
+		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
+		
+		for (ItemsApplyMDetail itemsApplyMdetail : itemsApplyMdetailList) {
+			itemsApplyMdetail.setPk(UUID.randomUUID().toString());
+			itemsApplyMdetail.setItemsApplyMPK(itemsApplyManagement.getPk());
+			itemsApplyMdetail.setInsertTime(updateInfo[0]);
+			itemsApplyMdetail.setLastestUpdate(updateInfo[0]);
+			itemsApplyMdetail.setUpdatePerson(updateInfo[2]);
+			itemsApplyMDetailDAO.save(itemsApplyMdetail);
+		}
 	}
 	
 	@MethodID("deleteItemApply")

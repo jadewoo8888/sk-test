@@ -26,13 +26,13 @@
             <column name="ItemsApplyDeptCode" length="50" />
         </property>
          <property name="imName" type="java.lang.String">
-            <column name="ImName" length="100" />
+            <column name="IMName" length="100" />
         </property>
         <property name="imAssetType" type="java.lang.String">
             <column name="IMAssetType" length="50" />
         </property>
          <property name="imType" type="java.lang.String">
-            <column name="IMType " length="50" />
+            <column name="IMType" length="50" />
         </property>
          <property name="imSpecification" type="java.lang.String">
             <column name="IMSpecification" length="50" />
@@ -53,13 +53,13 @@
             <column name="IAMLeaderCheckCount" />
         </property>
          <property name="assetRegPK" type="java.lang.String">
-            <column name="AssetRegPK " length="2000" />
+            <column name="AssetRegPK" length="2000" />
         </property>
          <property name="iamItemManagePK" type="java.lang.String">
             <column name="IAMItemManagePK" length="50" />
         </property>
          <property name="insertTime" type="java.lang.String">
-            <column name="InsertTime" length="40" />
+            <column name="Inserttime" length="40" />
         </property>
         <property name="lastestUpdate" type="java.lang.String">
             <column name="LastestUpdate" length="40" />

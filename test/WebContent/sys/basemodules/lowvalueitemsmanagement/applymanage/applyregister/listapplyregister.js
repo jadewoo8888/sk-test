@@ -26,7 +26,7 @@ function initDataGrid() {
 	 var _columns =  
 	 [[
 	 	{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
-			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\")' >修改</a>";
+			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.categoryManagementPK+"\")' >修改</a>";
 			html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
 			html += "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
 			html += "<a href='javascript:void(0);' onclick='reportone(\""+row.pk+"\")' >上报</a>  ";
@@ -74,10 +74,10 @@ function showCategoryListSuccFunc(result) {
 };
 
 function toAddApplyPage(pk,categoryName) {
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/addapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business=add';
 };
 /*function toEditPage(pk,categoryName) {
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/addapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
 }*/
 
 /*function initApplyFlagCombo(){
@@ -178,16 +178,16 @@ function getCategoryComboboxData() {
 /**
  * 新增
  **/
-function addone() {
-	/*if(!judgeOpeCollectOrg()) {
-		return;
-	}*/
- 	window.location.href = "addapplyregister.jsp?busitype=add";
-}
+//function addone() {
+//	/*if(!judgeOpeCollectOrg()) {
+//		return;
+//	}*/
+// 	window.location.href = "editapplyregister.jsp?business=add";
+//}
 
 //修改
-function modifyone(pk){
-		location.href='addapplyregister.jsp?pk='+pk+'&busitype=modify';
+function modifyone(pk,categoryPk){
+		location.href='editapplyregister.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business=modify';
 
 }
 

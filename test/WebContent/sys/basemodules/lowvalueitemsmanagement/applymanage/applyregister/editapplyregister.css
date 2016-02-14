@@ -11,6 +11,7 @@ textarea{resize:none;overflow:hidden;}
 .editTitle{display:inline-block;float:left;margin-right:20px;width:60px;font-size:13px;}
 .editline{height:1px;border:none;border-top:1px solid rgb(210,210,210);position:relative;top:12px;}
 .editTips{color:#666666;padding-left:90px;position:relative;top:-9px;}
+.EditPanel textarea {width:660px;}
 /*保存、返回按钮*/
 .Editinput{
 width:100%;
@@ -29,3 +30,6 @@ background-color:rgba(180,180,180,0.5);
 .EditPanel{padding-left:10px;}
 
 .colorlink{color:#00afe8;cursor:pointer;}
+
+
+

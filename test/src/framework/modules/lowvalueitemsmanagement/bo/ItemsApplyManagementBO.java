@@ -93,6 +93,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	public String deleteItemApply_log_trans(String pk) {
 		String return_tips = "";
 		entityDAO.delete(entityDAO.findById(pk));
+		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
 		return return_tips;
 
 	}

@@ -13,8 +13,8 @@ $(function () {
 	//initCategory();
 	//initApplyFlagCombo();
 	initComBindFunc(); 
-	/*getCategoryComboboxData();
-	initDeptBox();*/
+	getCategoryComboboxData();
+	/*initDeptBox();*/
 });
 
 
@@ -192,21 +192,21 @@ function modifyone(pk,categoryPk){
 }
 
 /**
- * 查看类目信息单
+ * 查看
  **/
 function viewone(pk){
 	top.layer.open({
 		type:2,
-		title:'查看类目信息 ',
+		title:'查看登记信息 ',
 		shift:1,
 		closeBtn :2,
-		area:['450px','228px'],
+		area:['1000px','680px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/systemseting/applyregistermanagement/viewapplyregister.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk
 	});
 }
 
@@ -228,13 +228,12 @@ function deleteone(pk){
 				$('body').addLoading({msg:'正在删除数据，请等待...'});			  //打开遮挡层
 
 				Ajax.service(
-						'LetRentBO',
-						'deleteLetRent', 
-						 [[pk]],
+						'ItemsApplyManagementBO',
+						'deleteItemApply', 
+						 [pk],
 						function(result){
 							$('body').removeLoading();     // 关闭遮挡层
 
-							
 							if(result!=null&&result!=""){		
 								top.layer.alert(result,{icon: 5, closeBtn:2});
 							}else{

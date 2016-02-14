@@ -10,8 +10,7 @@ $(function () {
 	initDefaultValue();
 	initDataGrid();
 	initComBindFunc(); 
-	initCategoryCombo();
-	//setApprovalOption();
+	//initCategoryCombo();
 });
 
 /**
@@ -358,10 +357,10 @@ function packageItemsApplyMDetailData() {
 /**
  * 新增
  **/
-function addone() {
-	/*if(!judgeOpeCollectOrg()) {
+/*function addone() {
+	if(!judgeOpeCollectOrg()) {
 		return;
-	}*/
+	}
  	window.location.href = "edititems.jsp?busitype=add";
 }
 
@@ -369,12 +368,12 @@ function addone() {
 function modifyone(pk){
 		location.href='edititems.jsp?pk='+pk+'&busitype=modify';
 
-}
+}*/
 
 /**
  * 删除
  **/
-function deleteone(pk) {
+/*function deleteone(pk) {
 	top.layer.open({
 		title:'删除数据',
 		icon: 3,
@@ -390,9 +389,9 @@ function deleteone(pk) {
 	});	
 }
 
-/**
+*//**
  * 发送删除请求
- **/
+ **//*
 function deleteService(pk) {
 	Ajax.service(
 		'ItemManageBO',
@@ -403,9 +402,9 @@ function deleteService(pk) {
 	);
 }
 
-/**
+*//**
  * 删除请求成功回调函数
- **/
+ **//*
 function deleteServiceSuccFunc(data) {
 	if(data!="null"&&data.length>0){
 		top.layer.alert(data,{closeBtn :2,icon:5});
@@ -416,15 +415,15 @@ function deleteServiceSuccFunc(data) {
 	}	
 }
 
-/**
+*//**
  * 请求失败回调函数,删除，注销，撤销注销失败等均调用此方法
- **/
+ **//*
 function serviceFailureFunc() {
 	top.layer.alert('删除数据出现错误，请联系管理员 ',{icon:5,closeBtn :2});
-} 
+} */
 
 
-function initCategoryCombo() {
+/*function initCategoryCombo() {
 	$('#category').combobox({
 		onBeforeLoad: function(param){
 			ajaxCategory();
@@ -447,9 +446,9 @@ function ajaxCategory(){
 			$('#category').combobox("loadData",result);
 		}
 	);
-}
+}*/
 
-function getImType() {
+/*function getImType() {
 	var checkedQc = new Object();
 	checkedQc.fn = '';
 	checkedQc.oper = 14;
@@ -463,4 +462,4 @@ function getImType() {
 		checkedQc.value1 = "(1=1)";
 	}
     return checkedQc;
-}
+}*/

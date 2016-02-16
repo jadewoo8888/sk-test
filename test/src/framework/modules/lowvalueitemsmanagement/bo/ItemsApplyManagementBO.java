@@ -16,8 +16,6 @@ import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyManagementDAO;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyMDetail;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyManagement;
-import framework.modules.propertymanagement.houseunit.domain.HouseUnit;
-import framework.modules.propertymanagement.letrentmanage.domain.LetRent;
 import framework.sys.basemodule.bo.BOBase;
 import framework.sys.basemodule.bo.ListForPageBean;
 import framework.sys.cache.GlobalCache;
@@ -26,7 +24,6 @@ import framework.sys.foreignkeytranslation.FKOper;
 import framework.sys.log.LogOperate;
 import framework.sys.log.LogOperateManager;
 import framework.sys.tools.DBOperation;
-import framework.sys.tools._Date;
 
 @LogOperate(menu = "低值易耗品物品申领管理")
 public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, ItemsApplyManagement> {
@@ -48,16 +45,12 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		
-		itemsApplyManagement.setApplyPerson(updateInfo[2]);
+		itemsApplyManagement.setApplyPerson(updateInfo[2]);//日期格式
 		//itemsApplyManagement.setItemsApplyDate(updateInfo[0]);
-		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_002");
-		//itemsApplyManagement.setItemsApplyFlag("");
-		//itemsApplyManagement.setApprovalFlag("");
+		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_002");//待发放
+		itemsApplyManagement.setItemsApplyFlag("WPSLZT_001");//未提交
 		itemsApplyManagement.setItemsIssueLister("");
 		itemsApplyManagement.setItemsIssueDate("");
-		if ("WPSLZT_002".equals(itemsApplyManagement.getItemsApplyFlag())) {
-			itemsApplyManagement.setAllowApprPerson("");
-		}
 		
 		itemsApplyManagement.setInsertTime(updateInfo[0]);
 		itemsApplyManagement.setLastestUpdate(updateInfo[0]);
@@ -156,11 +149,9 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 
 	private void processApproval(ItemsApplyManagement itemsApplyManagement, ApproveResult approveResult) {
 		if (approveResult.getApplyStatus().equals("未提交")) {
-			//letRent.setLetRentFlag("ZJZZT_001");
 			itemsApplyManagement.setItemsApplyFlag("WPSLZT_001");
 		}
 		if (approveResult.getApplyStatus().equals("待审批")) {
-			//letRent.setLetRentFlag("ZJZZT_002");
 			itemsApplyManagement.setItemsApplyFlag("WPSLZT_002");
 		}
 		if (approveResult.getApplyStatus().equals("审批中")) {

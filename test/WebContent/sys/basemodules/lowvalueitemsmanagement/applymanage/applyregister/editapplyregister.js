@@ -23,7 +23,6 @@ function initDefaultValue() {
 		$("#id_itemsApplyDeptCode").val(top.strUserDeptName);
 		$("#id_applyPerson").val(top.strUserName);
 		$("#id_itemsApplyDate").val(serverDate);
-		//getCategoryByPk(categoryPk);
 		$("#id_categoryManagementPK").val(categoryName);
 	}
 }
@@ -54,8 +53,8 @@ function dataFill(obj) {
 		$("#id_applyPerson").val(obj.applyPersonDisplay);
 		$("#id_itemsApplyDate").val(obj.itemsApplyDate);
 		$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
-		itemsApplyDeptCode = obj.itemsApplyDeptCode;
-	 	applyPerson = obj.applyPerson;
+		//itemsApplyDeptCode = obj.itemsApplyDeptCode;
+	 	//applyPerson = obj.applyPerson;
 }
 
 /**
@@ -69,9 +68,9 @@ function initDataGrid() {
         {field:"imTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}},
-		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
+		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}}
+		//{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}},
+		//{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
@@ -142,8 +141,7 @@ function initComBindFunc() {
 }
 
 function save(ifReport) {
-	var itemsApplyFlag = "WPSLZT_001";
-	var itemsApplyManagement = packageItemsApplyManData(itemsApplyFlag);
+	var itemsApplyManagement = packageItemsApplyManData();
 	var itemsApplyMdetailList = packageItemsApplyMDetailData();
 	debugger;
 	if (pk) {
@@ -190,17 +188,14 @@ function summitEdit(itemsApplyMdetailList,ifReport) {
 		);
 };
 
-function packageItemsApplyManData(itemsApplyFlag) {
+function packageItemsApplyManData() {
 	var itemsApplyMan = new Object();
-	//itemsApplyMan.PK
-	//itemsApplyMan.ItemsApplyCode
  	itemsApplyMan.categoryName = categoryName;
  	itemsApplyMan.categoryManagementPK = categoryPk;
  	itemsApplyMan.orgCode = top.strFilterOrgCode;
- 	itemsApplyMan.itemsApplyDeptCode = itemsApplyDeptCode;
- 	itemsApplyMan.applyPerson = applyPerson;
- 	itemsApplyMan.itemsApplyFlag = itemsApplyFlag;
- 	itemsApplyMan.approvalFlag = approvalFlag;
+ 	itemsApplyMan.itemsApplyDeptCode = top.strUserDeptCode;
+ 	itemsApplyMan.applyPerson = top.strUserAccount;
+ 	//itemsApplyMan.approvalFlag = approvalFlag;
  	itemsApplyMan.itemsApplyDate = $("#id_itemsApplyDate").val();
  	itemsApplyMan.itemsApplyRemark = $("#id_itemsApplyRemark").val();
  	return itemsApplyMan;

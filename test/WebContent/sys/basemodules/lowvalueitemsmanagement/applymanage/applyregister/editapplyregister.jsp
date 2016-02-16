@@ -10,25 +10,11 @@
 <script>
 //业务类型
 var business="${param.business}";
-//
 var categoryPk="${param.categoryPk}";
 var pk="${param.pk}";
-//var itemsApplyMPK = "${param.itemsApplyMPK}";
-//
-//var itemsApplyFlag = "WPSLZT_001";
-var approvalFlag = "佛山市禅城区人民法院部门领导驳回";
-var itemsApplyDeptCode = top.strUserDeptCode;
-var applyPerson = top.strUserAccount;
+//var itemsApplyDeptCode = top.strUserDeptCode;
+//var applyPerson = top.strUserAccount;
 var categoryName="${param.categoryName}";
-/* //招租方式
-var data_letRentWay=${json:classify("STD_ZZFS")};
-//拟出租用途
-
-var data_planLetPurpose=${json:classify("STD_DYYT")};
-//是、否 
-var data_YesNo=${json:classify("STD_YesNo")};
-//物业分类
-var data_unitClassify=${json:classify("STD_DYFL")}; */
 </script>
 </head>
 <body class="edit_body" style="background-color:white;" >
@@ -45,21 +31,21 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 		           	</div>
                     <table cellSpacing=1 cellPadding=0>
                        		<tr>
-								<td   class="Edit-Title2">申领部门</td>
-								<td   class="Edit-Input2">
+								<td   class="Edit-Title1">申领部门</td>
+								<td   class="Edit-Input1">
 								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
 								</td>
-								<td   class="Edit-Title2">申领类目</td>
-								<td   class="Edit-Input2">
+								<td   class="Edit-Title1">申领类目</td>
+								<td   class="Edit-Input1">
 								<input id="id_categoryManagementPK" fieldname="categoryManagementPK" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
-								<td   class="Edit-Title2">申领人</td>
-								<td   class="Edit-Input2"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
+								<td   class="Edit-Title1">申领人</td>
+								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
 								
-								<td   class="Edit-Title2">申领日期</td>
-								<td   class="Edit-Input2"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
+								<td   class="Edit-Title1">申领日期</td>
+								<td   class="Edit-Input1"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
 							</tr>
 							
 					<tr>
@@ -72,7 +58,7 @@ var data_unitClassify=${json:classify("STD_DYFL")}; */
 					</tr>
 					
 					<tr>
-						<td class="Edit-Title2">备注</td><td  class="Edit-Input2" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
 					</tr>
 					</table> 
 					

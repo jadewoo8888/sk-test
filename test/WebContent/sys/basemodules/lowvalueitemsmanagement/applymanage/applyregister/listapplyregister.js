@@ -10,9 +10,6 @@ var datagrid = null;
 $(function () { 
 	setItemStatus();
 	initDataGrid();
-	//getCategoryData();
-	//initCategory();
-	//initApplyFlagCombo();
 	initComBindFunc(); 
 	getCategoryComboboxData();
 	initDeptBox();
@@ -46,10 +43,6 @@ function initDataGrid() {
         {field:"itemsIssueDate",title:'发放日期',minwidth:100},
         {field:"itemsApplyRemark",title:'备注',minwidth:160}
 	]];
-	/* var dataGridOptions ={};
-	 //var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition,orgField:"orgCode"};
-	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',columns:_columns,sortInfo:_sortInfo};
-	 datagrid = new DataGrid(customOptions,dataGridOptions);*/
 	 
 	 var dataGridOptions ={checkbox:true};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',methodID:'getListForPageItemStatus',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition,
@@ -89,32 +82,6 @@ function showCategoryListSuccFunc(result) {
 function toAddApplyPage(pk,categoryName) {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 };
-/*function toEditPage(pk,categoryName) {
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
-}*/
-
-/*function initApplyFlagCombo(){
-	//申请单状态 查询条件控件初始化
-	
-	 $("#itemsApplyFlag").combobox({
-		 data:[
-			{classifyCode:'WPSLZT_001',classifyName:'全部'},
-		 	{classifyCode:'WPSLZT_002,WPSLZT_003',classifyName:'待审批'},
-		 	{classifyCode:'WPSLZT_001,WPSLZT_002,WPSLZT_003',classifyName:'已审批'}
-		 ],
-		 onSelect:function(data){
-		 	if(data.classifyName == "待审批"){
-		 		$("#itemsApplyFlag").attr('qc',"{fn:'itemsApplyFlag',oper:'"+ARY_STR_INCLUDE[0]+"'}");
-		 	}else if(data.classifyName == "已审批"){
-		 		$("#itemsApplyFlag").attr('qc',"{fn:'itemsApplyFlag',oper:'"+ARY_STR_NOTINCLUDE[0]+"'}");
-		 	}else if(data.classifyName == "全部"){
-		 		$("#itemsApplyFlag").attr('qc',"{fn:'itemsApplyFlag',oper:'"+ARY_STR_NOTEQUAL[0]+"'}");
-		 	}
-		 }
-	 })
-}*/
-
-
 
 /**
  * 为页面上的组件添加事件处理方法
@@ -137,8 +104,6 @@ function initComBindFunc() {
 	}); 
 	
 }
-
-//部门树回调函数
 
 /**
  * 选择申领部门
@@ -187,16 +152,6 @@ function getCategoryComboboxData() {
 		editable:false
 	});
 }
-
-/**
- * 新增
- **/
-//function addone() {
-//	/*if(!judgeOpeCollectOrg()) {
-//		return;
-//	}*/
-// 	window.location.href = "editapplyregister.jsp?business=add";
-//}
 
 //修改
 function modifyone(pk,categoryPk){

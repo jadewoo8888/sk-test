@@ -1,7 +1,7 @@
 //列表表格对象
 var datagrid = null;
 var mainObj = new Object();
-var approvalBusiType = "SPYWLX_001";
+var approvalBusiType = "SPYWLX_014";
 /**
  * 初始化方法
  **/ 
@@ -72,15 +72,13 @@ function initDataGrid() {
 		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}},
 		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}},
 		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
-		//{field:"checkCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:180},align:'right',fmType:'int'}},
-		//{field:"leaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:180},align:'right',fmType:'int'}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var classID = 'ItemManageBO';
 	 var customQueryCondition = setCustomQueryCondition1;
-	 if (business == 'modify') {
+	 if (business == STR_REGISTER_MODIFY) {
 		 classID = 'ItemsApplyMDetailBO';
 		 customQueryCondition = setCustomQueryCondition2;
 	 }
@@ -159,14 +157,14 @@ function summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsApplyManagementBO',
 			'addItemApply', 
-			 [itemsApplyManagement,itemsApplyMdetailList,ifReport],
+			 [itemsApplyManagement,itemsApplyMdetailList,ifReport,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
-					top.layer.alert('保存成功 ',{icon: 6, closeBtn:2});
+					top.layer.alert(ifReport?'上报成功 ':'保存成功',{icon: 6, closeBtn:2});
 					history.go(-1);
 				}		
 			}
@@ -178,14 +176,14 @@ function summitEdit(itemsApplyMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsApplyManagementBO',
 			'modifyItemApply', 
-			 [pk,itemsApplyRemark,itemsApplyMdetailList,ifReport],
+			 [pk,itemsApplyRemark,itemsApplyMdetailList,ifReport,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
-					top.layer.alert('修改成功 ',{icon: 6, closeBtn:2});
+					top.layer.alert(ifReport?'上报成功 ':'修改成功 ',{icon: 6, closeBtn:2});
 					history.go(-1);
 				}		
 			}
@@ -198,7 +196,7 @@ function packageItemsApplyManData(itemsApplyFlag) {
 	//itemsApplyMan.ItemsApplyCode
  	itemsApplyMan.categoryName = categoryName;
  	itemsApplyMan.categoryManagementPK = categoryPk;
- 	itemsApplyMan.orgCode = top.strUserOrgCode;
+ 	itemsApplyMan.orgCode = top.strFilterOrgCode;
  	itemsApplyMan.itemsApplyDeptCode = itemsApplyDeptCode;
  	itemsApplyMan.applyPerson = applyPerson;
  	itemsApplyMan.itemsApplyFlag = itemsApplyFlag;
@@ -220,7 +218,7 @@ function packageItemsApplyMDetailData() {
 	 	//物品申领表PKitemsApplyMDetail.ItemsApplyMPK
 	 	itemsApplyMDetail.categoryManagementPK = categoryPk;
 	 	itemsApplyMDetail.itemManagePK = row[i].pk;
-	 	itemsApplyMDetail.orgCode = top.strUserOrgCode;
+	 	itemsApplyMDetail.orgCode = top.strFilterOrgCode;
 	 	itemsApplyMDetail.itemsApplyDeptCode = top.strUserDeptCode;
 	 	itemsApplyMDetail.imName = row[i].imName;
 	 	itemsApplyMDetail.imAssetType = row[i].imAssetType;
@@ -230,7 +228,7 @@ function packageItemsApplyMDetailData() {
 	 	itemsApplyMDetail.iamApplyCount = editors[0].target.numberbox('getValue');
 	 	//itemsApplyMDetail.iamListerCheckCount = editors[1].target.numberbox('getValue');
 	 	//itemsApplyMDetail.iamLeaderCheckCount = editors[2].target.numberbox('getValue');
-	 	itemsApplyMDetail.iamItemManagePK = '';
+	 	itemsApplyMDetail.iamItemManagePK = row[i].pk;
 	 	
    		rowsData.push(itemsApplyMDetail);
 	}
@@ -352,7 +350,7 @@ function ajaxCategory(){
  **/
 function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_003&controltype='+business+'&businesscode='+pk;
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+pk;
 }
 
 /** 
@@ -407,8 +405,8 @@ function setApprovalOption() {
 function approvalsave(type,data){
 	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
 	Ajax.service(
- 			'LetRentBO',
- 			'approvalLetRent', 
+ 			'ItemsApplyManagementBO',
+ 			'approvalItemsApply', 
  			[mainObj,data,getAppendData(),type],
  			function(data){		
 				var tips = "保存信息成功！";

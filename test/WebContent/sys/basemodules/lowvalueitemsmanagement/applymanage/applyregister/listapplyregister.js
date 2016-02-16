@@ -36,12 +36,12 @@ function initDataGrid() {
 		}}, 
 		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"itemsApplyCode",title:'申领单号',minwidth:150},
-		{field:"categoryManagementPKDisplay",title:'类目',minwidth:160},
-        {field:"orgCodeDisplay",title:'申领部门',minwidth:160},
-        {field:"applyPersonDisplay",title:'申领人',minwidth:150},
-        {field:"iamCheckFlagDisplay",title:'单据状态',minwidth:160},
-        {field:"itemsIssueListerDisplay",title:'发放人',minwidth:160},
-        {field:"itemsIssueDate",title:'发放日期',minwidth:150},
+		{field:"categoryManagementPKDisplay",title:'类目',minwidth:100},
+        {field:"itemsApplyDeptCodeDisplay",title:'申领部门',minwidth:100},
+        {field:"applyPersonDisplay",title:'申领人',minwidth:80},
+        {field:"iamCheckFlagDisplay",title:'单据状态',minwidth:100},
+        {field:"itemsIssueListerDisplay",title:'发放人',minwidth:80},
+        {field:"itemsIssueDate",title:'发放日期',minwidth:100},
         {field:"itemsApplyRemark",title:'备注',minwidth:160}
 	]];
 	 var dataGridOptions ={};
@@ -50,6 +50,9 @@ function initDataGrid() {
 }
 
 function showCategoryListLayer() {
+	if(!judgeOpeCollectOrg()) {
+		return;
+	}
 	Ajax.service(
 		'CategoryManagementBO',
 		'findAll', 
@@ -76,7 +79,7 @@ function showCategoryListSuccFunc(result) {
 };
 
 function toAddApplyPage(pk,categoryName) {
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business=add';
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 };
 /*function toEditPage(pk,categoryName) {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName;
@@ -189,7 +192,10 @@ function getCategoryComboboxData() {
 
 //修改
 function modifyone(pk,categoryPk){
-		location.href='editapplyregister.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business=modify';
+	if(!judgeOpeCollectOrg()) {
+		return;
+	}
+	location.href='editapplyregister.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business='+STR_REGISTER_MODIFY;
 
 }
 
@@ -214,6 +220,9 @@ function viewone(pk){
 
 //删除 
 function deleteone(pk){
+	if(!judgeOpeCollectOrg()) {
+		return;
+	}
 	//删除提交
 	top.layer.open({
 		title:'提示 ',
@@ -251,6 +260,9 @@ function deleteone(pk){
 
 //上报 
 function reportone(pk){
+	if(!judgeOpeCollectOrg()) {
+		return;
+	}
 	top.layer.open({
 		title:'提示 ',
 		icon: 3,

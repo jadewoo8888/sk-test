@@ -3,41 +3,41 @@ package framework.modules.lowvalueitemsmanagement.bo;
 import java.util.List;
 import java.util.UUID;
 
+import framework.modules.append.bo.AppendBO;
+import framework.modules.append.bo.AppendBusinessType;
+import framework.modules.append.domain.Append;
 import framework.modules.approve.bo.ApprovalBO;
 import framework.modules.approve.bo.ApproveResult;
+import framework.modules.approve.dao.ApprovalDAO;
+import framework.modules.approve.domain.Approval;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyManagementDAO;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyMDetail;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyManagement;
 import framework.modules.propertymanagement.letrentmanage.domain.LetRent;
 import framework.sys.basemodule.bo.BOBase;
+import framework.sys.cache.GlobalCache;
 import framework.sys.context.applicationworker.MethodID;
 import framework.sys.log.LogOperate;
+import framework.sys.log.LogOperateManager;
 import framework.sys.tools.DBOperation;
 
 @LogOperate(menu = "低值易耗品物品申领管理")
 public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, ItemsApplyManagement> {
 
 	private ItemsApplyMDetailDAO itemsApplyMDetailDAO;
+	private AppendBO appendBO;
 	private ApprovalBO approvalBO;
-	/*@MethodID("addItemApply")
-	@LogOperate(operate = "新增物品申领")
-	public void addItemApply_log_trans(ItemsApplyManagement ItemsApplyManagement) {
-		String pk = UUID.randomUUID().toString();
-		ItemsApplyManagement.setPk(pk);
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		ItemsApplyManagement.setInsertTime(updateInfo[0]);
-		ItemsApplyManagement.setLastestUpdate(updateInfo[0]);
-		ItemsApplyManagement.setUpdatePerson(updateInfo[2]);
-		entityDAO.save(ItemsApplyManagement);
-	}*/
+	private ApprovalDAO approvalDAO;
+	
+	public static String Menu_ItemsApplyMan_Check = "MENU_10_01_01";
 	
 	@MethodID("addItemApply")
 	@LogOperate(operate = "新增物品申领")
-	public void addItemApply_log_trans(ItemsApplyManagement itemsApplyManagement, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport) {
+	public void addItemApply_log_trans(ItemsApplyManagement itemsApplyManagement, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList) {
 		String applyManagementPk = UUID.randomUUID().toString();
 		itemsApplyManagement.setPk(applyManagementPk);
-		String applyCode = UUID.randomUUID().toString();
+		String applyCode = GlobalCache.getBusinBillNoFactoryService().getWPSLNo();
 		itemsApplyManagement.setItemsApplyCode(applyCode);
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
@@ -69,13 +69,17 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		}
 		
 		if (ifReport) {
+			LogOperateManager.operate("上报物品申领");
 			this.upreportItemsApply_log_trans(applyManagementPk);
 		}
+		
+		/** 第二步：处理附件信息 * */
+		appendBO.processAppend(appendList, applyManagementPk, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
 	}
 	
 	@MethodID("modifyItemApply")
 	@LogOperate(operate = "修改物品申领")
-	public void modifyItemApply_log_trans(String pk, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport){
+	public void modifyItemApply_log_trans(String pk, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList){
 		ItemsApplyManagement itemsApplyManagement = entityDAO.findById(pk);
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		itemsApplyManagement.setLastestUpdate(updateInfo[0]);
@@ -95,8 +99,12 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		}
 		
 		if (ifReport) {
+			LogOperateManager.operate("上报物品申领");
 			this.upreportItemsApply_log_trans(pk);
 		}
+		
+		/** 第二步：处理附件信息 * */
+		appendBO.processAppend(appendList, pk, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
 	}
 	
 	@MethodID("deleteItemApply")
@@ -105,6 +113,10 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		String return_tips = "";
 		entityDAO.delete(entityDAO.findById(pk));
 		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
+		
+		/** 第二步：删除对应的附件信息 * */
+		String pkArr[] = {pk};
+		appendBO.deleteAppendByBusinessCode(pkArr, AppendBusinessType.TYYWLX_024);
 		return return_tips;
 
 	}
@@ -125,9 +137,9 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	 * 上报动作
 	 */
 	private ApproveResult _upreport(ItemsApplyManagement itemsApplyManagement) {
-		String[] sysPara = {"MENU_10_01_01",itemsApplyManagement.getOrgCode(),itemsApplyManagement.getItemsApplyDeptCode()};
+		String[] sysPara = {Menu_ItemsApplyMan_Check,itemsApplyManagement.getOrgCode(),itemsApplyManagement.getItemsApplyDeptCode()};
 		// 上报
-		ApproveResult approveResult = approvalBO.toUpApproval(itemsApplyManagement.getOrgCode(), "SPYWLX_001", itemsApplyManagement.getPk(), sysPara);
+		ApproveResult approveResult = approvalBO.toUpApproval(itemsApplyManagement.getOrgCode(), "SPYWLX_014", itemsApplyManagement.getPk(), sysPara);
 		processApproval(itemsApplyManagement, approveResult);
 		// 上报后，需要审批的生成待办事项
 		if (!approveResult.getApplyStatus().equals("已审批通过")) {
@@ -164,6 +176,60 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		entityDAO.attachDirty(itemsApplyManagement);
 	}
 	
+	@MethodID("approvalItemsApply")
+	@LogOperate(operate = "审批物品申领登记")
+	public ApproveResult approvalItemsApply_log_trans(ItemsApplyManagement itemsApplyManagement, Approval approval, List<Append> appendList, String strApprovalType) {
+		ApproveResult approveResult = null;
+		String[] arrCondition = _getApprovalConditon(itemsApplyManagement);
+		String[] sysPara = {Menu_ItemsApplyMan_Check,itemsApplyManagement.getOrgCode(),itemsApplyManagement.getItemsApplyDeptCode()};
+		// 通过 不通过
+		if (!"1".equals(strApprovalType)) {
+			if ("2".equals(strApprovalType)) {
+				approveResult = approvalBO.toAgreeApproval(approval, arrCondition, sysPara);
+				// 审批通过的处理
+				processApproval(itemsApplyManagement, approveResult);
+				// 同意后，不是已经通过结束的均生成待办事项
+				if (approveResult.getApplyStatus().indexOf("通过") == -1) {
+					genSynTaken();
+				}
+			} else if ("3".equals(strApprovalType)) {
+				approveResult = approvalBO.toUnagreeApproval(approval, arrCondition, sysPara);
+				String nextOrgCode = approveResult.getNextOrgCode(); // 生成的下一审批单位
+				String linkOrgCode = approval.getLinkOrgCode(); // 当前审批信息审批单位
+
+				// 由于下级单位的编码长度会比当前单位的编码长度大，故若退回的长度大于当前审批单位的长度的话，或下一审批单位为空，即可视为退回了上一单位或退回申请人
+				if (nextOrgCode == null || nextOrgCode.equals("") || nextOrgCode.length() > linkOrgCode.length()) {
+				}
+
+				// 审批不通过处理
+				processApproval(itemsApplyManagement, approveResult);
+				if (approveResult.getApplyStatus().indexOf("通过") == -1) {
+					genSynTaken();
+				}
+			}
+
+			String applyStatus = approveResult.getApplyStatus();// 申请单状态
+			if (applyStatus.equals("已审批通过")) {
+				// genSynTaken_approval_passend(assetWriteoff);
+			}
+		}
+		// 保存
+		else {
+			LogOperateManager.operate("保存审批信息");
+			entityDAO.attachDirty(itemsApplyManagement);
+			approvalDAO.attachDirty(approval);
+		}
+
+		/** 处理附件 * */
+		appendBO.processAppend(appendList, itemsApplyManagement.getPk(), AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
+
+		return approveResult;
+	}
+	
+	private String[] _getApprovalConditon(ItemsApplyManagement itemsApplyManagement) {
+		return new String[] { "", "", "", "", "", "", "" };
+	}
+	
 	private void genSynTaken() {
 
 	}
@@ -175,6 +241,32 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	public void setItemsApplyMDetailDAO(ItemsApplyMDetailDAO itemsApplyMDetailDAO) {
 		this.itemsApplyMDetailDAO = itemsApplyMDetailDAO;
 	}
+
+	public ApprovalBO getApprovalBO() {
+		return approvalBO;
+	}
+
+	public void setApprovalBO(ApprovalBO approvalBO) {
+		this.approvalBO = approvalBO;
+	}
+
+	public ApprovalDAO getApprovalDAO() {
+		return approvalDAO;
+	}
+
+	public void setApprovalDAO(ApprovalDAO approvalDAO) {
+		this.approvalDAO = approvalDAO;
+	}
+
+	public AppendBO getAppendBO() {
+		return appendBO;
+	}
+
+	public void setAppendBO(AppendBO appendBO) {
+		this.appendBO = appendBO;
+	}
+
+	
 
 	
 }

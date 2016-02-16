@@ -20,6 +20,10 @@
 var pk="${param.pk}";
 //业务类型
 var business=STR_VIEW;
+
+var mainObj = new Object();
+var approvalBusiType = "SPYWLX_014";//物品申领审批路径
+
 //加载完成执行 
 $(function(){
 	setAppenFrame(); 		//加载附件页面
@@ -71,11 +75,11 @@ function getInfo(){
 					funcType:"DrawApprovalBar", 
 					approvalBarDivID:"id_div_approvaloption", 
 					isReadonly:true, 
-					busiDeptCode:"", 
-					busiType:"SPYWLX_001", 
+					busiDeptCode:mainObj.itemsApplyDeptCode, 
+					busiType:approvalBusiType, 
 					busiPK:obj.pk, 
 					busiOrgCode:obj.orgCode, 
-					menuId:"MENU_01_06_02_02"
+					menuId:"MENU_10_01_02"
 				};
 				var am = new ApprovalModule(apprvalOption);
 			},function(){
@@ -107,7 +111,7 @@ function dataFill(obj){
  **/
 function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_003&controltype='+business+'&businesscode='+pk;
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+pk;
 }
 /** 
  * 获取附件数据
@@ -173,7 +177,7 @@ function getAppendData() {
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
-	           		<div class="editTitle">资产附件</div>						           			
+	           		<div class="editTitle">申领附件</div>						           			
 					<hr  class="editline"/>
 	           	</div>
 	            <div   class="editTips"></div> 

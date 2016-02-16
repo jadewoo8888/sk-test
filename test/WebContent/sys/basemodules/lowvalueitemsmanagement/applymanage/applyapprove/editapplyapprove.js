@@ -1,3 +1,5 @@
+var mainObj = new Object();
+var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 //加载完成执行 
 $(function(){
 	setAppenFrame(); 		//加载附件页面
@@ -76,11 +78,11 @@ function setApprovalOption() {
 		approvalBarDivID:"id_div_approvaloption", 
 		approvalButtonBarDivID:"id_span_buttonArea", 
 		isReadonly:false, 
-		busiDeptCode:"", 
+		busiDeptCode:mainObj.itemsApplyDeptCode, 
 		busiType:approvalBusiType, 
 		busiPK:mainObj.pk, 
 		busiOrgCode:mainObj.orgCode, 
-		menuId:"MENU_10_01_01", 
+		menuId:"MENU_10_01_02", 
 		approvalFunc:approvalsave,
 		validateFunc:function(){
 			$("#tabs").tabs("select",2);

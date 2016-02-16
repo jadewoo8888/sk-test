@@ -30,7 +30,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	private ApprovalBO approvalBO;
 	private ApprovalDAO approvalDAO;
 	
-	public static String Menu_ItemsApplyMan_Check = "MENU_10_01_01";
+	public static String Menu_ItemsApplyMan_Check = "MENU_10_01_02";//申领审批菜单
 	
 	@MethodID("addItemApply")
 	@LogOperate(operate = "新增物品申领")

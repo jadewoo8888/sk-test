@@ -373,7 +373,7 @@ function setApprovalOption() {
 		busiType:approvalBusiType, 
 		busiPK:mainObj.pk, 
 		busiOrgCode:mainObj.orgCode, 
-		menuId:"MENU_10_01_01", 
+		menuId:"MENU_10_01_02", 
 		approvalFunc:approvalsave,
 		validateFunc:function(){
 			$("#tabs").tabs("select",2);

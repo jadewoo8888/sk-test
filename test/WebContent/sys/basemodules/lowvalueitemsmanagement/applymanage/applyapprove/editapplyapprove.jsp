@@ -12,8 +12,6 @@
 var pk="${param.pk}";
 //业务类型
 var business="${param.business}";
-var mainObj = new Object();
-var approvalBusiType = "SPYWLX_001";//物品申领审批路径
 </script>
 </head>
 <body class="edit_body" style="background-color:white;" >

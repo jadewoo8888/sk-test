@@ -3,6 +3,8 @@ package framework.modules.lowvalueitemsmanagement.bo;
 import java.util.List;
 import java.util.UUID;
 
+import framework.core.sql.QueryCondition;
+import framework.core.sql.QueryConditionAssembler;
 import framework.modules.append.bo.AppendBO;
 import framework.modules.append.bo.AppendBusinessType;
 import framework.modules.append.domain.Append;
@@ -14,13 +16,17 @@ import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyManagementDAO;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyMDetail;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyManagement;
+import framework.modules.propertymanagement.houseunit.domain.HouseUnit;
 import framework.modules.propertymanagement.letrentmanage.domain.LetRent;
 import framework.sys.basemodule.bo.BOBase;
+import framework.sys.basemodule.bo.ListForPageBean;
 import framework.sys.cache.GlobalCache;
 import framework.sys.context.applicationworker.MethodID;
+import framework.sys.foreignkeytranslation.FKOper;
 import framework.sys.log.LogOperate;
 import framework.sys.log.LogOperateManager;
 import framework.sys.tools.DBOperation;
+import framework.sys.tools._Date;
 
 @LogOperate(menu = "低值易耗品物品申领管理")
 public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, ItemsApplyManagement> {
@@ -232,6 +238,41 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	
 	private void genSynTaken() {
 
+	}
+	
+	@MethodID("getListForPageItemStatus")
+	public ListForPageBean getListForPage(final int pageNumber, final int pageSize, final List<QueryCondition> queryCond, final String sortCond) {
+		ListForPageBean listForPageBean = new ListForPageBean();
+		QueryConditionAssembler assembler = getQueryConditionAssembler(queryCond, sortCond);
+		int totalCount = entityDAO.getTotalCountForPage(assembler);
+		List<ItemsApplyManagement> rowList = null;
+		if (totalCount > 0) {
+			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
+		}
+		if (rowList != null) {
+			for (ItemsApplyManagement itemsApplyManagement : rowList) {
+				if (itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_001")) {
+					itemsApplyManagement.setItemStatusDisplay("未上报");
+				} else if(itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_002")) {
+					itemsApplyManagement.setItemStatusDisplay("已上报");
+				} else if(itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_003")) {
+					itemsApplyManagement.setItemStatusDisplay("审批中");
+				} else if(itemsApplyManagement.getIamCheckFlag ().equals("FSCCQWPFS_001") || itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_004") || itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_005")) {
+					itemsApplyManagement.setItemStatusDisplay("已审批");
+				} else if(itemsApplyManagement.getIamCheckFlag().equals("FSCCQWPFS_003")) {
+					itemsApplyManagement.setItemStatusDisplay("采购中");
+				} else if(itemsApplyManagement.getIamCheckFlag().equals("FSCCQWPFS_002")) {
+					itemsApplyManagement.setItemStatusDisplay("待发放");
+				} else if(itemsApplyManagement.getIamCheckFlag().equals("FSCCQWPFS_004")) {
+					itemsApplyManagement.setItemStatusDisplay("已发放");
+				}
+			}
+		}
+		listForPageBean.setTotal(totalCount);
+		FKOper.getInstance().setDisplay(rowList);
+		listForPageBean.setRows(rowList);
+		return listForPageBean;
+		
 	}
 	
 	public ItemsApplyMDetailDAO getItemsApplyMDetailDAO() {

@@ -8,13 +8,15 @@ var datagrid = null;
  * 初始化方法
  **/ 
 $(function () { 
+	setItemStatus();
 	initDataGrid();
 	//getCategoryData();
 	//initCategory();
 	//initApplyFlagCombo();
 	initComBindFunc(); 
 	getCategoryComboboxData();
-	/*initDeptBox();*/
+	initDeptBox();
+	
 });
 
 
@@ -35,17 +37,23 @@ function initDataGrid() {
  			return html;
 		}}, 
 		//{field:"pk",title:'主键',minwidth:200, hidden:true},
-		{field:"itemsApplyCode",title:'申领单号',minwidth:150},
-		{field:"categoryManagementPKDisplay",title:'类目',minwidth:100},
+		{field:"itemsApplyCode",title:'申领单号',minwidth:80},
+		{field:"categoryManagementPKDisplay",title:'类目',minwidth:80},
         {field:"itemsApplyDeptCodeDisplay",title:'申领部门',minwidth:100},
         {field:"applyPersonDisplay",title:'申领人',minwidth:80},
-        {field:"iamCheckFlagDisplay",title:'单据状态',minwidth:100},
+        {field:"itemStatusDisplay",title:'单据状态',minwidth:80},
         {field:"itemsIssueListerDisplay",title:'发放人',minwidth:80},
         {field:"itemsIssueDate",title:'发放日期',minwidth:100},
         {field:"itemsApplyRemark",title:'备注',minwidth:160}
 	]];
-	 var dataGridOptions ={};
+	/* var dataGridOptions ={};
+	 //var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition,orgField:"orgCode"};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',columns:_columns,sortInfo:_sortInfo};
+	 datagrid = new DataGrid(customOptions,dataGridOptions);*/
+	 
+	 var dataGridOptions ={checkbox:true};
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',methodID:'getListForPageItemStatus',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition,
+			 orgField:"orgCode",deptField:'itemsApplyDeptCode'};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
@@ -136,22 +144,22 @@ function initComBindFunc() {
  * 选择申领部门
  **/
 function initDeptBox(){
-	//资产分类代码搜索  
-	$('#orgCode').searchbox({ 
+	//申领部门搜索  
+	$('#deptCode').searchbox({ 
 		prompt:'申领部门',
 		searcher:function(value,name){ 
-				//选择资产分类树
-		   		var treeValue = $('#orgCode').attr('treevalue');  
+				//选择申领部门树
+		   		var treeValue = $('#deptCode').attr('treevalue');  
 		 		var treeOption = {selType:'sgl',defaultSelecteds:treeValue,callBackFunction:acTreeCallBack};
 			  	top.deptTree(treeOption);
 		}
 	});
 	//禁止输入
-	$('#orgCode').searchbox('textbox').attr('readonly',true);//禁用输入
-	//资产分类树回调
+	$('#deptCode').searchbox('textbox').attr('readonly',true);//禁用输入
+	//申领部门树回调
 	function acTreeCallBack(code,codeAndName){
-		$('#orgCode').searchbox('setValue',codeAndName);
-		$('#orgCode').attr('treevalue',code);
+		$('#deptCode').searchbox('setValue',codeAndName);
+		$('#deptCode').attr('treevalue',code);
 	}
 }
 
@@ -298,26 +306,66 @@ function reportone(pk){
 	});
 }
 
-function getItemsApplyFlag() {
+function setItemStatus(){
+	//设置状态选择下拉框
+	$("#itemStatusDisplay").combobox({
+		valueField: 'value',
+		textField: 'text',
+		data:[{
+			'value':"WPSLZT_001",
+			'text':'未上报'
+		},{
+			'value':"WPSLZT_002",
+			'text':'已上报'
+		},{
+			'value':'WPSLZT_003',
+			'text':'审批中'
+		},{
+			'value':'FSCCQWPFS_001',
+			'text':'已审批'
+		},{
+			'value':'FSCCQWPFS_003',
+			'text':'采购中'
+		},{
+			'value':'FSCCQWPFS_002',
+			'text':'待发放'
+		},{
+			'value':'FSCCQWPFS_004',
+			'text':'已发放'
+		}],
+		width:140,
+		editable:false
+	});
+}
+
+function getItemStatus() {
 	var checkedQc = new Object();
 	checkedQc.fn = '';
 	checkedQc.oper = 14;
-	var contratStatusDisplay=$('#itemsApplyFlag').combobox('getValue');
+	var itemStatusDisplay=$('#itemStatusDisplay').combobox('getValue');
 	
-	if (contratStatusDisplay== '2'){
-		checkedQc.value1 = "(ItemsApplyFlag = 'WPSLZT_001')";
-	}else if(contratStatusDisplay== '3'){
-		checkedQc.value1 = "(ItemsApplyFlag = 'WPSLZT_002')";
-	}else if(contratStatusDisplay== '4'){
-		checkedQc.value1 = "(ItemsApplyFlag = 'WPSLZT_003')";
-	}else if(contratStatusDisplay== '5'){
-		checkedQc.value1 = "(ItemsApplyFlag Not In ('WPSLZT_004','WPSLZT_005') )";
-	}else{
+	if (itemStatusDisplay == 'WPSLZT_001' || itemStatusDisplay == 'WPSLZT_002' || itemStatusDisplay == 'WPSLZT_003') {
+		checkedQc.value1 = "((itemsApplyFlag = '"+itemStatusDisplay+"'))";
+	} else if (itemStatusDisplay == 'FSCCQWPFS_001' || itemStatusDisplay == 'FSCCQWPFS_002' || itemStatusDisplay == 'FSCCQWPFS_003' || itemStatusDisplay == 'FSCCQWPFS_004'){
+		checkedQc.value1 = "((iamCheckFlag  = '"+itemStatusDisplay+"'))";
+	} else {
 		checkedQc.value1 = "(1=1)";
 	}
     return checkedQc;
 }
 //自定义查询条件
+function setCustomQueryCondition() {
+	var customQCArr = new Array();
+	
+	var QC1 = new Object();
+	QC1.fn = "applyPerson";
+	QC1.oper = ARY_STR_EQUAL[0];
+	QC1.value1 = top.strUserAccount;
+	customQCArr.push(QC1);
+	
+	return customQCArr;
+}
+
 /*function setCustomQueryCondition() {
 	var customQCArr = new Array();
 	//审批人条件

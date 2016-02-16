@@ -41,6 +41,9 @@ public class ItemsApplyManagement implements java.io.Serializable, Cloneable {
 	private String itemsIssueListerDisplay = "";
 	private String itemsApplyFlagDisplay = "";
 	
+	//特殊字段
+	private String itemStatusDisplay = "";
+	
 	public String getPk() {
 		return pk;
 	}
@@ -201,6 +204,11 @@ public class ItemsApplyManagement implements java.io.Serializable, Cloneable {
 	public void setItemsApplyFlagDisplay(String itemsApplyFlagDisplay) {
 		this.itemsApplyFlagDisplay = itemsApplyFlagDisplay;
 	}
-	
+	public String getItemStatusDisplay() {
+		return itemStatusDisplay;
+	}
+	public void setItemStatusDisplay(String itemStatusDisplay) {
+		this.itemStatusDisplay = itemStatusDisplay;
+	}
 	
 }

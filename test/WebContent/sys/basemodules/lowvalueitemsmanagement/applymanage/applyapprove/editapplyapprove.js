@@ -153,7 +153,7 @@ function approvalsave(type,data){
  **/
 function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_003&controltype='+STR_VIEW+'&businesscode='+pk;
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+STR_VIEW+'&businesscode='+pk;
 }
 /** 
  * 获取附件数据

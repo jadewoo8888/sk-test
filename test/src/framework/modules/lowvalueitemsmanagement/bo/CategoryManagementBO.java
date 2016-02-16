@@ -1,5 +1,6 @@
 package framework.modules.lowvalueitemsmanagement.bo;
 
+import java.util.List;
 import java.util.UUID;
 
 import framework.modules.lowvalueitemsmanagement.dao.CategoryManagementDAO;
@@ -39,6 +40,12 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 		String return_tips = "";
 		entityDAO.delete(entityDAO.findById(pk));
 		return return_tips;
+	}
+	@MethodID("findCategoryByGroupCode")
+	public List<CategoryManagement> findCategoryByGroupCode(String groupCode) {
+		 String strSql = "select * from tCategoryManagement where groupCode = ? or groupCode is null";
+	     List<CategoryManagement> list = entityDAO.executeFind(CategoryManagement.class , strSql ,groupCode);
+		return list;
 	}
 	/*
 	@MethodID("deleteCategorys")

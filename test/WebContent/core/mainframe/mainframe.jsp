@@ -37,6 +37,8 @@
   var strUserDeptName = "<%=OperateUser.getUserDepartmentCodeDisplay()%>";//用户所属部门名称
   var strUserAccount = "<%=OperateUser.getUserAccount()%>";//用户账号
   var strUserName = "<%=OperateUser.getUserName()%>";//用户名称
+  var strUserGroupCode = "<%=OperateUser.getUserGroupCode()%>";//角色编码
+  var strUserGroupCodeDisplay = "<%=OperateUser.getUserGroupCodeDisplay()%>";//角色名称
   var strOrgIsCollect = "<%=OperateUserOrg.getOrgIsCollect()%>";//是否汇总,YesNo_001:是，YesNo_002:否
   var strOrgProperty = "<%=OperateUserOrg.getOrgProperty()%>";//单位会计执行制度,OrgProp_001:行政,OrgProp_002:事业,OrgProp_003	:企业化管理,OrgProp_004:民间,OrgProp_005:企业
   
@@ -52,7 +54,6 @@
   var downloadCookieName = strUserAccount+'downloadlastviewtime';
   /** 各大类资产的类别查询语句  **/ 
   var bigAssetTypeSqlArr = [${json:ac()}];
-  
   
   
   </script>

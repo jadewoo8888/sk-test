@@ -56,8 +56,8 @@ function showCategoryListLayer() {
 	}
 	Ajax.service(
 		'CategoryManagementBO',
-		'findAll', 
-		[],
+		'findCategoryByGroupCode', 
+		[top.strUserGroupCode],
 		showCategoryListSuccFunc
 	);
 }

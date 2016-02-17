@@ -27,7 +27,7 @@ function initData() {
 /** 
  * 根据编码获取信息
  **/
-function getCategoryByPk(pk) {debugger;
+function getCategoryByPk(pk) {
 	$("body").addLoading({msg:"正在获取信息，请稍后..."});
 	Ajax.service("CategoryManagementBO", "findByProperty", ['pk',pk], getCategoryByPkSuccFunc, getCategoryByPkFailureFunc);
 }
@@ -157,6 +157,7 @@ function initRoleCombo() {
 		valueField:'groupCode',
 		textField:'groupName',
 		width:220,
+		value: groupCode == 'null' ? "" : groupCode,
 		//height:26,
 		//panelHeight:100,
 		editable:false
@@ -170,7 +171,9 @@ function ajaxRole(){
 		'findAll', 
 		[],
 		function(result){
+			result.push({groupCode:'',groupName:'无'});
 			$('#groupCode').combobox("loadData",result);
 		}
 	);
 }
+

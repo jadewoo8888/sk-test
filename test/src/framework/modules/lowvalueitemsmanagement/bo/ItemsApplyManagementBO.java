@@ -29,6 +29,7 @@ import framework.sys.tools.DBOperation;
 public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, ItemsApplyManagement> {
 
 	private ItemsApplyMDetailDAO itemsApplyMDetailDAO;
+	private ItemsApplyMDetailBO itemsApplyMDetailBO;
 	private AppendBO appendBO;
 	private ApprovalBO approvalBO;
 	private ApprovalDAO approvalDAO;
@@ -175,7 +176,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	
 	@MethodID("approvalItemsApply")
 	@LogOperate(operate = "审批物品申领登记")
-	public ApproveResult approvalItemsApply_log_trans(ItemsApplyManagement itemsApplyManagement, Approval approval, List<Append> appendList, String strApprovalType) {
+	public ApproveResult approvalItemsApply_log_trans(ItemsApplyManagement itemsApplyManagement, Approval approval, List<Append> appendList, String strApprovalType,List<ItemsApplyMDetail> itemsApplyMDetailList, int roleType) {
 		ApproveResult approveResult = null;
 		String[] arrCondition = _getApprovalConditon(itemsApplyManagement);
 		String[] sysPara = {Menu_ItemsApplyMan_Check,itemsApplyManagement.getOrgCode(),itemsApplyManagement.getItemsApplyDeptCode()};
@@ -220,6 +221,8 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		/** 处理附件 * */
 		appendBO.processAppend(appendList, itemsApplyManagement.getPk(), AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
 
+		itemsApplyMDetailBO.approvalItemMDtailCount_log_trans(itemsApplyMDetailList, roleType);
+		
 		return approveResult;
 	}
 	
@@ -272,6 +275,22 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 
 	public void setItemsApplyMDetailDAO(ItemsApplyMDetailDAO itemsApplyMDetailDAO) {
 		this.itemsApplyMDetailDAO = itemsApplyMDetailDAO;
+	}
+
+	public ItemsApplyMDetailBO getItemsApplyMDetailBO() {
+		return itemsApplyMDetailBO;
+	}
+
+	public void setItemsApplyMDetailBO(ItemsApplyMDetailBO itemsApplyMDetailBO) {
+		this.itemsApplyMDetailBO = itemsApplyMDetailBO;
+	}
+
+	public static String getMenu_ItemsApplyMan_Check() {
+		return Menu_ItemsApplyMan_Check;
+	}
+
+	public static void setMenu_ItemsApplyMan_Check(String menu_ItemsApplyMan_Check) {
+		Menu_ItemsApplyMan_Check = menu_ItemsApplyMan_Check;
 	}
 
 	public ApprovalBO getApprovalBO() {

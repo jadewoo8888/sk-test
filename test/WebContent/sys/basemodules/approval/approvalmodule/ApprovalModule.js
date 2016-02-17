@@ -12,7 +12,8 @@ ApprovalModule.prototype = {
      * 1.各功能通用属性:
      * funcType: 使用功能的类别(必要)，定义了当前模块的类别，也影响了功能相关属性的定义 QueryCondition:获取列表页面查询条件；DrawApprovalBar:绘制审批栏及审批按钮；DrawAdditionalApprovalBar:绘制审批补录栏；DrawApprovalDiagram:绘制审批路线图
      * userAccount: 当前用户账号
-     * 
+     * getApprovalSuccFunc:获取审批信息成功后的回调函数，参数为所有审批信息， 因有时具体页面需要用到审批信息
+     
      * /---- 注意:以下属性的必要性全部是以功能类型为前提的。另外不同功能类型会有同名且包含相同内容的属性，这里仅按照功能类别的需要进行罗列 ---/
      * 
      * 2.QueryCondition专用属性(全部必要)：
@@ -347,6 +348,9 @@ ApprovalModule.prototype = {
 				$("body").removeLoading();
 				appmod.approvalData = data;
 				appmod._drawApprovalBar();
+				if(appmod.approvalParams.getApprovalSuccFunc) {
+					appmod.approvalParams.getApprovalSuccFunc(data);
+				}
 				if(!appmod.approvalParams.isReadonly){
 					appmod._drawApprovalButton();
 				}
@@ -360,7 +364,7 @@ ApprovalModule.prototype = {
 	},
 	
 	/**
-     * 绘制审批栏
+     * 绘制审批栏(此方法目前使用拼接html的方式生成审批栏，但是这种实现方式并不符合6.0的编码风格，如果有时间的话应当改为绘制补录审批栏的实现方式)
      **/
 	_drawApprovalBar: function(){
 		//没有审批信息直接跳过

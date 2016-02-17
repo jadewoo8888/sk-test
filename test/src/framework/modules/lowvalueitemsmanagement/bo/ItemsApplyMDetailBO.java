@@ -1,5 +1,6 @@
 package framework.modules.lowvalueitemsmanagement.bo;
 
+import java.util.List;
 import java.util.UUID;
 
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO;
@@ -40,5 +41,21 @@ public class ItemsApplyMDetailBO  extends BOBase<ItemsApplyMDetailDAO, ItemsAppl
 		entityDAO.delete(entityDAO.findById(pk));
 		return return_tips;
 
+	}
+	
+	@MethodID("approvalItemMDtailCount")
+	@LogOperate(operate = "审批物品申领明细")
+	public void approvalItemMDtailCount_log_trans(List<ItemsApplyMDetail> itemsApplyMDetailList, int roleType){
+		if (roleType == 2 || roleType == 3) {
+			for (ItemsApplyMDetail itemsApplyMDetail : itemsApplyMDetailList) {
+				ItemsApplyMDetail dbItemsApplyMDetail = entityDAO.findById(itemsApplyMDetail.getPk());
+				if (roleType == 2) {
+					dbItemsApplyMDetail.setIamListerCheckCount(itemsApplyMDetail.getIamListerCheckCount());
+				} else if (roleType == 3) {
+					dbItemsApplyMDetail.setIamLeaderCheckCount(itemsApplyMDetail.getIamLeaderCheckCount());
+				}
+				entityDAO.attachDirty(dbItemsApplyMDetail);
+			}
+		}
 	}
 }

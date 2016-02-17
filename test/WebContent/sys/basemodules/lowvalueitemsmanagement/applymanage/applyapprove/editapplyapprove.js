@@ -1,10 +1,12 @@
 var mainObj = new Object();
 var approvalBusiType = "SPYWLX_014";//物品申领审批路径
+var approvalModule;
+var approvalRole;
 //加载完成执行 
 $(function(){
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
-	initDataGrid();
+	//initDataGrid();
 	buttonBind();
 });
 
@@ -17,6 +19,15 @@ function buttonBind(){
  * 初始化表格信息
  **/
 function initDataGrid() {
+	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80};
+	if (approvalRole == 2) {
+		iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}};
+	}
+	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80};
+	if (approvalRole == 3) {
+		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}};
+	}
+	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
@@ -25,25 +36,39 @@ function initDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
+		iamListerCheckCountField,
+		iamLeaderCheckCountField
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
+}
+
+function initEditCell(){
+	var row = datagrid.dataGridObj.datagrid('getRows');
+	var rowLen = row.length;
+	for (var i = 0; i < rowLen; i++) {
+		datagrid.dataGridObj.datagrid('beginEdit', i);
+	}
 }
 
 //自定义查询条件
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
 	//单位条件
-	var itemsApplyQc = new Object();
-	itemsApplyQc.fn = 'itemsApplyMPK';
-	itemsApplyQc.oper = ARY_STR_EQUAL[0];
-	itemsApplyQc.value1 = pk;
-	customQCArr.push(itemsApplyQc);
+	var mpkQc = new Object();
+	mpkQc.fn = 'itemsApplyMPK';
+	mpkQc.oper = ARY_STR_EQUAL[0];
+	mpkQc.value1 = pk;
+	customQCArr.push(mpkQc);
+	
+	var appCountQc = new Object();
+	appCountQc.fn = 'iamApplyCount';
+	appCountQc.oper = ARY_STR_NOTEQUAL[0];
+	appCountQc.value1 = '0';
+	customQCArr.push(appCountQc);
     return customQCArr;
 }
 
@@ -71,9 +96,14 @@ function dataFill(obj){
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
 }
 
+function getApprovalRoleFn() {
+	approvalRole = approvalModule.curNodeInfo.node.approvalRole;
+	initDataGrid();
+}
 //审批数据初始化
 function setApprovalOption() {
 	var apprvalOption = {
+		getApprovalSuccFunc:getApprovalRoleFn,
 		funcType:"DrawApprovalBar", 
 		approvalBarDivID:"id_div_approvaloption", 
 		approvalButtonBarDivID:"id_span_buttonArea", 
@@ -95,7 +125,7 @@ function setApprovalOption() {
 			checker:top.strUserName
 		}
 	};
-	var am = new ApprovalModule(apprvalOption);
+	approvalModule = new ApprovalModule(apprvalOption);
 	$("#tabs").tabs({
 		onSelect:function(title,index){
 			//切换标签时改变校验信息的显示/隐藏
@@ -112,11 +142,13 @@ function setApprovalOption() {
 
 //审批操作
 function approvalsave(type,data){
+	var approvalItemMDtail = packageApprovalItemMDtail();
+	
 	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
 	Ajax.service(
  			'ItemsApplyManagementBO',
  			'approvalItemsApply', 
- 			[mainObj,data,getAppendData(),type],
+ 			[mainObj,data,getAppendData(),type,approvalItemMDtail,approvalRole],
  			function(data){		
 				var tips = "保存信息成功！";
 				if(data != null && type != "1"){
@@ -147,6 +179,25 @@ function approvalsave(type,data){
 				top.layer.alert('审批操作出问题了，请联系管理员。',{closeBtn :2,icon:5});
  			}
  	  );
+}
+
+function packageApprovalItemMDtail() {
+	var row = datagrid.dataGridObj.datagrid('getRows');
+	var rowLen = row.length;
+    var rowsData = new Array();
+    for(var i=0;i<rowLen;i++) {
+		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
+	 	
+	 	var itemsApplyMDetail = new Object();
+	 	itemsApplyMDetail.pk = row[i].pk;
+	 	if (approvalRole == 2) {
+	 		itemsApplyMDetail.iamListerCheckCount = editors[0].target.numberbox('getValue');
+	 	} else if (approvalRole == 3) {
+	 		itemsApplyMDetail.iamLeaderCheckCount = editors[0].target.numberbox('getValue');
+	 	}
+   		rowsData.push(itemsApplyMDetail);
+	}
+    return rowsData;
 }
 /**
  * 设置附件

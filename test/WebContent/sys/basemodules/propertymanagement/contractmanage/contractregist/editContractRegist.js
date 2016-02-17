@@ -47,7 +47,7 @@ function initDataGrid() {
 	var _sortInfo = {"sortPK" : "hlcRentRulePK","sortSql" : "hlcRentRuleStartDate Asc"};
 	 var _columns =  
 	 [[
-		{field:"hlcRentRuleStartDate",title:'租赁开始日期',minwidth:100, editor:'text'},
+		{field:"hlcRentRuleStartDate",title:'租赁开始日期',minwidth:100, editor:{ type:'datebox',  options:{onSelect:hlcRentRuleStartDateSelect,editable:false,width:100,required:true}}},
 		{field:"hlcRentRuleEndDate",title:'租赁截止日期',minwidth:100, editor:{ type:'datebox',  options:{onSelect:hlcRentRuleEndDateSelect,editable:false,width:100,required:true}}},
 		{field:"hlcRentRuleRent",title:'月租金（小写）',minwidth:110,editor:{ type:'numberbox',  options:{onChange:hlcRentRuleRentChange,min:0.00,precision:2,groupSeparator:',',width:100,required:true}},align:'right',fmType:'money'},
 		{field:"hlcRentRuleRentUp",title:'月租金（大写）',minwidth:230},

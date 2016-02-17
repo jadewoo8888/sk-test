@@ -42,8 +42,8 @@ function initDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
+		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80},
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
@@ -56,11 +56,17 @@ function initDataGrid() {
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
 	//单位条件
-	var itemsApplyQc = new Object();
-	itemsApplyQc.fn = 'itemsApplyMPK';
-	itemsApplyQc.oper = ARY_STR_EQUAL[0];
-	itemsApplyQc.value1 = pk;
-	customQCArr.push(itemsApplyQc);
+	var mpkQc = new Object();
+	mpkQc.fn = 'itemsApplyMPK';
+	mpkQc.oper = ARY_STR_EQUAL[0];
+	mpkQc.value1 = pk;
+	customQCArr.push(mpkQc);
+	
+	var appCountQc = new Object();
+	appCountQc.fn = 'iamApplyCount';
+	appCountQc.oper = ARY_STR_NOTEQUAL[0];
+	appCountQc.value1 = '0';
+	customQCArr.push(appCountQc);
     return customQCArr;
 }
 

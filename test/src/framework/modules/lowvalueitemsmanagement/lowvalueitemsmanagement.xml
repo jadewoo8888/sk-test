@@ -47,6 +47,9 @@
 		<property name="itemsApplyMDetailDAO">
 			<ref bean="ItemsApplyMDetailDAO" />
 		</property>
+		<property name="itemsApplyMDetailBO">
+			<ref bean="ItemsApplyMDetailBO" />
+		</property>
 		
 		<property name="approvalDAO">
 			<ref bean="ApprovalDAO" />

@@ -93,8 +93,8 @@ function getCategoryComboboxData() {
 	function ajaxCategory(){
 		Ajax.service(
 			'CategoryManagementBO',
-			'findAll', 
-			[],
+			'findCategoryByGroupCode', 
+			[top.strUserGroupCode],
 			function(result){
 				$('#category').combobox("loadData",result);
 			}

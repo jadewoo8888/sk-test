@@ -253,7 +253,6 @@ function getContractStatus(){
 	checkedQc.fn = '';
 	checkedQc.oper = 14;
 	var contratStatusDisplay=$('#contratStatusDisplay').combobox('getValue');
-	debugger;
 	if (contratStatusDisplay== '0'){
 		checkedQc.value1 = "((canLeaseFlag = '0'))";
 	}else if(contratStatusDisplay== '1'){

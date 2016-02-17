@@ -21,7 +21,7 @@ function initDataGrid() {
 	 var _columns =  
 	 [[
 	 	{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
-			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\")' >修改</a>";
+			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.groupCode+"\")' >修改</a>";
 			html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
 			//html += "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
  			return html;
@@ -72,8 +72,8 @@ function addone() {
 }
 
 //修改
-function modifyone(pk){
-		location.href='editcategroy.jsp?pk='+pk+'&busitype=modify';
+function modifyone(pk,groupCode){
+		location.href='editcategroy.jsp?pk='+pk+'&busitype=modify&groupCode='+groupCode;
 
 }
 

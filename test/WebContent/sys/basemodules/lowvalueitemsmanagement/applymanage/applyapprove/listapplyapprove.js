@@ -166,7 +166,7 @@ function setCustomQueryCondition() {
 	orgQc = new Object();
 	orgQc.fn = '';
 	orgQc.oper = ARY_STR_NULLOPER[0];
-	orgQc.value1 = 'AllowApprPerson like \'%|'+ top.strUserAccount +'|%\' or linkers like \'%|'+ top.strUserAccount +'|%\'';
+	orgQc.value1 = '(AllowApprPerson like \'%|'+ top.strUserAccount +'|%\' or linkers like \'%|'+ top.strUserAccount +'|%\')  and itemsApplyFlag!=\'WPSLZT_001\'';
 	customQCArr.push(orgQc);
 	
     return customQCArr;

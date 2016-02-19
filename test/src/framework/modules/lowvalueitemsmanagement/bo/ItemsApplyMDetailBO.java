@@ -11,7 +11,7 @@ import framework.sys.log.LogOperate;
 import framework.sys.tools.DBOperation;
 
 @LogOperate(menu = "低值易耗品物品申领管理明细")
-public class ItemsApplyMDetailBO  extends BOBase<ItemsApplyMDetailDAO, ItemsApplyMDetail>{
+public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApplyMDetail>{
 
 	@MethodID("addItemsApplyMDetail")
 	@LogOperate(operate = "新增物品申领明细")

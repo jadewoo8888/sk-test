@@ -21,7 +21,6 @@ var pk="${param.pk}";
 //业务类型
 var business=STR_VIEW;
 
-var mainObj = new Object();
 var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 
 //加载完成执行 
@@ -81,7 +80,7 @@ function getInfo(){
 					funcType:"DrawApprovalBar", 
 					approvalBarDivID:"id_div_approvaloption", 
 					isReadonly:true, 
-					busiDeptCode:mainObj.itemsApplyDeptCode, 
+					busiDeptCode:obj.itemsApplyDeptCode, 
 					busiType:approvalBusiType, 
 					busiPK:obj.pk, 
 					busiOrgCode:obj.orgCode, 

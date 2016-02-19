@@ -46,12 +46,12 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		
-		itemsApplyManagement.setApplyPerson(updateInfo[2]);//日期格式
+		//itemsApplyManagement.setApplyPerson(updateInfo[2]);//日期格式
 		//itemsApplyManagement.setItemsApplyDate(updateInfo[0]);
 		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_002");//待发放
 		itemsApplyManagement.setItemsApplyFlag("WPSLZT_001");//未提交
-		itemsApplyManagement.setItemsIssueLister("");
-		itemsApplyManagement.setItemsIssueDate("");
+		//itemsApplyManagement.setItemsIssueLister("");
+		//itemsApplyManagement.setItemsIssueDate("");
 		
 		itemsApplyManagement.setInsertTime(updateInfo[0]);
 		itemsApplyManagement.setLastestUpdate(updateInfo[0]);

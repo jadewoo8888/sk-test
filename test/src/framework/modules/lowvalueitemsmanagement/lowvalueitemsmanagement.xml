@@ -75,4 +75,49 @@
 			<ref bean="ItemsApplyMDetailDAO" />
 		</property>
 	</bean>
+	
+	<bean id="ItemsPurchaseDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="ItemsPurchaseBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.ItemsPurchaseBO">
+		<property name="entityDAO">
+			<ref bean="ItemsPurchaseDAO" />
+		</property>
+		
+		<property name="itemsPurchaseDetailDAO">
+			<ref bean="ItemsPurchaseDetailDAO" />
+		</property>
+		<property name="itemsPurchaseDetailBO">
+			<ref bean="ItemsPurchaseDetailBO" />
+		</property>
+		
+		<property name="approvalDAO">
+			<ref bean="ApprovalDAO" />
+		</property>
+		<property name="approvalBO">
+			<ref bean="ApprovalBO" />
+		</property>
+		<property name="appendBO">
+			<ref bean="AppendBO" />
+		</property>
+	</bean>
+	
+	<bean id="ItemsPurchaseDetailDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDetailDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="ItemsPurchaseDetailBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.ItemsPurchaseDetailBO">
+		<property name="entityDAO">
+			<ref bean="ItemsPurchaseDetailDAO" />
+		</property>
+	</bean>
 </beans>

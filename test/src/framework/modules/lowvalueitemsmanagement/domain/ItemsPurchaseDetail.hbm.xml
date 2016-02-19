@@ -10,41 +10,41 @@
             <column name="PK" length="50" />
             <generator class="assigned" />
         </id>
-         <property name="iPDItemsPurchasePK" type="java.lang.String">
-            <column name="IPDItemsPurchasePK" length="50" />
+         <property name="ipDItemsPurchasePK" type="java.lang.String">
+            <column name="ipDItemsPurchasePK" length="50" />
         </property>
-         <property name="iPDItemManagePK" type="java.lang.String">
-            <column name="IPDItemManagePK" length="50" />
+         <property name="ipDItemManagePK" type="java.lang.String">
+            <column name="ipDItemManagePK" length="50" />
         </property>
-         <property name="iPDName" type="java.lang.String">
-            <column name="IPDName" length="100" />
+         <property name="ipDName" type="java.lang.String">
+            <column name="ipDName" length="100" />
         </property>
-         <property name="iPDType" type="java.lang.String">
-            <column name="IPDType" length="50" />
+         <property name="ipDType" type="java.lang.String">
+            <column name="ipDType" length="50" />
         </property>
-         <property name="iPDSpecification" type="java.lang.String">
-            <column name="IPDSpecification" length="50" />
+         <property name="ipDSpecification" type="java.lang.String">
+            <column name="ipDSpecification" length="50" />
         </property>
-         <property name="iPDMetricUnit" type="java.lang.String">
-            <column name="IPDMetricUnit" length="50" />
+         <property name="ipDMetricUnit" type="java.lang.String">
+            <column name="ipDMetricUnit" length="50" />
         </property>
-        <property name="iPDApplyCount" type="java.lang.Integer">
-            <column name="IPDApplyCount"/>
+        <property name="ipDApplyCount" type="java.lang.Integer">
+            <column name="ipDApplyCount"/>
         </property>
-         <property name="iPDApproveCount" type="java.lang.Integer">
-            <column name="IPDApproveCount" />
+         <property name="ipDApproveCount" type="java.lang.Integer">
+            <column name="ipDApproveCount" />
         </property>
-         <property name="iPDPurchaseCount" type="java.lang.Integer">
-            <column name="IPDPurchaseCount" />
+         <property name="ipDPurchaseCount" type="java.lang.Integer">
+            <column name="ipDPurchaseCount" />
         </property>
-         <property name="iPDStoreCount" type="java.lang.Integer">
-            <column name="IPDStoreCount"/>
+         <property name="ipDStoreCount" type="java.lang.Integer">
+            <column name="ipDStoreCount"/>
         </property>
-         <property name="iPDCheckFlag" type="java.lang.String">
-            <column name="IPDCheckFlag"  length="100" />
+         <property name="ipDCheckFlag" type="java.lang.String">
+            <column name="ipDCheckFlag"  length="100" />
         </property>
-        <property name="inserttime" type="java.lang.String">
-            <column name="Inserttime" length="40"/>
+        <property name="insertTime" type="java.lang.String">
+            <column name="InsertTime" length="40"/>
         </property>
         <property name="lastestUpdate" type="java.lang.String">
             <column name="LastestUpdate" length="40" />

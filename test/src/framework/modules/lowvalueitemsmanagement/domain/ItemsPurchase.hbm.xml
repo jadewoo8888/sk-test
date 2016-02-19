@@ -49,8 +49,8 @@
          <property name="allowApprPerson" type="java.lang.String">
             <column name="allowApprPerson" length="100"/>
         </property>
-        <property name="inserttime" type="java.lang.String">
-            <column name="Inserttime" length="40"/>
+        <property name="insertTime" type="java.lang.String">
+            <column name="InsertTime" length="40"/>
         </property>
         <property name="lastestUpdate" type="java.lang.String">
             <column name="LastestUpdate" length="40" />

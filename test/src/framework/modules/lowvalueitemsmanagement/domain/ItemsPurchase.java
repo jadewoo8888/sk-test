@@ -7,7 +7,7 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 
 	private String pk = "";
 	private String ipCode = "";
-	//@FK(ref = Ref.Organization)
+	@FK(ref = Ref.Category)
 	private String ipCategoryPK = "";
 	@FK(ref = Ref.Organization)
 	private String ipOrgCode = "";
@@ -24,7 +24,7 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 	private String ipApprovalFlag = "";
 	private String linkers = "";
 	private String allowApprPerson = ""; 
-	private String inserttime = "";
+	private String insertTime = "";
 	private String lastestUpdate = "";
 	private String updatePerson = "";
 
@@ -119,11 +119,12 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 	public void setAllowApprPerson(String allowApprPerson) {
 		this.allowApprPerson = allowApprPerson;
 	}
-	public String getInserttime() {
-		return inserttime;
+	
+	public String getInsertTime() {
+		return insertTime;
 	}
-	public void setInserttime(String inserttime) {
-		this.inserttime = inserttime;
+	public void setInsertTime(String insertTime) {
+		this.insertTime = insertTime;
 	}
 	public String getLastestUpdate() {
 		return lastestUpdate;

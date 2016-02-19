@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html> 
 <head>
-<link href="viewapplyregister.css" rel="stylesheet" type="text/css" />
+<link href="viewpurchaseapply.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.css" rel="stylesheet" type="text/css" />
 <style>
 .colorblack{color: #000000;}
@@ -20,9 +20,8 @@
 var pk="${param.pk}";
 //业务类型
 var business=STR_VIEW;
-
-//var mainObj = new Object();
-var approvalBusiType = "SPYWLX_014";//物品申领审批路径
+var categoryName="${param.categoryName}";
+var approvalBusiType = "SPYWLX_015";//物品采购审批路径
 
 //加载完成执行 
 $(function(){
@@ -34,21 +33,21 @@ $(function(){
  * 初始化表格信息
  **/
 function initDataGrid() {
+	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},
-        {field:"imTypeDisplay",title:'类别',minwidth:80},
-        {field:"imSpecification",title:'规格型号',minwidth:80},
-		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80}
+		{field:"ipDName",title:'物品名称',minwidth:80},
+        {field:"ipDType",title:'类别',minwidth:80},
+        {field:"ipDSpecification",title:'规格型号',minwidth:80},
+		{field:"ipDMetricUnit",title:'单位',minwidth:80},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}},
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
 	 
-	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
@@ -56,14 +55,15 @@ function initDataGrid() {
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
 	//单位条件
-	var mpkQc = new Object();
-	mpkQc.fn = 'itemsApplyMPK';
-	mpkQc.oper = ARY_STR_EQUAL[0];
-	mpkQc.value1 = pk;
-	customQCArr.push(mpkQc);
+	//采购申请条件
+	var qc = new Object();
+	qc.fn = 'ipDItemsPurchasePK';
+	qc.oper = ARY_STR_EQUAL[0];
+	qc.value1 = pk;
+	customQCArr.push(qc);
 	
 	var appCountQc = new Object();
-	appCountQc.fn = 'iamApplyCount';
+	appCountQc.fn = 'ipDApplyCount';
 	appCountQc.oper = ARY_STR_NOTEQUAL[0];
 	appCountQc.value1 = '0';
 	customQCArr.push(appCountQc);
@@ -72,7 +72,7 @@ function setCustomQueryCondition() {
 
 //获取信息 
 function getInfo(){
-	Ajax.service('ItemsApplyManagementBO','findById',[pk],
+	Ajax.service('ItemsPurchaseBO','findById',[pk],
 			function(obj){
 				dataFill(obj);	
 				
@@ -81,11 +81,11 @@ function getInfo(){
 					funcType:"DrawApprovalBar", 
 					approvalBarDivID:"id_div_approvaloption", 
 					isReadonly:true, 
-					busiDeptCode:obj.itemsApplyDeptCode, 
+					busiDeptCode:obj.ipDeptCode, 
 					busiType:approvalBusiType, 
 					busiPK:obj.pk, 
-					busiOrgCode:obj.orgCode, 
-					menuId:"MENU_10_01_02"
+					busiOrgCode:obj.ipOrgCode, 
+					menuId:"MENU_10_03_01"
 				};
 				var am = new ApprovalModule(apprvalOption);
 			},function(){
@@ -95,29 +95,18 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	$("#id_categoryManagementPK").val(obj.categoryName);
-	$("#id_itemsApplyDeptCode").val(obj.itemsApplyDeptCodeDisplay);
-	$("#id_applyPerson").val(obj.applyPersonDisplay);
-	$("#id_itemsApplyDate").val(obj.itemsApplyDate);
-	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
-	 /*  // 开始遍历赋值 
-	  for(var p in obj){
-		  var $element=$("#id_"+p);
-		  if($element[0]&&obj[p]!=null){	
-				  if(obj[p+"Display"]){
-					  $element.html(obj[p+"Display"]);
-				  }else{
-					  $element.html(obj[p]);
-				  }     			  	
-		  }
-	  } */
+	$("#id_ipCategoryPK").val(categoryName);
+	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
+	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
+	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);
+	$("#id_ipRemark").val(obj.ipRemark);
 }
 /**
  * 设置附件
  **/
 function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+pk;
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_026&controltype='+business+'&businesscode='+pk;
 }
 /** 
  * 获取附件数据
@@ -143,21 +132,21 @@ function getAppendData() {
 		           	</div>
                     <table cellSpacing=1 cellPadding=0>
                        		<tr>
-								<td   class="Edit-Title1">申领部门</td>
+								<td   class="Edit-Title1">申购部门</td>
 								<td   class="Edit-Input1">
-								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_ipDeptCode" fieldname="ipDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
 								</td>
-								<td   class="Edit-Title2">申领类目</td>
-								<td   class="Edit-Input2">
-								<input id="id_categoryManagementPK" fieldname="categoryManagementPK"  class="easyui-validatebox" readonly="readonly"/>
+								<td   class="Edit-Title1">申购类目</td>
+								<td   class="Edit-Input1">
+								<input id="id_ipCategoryPK" fieldname="ipCategoryPK" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
-								<td   class="Edit-Title1">申领人</td>
-								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" class="easyui-validatebox" readonly="readonly"/></td>
+								<td   class="Edit-Title1">申购人</td>
+								<td   class="Edit-Input1"><input id="id_ipApplyPerson" fieldname="ipApplyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
 								
-								<td   class="Edit-Title2">申领日期</td>
-								<td   class="Edit-Input2"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
+								<td   class="Edit-Title1">申购日期</td>
+								<td   class="Edit-Input1"><input  id="id_ipPurchaseDate"  fieldname="ipPurchaseDate" readonly="readonly"/></td>
 							</tr>
 							
 					<tr>
@@ -170,7 +159,7 @@ function getAppendData() {
 					</tr>
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"  readonly="readonly"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_ipRemark" fieldname="ipRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
 					</tr>
 					</table> 
 					
@@ -183,7 +172,7 @@ function getAppendData() {
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
-	           		<div class="editTitle">申领附件</div>						           			
+	           		<div class="editTitle">采购申请附件</div>						           			
 					<hr  class="editline"/>
 	           	</div>
 	            <div   class="editTips"></div> 
@@ -202,7 +191,6 @@ function getAppendData() {
 
 	    </div> 
 	</div>
-	<div style="background-color:white;height:100px;"></div>
 
 	</body>
 </html>

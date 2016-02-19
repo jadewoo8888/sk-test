@@ -4,34 +4,20 @@ package framework.modules.lowvalueitemsmanagement.domain;
 public class ItemsPurchaseDetail implements java.io.Serializable, Cloneable {
 
 	private String pk = "";
-	//@FK(ref = Ref.Organization)
-	private String iPDItemsPurchasePK = "";
-	//@FK(ref = Ref.Organization)
-	private String iPDItemManagePK = "";
-	//@FK(ref = Ref.Organization)
-	private String iPDName = "";
-	//@FK(ref = Ref.Organization)
-	private String iPDType = "";
-	//@FK(ref = Ref.Organization)
-	private String iPDSpecification = "";
-	//@FK(ref = Ref.Organization)
-	private String iPDMetricUnit = "";
-	private Integer iPDApplyCount = 0;
-	private Integer iPDApproveCount = 0;
-	private Integer iPDPurchaseCount = 0;
-	private Integer iPDStoreCount = 0;
-	private String iPDCheckFlag = "";
-	private String inserttime = "";
+	private String ipDItemsPurchasePK = "";
+	private String ipDItemManagePK = "";
+	private String ipDName = "";
+	private String ipDType = "";
+	private String ipDSpecification = "";
+	private String ipDMetricUnit = "";
+	private Integer ipDApplyCount = 0;
+	private Integer ipDApproveCount = 0;
+	private Integer ipDPurchaseCount = 0;
+	private Integer ipDStoreCount = 0;
+	private String ipDCheckFlag = "";
+	private String insertTime = "";
 	private String lastestUpdate = "";
 	private String updatePerson = "";
-
-	// 外检翻译
-	private String iPDItemsPurchasePKDisplay = "";
-	private String iPDItemManagePKDisplay = "";
-	private String iPDNameDisplay = "";
-	private String iPDTypeDisplay = "";
-	private String iPDSpecificationDisplay = "";
-	private String iPDMetricUnitDisplay = "";
 	
 	
 	public String getPk() {
@@ -40,77 +26,78 @@ public class ItemsPurchaseDetail implements java.io.Serializable, Cloneable {
 	public void setPk(String pk) {
 		this.pk = pk;
 	}
-	public String getiPDItemsPurchasePK() {
-		return iPDItemsPurchasePK;
+	public String getIpDItemsPurchasePK() {
+		return ipDItemsPurchasePK;
 	}
-	public void setiPDItemsPurchasePK(String iPDItemsPurchasePK) {
-		this.iPDItemsPurchasePK = iPDItemsPurchasePK;
+	public void setIpDItemsPurchasePK(String ipDItemsPurchasePK) {
+		this.ipDItemsPurchasePK = ipDItemsPurchasePK;
 	}
-	public String getiPDItemManagePK() {
-		return iPDItemManagePK;
+	public String getIpDItemManagePK() {
+		return ipDItemManagePK;
 	}
-	public void setiPDItemManagePK(String iPDItemManagePK) {
-		this.iPDItemManagePK = iPDItemManagePK;
+	public void setIpDItemManagePK(String ipDItemManagePK) {
+		this.ipDItemManagePK = ipDItemManagePK;
 	}
-	public String getiPDName() {
-		return iPDName;
+	public String getIpDName() {
+		return ipDName;
 	}
-	public void setiPDName(String iPDName) {
-		this.iPDName = iPDName;
+	public void setIpDName(String ipDName) {
+		this.ipDName = ipDName;
 	}
-	public String getiPDType() {
-		return iPDType;
+	public String getIpDType() {
+		return ipDType;
 	}
-	public void setiPDType(String iPDType) {
-		this.iPDType = iPDType;
+	public void setIpDType(String ipDType) {
+		this.ipDType = ipDType;
 	}
-	public String getiPDSpecification() {
-		return iPDSpecification;
+	public String getIpDSpecification() {
+		return ipDSpecification;
 	}
-	public void setiPDSpecification(String iPDSpecification) {
-		this.iPDSpecification = iPDSpecification;
+	public void setIpDSpecification(String ipDSpecification) {
+		this.ipDSpecification = ipDSpecification;
 	}
-	public String getiPDMetricUnit() {
-		return iPDMetricUnit;
+	public String getIpDMetricUnit() {
+		return ipDMetricUnit;
 	}
-	public void setiPDMetricUnit(String iPDMetricUnit) {
-		this.iPDMetricUnit = iPDMetricUnit;
+	public void setIpDMetricUnit(String ipDMetricUnit) {
+		this.ipDMetricUnit = ipDMetricUnit;
 	}
-	public Integer getiPDApplyCount() {
-		return iPDApplyCount;
+	public Integer getIpDApplyCount() {
+		return ipDApplyCount;
 	}
-	public void setiPDApplyCount(Integer iPDApplyCount) {
-		this.iPDApplyCount = iPDApplyCount;
+	public void setIpDApplyCount(Integer ipDApplyCount) {
+		this.ipDApplyCount = ipDApplyCount;
 	}
-	public Integer getiPDApproveCount() {
-		return iPDApproveCount;
+	public Integer getIpDApproveCount() {
+		return ipDApproveCount;
 	}
-	public void setiPDApproveCount(Integer iPDApproveCount) {
-		this.iPDApproveCount = iPDApproveCount;
+	public void setIpDApproveCount(Integer ipDApproveCount) {
+		this.ipDApproveCount = ipDApproveCount;
 	}
-	public Integer getiPDPurchaseCount() {
-		return iPDPurchaseCount;
+	public Integer getIpDPurchaseCount() {
+		return ipDPurchaseCount;
 	}
-	public void setiPDPurchaseCount(Integer iPDPurchaseCount) {
-		this.iPDPurchaseCount = iPDPurchaseCount;
+	public void setIpDPurchaseCount(Integer ipDPurchaseCount) {
+		this.ipDPurchaseCount = ipDPurchaseCount;
 	}
-	public Integer getiPDStoreCount() {
-		return iPDStoreCount;
+	public Integer getIpDStoreCount() {
+		return ipDStoreCount;
 	}
-	public void setiPDStoreCount(Integer iPDStoreCount) {
-		this.iPDStoreCount = iPDStoreCount;
+	public void setIpDStoreCount(Integer ipDStoreCount) {
+		this.ipDStoreCount = ipDStoreCount;
 	}
-	public String getiPDCheckFlag() {
-		return iPDCheckFlag;
+	public String getIpDCheckFlag() {
+		return ipDCheckFlag;
 	}
-	public void setiPDCheckFlag(String iPDCheckFlag) {
-		this.iPDCheckFlag = iPDCheckFlag;
+	public void setIpDCheckFlag(String ipDCheckFlag) {
+		this.ipDCheckFlag = ipDCheckFlag;
 	}
-	public String getInserttime() {
-		return inserttime;
+	
+	public String getInsertTime() {
+		return insertTime;
 	}
-	public void setInserttime(String inserttime) {
-		this.inserttime = inserttime;
+	public void setInsertTime(String insertTime) {
+		this.insertTime = insertTime;
 	}
 	public String getLastestUpdate() {
 		return lastestUpdate;
@@ -124,43 +111,5 @@ public class ItemsPurchaseDetail implements java.io.Serializable, Cloneable {
 	public void setUpdatePerson(String updatePerson) {
 		this.updatePerson = updatePerson;
 	}
-	public String getiPDItemsPurchasePKDisplay() {
-		return iPDItemsPurchasePKDisplay;
-	}
-	public void setiPDItemsPurchasePKDisplay(String iPDItemsPurchasePKDisplay) {
-		this.iPDItemsPurchasePKDisplay = iPDItemsPurchasePKDisplay;
-	}
-	public String getiPDItemManagePKDisplay() {
-		return iPDItemManagePKDisplay;
-	}
-	public void setiPDItemManagePKDisplay(String iPDItemManagePKDisplay) {
-		this.iPDItemManagePKDisplay = iPDItemManagePKDisplay;
-	}
-	public String getiPDNameDisplay() {
-		return iPDNameDisplay;
-	}
-	public void setiPDNameDisplay(String iPDNameDisplay) {
-		this.iPDNameDisplay = iPDNameDisplay;
-	}
-	public String getiPDTypeDisplay() {
-		return iPDTypeDisplay;
-	}
-	public void setiPDTypeDisplay(String iPDTypeDisplay) {
-		this.iPDTypeDisplay = iPDTypeDisplay;
-	}
-	public String getiPDSpecificationDisplay() {
-		return iPDSpecificationDisplay;
-	}
-	public void setiPDSpecificationDisplay(String iPDSpecificationDisplay) {
-		this.iPDSpecificationDisplay = iPDSpecificationDisplay;
-	}
-	public String getiPDMetricUnitDisplay() {
-		return iPDMetricUnitDisplay;
-	}
-	public void setiPDMetricUnitDisplay(String iPDMetricUnitDisplay) {
-		this.iPDMetricUnitDisplay = iPDMetricUnitDisplay;
-	}
-	
-	
 	
 }

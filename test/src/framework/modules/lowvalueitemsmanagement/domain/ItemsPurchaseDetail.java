@@ -1,5 +1,7 @@
 package framework.modules.lowvalueitemsmanagement.domain;
 
+import framework.sys.foreignkeytranslation.FK;
+import framework.sys.foreignkeytranslation.Ref;
 
 public class ItemsPurchaseDetail implements java.io.Serializable, Cloneable {
 
@@ -7,6 +9,7 @@ public class ItemsPurchaseDetail implements java.io.Serializable, Cloneable {
 	private String ipDItemsPurchasePK = "";
 	private String ipDItemManagePK = "";
 	private String ipDName = "";
+	@FK(ref = Ref.Classify)
 	private String ipDType = "";
 	private String ipDSpecification = "";
 	private String ipDMetricUnit = "";
@@ -19,6 +22,8 @@ public class ItemsPurchaseDetail implements java.io.Serializable, Cloneable {
 	private String lastestUpdate = "";
 	private String updatePerson = "";
 	
+	// 外检翻译
+    private String ipDTypeDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -110,6 +115,12 @@ public class ItemsPurchaseDetail implements java.io.Serializable, Cloneable {
 	}
 	public void setUpdatePerson(String updatePerson) {
 		this.updatePerson = updatePerson;
+	}
+	public String getIpDTypeDisplay() {
+		return ipDTypeDisplay;
+	}
+	public void setIpDTypeDisplay(String ipDTypeDisplay) {
+		this.ipDTypeDisplay = ipDTypeDisplay;
 	}
 	
 }

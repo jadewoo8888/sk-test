@@ -27,13 +27,13 @@ function initDataGrid() {
 	 	{field:'option',title:'操作',minwidth:280,formatter:function(value,row,index){
 	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >查看</a>";
 			if (row.ipApprovalFlag == 'WPSLZT_001') {
-				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.categoryManagementPK+"\",\""+row.ipCategoryPKDisplay+"\")' >修改</a>";
+				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >修改</a>";
 				html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
 				html += "<a href='javascript:void(0);' onclick='reportone(\""+row.pk+"\")' >上报</a>  ";
 			}
-			if (row.itemsApplyFlag == 'WPSGZT_004' && (row.ipPurchaseCountSum != 0 && ipStoreCountSum  < ipPurchaseCountSum)) {
-				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.categoryManagementPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
-				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.categoryManagementPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库</a>";
+			if (row.ipApprovalFlag == 'WPSGZT_004' && (row.ipPurchaseCountSum != 0 && ipStoreCountSum  < ipPurchaseCountSum)) {
+				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
+				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库</a>";
 			}
  			return html;
  			//【修改】、【删除】、【上报】、【查看】、【入库前修改】、【入库】

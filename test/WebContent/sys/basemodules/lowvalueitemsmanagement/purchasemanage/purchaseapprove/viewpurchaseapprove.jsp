@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html> 
 <head>
-<link href="viewpurchaseapply.css" rel="stylesheet" type="text/css" />
+<link href="viewpurchaseapprove.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.css" rel="stylesheet" type="text/css" />
 <style>
 .colorblack{color: #000000;}

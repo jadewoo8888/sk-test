@@ -18,7 +18,7 @@
 		<menu id="MENU_10_02" name="物品发放管理" url="/sys/basemodules/lowvalueitemsmanagement/issuemange/listissueitem.jsp" desc="用于物品申领的发放管理"/>
 		<menu id="MENU_10_03" name="物品采购管理">
 			<menu id="MENU_10_03_01" name="采购申请" url="/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/listpurchaseapply.jsp" desc="用于物品采购申请"/>
-    		<menu id="MENU_10_03_02" name="采购审批" url="/sys/basemodules/lowvalueitemsmanagement/procurementmanage/procurementapprove/listprocurementapprove.jsp" desc="用于采购审批"/>
+    		<menu id="MENU_10_03_02" name="采购审批" url="/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/listpurchaseapprove.jsp" desc="用于采购审批"/>
 		</menu>
 		<menu id="MENU_10_04" name="低值品仓库管理" url="/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/listlowvalueitems.jsp" desc="用于低值品仓库管理"/>
 		<menu id="MENU_10_05" name="系统设置">

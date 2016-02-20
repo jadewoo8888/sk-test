@@ -138,7 +138,7 @@ function approvalsave(type,data){
 	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
 	Ajax.service(
  			'ItemsPurchaseBO',
- 			'approvalApplyCount', 
+ 			'approvalItemsPurchase', 
  			[mainObj,data,getAppendData(),type,approvalPurchaseDetail],
  			function(data){		
 				var tips = "保存信息成功！";

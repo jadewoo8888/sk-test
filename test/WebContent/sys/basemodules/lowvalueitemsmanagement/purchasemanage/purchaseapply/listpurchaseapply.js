@@ -247,7 +247,7 @@ function reportone(pk){
 		icon: 3,
 		area:['250px','150px'],
 		btn:['确定','取消'],
-		content:'确定上报吗？',
+		content:'是否确认将申购单提交审批？',
 		shift:1,
 		closeBtn :2,
 		yes: function(index){
@@ -267,7 +267,7 @@ function reportone(pk){
 							if(result!=null&&result!=""){		
 								top.layer.alert(result,{icon: 5, closeBtn:2});
 							}else{
-								top.layer.alert('上报 成功 ',{icon: 6, closeBtn:2});
+								top.layer.alert('申请提交成功 ',{icon: 6, closeBtn:2});
 						    	//刷新
 						    	datagrid.query();
 							}		

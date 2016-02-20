@@ -36,6 +36,7 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage>{
 			@MethodID("deleteItem")
 			@LogOperate(operate = "删除一条物品")
 			public String deleteItem_log_trans(String pk) {
+				//对应物品存在物品申领单或物品采购单、低值品入库记录时不允许删除
 				String return_tips = "";
 				entityDAO.delete(entityDAO.findById(pk));
 				return return_tips;

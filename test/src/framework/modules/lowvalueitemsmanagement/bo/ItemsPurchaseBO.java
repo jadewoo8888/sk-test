@@ -168,7 +168,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	}
 	
 	@MethodID("approvalItemsPurchase")
-	@LogOperate(operate = "审批物品采购申请")
+	@LogOperate(operate = "审批物品申购")
 	public ApproveResult approvalItemsPurchase_log_trans(ItemsPurchase itemsPurchase, Approval approval, List<Append> appendList, String strApprovalType,List<ItemsPurchaseDetail> itemsPurchaseDetailList) {
 		ApproveResult approveResult = null;
 		String[] arrCondition = _getApprovalConditon(itemsPurchase);

@@ -9,7 +9,7 @@ $(function(){
 		});	
 	
 	//编辑事务读取数据 
-	if(busitype=="modify"){
+	if(business=="modify"){
 		$("#businesstext").html("修改类目 ");
 	}
 });
@@ -62,10 +62,10 @@ function dataFill(obj){
 			    	}
 			     }else{
 		  		 	//特殊字段处理
-		  		 	if(p=='assetSysCode'){
+		  		 	/*if(p=='assetSysCode'){
 		  		 		getAssetInfo(obj[p]);
 		  		 		continue;
-		  		 	}
+		  		 	}*/
 		  		 	
 		  		 	$("#id_"+p).val(obj[p]);		  		 	
 			     }
@@ -122,15 +122,15 @@ function getDataPackage(){
 
 //保存 
 function savedata(){
-	edit(busitype);
+	edit(business);
 }
 
 //新增修改 
-function edit(busitype){
+function edit(business){
 	// 验证通过则返回为true
 	if($("#ff").form("validate")){
 		var itemObj = getDataPackage();
-		if (busitype == 'add') {
+		if (business == 'add') {
 			submitAdd(itemObj);
 		} else {
 			itemObj.pk = pk;

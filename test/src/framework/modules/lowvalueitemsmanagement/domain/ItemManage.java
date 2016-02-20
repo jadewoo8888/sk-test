@@ -11,7 +11,7 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	@FK(ref = Ref.Classify)
 	private String imType="";
 	private String imName = "";
-	//@FK(ref = Ref.AssetClassify)
+	@FK(ref = Ref.AssetClassify)
 	private String imAssetType = "";
 	
 	private String imSpecification = "";
@@ -24,7 +24,7 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	// 外检翻译
 	private String imCategoryPKDisplay = "";
 	private String imTypeDisplay = "";
-	//private String imAssetTypeDisplay = "";
+	private String imAssetTypeDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -103,6 +103,12 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	}
 	public void setImTypeDisplay(String imTypeDisplay) {
 		this.imTypeDisplay = imTypeDisplay;
+	}
+	public String getImAssetTypeDisplay() {
+		return imAssetTypeDisplay;
+	}
+	public void setImAssetTypeDisplay(String imAssetTypeDisplay) {
+		this.imAssetTypeDisplay = imAssetTypeDisplay;
 	}
 	
 }

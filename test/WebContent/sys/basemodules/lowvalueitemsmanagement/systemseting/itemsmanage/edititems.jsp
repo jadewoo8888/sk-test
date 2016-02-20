@@ -38,7 +38,7 @@ background-color:rgba(180,180,180,0.5);
 </style>
 <script>
 //事务 
-var busitype="${param.busitype}";
+var business="${param.business}";
 var pk="${param.pk}";
 //var data_imType=${json:classify("STD_DYZT")};
 </script>
@@ -68,7 +68,7 @@ var pk="${param.pk}";
 							<tr>
 								<td   class="Edit-Title1">名称<span class="notnullTip">*</span></td>
 								<td   class="Edit-Input1"><input id="id_imName" fieldname="imName" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox"/></td>
-								<td   class="Edit-Title2">资产分类代码<span class="notnullTip">*</span></td>
+								<td   class="Edit-Title2">资产分类代码</td>
 								<td   class="Edit-Input2"><input  id="id_imAssetType" fieldname="imAssetType"/></td>
 							</tr>
 							<tr> 

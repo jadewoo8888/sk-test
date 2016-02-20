@@ -75,8 +75,8 @@ function initAddDataGrid() {
 	 var _columns =  
 	 [[
 		{field:"imName",title:'物品名称',minwidth:80},
-		{field:"ipDType",title:'类别编码',minwidth:80,hidden:true},
-        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
+		{field:"imType",title:'类别编码',minwidth:80,hidden:true},
+        {field:"imTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}},
@@ -234,7 +234,7 @@ function packageItemsPurchaseDetailData() {
 	 	var itemsPurchaseDetail = new Object();
 	 	itemsPurchaseDetail.ipDItemManagePK = row[i].pk;
 	 	if (pk) {
-	 		itemsPurchaseDetail.ipDName = row[i].ipDName;
+	 		itemsPurchaseDetail.ipDType= row[i].ipDType;
 		 	itemsPurchaseDetail.ipDName = row[i].ipDName;
 		 	itemsPurchaseDetail.ipDSpecification= row[i].ipDSpecification;
 		 	itemsPurchaseDetail.ipDMetricUnit= row[i].ipDMetricUnit;

@@ -214,7 +214,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 		/** 处理附件 * */
 		appendBO.processAppend(appendList, itemsPurchase.getPk(), AppendBusinessType.TYYWLX_026, itemsPurchase.getIpOrgCode());
 
-		itemsPurchaseDetailBO.approvalItemMDtailCount_log_trans(itemsPurchaseDetailList);
+		itemsPurchaseDetailBO.approveApplyCount_log_trans(itemsPurchaseDetailList);
 		
 		return approveResult;
 	}

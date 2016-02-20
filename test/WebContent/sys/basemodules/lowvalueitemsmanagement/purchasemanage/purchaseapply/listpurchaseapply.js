@@ -31,8 +31,8 @@ function initDataGrid() {
 				html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
 				html += "<a href='javascript:void(0);' onclick='reportone(\""+row.pk+"\")' >上报</a>  ";
 			}
-			if (row.ipApprovalFlag == 'WPSGZT_004' && (row.ipPurchaseCountSum != 0 && ipStoreCountSum  < ipPurchaseCountSum)) {
-				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
+			if (row.ipApprovalFlag == 'WPSLZT_004' && (row.ipPurchaseCountSum == 0 || ipStoreCountSum  < ipPurchaseCountSum)) {
+				html += "<a href='javascript:void(0);' onclick='modifystore(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
 				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库</a>";
 			}
  			return html;
@@ -170,6 +170,14 @@ function modifyone(pk,categoryPk,categoryName){
 
 }
 
+//入库前修改
+function modifystore(pk,categoryPk,categoryName){
+	if(!judgeOpeCollectOrg()) {
+		return;
+	}
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
+
+}
 /**
  * 查看
  **/
@@ -309,7 +317,7 @@ function getItemStatus() {
 	} else if (itemStatusDisplay == 'WPSLZT_004,WPSLZT_005'){
 		checkedQc.value1 = "((ipApprovalFlag in ('WPSLZT_004','WPSLZT_005')))";
 	} else if (itemStatusDisplay == 'stored'){
-		checkedQc.value1 = "((ipStoreCountSum != 0 and ipStoreCountSum  = ipPurchaseCountSum))";
+		checkedQc.value1 = "((ipStoreCountSum != 0 and ipStoreCountSum  >= ipPurchaseCountSum))";
 	} else {
 		checkedQc.value1 = "(1=1)";
 	}

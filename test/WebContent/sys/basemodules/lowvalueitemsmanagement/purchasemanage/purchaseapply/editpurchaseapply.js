@@ -152,12 +152,12 @@ function initComBindFunc() {
 		save(true);
 	});
 	//查询按钮处理事件
-	$("#id_btn_query").click(function () {
+	/*$("#id_btn_query").click(function () {
 		datagrid.query();
 	});
 	$("#id_btn_export").click(function () {
 		datagrid.showExport();
-	}); 
+	});*/ 
 	$("#id_bt_return").click(function(){
 		history.go(-1);
 		});

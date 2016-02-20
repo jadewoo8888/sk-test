@@ -43,12 +43,22 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 
 	}
 	
-	@MethodID("approvalPurchaseMDtailCount")
-	@LogOperate(operate = "审批物品采购申请明细")
-	public void approvalItemMDtailCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList){
+	@MethodID("approvalApplyCount")
+	@LogOperate(operate = "审批物品申购数量")
+	public void approveApplyCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList){
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
 			dbItemsPurchaseDetail.setIpDApproveCount(itemsPurchaseDetail.getIpDApproveCount());
+			entityDAO.attachDirty(dbItemsPurchaseDetail);
+		}
+	}
+	
+	@MethodID("modifyPurchaseCount")
+	@LogOperate(operate = "修改物品采购数量")
+	public void modifyPurchaseCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList){
+		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
+			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
+			dbItemsPurchaseDetail.setIpDPurchaseCount(itemsPurchaseDetail.getIpDPurchaseCount());
 			entityDAO.attachDirty(dbItemsPurchaseDetail);
 		}
 	}

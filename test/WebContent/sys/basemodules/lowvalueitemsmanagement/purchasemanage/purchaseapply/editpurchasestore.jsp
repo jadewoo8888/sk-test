@@ -3,11 +3,20 @@
 <!DOCTYPE HTML>
 <html> 
 <head>
-<link href="editpurchaseapply.css" rel="stylesheet" type="text/css" />
-<script src="editpurchaseapply.js" type="text/javascript"></script>
+<link href="editpurchasestore.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.css" rel="stylesheet" type="text/css" />
+<style>
+.colorblack{color: #000000;}
+.notnullTip{color:red;vertical-align: middle;margin-left:3px;}
+.View-Title1{width:200px;}
+.View-Title2{width:200px;}
+.editTips{text-align:left;}
+#id_unitAdress{width:638px;}
+.EditPanel{padding-left:10px;}
+</style> 
+<script src="editpurchasestore.js" type="text/javascript"></script>
 <script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
-<script>
+<script> 
 //业务类型
 var business="${param.business}";
 var categoryPk="${param.categoryPk}";
@@ -56,7 +65,7 @@ var pk="${param.pk}";
 					</tr>
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_ipRemark" fieldname="ipRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_ipRemark" fieldname="ipRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！" readonly="readonly"></textarea></td>
 					</tr>
 					</table> 
 					
@@ -87,8 +96,6 @@ var pk="${param.pk}";
 	    <div title="审批路线图" id="approval_img">
 
 	    </div> 
-	    <!--审批按钮栏  -->
-	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
 	</div>
 	
 	<div style="background-color:white;height:100px;"></div>
@@ -96,10 +103,10 @@ var pk="${param.pk}";
 	
 	<div class="Editinput">
 		<input type="button" id="id_btn_save" class="bt_ensure" value="保存"></input>
-		<input type="button" id="id_btn_report" class="bt_ensure" value="上报"></input>
 		<input id="id_bt_return" type="button" class="bt_cancel" value="返回"></input>
 	</div>
 
 	</body>
 </html>
+
 

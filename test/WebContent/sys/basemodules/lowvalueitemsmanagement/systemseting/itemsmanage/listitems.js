@@ -50,7 +50,24 @@ function initComBindFunc() {
 		datagrid.showExport();
 	}); 
 	
-	
+	initCombobox();
+}
+
+function initCombobox() {
+	if($('#imType')[0])
+		$('#imType').combobox({    
+		    data:data_imType,  
+		    editable:false,
+		    panelHeight:100,
+		    multiple:true,
+		    height:28,
+		    width:120,
+		    valueField:'classifyCode',
+		    textField:'classifyName',
+		    onLoadSuccess: function () { //数据加载完毕事件
+
+	        }  
+		});
 }
 
 /**

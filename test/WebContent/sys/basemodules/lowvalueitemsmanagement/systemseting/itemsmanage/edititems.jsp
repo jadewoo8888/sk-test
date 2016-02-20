@@ -62,7 +62,7 @@ var pk="${param.pk}";
 								<td   class="Edit-Input1"><input type="text" id="id_imCategoryPK" fieldname="imCategoryPK" class="easyui-combobox"  editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,valueField:'pk',textField:'categoryName'"/></td>
 								<td   class="Edit-Title2">类别<span class="notnullTip">*</span></td>
 								<td   class="Edit-Input2">
-								<input id="id_imType" fieldname="imType" class="easyui-combobox" editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001,WPLB_002',classifyName:'全部'},{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" />
+								<input id="id_imType" fieldname="imType" class="easyui-combobox" editable="false" required="true"  missingMessage="必选项"  data-options="height:28,width:202,value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" />
 								</td>
 							</tr>
 							<tr>

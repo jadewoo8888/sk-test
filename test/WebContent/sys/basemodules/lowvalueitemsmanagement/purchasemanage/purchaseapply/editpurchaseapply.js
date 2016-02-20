@@ -75,7 +75,8 @@ function initAddDataGrid() {
 	 var _columns =  
 	 [[
 		{field:"imName",title:'物品名称',minwidth:80},
-        {field:"imTypeDisplay",title:'类别',minwidth:80},
+		{field:"ipDType",title:'类别编码',minwidth:80,hidden:true},
+        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}},
@@ -108,7 +109,8 @@ function initModifyDataGrid() {
 	 var _columns =  
 	 [[
 		{field:"ipDName",title:'物品名称',minwidth:80},
-        {field:"ipDType",title:'类别',minwidth:80},
+		{field:"ipDType",title:'类别编码',minwidth:80,hidden:true},
+        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
 		{field:"ipDMetricUnit",title:'单位',minwidth:80},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}},

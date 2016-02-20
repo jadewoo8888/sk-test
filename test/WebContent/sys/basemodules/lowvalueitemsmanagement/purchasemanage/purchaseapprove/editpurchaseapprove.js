@@ -24,7 +24,8 @@ function initDataGrid() {
 	 var _columns =  
 		 [[
 			{field:"ipDName",title:'物品名称',minwidth:80},
-	        {field:"ipDType",title:'类别',minwidth:80},
+	        {field:"ipDType",title:'类别编码',minwidth:80,hidden:true},
+	        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
 	        {field:"ipDSpecification",title:'规格型号',minwidth:80},
 			{field:"ipDMetricUnit",title:'单位',minwidth:80},
 			{field:"ipDApplyCount",title:'申购数量',minwidth:80},

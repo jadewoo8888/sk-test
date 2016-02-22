@@ -119,5 +119,9 @@
 		<property name="entityDAO">
 			<ref bean="ItemsPurchaseDetailDAO" />
 		</property>
+		
+		<property name="itemsPurchaseDAO">
+			<ref bean="ItemsPurchaseDAO" />
+		</property>
 	</bean>
 </beans>

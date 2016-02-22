@@ -117,7 +117,7 @@ function save() {
 	Ajax.service(
 			'ItemsPurchaseDetailBO',
 			'modifyPurchaseCount', 
-			 [purchaseDetailList],
+			 [purchaseDetailList,pk],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击

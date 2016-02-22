@@ -3,7 +3,9 @@ package framework.modules.lowvalueitemsmanagement.bo;
 import java.util.List;
 import java.util.UUID;
 
+import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDetailDAO;
+import framework.modules.lowvalueitemsmanagement.domain.ItemsPurchase;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsPurchaseDetail;
 import framework.sys.basemodule.bo.BOBase;
 import framework.sys.context.applicationworker.MethodID;
@@ -13,6 +15,8 @@ import framework.sys.tools.DBOperation;
 @LogOperate(menu = "低值易耗品物品采购申请明细")
 public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsPurchaseDetail>{
 
+	private ItemsPurchaseDAO itemsPurchaseDAO;
+	
 	@MethodID("addItemsPurchaseDetail")
 	@LogOperate(operate = "新增物品采购申请明细")
 	public void addItemsPurchaseDetail_log_trans(ItemsPurchaseDetail itemsPurchaseDetail) {
@@ -55,12 +59,37 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	
 	@MethodID("modifyPurchaseCount")
 	@LogOperate(operate = "修改物品采购数量")
-	public void modifyPurchaseCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList){
+	public void modifyPurchaseCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList, String ipDItemsPurchasePK){
+		
+		int ipPurchaseCountSum = 0;//采购数量合计
+		
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
 			dbItemsPurchaseDetail.setIpDPurchaseCount(itemsPurchaseDetail.getIpDPurchaseCount());
 			entityDAO.attachDirty(dbItemsPurchaseDetail);
+			ipPurchaseCountSum += dbItemsPurchaseDetail.getIpDPurchaseCount();
 		}
+		//合计采购数量
+		ItemsPurchase itemsPurchase = itemsPurchaseDAO.findById(ipDItemsPurchasePK);
+		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
+		itemsPurchaseDAO.attachDirty(itemsPurchase);
 	}
+	
+	@MethodID("getIpDetailLisByIPPK")
+	public List<ItemsPurchaseDetail> getIpDetailLisByIPPK(String ipPk) {
+		List<ItemsPurchaseDetail> list = entityDAO.executeFind(ItemsPurchaseDetail.class,"select * from tItemsPurchaseDetail t where t.ipDApplyCount > 0 and t.IPDItemsPurchasePK = ?", ipPk);
+		return list;
+	}
+
+	public ItemsPurchaseDAO getItemsPurchaseDAO() {
+		return itemsPurchaseDAO;
+	}
+
+	public void setItemsPurchaseDAO(ItemsPurchaseDAO itemsPurchaseDAO) {
+		this.itemsPurchaseDAO = itemsPurchaseDAO;
+	}
+	
+	
+	
 }
 

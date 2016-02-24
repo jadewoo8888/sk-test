@@ -123,5 +123,53 @@
 		<property name="itemsPurchaseDAO">
 			<ref bean="ItemsPurchaseDAO" />
 		</property>
+		<property name="lviStoreRecordDAO">
+			<ref bean="LVIStoreRecordDAO" />
+		</property>
+		<property name="lowValueItemsDAO">
+			<ref bean="LowValueItemsDAO" />
+		</property>
+	</bean>
+	
+	<bean id="LVIStoreRecordDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.LVIStoreRecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="LVIStoreRecordBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.LVIStoreRecordBO">
+		<property name="entityDAO">
+			<ref bean="LVIStoreRecordDAO" />
+		</property>
+	</bean>
+	
+	<bean id="LowValueItemsDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.LowValueItemsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="LowValueItemsBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.LowValueItemsBO">
+		<property name="entityDAO">
+			<ref bean="LowValueItemsDAO" />
+		</property>
+	</bean>
+	
+	<bean id="LVIPopRecordDAO"
+		class="framework.modules.lowvalueitemsmanagement.dao.LVIPopRecordDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" /> 
+		</property> 
+	</bean>
+
+	<bean id="LVIPopRecordBO"
+		class="framework.modules.lowvalueitemsmanagement.bo.LVIPopRecordBO">
+		<property name="entityDAO">
+			<ref bean="LowValueItemsDAO" />
+		</property>
 	</bean>
 </beans>

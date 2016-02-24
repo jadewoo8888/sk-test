@@ -32,8 +32,8 @@ function initDataGrid() {
 				html += "<a href='javascript:void(0);' onclick='reportone(\""+row.pk+"\")' >上报</a>  ";
 			}
 			if (row.ipApprovalFlag == 'WPSLZT_004' && (row.ipPurchaseCountSum == 0 || row.ipStoreCountSum  < row.ipPurchaseCountSum)) {
-				html += "<a href='javascript:void(0);' onclick='modifystore(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
-				html += "<a href='javascript:void(0);' onclick='dostore(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >入库</a>";
+				html += "<a href='javascript:void(0);' onclick='modifyPushStore(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
+				html += "<a href='javascript:void(0);' onclick='pushPurchaseStore(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >入库</a>";
 			}
  			return html;
  			//【修改】、【删除】、【上报】、【查看】、【入库前修改】、【入库】
@@ -171,7 +171,7 @@ function modifyone(pk,categoryPk,categoryName){
 }
 
 //入库前修改
-function modifystore(pk,categoryPk,categoryName){
+function modifyPushStore(pk,categoryPk,categoryName){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
@@ -179,11 +179,11 @@ function modifystore(pk,categoryPk,categoryName){
 }
 
 //入库
-function dostore(pk,categoryName){
+function pushPurchaseStore(pk,categoryName){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/dopurchasestore.jsp?pk='+pk+'&categoryName='+categoryName+'&business='+STR_VIEW;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/pushpurchasestore.jsp?pk='+pk+'&categoryName='+categoryName+'&business='+STR_VIEW;
 }
 /**
  * 查看

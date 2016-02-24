@@ -43,7 +43,8 @@ function initDataGrid() {
 		{field:"ipDMetricUnit",title:'单位',minwidth:80},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:80},
 		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80},
-		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80}
+		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80},
+		{field:"ipDStoreCount",title:'已入库数量',minwidth:80}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};

@@ -157,6 +157,9 @@
 		<property name="entityDAO">
 			<ref bean="LowValueItemsDAO" />
 		</property>
+		<property name="lviStoreRecordDAO">
+			<ref bean="LVIStoreRecordDAO" />
+		</property>
 	</bean>
 	
 	<bean id="LVIPopRecordDAO"

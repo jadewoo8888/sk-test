@@ -142,21 +142,21 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		String strSql = "SELECT * FROM tLowValueItems WHERE LVIItemManagePK = ?";
 		LowValueItems lowValueItem = lowValueItemsDAO.executeFindEntity(LowValueItems.class, strSql, itemsPurchaseDetail.getIpDItemManagePK());
 		if (lowValueItem != null) {
-			lowValueItem.setlVICount(lowValueItem.getlVICount() + itemsPurchaseDetail.getIpDPurchaseCount());
+			lowValueItem.setLviCount(lowValueItem.getLviCount() + itemsPurchaseDetail.getIpDPurchaseCount());
 			lowValueItemsDAO.attachDirty(lowValueItem);
 		} else {
 			lowValueItem = new LowValueItems();
 			lowValueItem.setInserttime(updateInfo[0]);
 			lowValueItem.setLastestUpdate(updateInfo[0]);
 			lowValueItem.setUpdatePerson(updateInfo[2]);
-			lowValueItem.setlVICategoryPK(itemsPurchase.getIpCategoryPK());
-			lowValueItem.setlVICount(itemsPurchaseDetail.getIpDPurchaseCount());
-			lowValueItem.setlVIItemManagePK(itemsPurchaseDetail.getIpDItemManagePK());
-			lowValueItem.setlVIMetricUnit(itemsPurchaseDetail.getIpDMetricUnit());
-			lowValueItem.setlVIName(itemsPurchaseDetail.getIpDName());
-			lowValueItem.setlVIRemark("");
-			lowValueItem.setlVISpecification(itemsPurchaseDetail.getIpDSpecification());
-			lowValueItem.setlVIType(itemsPurchaseDetail.getIpDType());
+			lowValueItem.setLviCategoryPK(itemsPurchase.getIpCategoryPK());
+			lowValueItem.setLviCount(itemsPurchaseDetail.getIpDPurchaseCount());
+			lowValueItem.setLviItemManagePK(itemsPurchaseDetail.getIpDItemManagePK());
+			lowValueItem.setLviMetricUnit(itemsPurchaseDetail.getIpDMetricUnit());
+			lowValueItem.setLviName(itemsPurchaseDetail.getIpDName());
+			lowValueItem.setLviRemark("");
+			lowValueItem.setLviSpecification(itemsPurchaseDetail.getIpDSpecification());
+			lowValueItem.setLviType(itemsPurchaseDetail.getIpDType());
 			lowValueItem.setPk(UUID.randomUUID().toString());
 			lowValueItemsDAO.save(lowValueItem);
 		}

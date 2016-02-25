@@ -6,30 +6,23 @@ import framework.sys.foreignkeytranslation.Ref;
 public class LowValueItems implements java.io.Serializable, Cloneable{
 
 	private String pk = "";
-	//@FK(ref = Ref.Organization)
-	private String lVICategoryPK = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIItemManagePK = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIName = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIType = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISpecification = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIMetricUnit = "";
-	private Integer lVICount = 0;
-	private String lVIRemark = "";
+	@FK(ref = Ref.Category)
+	private String lviCategoryPK = "";
+	private String lviItemManagePK = "";
+	private String lviName = "";
+	@FK(ref = Ref.Classify)
+	private String lviType = "";
+	private String lviSpecification = "";
+	private String lviMetricUnit = "";
+	private Integer lviCount = 0;
+	private String lviRemark = "";
 	private String inserttime = "";
 	private String lastestUpdate = "";
 	private String updatePerson = "";
 
 	// 外检翻译
-	private String lVICategoryPKDisplay = "";
-	private String lVIItemManagePKDisplay = "";
-	private String lVITypeDisplay = "";
-	private String lVISpecificationDisplay = "";
-	private String lVIMetricUnitDisplay = "";
+	private String lviCategoryPKDisplay = "";
+	private String lviTypeDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -37,53 +30,53 @@ public class LowValueItems implements java.io.Serializable, Cloneable{
 	public void setPk(String pk) {
 		this.pk = pk;
 	}
-	public String getlVICategoryPK() {
-		return lVICategoryPK;
+	public String getLviCategoryPK() {
+		return lviCategoryPK;
 	}
-	public void setlVICategoryPK(String lVICategoryPK) {
-		this.lVICategoryPK = lVICategoryPK;
+	public void setLviCategoryPK(String lviCategoryPK) {
+		this.lviCategoryPK = lviCategoryPK;
 	}
-	public String getlVIItemManagePK() {
-		return lVIItemManagePK;
+	public String getLviItemManagePK() {
+		return lviItemManagePK;
 	}
-	public void setlVIItemManagePK(String lVIItemManagePK) {
-		this.lVIItemManagePK = lVIItemManagePK;
+	public void setLviItemManagePK(String lviItemManagePK) {
+		this.lviItemManagePK = lviItemManagePK;
 	}
-	public String getlVIName() {
-		return lVIName;
+	public String getLviName() {
+		return lviName;
 	}
-	public void setlVIName(String lVIName) {
-		this.lVIName = lVIName;
+	public void setLviName(String lviName) {
+		this.lviName = lviName;
 	}
-	public String getlVIType() {
-		return lVIType;
+	public String getLviType() {
+		return lviType;
 	}
-	public void setlVIType(String lVIType) {
-		this.lVIType = lVIType;
+	public void setLviType(String lviType) {
+		this.lviType = lviType;
 	}
-	public String getlVISpecification() {
-		return lVISpecification;
+	public String getLviSpecification() {
+		return lviSpecification;
 	}
-	public void setlVISpecification(String lVISpecification) {
-		this.lVISpecification = lVISpecification;
+	public void setLviSpecification(String lviSpecification) {
+		this.lviSpecification = lviSpecification;
 	}
-	public String getlVIMetricUnit() {
-		return lVIMetricUnit;
+	public String getLviMetricUnit() {
+		return lviMetricUnit;
 	}
-	public void setlVIMetricUnit(String lVIMetricUnit) {
-		this.lVIMetricUnit = lVIMetricUnit;
+	public void setLviMetricUnit(String lviMetricUnit) {
+		this.lviMetricUnit = lviMetricUnit;
 	}
-	public Integer getlVICount() {
-		return lVICount;
+	public Integer getLviCount() {
+		return lviCount;
 	}
-	public void setlVICount(Integer lVICount) {
-		this.lVICount = lVICount;
+	public void setLviCount(Integer lviCount) {
+		this.lviCount = lviCount;
 	}
-	public String getlVIRemark() {
-		return lVIRemark;
+	public String getLviRemark() {
+		return lviRemark;
 	}
-	public void setlVIRemark(String lVIRemark) {
-		this.lVIRemark = lVIRemark;
+	public void setLviRemark(String lviRemark) {
+		this.lviRemark = lviRemark;
 	}
 	public String getInserttime() {
 		return inserttime;
@@ -103,36 +96,20 @@ public class LowValueItems implements java.io.Serializable, Cloneable{
 	public void setUpdatePerson(String updatePerson) {
 		this.updatePerson = updatePerson;
 	}
-	public String getlVICategoryPKDisplay() {
-		return lVICategoryPKDisplay;
+	public String getLviCategoryPKDisplay() {
+		return lviCategoryPKDisplay;
 	}
-	public void setlVICategoryPKDisplay(String lVICategoryPKDisplay) {
-		this.lVICategoryPKDisplay = lVICategoryPKDisplay;
+	public void setLviCategoryPKDisplay(String lviCategoryPKDisplay) {
+		this.lviCategoryPKDisplay = lviCategoryPKDisplay;
 	}
-	public String getlVIItemManagePKDisplay() {
-		return lVIItemManagePKDisplay;
+	public String getLviTypeDisplay() {
+		return lviTypeDisplay;
 	}
-	public void setlVIItemManagePKDisplay(String lVIItemManagePKDisplay) {
-		this.lVIItemManagePKDisplay = lVIItemManagePKDisplay;
+	public void setLviTypeDisplay(String lviTypeDisplay) {
+		this.lviTypeDisplay = lviTypeDisplay;
 	}
-	public String getlVITypeDisplay() {
-		return lVITypeDisplay;
-	}
-	public void setlVITypeDisplay(String lVITypeDisplay) {
-		this.lVITypeDisplay = lVITypeDisplay;
-	}
-	public String getlVISpecificationDisplay() {
-		return lVISpecificationDisplay;
-	}
-	public void setlVISpecificationDisplay(String lVISpecificationDisplay) {
-		this.lVISpecificationDisplay = lVISpecificationDisplay;
-	}
-	public String getlVIMetricUnitDisplay() {
-		return lVIMetricUnitDisplay;
-	}
-	public void setlVIMetricUnitDisplay(String lVIMetricUnitDisplay) {
-		this.lVIMetricUnitDisplay = lVIMetricUnitDisplay;
-	} 
+	
+	
 	
 	
 

@@ -43,7 +43,7 @@ function initDataGrid() {
 		 var html = "";
 		 //已入库数量小于采购数量时，显示[入库]按钮
 		 if (row.ipDStoreCount < row.ipDPurchaseCount) {
-	 		html += '<div><input type="button" id="id_'+row.pk+'" class="bt_ensure" value="入库" onclick="pushStore(\''+row.pk+'\')"/></div>';
+	 		html += '<div><input type="button" id="id_'+row.pk+'" class="bt_ensure" value="入库" onclick="pushStore(\''+row.pk+'\',\''+row.ipDType+'\',\''+row.ipDItemManagePK+'\')"/></div>';
 		 }
  			return html;
 		}}, 
@@ -127,23 +127,65 @@ function packageItemsPurchaseDetailData() {
 	return rowsData;
 }
 
-function pushStore(itemsPurchaseDetaiPk) {
+function pushStore(itemsPurchaseDetaiPk,ipDType,ipDItemManagePK) {
+	if (ipDType == 'WPLB_002') {//固定资产
+		getItemByPk(ipDItemManagePK,itemsPurchaseDetaiPk);
+	} else {
+		Ajax.service(
+				'ItemsPurchaseDetailBO',
+				'pushOneStore', 
+				 [itemsPurchaseDetaiPk],
+				function(result){
+					$('body').removeLoading();     // 关闭遮挡层
+					//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+					if(result!=null&&result!=""){		
+						top.layer.alert(result,{icon: 5, closeBtn:2});
+					}else{
+						top.layer.alert('入库成功',{icon: 6, closeBtn:2});
+						//history.go(-1);
+						 window.location.reload();
+					}		
+				}
+			);
+	}
+	
+}
+
+/** 
+ * 根据编码获取物品信息
+ **/
+function getItemByPk(ipDItemManagePK,itemsPurchaseDetaiPk) {
 	Ajax.service(
-			'ItemsPurchaseDetailBO',
-			'pushOneStore', 
-			 [itemsPurchaseDetaiPk],
-			function(result){
-				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
-				if(result!=null&&result!=""){		
-					top.layer.alert(result,{icon: 5, closeBtn:2});
+	  		'ItemManageBO',
+	  		'findById', 
+	  		[pk],
+	  		function(obj){
+	  			storage(obj.imAssetType,itemsPurchaseDetaiPk);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
+/**
+*	入库接口
+*	assetRegAssetType:物品所属资产类别
+*	purchaseDetailPK:采购明细pk
+**/
+function storage(assetRegAssetType,purchaseDetailPK){
+	var url = top.contextPath + '/sys/basemodules/asset/assetregister/editAsset.jsp';
+	Ajax.service(			
+			'CardTemplateBO',
+			'getCardTemplateByAssetType', 
+			 [[assetRegAssetType]],
+			function(cardcode){
+				if(cardcode!="null"){
+					window.location.href = url +'?business='+STR_REGISTER_ADDNEW+'&purchaseDetailPK='+purchaseDetailPK+'&cardcode='+cardcode.pk+'&cardname='+encodeURI(encodeURI(cardcode.cardName));					
 				}else{
-					top.layer.alert('入库成功',{icon: 6, closeBtn:2});
-					//history.go(-1);
-					 window.location.reload();
-				}		
+					top.layer.alert('模板丢失 ',{closeBtn :2,icon:5});					
+				}
 			}
-		);
+	);
 }
 
 function batchPushStore() {

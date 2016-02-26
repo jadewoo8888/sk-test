@@ -21,12 +21,12 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TCATEGORYMANAGEMENT
-  is 'ÀàÄ¿¹ÜÀí±í';
+  is 'ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½';
 -- Add comments to the columns 
 comment on column TCATEGORYMANAGEMENT.pk
-  is 'Ö÷¼ü';
+  is 'ï¿½ï¿½ï¿½ï¿½';
 comment on column TCATEGORYMANAGEMENT.categoryname
-  is 'ÀàÄ¿Ãû³Æ';
+  is 'ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TCATEGORYMANAGEMENT
   add constraint TCATEGORYMANAGEMENT_PK primary key (PK)
@@ -71,7 +71,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TITEMMANAGE
-  is 'ÎïÆ·¹ÜÀí±í';
+  is 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TITEMMANAGE
   add constraint TITEMMANAGE_PK primary key (PK)
@@ -123,7 +123,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TITEMSAPPLYMANAGEMENT
-  is 'ÎïÆ·ÉêÁì¹ÜÀí±í';
+  is 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TITEMSAPPLYMANAGEMENT
   add constraint TITEMSAPPLYMANAGEMENT_PK primary key (PK)
@@ -176,7 +176,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TITEMSAPPLYMDETAIL
-  is 'ÎïÆ·ÉêÁì¹ÜÀíÃ÷Ï¸±í';
+  is 'ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TITEMSAPPLYMDETAIL
   add constraint TITEMSAPPLYMDETAIL_PK primary key (PK)
@@ -226,7 +226,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TITEMSPURCHASE
-  is 'ÎïÆ·²É¹ºÉêÇë±í';
+  is 'ï¿½ï¿½Æ·ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TITEMSPURCHASE
   add constraint TITEMSPURCHASE_PK primary key (PK)
@@ -274,7 +274,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TITEMSPURCHASEDETAIL
-  is 'ÎïÆ·²É¹ºÉêÇëÃ÷Ï¸±í';
+  is 'ï¿½ï¿½Æ·ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TITEMSPURCHASEDETAIL
   add constraint TITEMSPURCHASEDETAIL_PK primary key (PK)
@@ -319,7 +319,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TLOWVALUEITEMS
-  is 'µÍÖµÆ·²Ö¿â±í';
+  is 'ï¿½ï¿½ÖµÆ·ï¿½Ö¿ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TLOWVALUEITEMS
   add constraint TLOWVALUEITEMS_PK primary key (PK)
@@ -344,6 +344,7 @@ create table TLVISTORERECORD
   lvisrcategorypk    VARCHAR2(50),
   lvisritemmanagepk  VARCHAR2(50),
   lvisrorgcode       VARCHAR2(50),
+  lvisrdeptcode      VARCHAR2(50),
   lvisrname          VARCHAR2(100),
   lvisrtype          VARCHAR2(50),
   lvisrspecification VARCHAR2(100),
@@ -368,7 +369,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TLVISTORERECORD
-  is 'µÍÖµÆ·Èë¿â¼ÇÂ¼±í';
+  is 'ï¿½ï¿½ÖµÆ·ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TLVISTORERECORD
   add constraint TLVISTORERECORD_PK primary key (PK)
@@ -416,7 +417,7 @@ tablespace SAM_GDCZ31
   );
 -- Add comments to the table 
 comment on table TLVIPOPRECORD
-  is 'µÍÖµÆ·³ö¿â¼ÇÂ¼±í';
+  is 'ï¿½ï¿½ÖµÆ·ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½';
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table TLVIPOPRECORD
   add constraint TLVIPOPRECORD_PK primary key (PK)

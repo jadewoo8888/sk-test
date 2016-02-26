@@ -1,42 +1,40 @@
 package framework.modules.lowvalueitemsmanagement.domain;
 
+import framework.sys.foreignkeytranslation.FK;
+import framework.sys.foreignkeytranslation.Ref;
+
 public class LVIStoreRecord implements java.io.Serializable, Cloneable {
 
 	private String pk = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISRPurchasePK = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISRCategoryPK = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISRItemManagePK = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISROrgCode = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISRName = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISRType = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISRSpecification = "";
-	//@FK(ref = Ref.Organization)
-	private String lVISRMetricUnit = "";
+	private String lviSRPurchasePK = "";
+	@FK(ref = Ref.Category)
+	private String lviSRCategoryPK = "";
+	private String lviSRItemManagePK = "";
+	@FK(ref = Ref.Organization)
+	private String lviSROrgCode = "";
+	@FK(ref = Ref.Department)
+	private String lviSRDeptCode = "";
+	private String lviSRName = "";
+	@FK(ref = Ref.Classify)
+	private String lviSRType = "";
+	private String lviSRSpecification = "";
+	private String lviSRMetricUnit = "";
 	
-	private Integer lVISRCount = 0;
-	private String lVISRPerson = "";
-	private String lVISRDate = "";
-	private String lVISRRemark = "";
+	private Integer lviSRCount = 0;
+	private String lviSRPerson = "";
+	private String lviSRDate = "";
+	private String lviSRRemark = "";
 	
 	private String inserttime = "";
 	private String lastestUpdate = "";
 	private String updatePerson = "";
 
 	// 外检翻译
-	private String lVISRPurchasePKDisplay = "";
-	private String lVISRCategoryPKDisplay = "";
-	private String lVISRItemManagePKDisplay = "";
-	private String lVISROrgCodeDisplay = "";
-	private String lVISRTypeDisplay = "";
-	private String lVISRSpecificationDisplay = "";
-	private String lVISRMetricUnitDisplay = "";
+	private String lviSRPurchasePKDisplay = "";
+	private String lviSRCategoryPKDisplay = "";
+	private String lviSROrgCodeDisplay = "";
+	private String lviSRDeptCodeDisplay = "";
+	private String lviSRTypeDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -44,77 +42,77 @@ public class LVIStoreRecord implements java.io.Serializable, Cloneable {
 	public void setPk(String pk) {
 		this.pk = pk;
 	}
-	public String getlVISRPurchasePK() {
-		return lVISRPurchasePK;
+	public String getLviSRPurchasePK() {
+		return lviSRPurchasePK;
 	}
-	public void setlVISRPurchasePK(String lVISRPurchasePK) {
-		this.lVISRPurchasePK = lVISRPurchasePK;
+	public void setLviSRPurchasePK(String lviSRPurchasePK) {
+		this.lviSRPurchasePK = lviSRPurchasePK;
 	}
-	public String getlVISRCategoryPK() {
-		return lVISRCategoryPK;
+	public String getLviSRCategoryPK() {
+		return lviSRCategoryPK;
 	}
-	public void setlVISRCategoryPK(String lVISRCategoryPK) {
-		this.lVISRCategoryPK = lVISRCategoryPK;
+	public void setLviSRCategoryPK(String lviSRCategoryPK) {
+		this.lviSRCategoryPK = lviSRCategoryPK;
 	}
-	public String getlVISRItemManagePK() {
-		return lVISRItemManagePK;
+	public String getLviSRItemManagePK() {
+		return lviSRItemManagePK;
 	}
-	public void setlVISRItemManagePK(String lVISRItemManagePK) {
-		this.lVISRItemManagePK = lVISRItemManagePK;
+	public void setLviSRItemManagePK(String lviSRItemManagePK) {
+		this.lviSRItemManagePK = lviSRItemManagePK;
 	}
-	public String getlVISROrgCode() {
-		return lVISROrgCode;
+	public String getLviSROrgCode() {
+		return lviSROrgCode;
 	}
-	public void setlVISROrgCode(String lVISROrgCode) {
-		this.lVISROrgCode = lVISROrgCode;
+	public void setLviSROrgCode(String lviSROrgCode) {
+		this.lviSROrgCode = lviSROrgCode;
 	}
-	public String getlVISRName() {
-		return lVISRName;
+	public String getLviSRName() {
+		return lviSRName;
 	}
-	public void setlVISRName(String lVISRName) {
-		this.lVISRName = lVISRName;
+	public void setLviSRName(String lviSRName) {
+		this.lviSRName = lviSRName;
 	}
-	public String getlVISRType() {
-		return lVISRType;
+	public String getLviSRType() {
+		return lviSRType;
 	}
-	public void setlVISRType(String lVISRType) {
-		this.lVISRType = lVISRType;
+	public void setLviSRType(String lviSRType) {
+		this.lviSRType = lviSRType;
 	}
-	public String getlVISRSpecification() {
-		return lVISRSpecification;
+	public String getLviSRSpecification() {
+		return lviSRSpecification;
 	}
-	public void setlVISRSpecification(String lVISRSpecification) {
-		this.lVISRSpecification = lVISRSpecification;
+	public void setLviSRSpecification(String lviSRSpecification) {
+		this.lviSRSpecification = lviSRSpecification;
 	}
-	public String getlVISRMetricUnit() {
-		return lVISRMetricUnit;
+	public String getLviSRMetricUnit() {
+		return lviSRMetricUnit;
 	}
-	public void setlVISRMetricUnit(String lVISRMetricUnit) {
-		this.lVISRMetricUnit = lVISRMetricUnit;
+	public void setLviSRMetricUnit(String lviSRMetricUnit) {
+		this.lviSRMetricUnit = lviSRMetricUnit;
 	}
-	public Integer getlVISRCount() {
-		return lVISRCount;
+	public Integer getLviSRCount() {
+		return lviSRCount;
 	}
-	public void setlVISRCount(Integer lVISRCount) {
-		this.lVISRCount = lVISRCount;
+	public void setLviSRCount(Integer lviSRCount) {
+		this.lviSRCount = lviSRCount;
 	}
-	public String getlVISRPerson() {
-		return lVISRPerson;
+	public String getLviSRPerson() {
+		return lviSRPerson;
 	}
-	public void setlVISRPerson(String lVISRPerson) {
-		this.lVISRPerson = lVISRPerson;
+	public void setLviSRPerson(String lviSRPerson) {
+		this.lviSRPerson = lviSRPerson;
 	}
-	public String getlVISRDate() {
-		return lVISRDate;
+	public String getLviSRDate() {
+		return lviSRDate;
 	}
-	public void setlVISRDate(String lVISRDate) {
-		this.lVISRDate = lVISRDate;
+	public void setLviSRDate(String lviSRDate) {
+		this.lviSRDate = lviSRDate;
 	}
-	public String getlVISRRemark() {
-		return lVISRRemark;
+	public String getLviSRRemark() {
+		return lviSRRemark;
 	}
-	public void setlVISRRemark(String lVISRRemark) {
-		this.lVISRRemark = lVISRRemark;
+	public void setLviSRRemark(String lviSRRemark) {
+		this.lviSRRemark = lviSRRemark;
 	}
 	public String getInserttime() {
 		return inserttime;
@@ -134,48 +132,41 @@ public class LVIStoreRecord implements java.io.Serializable, Cloneable {
 	public void setUpdatePerson(String updatePerson) {
 		this.updatePerson = updatePerson;
 	}
-	public String getlVISRPurchasePKDisplay() {
-		return lVISRPurchasePKDisplay;
+	public String getLviSRPurchasePKDisplay() {
+		return lviSRPurchasePKDisplay;
 	}
-	public void setlVISRPurchasePKDisplay(String lVISRPurchasePKDisplay) {
-		this.lVISRPurchasePKDisplay = lVISRPurchasePKDisplay;
+	public void setLviSRPurchasePKDisplay(String lviSRPurchasePKDisplay) {
+		this.lviSRPurchasePKDisplay = lviSRPurchasePKDisplay;
 	}
-	public String getlVISRCategoryPKDisplay() {
-		return lVISRCategoryPKDisplay;
+	public String getLviSRCategoryPKDisplay() {
+		return lviSRCategoryPKDisplay;
 	}
-	public void setlVISRCategoryPKDisplay(String lVISRCategoryPKDisplay) {
-		this.lVISRCategoryPKDisplay = lVISRCategoryPKDisplay;
+	public void setLviSRCategoryPKDisplay(String lviSRCategoryPKDisplay) {
+		this.lviSRCategoryPKDisplay = lviSRCategoryPKDisplay;
 	}
-	public String getlVISRItemManagePKDisplay() {
-		return lVISRItemManagePKDisplay;
+	public String getLviSROrgCodeDisplay() {
+		return lviSROrgCodeDisplay;
 	}
-	public void setlVISRItemManagePKDisplay(String lVISRItemManagePKDisplay) {
-		this.lVISRItemManagePKDisplay = lVISRItemManagePKDisplay;
+	public void setLviSROrgCodeDisplay(String lviSROrgCodeDisplay) {
+		this.lviSROrgCodeDisplay = lviSROrgCodeDisplay;
 	}
-	public String getlVISROrgCodeDisplay() {
-		return lVISROrgCodeDisplay;
+	public String getLviSRTypeDisplay() {
+		return lviSRTypeDisplay;
 	}
-	public void setlVISROrgCodeDisplay(String lVISROrgCodeDisplay) {
-		this.lVISROrgCodeDisplay = lVISROrgCodeDisplay;
+	public void setLviSRTypeDisplay(String lviSRTypeDisplay) {
+		this.lviSRTypeDisplay = lviSRTypeDisplay;
 	}
-	public String getlVISRTypeDisplay() {
-		return lVISRTypeDisplay;
+	public String getLviSRDeptCode() {
+		return lviSRDeptCode;
 	}
-	public void setlVISRTypeDisplay(String lVISRTypeDisplay) {
-		this.lVISRTypeDisplay = lVISRTypeDisplay;
+	public void setLviSRDeptCode(String lviSRDeptCode) {
+		this.lviSRDeptCode = lviSRDeptCode;
 	}
-	public String getlVISRSpecificationDisplay() {
-		return lVISRSpecificationDisplay;
+	public String getLviSRDeptCodeDisplay() {
+		return lviSRDeptCodeDisplay;
 	}
-	public void setlVISRSpecificationDisplay(String lVISRSpecificationDisplay) {
-		this.lVISRSpecificationDisplay = lVISRSpecificationDisplay;
+	public void setLviSRDeptCodeDisplay(String lviSRDeptCodeDisplay) {
+		this.lviSRDeptCodeDisplay = lviSRDeptCodeDisplay;
 	}
-	public String getlVISRMetricUnitDisplay() {
-		return lVISRMetricUnitDisplay;
-	}
-	public void setlVISRMetricUnitDisplay(String lVISRMetricUnitDisplay) {
-		this.lVISRMetricUnitDisplay = lVISRMetricUnitDisplay;
-	}
-	
 	
 }

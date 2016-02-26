@@ -10,40 +10,43 @@
             <column name="PK" length="50" />
             <generator class="assigned" />
         </id>
-         <property name="lVISRPurchasePK" type="java.lang.String">
+         <property name="lviSRPurchasePK" type="java.lang.String">
             <column name="LVISRPurchasePK" length="50" />
         </property>
-         <property name="lVISRCategoryPK" type="java.lang.String">
+         <property name="lviSRCategoryPK" type="java.lang.String">
             <column name="LVISRCategoryPK" length="50" />
         </property>
-         <property name="lVISRItemManagePK" type="java.lang.String">
+         <property name="lviSRItemManagePK" type="java.lang.String">
             <column name="LVISRItemManagePK" length="50" />
         </property>
-         <property name="lVISROrgCode" type="java.lang.String">
+         <property name="lviSROrgCode" type="java.lang.String">
             <column name="LVISROrgCode" length="50" />
         </property>
-         <property name="lVISRName" type="java.lang.String">
+        <property name="lviSRDeptCode" type="java.lang.String">
+            <column name="LVISRDeptCode" length="50" />
+        </property>
+         <property name="lviSRName" type="java.lang.String">
             <column name="LVISRName" length="100" />
         </property>
-         <property name="lVISRType" type="java.lang.String">
+         <property name="lviSRType" type="java.lang.String">
             <column name="LVISRType" length="50" />
         </property>
-        <property name="lVISRSpecification" type="java.lang.String">
+        <property name="lviSRSpecification" type="java.lang.String">
             <column name="LVISRSpecification" length="100"/>
         </property>
-         <property name="lVISRMetricUnit" type="java.lang.String">
+         <property name="lviSRMetricUnit" type="java.lang.String">
             <column name="LVISRMetricUnit" length="50"/>
         </property>
-         <property name="lVISRCount" type="java.lang.Integer">
+         <property name="lviSRCount" type="java.lang.Integer">
             <column name="LVISRCount"/>
         </property>
-         <property name="lVISRPerson" type="java.lang.String">
+         <property name="lviSRPerson" type="java.lang.String">
             <column name="LVISRPerson" length="20" />
         </property>
-         <property name="lVISRDate" type="java.lang.String">
+         <property name="lviSRDate" type="java.lang.String">
             <column name="LVISRDate" length="50" />
         </property>
-        <property name="lVISRRemark" type="java.lang.String">
+        <property name="lviSRRemark" type="java.lang.String">
             <column name="LVISRRemark" length="255"  />
         </property>
         <property name="inserttime" type="java.lang.String">

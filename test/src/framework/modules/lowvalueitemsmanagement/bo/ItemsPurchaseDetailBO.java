@@ -116,20 +116,20 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		itemsPurchase.setIpStoreCountSum(itemsPurchase.getIpStoreCountSum() + itemsPurchaseDetail.getIpDPurchaseCount());
 		//3、单独登记一条入库记录
 		LVIStoreRecord lviStoreRecord = new LVIStoreRecord();
-		lviStoreRecord.setlVISRCategoryPK(itemsPurchase.getIpCategoryPK());
-		lviStoreRecord.setlVISRCount(itemsPurchaseDetail.getIpDPurchaseCount());//采购数量=入库数量？
+		lviStoreRecord.setLviSRCategoryPK(itemsPurchase.getIpCategoryPK());
+		lviStoreRecord.setLviSRCount(itemsPurchaseDetail.getIpDPurchaseCount());//采购数量=入库数量？
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		lviStoreRecord.setlVISRDate(df.format(new Date()));
-		lviStoreRecord.setlVISRItemManagePK(itemsPurchaseDetail.getIpDItemManagePK());
-		lviStoreRecord.setlVISRMetricUnit(itemsPurchaseDetail.getIpDMetricUnit());
-		lviStoreRecord.setlVISRName(itemsPurchaseDetail.getIpDName());
-		lviStoreRecord.setlVISROrgCode(itemsPurchase.getIpOrgCode());
+		lviStoreRecord.setLviSRDate(df.format(new Date()));
+		lviStoreRecord.setLviSRItemManagePK(itemsPurchaseDetail.getIpDItemManagePK());
+		lviStoreRecord.setLviSRMetricUnit(itemsPurchaseDetail.getIpDMetricUnit());
+		lviStoreRecord.setLviSRName(itemsPurchaseDetail.getIpDName());
+		lviStoreRecord.setLviSROrgCode(itemsPurchase.getIpOrgCode());
 		
-		lviStoreRecord.setlVISRPerson(updateInfo[2]);
-		lviStoreRecord.setlVISRPurchasePK(itemsPurchase.getPk());
-		lviStoreRecord.setlVISRRemark("");
-		lviStoreRecord.setlVISRSpecification(itemsPurchaseDetail.getIpDSpecification());
-		lviStoreRecord.setlVISRType(itemsPurchaseDetail.getIpDType());
+		lviStoreRecord.setLviSRPerson(updateInfo[2]);
+		lviStoreRecord.setLviSRPurchasePK(itemsPurchase.getPk());
+		lviStoreRecord.setLviSRRemark("");
+		lviStoreRecord.setLviSRSpecification(itemsPurchaseDetail.getIpDSpecification());
+		lviStoreRecord.setLviSRType(itemsPurchaseDetail.getIpDType());
 		lviStoreRecord.setPk(UUID.randomUUID().toString());
 		
 		lviStoreRecord.setInserttime(updateInfo[0]);

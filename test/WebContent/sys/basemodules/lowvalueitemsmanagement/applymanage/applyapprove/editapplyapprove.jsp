@@ -68,7 +68,7 @@ var business="${param.business}";
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
-	           		<div class="editTitle">资产附件</div>						           			
+	           		<div class="editTitle">采购附件</div>						           			
 					<hr  class="editline"/>
 	           	</div>
 	            <div   class="editTips"></div> 

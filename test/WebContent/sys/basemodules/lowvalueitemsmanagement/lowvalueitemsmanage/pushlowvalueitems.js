@@ -83,7 +83,7 @@ function save() {
 	Ajax.service(
 			'LowValueItemsBO',
 			'addLowValueItems', 
-			 [lowValueItemsList,top.strFilterOrgCode],
+			 [lowValueItemsList,top.strFilterOrgCode,top.strUserDeptCode],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击

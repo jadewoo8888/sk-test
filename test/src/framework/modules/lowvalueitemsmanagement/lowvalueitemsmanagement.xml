@@ -143,6 +143,18 @@
 		<property name="entityDAO">
 			<ref bean="LVIStoreRecordDAO" />
 		</property>
+		
+		<property name="lowValueItemsDAO">
+			<ref bean="LowValueItemsDAO" />
+		</property>
+		
+		<property name="itemsPurchaseDetailDAO">
+			<ref bean="ItemsPurchaseDetailDAO" />
+		</property>
+		
+		<property name="itemsPurchaseDAO">
+			<ref bean="ItemsPurchaseDAO" />
+		</property>
 	</bean>
 	
 	<bean id="LowValueItemsDAO"

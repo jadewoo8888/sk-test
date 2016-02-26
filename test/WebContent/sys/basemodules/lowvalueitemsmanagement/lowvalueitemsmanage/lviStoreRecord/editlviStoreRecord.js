@@ -1,7 +1,7 @@
+var lviSRItemManagePK;
 //加载完成执行 
 $(function(){	
 	initData();
-	getCategoryComboboxData();
 	setAppenFrame();
 	//返回页面
 	$("#return").click(function(){
@@ -37,7 +37,7 @@ function getLVIStoreRecordByPk(pk) {
 }
 
 //数据填充 (待完善 )
-function dataFill(obj){
+function dataFill(obj){debugger;
 	  // 开始遍历赋值 
 	  for(var p in obj){
 		  if($("#id_"+p)&&obj[p]!=null){		     
@@ -63,6 +63,8 @@ function dataFill(obj){
 	  if(business==STR_REGISTER_MODIFY){
 		  dataPackage=obj;
 	  }
+	  
+	  lviSRItemManagePK = obj.lviSRItemManagePK;
 }
 
 //基本信息数据封装 
@@ -106,7 +108,7 @@ function getDataPackage(){
 	}
 	
 	dataPackage['pk'] = pk;
-
+	dataPackage['lviSRItemManagePK'] = lviSRItemManagePK;
 	return dataPackage;
 }
 
@@ -139,21 +141,6 @@ function savedata(){
 	}else{
 		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
 	}
-}
-
-
-
-function getCategoryComboboxData() {
-	Ajax.service(
-			'CategoryManagementBO',
-			'findCategoryByGroupCode', 
-			[top.strUserGroupCode],
-		getCategoryComboboxDataSuccFunc
-	);
-}
-
-function getCategoryComboboxDataSuccFunc(result) {debugger;
-	$('#id_lviSRCategoryPK').combobox("loadData",result);  
 }
 
 /**

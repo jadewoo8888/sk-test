@@ -22,7 +22,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 	
 	@MethodID("addLowValueItems")
 	@LogOperate(operate = "新增低值品仓库")
-	public void addLowValueItems_log_trans(List<LowValueItems> lowValueItemsList, String orgCode) {
+	public void addLowValueItems_log_trans(List<LowValueItems> lowValueItemsList, String orgCode, String deptCode) {
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		
@@ -49,8 +49,8 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 			lviStoreRecord.setLviSRItemManagePK(newLowValueItems.getLviItemManagePK());
 			lviStoreRecord.setLviSRMetricUnit(newLowValueItems.getLviMetricUnit());
 			lviStoreRecord.setLviSRName(newLowValueItems.getLviName());
+			lviStoreRecord.setLviSRDeptCode(deptCode);
 			lviStoreRecord.setLviSROrgCode(orgCode);
-			
 			lviStoreRecord.setLviSRPerson(updateInfo[2]);
 			lviStoreRecord.setLviSRPurchasePK(newLowValueItems.getPk());
 			lviStoreRecord.setLviSRRemark("");

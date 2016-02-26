@@ -175,10 +175,9 @@ function deleteService(pk) {
 /**
  * 删除请求成功回调函数
  **/
-function deleteServiceSuccFunc(data) {
-	if(data!="null"&&data.length>0){
-		top.layer.alert(data,{closeBtn :2,icon:5});
-		changeBtnDisabled(false);
+function deleteServiceSuccFunc(result) {
+	if(result!="null"&&result.length>0){
+		top.layer.alert(result,{icon: 5, closeBtn:2});
 	}else{	    				
 		top.layer.alert('删除成功 ',{icon:6,closeBtn :2});
 		datagrid.query();

@@ -3,20 +3,20 @@
 <!DOCTYPE HTML>
 <html> 
 <head>
-<link href="${contextPath}/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/editapplyapprove.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.css" rel="stylesheet" type="text/css" />
-<script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
-<script src="${contextPath}/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/editapplyapprove.js" type="text/javascript"></script>
+<link href="${contextPath}/sys/basemodules/lowvalueitemsmanagement/issuemange/editissueitem.css" rel="stylesheet" type="text/css" />
+<script src="${contextPath}/sys/basemodules/lowvalueitemsmanagement/issuemange/editissueitem.js" type="text/javascript"></script>
 <script> 
 //查询pk
 var pk="${param.pk}";
+var categoryPk="${param.categoryPk}";
+var categoryName="${param.categoryName}";
 //业务类型
 var business="${param.business}";
 </script>
 </head>
 <body class="edit_body" style="background-color:white;" >
 	<div id="id_div_desc" class="head">
-		<span class="head-title"></span>
+		<span class="head-title">物品发放</span>
 		<span class="head-tx"></span>
 	</div>
 	
@@ -68,7 +68,7 @@ var business="${param.business}";
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
-	           		<div class="editTitle">资产附件</div>						           			
+	           		<div class="editTitle">申领附件</div>						           			
 					<hr  class="editline"/>
 	           	</div>
 	            <div   class="editTips"></div> 
@@ -78,18 +78,13 @@ var business="${param.business}";
 				</div>	
 			</div>	
 	    </div>  
-	    
-	    <div title="审批意见" id="id_div_approvaloption">
-
-	    </div>  
-	    
-	    <div title="审批路线图" id="approval_img">
-
-	    </div>  
-	     
 	</div>
 	<div style="background-color:white;height:100px;"></div>
-	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
+	<div class="Editinput"><span id="id_span_buttonArea"></span>
+		<input id="id_bt_issue" type="button" class="bt_ensure" value="发放"></input>
+		<input id="id_bt_purchase" type="button" class="bt_ensure" value="申购"></input>
+		<input id="return" type="button" class="bt_cancel" value="返回"></input>
+	</div>
 
 	</body>
 </html>

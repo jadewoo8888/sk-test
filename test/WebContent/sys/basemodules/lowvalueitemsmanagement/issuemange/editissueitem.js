@@ -1,17 +1,19 @@
-var mainObj = new Object();
-var approvalBusiType = "SPYWLX_014";//物品申领审批路径
-var approvalModule;
-var approvalRole;
 //加载完成执行 
 $(function(){
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
-	//initDataGrid();
+	initDataGrid();
 	buttonBind();
 });
 
 //按钮事件 
 function buttonBind(){
+	$("#id_bt_issue").click(function () {
+		issueFn();
+	});
+	$("#id_bt_purchase").click(function () {
+		purchaseFn();
+	});
 	//返回页面
 	$("#return").click(function(){history.go(-1);});
 }
@@ -19,14 +21,6 @@ function buttonBind(){
  * 初始化表格信息
  **/
 function initDataGrid() {
-	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80};
-	if (approvalRole == 2) {
-		iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}};
-	}
-	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80};
-	if (approvalRole == 3) {
-		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}};
-	}
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
@@ -36,22 +30,21 @@ function initDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		iamListerCheckCountField,
-		iamLeaderCheckCountField
+		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80},
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80},
+		{field:"itemStoreCount",title:'库存',minwidth:80,formatter:function(value,row,index){
+			if (value < row.iamLeaderCheckCount) {
+				return '<span style="color: red">'+value+'</span>';
+			} else {
+				return value;
+			}
+		}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:ifShowIssueBtFn};
 	 
-	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
-}
-
-function initEditCell(){
-	var row = datagrid.dataGridObj.datagrid('getRows');
-	var rowLen = row.length;
-	for (var i = 0; i < rowLen; i++) {
-		datagrid.dataGridObj.datagrid('beginEdit', i);
-	}
 }
 
 //自定义查询条件
@@ -64,24 +57,35 @@ function setCustomQueryCondition() {
 	mpkQc.value1 = pk;
 	customQCArr.push(mpkQc);
 	
-	var appCountQc = new Object();
-	appCountQc.fn = 'iamApplyCount';
-	appCountQc.oper = ARY_STR_NOTEQUAL[0];
-	appCountQc.value1 = '0';
-	customQCArr.push(appCountQc);
     return customQCArr;
+}
+
+function ifShowIssueBtFn() {
+	var ifIssue = true;
+	var row = datagrid.dataGridObj.datagrid('getRows');
+	for (var i = 0; i < row.length; i++) {
+		if (row[i].itemStoreCount < row[i].iamLeaderCheckCount) {
+			ifIssue = false;
+			break;
+		}
+	}
+	
+	if (ifIssue) {
+		$('#id_bt_issue').show();
+		$('#id_bt_purchase').hide();
+	} else {
+		$('#id_bt_issue').hide();
+		$('#id_bt_purchase').show();
+	}
 }
 
 //获取信息 
 function getInfo(){
 	Ajax.service('ItemsApplyManagementBO','findById',[pk],
 			function(obj){
-				mainObj = obj;
 				//数据填充 
 	      	 	dataFill(obj);
 				
-	      		//审批数据初始化
-	      	 	setApprovalOption();
 			},function(){
 				top.layer.alert('数据异常 ',{closeBtn :2,icon:5});
 			}
@@ -96,108 +100,35 @@ function dataFill(obj){
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
 }
 
-function getApprovalRoleFn() {
-	approvalRole = approvalModule.curNodeInfo.node.approvalRole;
-	initDataGrid();
-}
-//审批数据初始化
-function setApprovalOption() {
-	var apprvalOption = {
-		getApprovalSuccFunc:getApprovalRoleFn,
-		funcType:"DrawApprovalBar", 
-		approvalBarDivID:"id_div_approvaloption", 
-		approvalButtonBarDivID:"id_span_buttonArea", 
-		isReadonly:false, 
-		busiDeptCode:mainObj.itemsApplyDeptCode, 
-		busiType:approvalBusiType, 
-		busiPK:mainObj.pk, 
-		busiOrgCode:mainObj.orgCode, 
-		menuId:"MENU_10_01_02", 
-		approvalFunc:approvalsave,
-		validateFunc:function(){
-			$("#tabs").tabs("select",2);
-			return true;
-		},
-		busiDefaultValue:{
-			linker:top.strUserName,
-			operator:top.strUserName,
-			auditer:top.strUserName,
-			checker:top.strUserName
-		}
-	};
-	approvalModule = new ApprovalModule(apprvalOption);
-	$("#tabs").tabs({
-		onSelect:function(title,index){
-			//切换标签时改变校验信息的显示/隐藏
-			if(index==2){
-				$("body").find(".validatebox-tip-content").css("display","block");
-				$("body").find(".validatebox-tip-content").next().css("display","block");
-			}else{
-				$("body").find(".validatebox-tip-content").css("display","none");
-				$("body").find(".validatebox-tip-content").next().css("display","none");
-			}
-		}
-	});
-}
-
-//审批操作
-function approvalsave(type,data){
-	var approvalItemMDtail = packageApprovalItemMDtail();
+function issueFn() {
 	
-	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
-	Ajax.service(
- 			'ItemsApplyManagementBO',
- 			'approvalItemsApply', 
- 			[mainObj,data,getAppendData(),type,approvalItemMDtail,approvalRole],
- 			function(data){		
-				var tips = "保存信息成功！";
-				if(data != null && type != "1"){
-					var nextOrgName = data.nextOrgCodeDisplay;//新生成的审批信息的审批单位名称
-					var nextSysOrgCode = data.nextOrgCode;//新生成的审批信息的审批单位
-					var Name = data.itemName;//审批栏名称
-					var applyStatus = data.applyStatus;//申请单状态
-					var approvalStatus = data.approvalStatus;//审批状态
-					
-					if(applyStatus == "审批中"){//审批中，提示信息
-						if(top.strFilterOrgCode == nextSysOrgCode){//审批时，如果下一个审批单位跟当前审批单位不是同一个单位时，提示：上报后将提交到XX审核；
-							tips = "上报后将提交到'"+nextOrgName+"'审核";
-						}else{//审批时，如果下一个审批单位跟当前审批单位是同一个单位时，提示：上报后将提交到“审批栏名称”；
-							tips = "上报后将提交到'"+ Name+"'";
-						}
-					}else if(applyStatus == "已审批通过"){//审批结束 1、退回到申请人 2、审批结束
-						strTips="申请单审批结束";
-					}else{
-						strTips="审批成功";
-					}
-				}
- 				top.layer.alert(tips,{closeBtn :2,icon:6});
-	    		$('body').removeLoading();     // 关闭遮挡层
-	    		history.go(-2);
-
- 			},function(){
-				$("body").removeLoading();
-				top.layer.alert('审批操作出问题了，请联系管理员。',{closeBtn :2,icon:5});
- 			}
- 	  );
-}
-
-function packageApprovalItemMDtail() {
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
-    var rowsData = new Array();
+    var pkArr = new Array();
     for(var i=0;i<rowLen;i++) {
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
-	 	
-	 	var itemsApplyMDetail = new Object();
-	 	itemsApplyMDetail.pk = row[i].pk;
-	 	if (approvalRole == 2) {
-	 		itemsApplyMDetail.iamListerCheckCount = editors[0].target.numberbox('getValue');
-	 	} else if (approvalRole == 3) {
-	 		itemsApplyMDetail.iamLeaderCheckCount = editors[0].target.numberbox('getValue');
-	 	}
-   		rowsData.push(itemsApplyMDetail);
+		pkArr.push(row[i].pk);
 	}
-    return rowsData;
+    
+    Ajax.service(
+			'ItemsApplyMDetailBO',
+			'issueItems', 
+			 [pkArr],
+			function(result){
+				$('body').removeLoading();     // 关闭遮挡层
+				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				if(result!=null&&result!=""){		
+					top.layer.alert(result,{icon: 5, closeBtn:2});
+				}else{
+					top.layer.alert('发放成功',{icon: 6, closeBtn:2});
+					history.go(-1);
+				}		
+			}
+		);
+}
+
+function purchaseFn() {
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 }
 /**
  * 设置附件

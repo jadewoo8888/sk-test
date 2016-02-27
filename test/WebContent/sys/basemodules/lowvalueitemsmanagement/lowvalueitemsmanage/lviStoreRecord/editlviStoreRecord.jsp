@@ -93,7 +93,7 @@ var pk="${param.pk}";
 							
 							<tr>
 								<td   class="Edit-Title1">入库数量<span class="notnullTip">*</span></td>
-								<td colspan="3"><input id="id_lviSRCount" fieldname="lviSRCount" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>
+								<td class="Edit-Input-Merge" colspan="3"><input id="id_lviSRCount" fieldname="lviSRCount" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>
 							</tr>
 							<tr>
 								<td   class="Edit-Title1">备注</td>

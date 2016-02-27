@@ -6,22 +6,16 @@ import framework.sys.foreignkeytranslation.Ref;
 public class ItemsApplyMDetail implements java.io.Serializable, Cloneable {
 	private String pk = "";
 	private String itemsApplyMPK = "";
-	//@FK(ref = Ref.Organization)
 	private String categoryManagementPK = "";
-	//@FK(ref = Ref.Organization)
 	private String itemManagePK = "";
-	//@FK(ref = Ref.Organization)
 	private String orgCode = "";
-	//@FK(ref = Ref.Organization)
 	private String itemsApplyDeptCode = "";
 	private String imName = "";
-	//@FK(ref = Ref.Organization)
+	//@FK(ref = Ref.AssetClassify)
 	private String imAssetType = "";
 	@FK(ref = Ref.Classify)
 	private String imType = "";
-	//@FK(ref = Ref.Organization)
 	private String imSpecification = "";
-	//@FK(ref = Ref.Organization)
 	private String imMetricUnit = "";
 	private Integer iamApplyCount = 0;
 	private String iamCheckFlag = "";
@@ -44,6 +38,9 @@ public class ItemsApplyMDetail implements java.io.Serializable, Cloneable {
 	private String imTypeDisplay = "";
 	//private String iMSpecificationDisplay = "";
 	//private String iMMetricUnitDisplay = "";
+	
+	//特殊字段
+	private int itemStoreCount = 0;//库存
 
 	public String getPk() {
 		return pk;
@@ -214,8 +211,12 @@ public class ItemsApplyMDetail implements java.io.Serializable, Cloneable {
 		this.imTypeDisplay = imTypeDisplay;
 	}
 
-	
-	
+	public int getItemStoreCount() {
+		return itemStoreCount;
+	}
 
-	
+	public void setItemStoreCount(int itemStoreCount) {
+		this.itemStoreCount = itemStoreCount;
+	}
+
 }

@@ -74,6 +74,18 @@
 		<property name="entityDAO">
 			<ref bean="ItemsApplyMDetailDAO" />
 		</property>
+		
+		<property name="lowValueItemsDAO">
+			<ref bean="LowValueItemsDAO" />
+		</property>
+		
+		<property name="lviPopRecordDAO">
+			<ref bean="LVIPopRecordDAO" />
+		</property>
+		
+		<property name="itemsApplyManagementDAO">
+			<ref bean="ItemsApplyManagementDAO" />
+		</property>
 	</bean>
 	
 	<bean id="ItemsPurchaseDAO"

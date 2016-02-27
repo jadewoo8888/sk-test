@@ -27,7 +27,7 @@ function initDataGrid() {
 	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
 	 		//只有单据状态是“待发放”和“采购中”的才有【发放】操作
 			if ((row.iamCheckFlag == 'FSCCQWPFS_002' || row.iamCheckFlag == 'FSCCQWPFS_003')) {
-				html += "<a href='javascript:void(0);' onclick='issueone(\""+row.pk+"\")' >发放</a>  ";
+				html += "<a href='javascript:void(0);' onclick='issueone(\""+row.pk+"\",\""+row.categoryManagementPK+"\",\""+row.categoryName+"\")' >发放</a>  ";
 			}
  			return html;
 		}}, 
@@ -115,8 +115,8 @@ function getCategoryComboboxData() {
 }
 
 //发放
-function issueone(pk){
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/issuemange/editapplyapprove.jsp?pk='+pk+'&business='+STR_CHECK;
+function issueone(pk,categoryPk,categoryName){
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/issuemange/editissueitem.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 }
 
 /**
@@ -143,10 +143,10 @@ function getCheckStatus(){
 	checkedQc.fn = '';
 	checkedQc.oper = 14;
 	var checkStatusDisplay=$('#checkStatusDisplay').combobox('getValue');
-	if (checkStatusDisplay == '') {
-		checkedQc.value1 = "(1=1)";
-	} else {
+	if (checkStatusDisplay != '') {
 		checkedQc.value1 = "((iamCheckFlag = '"+checkStatusDisplay+"'))";
+	} else {
+		checkedQc.value1 = "(1=1)";
 	}
     return checkedQc;
 }
@@ -157,10 +157,12 @@ function setCheckStatus(){
 	$("#checkStatusDisplay").combobox({
 		valueField: 'value',
 		textField: 'text',
-		data:[{
+		data:[
+		   /*   {
 			'value':"",
 			'text':'全部'
-			},{
+			},*/
+			{
 				'value':"FSCCQWPFS_002",
 				'text':'待发放'
 			},{

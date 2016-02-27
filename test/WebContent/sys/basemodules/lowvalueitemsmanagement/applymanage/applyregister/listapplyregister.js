@@ -70,10 +70,11 @@ function showCategoryListSuccFunc(result) {
 		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddApplyPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
 	}
 	//页面层
-	layer.open({
+	top.layer.open({
 		title:'选择类目',
 	    type: 1,
-	    skin: 'layui-layer-rim', //加上边框
+	    closeBtn :2,
+	   // skin: 'layui-layer-rim', //加上边框
 	    area: ['180px', '220px'], //宽高
 	    content: html
 	});

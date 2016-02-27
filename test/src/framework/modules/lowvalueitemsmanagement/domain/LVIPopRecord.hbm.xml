@@ -10,41 +10,41 @@
             <column name="PK" length="50" />
             <generator class="assigned" />
         </id>
-         <property name="lVIPRCategoryPK" type="java.lang.String">
+         <property name="lviPRCategoryPK" type="java.lang.String">
             <column name="LVIPRCategoryPK" length="50" />
         </property>
-         <property name="lVIPRItemManagePK" type="java.lang.String">
+         <property name="lviPRItemManagePK" type="java.lang.String">
             <column name="LVIPRItemManagePK" length="50" />
         </property>
-         <property name="lVIPRName" type="java.lang.String">
+         <property name="lviPRName" type="java.lang.String">
             <column name="LVIPRName" length="100" />
         </property>
-         <property name="lVIPRType" type="java.lang.String">
+         <property name="lviPRType" type="java.lang.String">
             <column name="LVIPRType" length="50" />
         </property>
-         <property name="lVIPRSpecification" type="java.lang.String">
+         <property name="lviPRSpecification" type="java.lang.String">
             <column name="LVIPRSpecification" length="100" />
         </property>
-         <property name="lVIPRMetricUnit" type="java.lang.String">
+         <property name="lviPRMetricUnit" type="java.lang.String">
             <column name="LVIPRMetricUnit" length="50" />
         </property>
-        <property name="lVIPRCount" type="java.lang.Integer">
+        <property name="lviPRCount" type="java.lang.Integer">
             <column name="LVIPRCount" />
         </property>
-         <property name="lVIPRApplyPerson" type="java.lang.String">
+         <property name="lviPRApplyPerson" type="java.lang.String">
             <column name="LVIPRApplyPerson" length="20"/>
         </property>
-         <property name="lVIPRPerson" type="java.lang.String">
+         <property name="lviPRPerson" type="java.lang.String">
             <column name="LVIPRPerson" length="20"/>
         </property>
-         <property name="lVIPRDate" type="java.lang.String">
+         <property name="lviPRDate" type="java.lang.String">
             <column name="LVIPRDate" length="50" />
         </property>
-         <property name="lVIPRRemark" type="java.lang.String">
+         <property name="lviPRRemark" type="java.lang.String">
             <column name="LVIPRRemark" length="255" />
         </property>
-        <property name="inserttime" type="java.lang.String">
-            <column name="Inserttime" length="40"/>
+        <property name="insertTime" type="java.lang.String">
+            <column name="InsertTime" length="40"/>
         </property>
         <property name="lastestUpdate" type="java.lang.String">
             <column name="LastestUpdate" length="40" />

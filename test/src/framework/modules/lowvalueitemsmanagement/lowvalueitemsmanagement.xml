@@ -196,7 +196,7 @@
 	<bean id="LVIPopRecordBO"
 		class="framework.modules.lowvalueitemsmanagement.bo.LVIPopRecordBO">
 		<property name="entityDAO">
-			<ref bean="LowValueItemsDAO" />
+			<ref bean="LVIPopRecordDAO" />
 		</property>
 	</bean>
 </beans>

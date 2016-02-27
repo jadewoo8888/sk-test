@@ -1,40 +1,37 @@
 package framework.modules.lowvalueitemsmanagement.domain;
 
+import framework.sys.foreignkeytranslation.FK;
+import framework.sys.foreignkeytranslation.Ref;
+
 public class LVIPopRecord  implements java.io.Serializable, Cloneable {
 
 	private String pk = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIPRCategoryPK = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIPRItemManagePK = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIPRName = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIPRType = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIPRSpecification = "";
-	//@FK(ref = Ref.Organization)
-	private String lVIPRMetricUnit = "";
-	//@FK(ref = Ref.Organization)
-	private Integer lVIPRCount = 0;
-	//@FK(ref = Ref.Organization)
-	private String lVIPRApplyPerson = "";
+	@FK(ref = Ref.Category)
+	private String lviPRCategoryPK = "";
+	private String lviPRItemManagePK = "";
+	private String lviPRName = "";
+	@FK(ref = Ref.Classify)
+	private String lviPRType = "";
+	private String lviPRSpecification = "";
+	private String lviPRMetricUnit = "";
+	private Integer lviPRCount = 0;
+	private String lviPRApplyPerson = "";
 	
-	private String lVIPRPerson = "";
-	private String lVIPRDate = "";
-	private String lVIPRRemark = "";
+	private String lviPRPerson = "";
+	private String lviPRDate = "";
+	private String lviPRRemark = "";
 	
-	private String inserttime = "";
+	private String insertTime = "";
 	private String lastestUpdate = "";
 	private String updatePerson = "";
 
 	// 外检翻译
-	private String lVIPRCategoryPKDisplay = "";
-	private String lVIPRItemManagePKDisplay = "";
-	private String lVISRItemManagePKDisplay = "";
-	private String lVIPRNameDisplay = "";
-	private String lVIPRTypeDisplay = "";
-	private String lVIPRSpecificationDisplay = "";
+	private String lviPRCategoryPKDisplay = "";
+	/*private String lviPRItemManagePKDisplay = "";
+	private String lviSRItemManagePKDisplay = "";
+	private String lviPRNameDisplay = "";*/
+	private String lviPRTypeDisplay = "";
+	//private String lviPRSpecificationDisplay = "";
 	
 	public String getPk() {
 		return pk;
@@ -42,77 +39,77 @@ public class LVIPopRecord  implements java.io.Serializable, Cloneable {
 	public void setPk(String pk) {
 		this.pk = pk;
 	}
-	public String getlVIPRCategoryPK() {
-		return lVIPRCategoryPK;
+	public String getLviPRCategoryPK() {
+		return lviPRCategoryPK;
 	}
-	public void setlVIPRCategoryPK(String lVIPRCategoryPK) {
-		this.lVIPRCategoryPK = lVIPRCategoryPK;
+	public void setLviPRCategoryPK(String lviPRCategoryPK) {
+		this.lviPRCategoryPK = lviPRCategoryPK;
 	}
-	public String getlVIPRItemManagePK() {
-		return lVIPRItemManagePK;
+	public String getLviPRItemManagePK() {
+		return lviPRItemManagePK;
 	}
-	public void setlVIPRItemManagePK(String lVIPRItemManagePK) {
-		this.lVIPRItemManagePK = lVIPRItemManagePK;
+	public void setLviPRItemManagePK(String lviPRItemManagePK) {
+		this.lviPRItemManagePK = lviPRItemManagePK;
 	}
-	public String getlVIPRName() {
-		return lVIPRName;
+	public String getLviPRName() {
+		return lviPRName;
 	}
-	public void setlVIPRName(String lVIPRName) {
-		this.lVIPRName = lVIPRName;
+	public void setLviPRName(String lviPRName) {
+		this.lviPRName = lviPRName;
 	}
-	public String getlVIPRType() {
-		return lVIPRType;
+	public String getLviPRType() {
+		return lviPRType;
 	}
-	public void setlVIPRType(String lVIPRType) {
-		this.lVIPRType = lVIPRType;
+	public void setLviPRType(String lviPRType) {
+		this.lviPRType = lviPRType;
 	}
-	public String getlVIPRSpecification() {
-		return lVIPRSpecification;
+	public String getLviPRSpecification() {
+		return lviPRSpecification;
 	}
-	public void setlVIPRSpecification(String lVIPRSpecification) {
-		this.lVIPRSpecification = lVIPRSpecification;
+	public void setLviPRSpecification(String lviPRSpecification) {
+		this.lviPRSpecification = lviPRSpecification;
 	}
-	public String getlVIPRMetricUnit() {
-		return lVIPRMetricUnit;
+	public String getLviPRMetricUnit() {
+		return lviPRMetricUnit;
 	}
-	public void setlVIPRMetricUnit(String lVIPRMetricUnit) {
-		this.lVIPRMetricUnit = lVIPRMetricUnit;
+	public void setLviPRMetricUnit(String lviPRMetricUnit) {
+		this.lviPRMetricUnit = lviPRMetricUnit;
 	}
-	public Integer getlVIPRCount() {
-		return lVIPRCount;
+	public Integer getLviPRCount() {
+		return lviPRCount;
 	}
-	public void setlVIPRCount(Integer lVIPRCount) {
-		this.lVIPRCount = lVIPRCount;
+	public void setLviPRCount(Integer lviPRCount) {
+		this.lviPRCount = lviPRCount;
 	}
-	public String getlVIPRApplyPerson() {
-		return lVIPRApplyPerson;
+	public String getLviPRApplyPerson() {
+		return lviPRApplyPerson;
 	}
-	public void setlVIPRApplyPerson(String lVIPRApplyPerson) {
-		this.lVIPRApplyPerson = lVIPRApplyPerson;
+	public void setLviPRApplyPerson(String lviPRApplyPerson) {
+		this.lviPRApplyPerson = lviPRApplyPerson;
 	}
-	public String getlVIPRPerson() {
-		return lVIPRPerson;
+	public String getLviPRPerson() {
+		return lviPRPerson;
 	}
-	public void setlVIPRPerson(String lVIPRPerson) {
-		this.lVIPRPerson = lVIPRPerson;
+	public void setLviPRPerson(String lviPRPerson) {
+		this.lviPRPerson = lviPRPerson;
 	}
-	public String getlVIPRDate() {
-		return lVIPRDate;
+	public String getLviPRDate() {
+		return lviPRDate;
 	}
-	public void setlVIPRDate(String lVIPRDate) {
-		this.lVIPRDate = lVIPRDate;
+	public void setLviPRDate(String lviPRDate) {
+		this.lviPRDate = lviPRDate;
 	}
-	public String getlVIPRRemark() {
-		return lVIPRRemark;
+	public String getLviPRRemark() {
+		return lviPRRemark;
 	}
-	public void setlVIPRRemark(String lVIPRRemark) {
-		this.lVIPRRemark = lVIPRRemark;
+	public void setLviPRRemark(String lviPRRemark) {
+		this.lviPRRemark = lviPRRemark;
 	}
-	public String getInserttime() {
-		return inserttime;
+	public String getInsertTime() {
+		return insertTime;
 	}
-	public void setInserttime(String inserttime) {
-		this.inserttime = inserttime;
+	public void setInsertTime(String insertTime) {
+		this.insertTime = insertTime;
 	}
 	public String getLastestUpdate() {
 		return lastestUpdate;
@@ -126,43 +123,17 @@ public class LVIPopRecord  implements java.io.Serializable, Cloneable {
 	public void setUpdatePerson(String updatePerson) {
 		this.updatePerson = updatePerson;
 	}
-	public String getlVIPRCategoryPKDisplay() {
-		return lVIPRCategoryPKDisplay;
+	public String getLviPRCategoryPKDisplay() {
+		return lviPRCategoryPKDisplay;
 	}
-	public void setlVIPRCategoryPKDisplay(String lVIPRCategoryPKDisplay) {
-		this.lVIPRCategoryPKDisplay = lVIPRCategoryPKDisplay;
+	public void setLviPRCategoryPKDisplay(String lviPRCategoryPKDisplay) {
+		this.lviPRCategoryPKDisplay = lviPRCategoryPKDisplay;
 	}
-	public String getlVIPRItemManagePKDisplay() {
-		return lVIPRItemManagePKDisplay;
+	public String getLviPRTypeDisplay() {
+		return lviPRTypeDisplay;
 	}
-	public void setlVIPRItemManagePKDisplay(String lVIPRItemManagePKDisplay) {
-		this.lVIPRItemManagePKDisplay = lVIPRItemManagePKDisplay;
-	}
-	public String getlVISRItemManagePKDisplay() {
-		return lVISRItemManagePKDisplay;
-	}
-	public void setlVISRItemManagePKDisplay(String lVISRItemManagePKDisplay) {
-		this.lVISRItemManagePKDisplay = lVISRItemManagePKDisplay;
-	}
-	public String getlVIPRNameDisplay() {
-		return lVIPRNameDisplay;
-	}
-	public void setlVIPRNameDisplay(String lVIPRNameDisplay) {
-		this.lVIPRNameDisplay = lVIPRNameDisplay;
-	}
-	public String getlVIPRTypeDisplay() {
-		return lVIPRTypeDisplay;
-	}
-	public void setlVIPRTypeDisplay(String lVIPRTypeDisplay) {
-		this.lVIPRTypeDisplay = lVIPRTypeDisplay;
-	}
-	public String getlVIPRSpecificationDisplay() {
-		return lVIPRSpecificationDisplay;
-	}
-	public void setlVIPRSpecificationDisplay(String lVIPRSpecificationDisplay) {
-		this.lVIPRSpecificationDisplay = lVIPRSpecificationDisplay;
+	public void setLviPRTypeDisplay(String lviPRTypeDisplay) {
+		this.lviPRTypeDisplay = lviPRTypeDisplay;
 	}
 	
-	
-
 }

@@ -59,36 +59,36 @@ var pk="${param.pk}";
                        
                        <tr>
 								<td   class="Edit-Title1">类目</td>
-								<td   class="Edit-Input1"><input type="text" id="id_lviSRCategoryPK" fieldname="lviSRCategoryPK" readonly="readonly"  missingMessage="必选项"/></td>
+								<td   class="Edit-Input1"><input type="text" id="id_lviSRCategoryPK" fieldname="lviSRCategoryPK"class="disableText" readonly="readonly"/></td>
 								<td   class="Edit-Title2">入库日期</td>
 								<td   class="Edit-Input2">
-								<input id="id_lviSRDate" fieldname="lviSRDate" readonly="readonly" required="true"  missingMessage="必选项"  data-options="height:28,width:202,value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" />
+								<input id="id_lviSRDate" fieldname="lviSRDate"  class="disableText" readonly="readonly"/>
 								</td>
 							</tr>
 							
 							<tr>
 								<td   class="Edit-Title1">入库部门</td>
-								<td   class="Edit-Input1"><input type="text" id="id_lviSRDeptCode" fieldname="lviSRDeptCode"  readonly="readonly" required="true"  missingMessage="必选项"  data-options="height:28,width:202,valueField:'pk',textField:'categoryName'"/></td>
+								<td   class="Edit-Input1"><input type="text" id="id_lviSRDeptCode" fieldname="lviSRDeptCode"  class="disableText" readonly="readonly"/></td>
 								<td   class="Edit-Title2">入库人</td>
 								<td   class="Edit-Input2">
-								<input id="id_lviSRPerson" fieldname="lviSRPerson" readonly="readonly" required="true"  missingMessage="必选项"  data-options="height:28,width:202,value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" />
+								<input id="id_lviSRPerson" fieldname="lviSRPerson" class="disableText" readonly="readonly" />
 								</td>
 							</tr>
 							
 							<tr>
 								<td  class="Edit-Title2">类别</td>
 									<td   class="Edit-Input2">
-									<input id="id_lviSRType" fieldname="lviSRType" readonly="readonly" missingMessage="必选项"  data-options="height:28,width:202,value:'WPLB_001',valueField:'classifyCode',textField:'classifyName',data:[{classifyCode:'WPLB_001',classifyName:'低值品'},{classifyCode:'WPLB_002',classifyName:'固定资产'}]" />
+									<input id="id_lviSRType" fieldname="lviSRType" class="disableText" readonly="readonly" />
 									</td>
 								<td   class="Edit-Title1">物品名称</td>
-								<td   class="Edit-Input1"><input id="id_lviSRName" fieldname="lviSRName" readonly="readonly" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox"/></td>
+								<td   class="Edit-Input1"><input id="id_lviSRName" fieldname="lviSRName" class="disableText" readonly="readonly"/></td>
 							</tr>
 							
 							<tr> 
 								<td   class="Edit-Title1">规格</td>
-								<td   class="Edit-Input1"><input  id="id_lviSRSpecification" fieldname="lviSRSpecification" readonly="readonly" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>
+								<td   class="Edit-Input1"><input  id="id_lviSRSpecification" fieldname="lviSRSpecification" class="disableText" readonly="readonly"/></td>
 								<td   class="Edit-Title2">单位</td>
-								<td   class="Edit-Input2"><input id="id_lviSRMetricUnit" fieldname="lviSRMetricUnit" readonly="readonly" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>					
+								<td   class="Edit-Input2"><input id="id_lviSRMetricUnit" fieldname="lviSRMetricUnit" class="disableText" readonly="readonly"/></td>					
 							</tr>
 							
 							<tr>

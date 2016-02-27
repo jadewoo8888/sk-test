@@ -33,19 +33,19 @@ var categoryName="${param.categoryName}";
                        		<tr>
 								<td   class="Edit-Title1">申领部门</td>
 								<td   class="Edit-Input1">
-								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="disableText" readonly="readonly"/>
 								</td>
 								<td   class="Edit-Title1">申领类目</td>
 								<td   class="Edit-Input1">
-								<input id="id_categoryManagementPK" fieldname="categoryManagementPK" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_categoryManagementPK" fieldname="categoryManagementPK" validType="length[1,50]" invalidMessage="不能超过25个字符" class="disableText" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
 								<td   class="Edit-Title1">申领人</td>
-								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
+								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="disableText" readonly="readonly"/></td>
 								
 								<td   class="Edit-Title1">申领日期</td>
-								<td   class="Edit-Input1"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
+								<td   class="Edit-Input1"><input  id="id_itemsApplyDate" class="disableText" fieldname="itemsApplyDate" readonly="readonly"/></td>
 							</tr>
 							
 					<tr>

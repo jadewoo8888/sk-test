@@ -29,19 +29,18 @@ var categoryName="${param.categoryName}";
                        		<tr>
 								<td   class="Edit-Title1">入库类目</td>
 								<td   class="Edit-Input1">
-								<input id="id_categoryManagementPK" fieldname="categoryManagementPK" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_categoryManagementPK" fieldname="categoryManagementPK" class="disableText" readonly="readonly"/>
 								</td>
 								<td   class="Edit-Title1">入库日期</td>
-								<td   class="Edit-Input1"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
+								<td   class="Edit-Input1"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" class="disableText" readonly="readonly"/></td>
 							</tr>
 							<tr>
 							<td   class="Edit-Title1">入库部门</td>
 								<td   class="Edit-Input1">
-								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" class="disableText" readonly="readonly"/>
 								</td>
 								<td   class="Edit-Title1">入库人</td>
-								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
-								
+								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" class="disableText" readonly="readonly"/></td>
 								
 							</tr>
 							

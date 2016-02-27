@@ -32,7 +32,7 @@ var data_lviSRType=${json:classify("STD_WPLB")};
 			<input type="text" qc={fn:'lviSRSpecification',oper:'3'} placeholder="规格" class="shaixuan_txt float_left"/>
 			<input type="text" qc={fn:'lviName',oper:'3'} placeholder="入库数量" class="shaixuan_txt float_left"/>
 			<input type="text" qc={fn:'lviSpecification',oper:'3'} placeholder="入库人" class="shaixuan_txt float_left"/>
-			<input type="text" qc={fn:'inserttime',oper:'3'} placeholder="入库日期" class="shaixuan_txt float_left"/>
+			<input type="text" qc={fn:'lviSRDate',oper:'3'} placeholder="入库日期" class="easyui-datebox" editable="fasle" />
 			<input type="button" id="id_btn_query" value="查询" class="bt_query mleft5">
 		</div>
 	</div>

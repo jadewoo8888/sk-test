@@ -26,7 +26,7 @@ var pk="${param.pk}";
 </head>
 <body class="edit_body" style="background-color:white;" >
 	<div id="id_div_desc" class="head">
-		<span class="head-title"></span>
+		<span class="head-title">入库前修改</span>
 		<span class="head-tx"></span>
 	</div>
 	
@@ -40,19 +40,19 @@ var pk="${param.pk}";
                        		<tr>
 								<td   class="Edit-Title1">申购部门</td>
 								<td   class="Edit-Input1">
-								<input id="id_ipDeptCode" fieldname="ipDeptCode" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_ipDeptCode" fieldname="ipDeptCode" class="disableText" readonly="readonly"/>
 								</td>
 								<td   class="Edit-Title1">申购类目</td>
 								<td   class="Edit-Input1">
-								<input id="id_ipCategoryPK" fieldname="ipCategoryPK" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_ipCategoryPK" fieldname="ipCategoryPK" class="disableText" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
 								<td   class="Edit-Title1">申购人</td>
-								<td   class="Edit-Input1"><input id="id_ipApplyPerson" fieldname="ipApplyPerson" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox" readonly="readonly"/></td>
+								<td   class="Edit-Input1"><input id="id_ipApplyPerson" fieldname="ipApplyPerson" class="disableText" readonly="readonly"/></td>
 								
 								<td   class="Edit-Title1">申购日期</td>
-								<td   class="Edit-Input1"><input  id="id_ipPurchaseDate"  fieldname="ipPurchaseDate" readonly="readonly"/></td>
+								<td   class="Edit-Input1"><input  id="id_ipPurchaseDate"  fieldname="ipPurchaseDate" class="disableText" readonly="readonly"/></td>
 							</tr>
 							
 					<tr>

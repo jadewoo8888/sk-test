@@ -30,16 +30,16 @@ var business="${param.business}";
                        		<tr>
 								<td   class="Edit-Title1">申领部门</td>
 								<td   class="Edit-Input1">
-								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_itemsApplyDeptCode" fieldname="itemsApplyDeptCode" class="disableText" readonly="readonly"/>
 								</td>
 								<td   class="Edit-Title2">申领类目</td>
 								<td   class="Edit-Input2">
-								<input id="id_categoryManagementPK" fieldname="categoryManagementPK"  class="easyui-validatebox" readonly="readonly"/>
+								<input id="id_categoryManagementPK" fieldname="categoryManagementPK"  class="disableText" readonly="readonly"/>
 								</td>
 							</tr>
 							<tr>
 								<td   class="Edit-Title1">申领人</td>
-								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" class="easyui-validatebox" readonly="readonly"/></td>
+								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" class="disableText" readonly="readonly"/></td>
 								
 								<td   class="Edit-Title2">申领日期</td>
 								<td   class="Edit-Input2"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
@@ -55,7 +55,7 @@ var business="${param.business}";
 					</tr>
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"  readonly="readonly"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="disableText"  readonly="readonly"></textarea></td>
 					</tr>
 					</table> 
 					

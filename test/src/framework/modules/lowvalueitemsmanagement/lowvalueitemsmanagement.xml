@@ -29,6 +29,18 @@
 		<property name="entityDAO">
 			<ref bean="ItemManageDAO" />
 		</property>
+		
+		<property name="itemsApplyMDetailDAO">
+			<ref bean="ItemsApplyMDetailDAO" />
+		</property>
+		
+		<property name="itemsPurchaseDetailDAO">
+			<ref bean="ItemsPurchaseDetailDAO" />
+		</property>
+		
+		<property name="lviStoreRecordDAO">
+			<ref bean="LVIStoreRecordDAO" />
+		</property>
 	</bean>
 	
 	<bean id="ItemsApplyManagementDAO"

@@ -124,7 +124,7 @@ function deleteService(pk) {
 function deleteServiceSuccFunc(data) {
 	if(data!="null"&&data.length>0){
 		top.layer.alert(data,{closeBtn :2,icon:5});
-		changeBtnDisabled(false);
+		//changeBtnDisabled(false);
 	}else{	    				
 		top.layer.alert('删除成功 ',{icon:6,closeBtn :2});
 		datagrid.query();

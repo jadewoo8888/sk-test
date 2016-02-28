@@ -3,15 +3,7 @@ $(function(){
 	initData();
 	getCategoryComboboxData();
 	initAssetTypeBox();
-	//返回页面
-	$("#return").click(function(){
-		history.go(-1);
-		});	
 	
-	//编辑事务读取数据 
-	if(business=="modify"){
-		$("#businesstext").html("修改类目 ");
-	}
 });
 
 
@@ -19,8 +11,28 @@ $(function(){
  * 初始获取页面所需数据
  **/
 function initData() {
+	//返回页面
+	$("#return").click(function(){
+		history.go(-1);
+		});	
+	
+	$('#id_imType').combobox({  
+        onChange:function(){  
+        	imTypeChangeFn(); 
+        }
+        });  
+	
+	//编辑事务读取数据 
+	if(business=="modify"){
+		$("#businesstext").html("修改类目 ");
+	}
+	
+	$('#span_imAssetType').hide();
+	
 	if(pk) {
 		getItemByPk(pk);
+		$('#id_imName').addClass('disableText');
+		$('#id_imName').attr('readonly',true);//禁用输入
 	}
 }
 
@@ -122,22 +134,22 @@ function getDataPackage(){
 
 //保存 
 function savedata(){
-	edit(business);
+	if($("#EditPanel").form("validate")){
+		$("#save").attr("disabled", true);
+		edit(business);
+	}else{
+		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
+	}
 }
 
 //新增修改 
 function edit(business){
-	// 验证通过则返回为true
-	if($("#ff").form("validate")){
-		var itemObj = getDataPackage();
-		if (business == 'add') {
-			submitAdd(itemObj);
-		} else {
-			itemObj.pk = pk;
-			submitModify(itemObj);
-		}
-	}else{
-		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
+	var itemObj = getDataPackage();
+	if (business == 'add') {
+		submitAdd(itemObj);
+	} else {
+		itemObj.pk = pk;
+		submitModify(itemObj);
 	}
 }
 
@@ -207,14 +219,18 @@ function submitModify(submitPackage){
 function getCategoryComboboxData() {
 	Ajax.service(
 		'CategoryManagementBO',
-		'findAll', 
-		[],
+		'findCategoryByGroupCode', 
+		[top.strUserGroupCode],
 		getCategoryComboboxDataSuccFunc
 	);
 }
 
 function getCategoryComboboxDataSuccFunc(result) {
 	$('#id_imCategoryPK').combobox("loadData",result);  
+	 if (result.length > 0) {
+		 $('#id_imCategoryPK').combobox('select', result[0].pk);
+     }
+	 
 }
 
 /**
@@ -237,5 +253,21 @@ function initAssetTypeBox(){
 	function acTreeCallBack(code,codeAndName){
 		$('#id_imAssetType').searchbox('setValue',codeAndName);
 		$('#id_imAssetType').attr('treevalue',code);
+	}
+}
+
+function imTypeChangeFn() {
+	var type = $('#id_imType').combobox('getValue');
+	if (type == 'WPLB_002') {
+		$('#span_imAssetType').show();
+		/*//$('#id_imAssetType').searchbox('textbox').validatebox({required: true, missingMessage:'必填 '});
+		$('#id_imAssetType').validatebox({required: true, missingMessage:'必填 '});
+		//$('#id_imAssetType').attr("class", "easyui-validatebox");
+		$("id_imAssetType").addClass("easyui-validatebox");*/
+	} else {
+		$('#span_imAssetType').hide();
+		/*$("id_imAssetType").removeClass("easyui-validatebox");
+		$("id_imAssetType").removeAttr("required");
+		$("id_imAssetType").removeAttr("missingMessage");*/
 	}
 }

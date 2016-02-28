@@ -39,7 +39,7 @@ form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; 
 		  		<div class="EditPanel">
 				    <div>   
 				        <label for="type">名称<span>*</span>:</label>
-				        <input id="categoryName" name="categoryName" class="easyui-validatebox" required="true" missingMessage="不能为空" />   
+				        <input id="categoryName" name="categoryName" class="easyui-validatebox" required="true"  validType="length[1,50]"  invalidMessage="不能超过50个字符！" missingMessage="不能为空" />   
 				    </div>   
 				    <div style="height:30px">   
 				        <label for="type">角色:</label>
@@ -47,7 +47,7 @@ form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; 
 				    </div>  
 				    <div>   
 				        <label for="type">备注:</label>
-				        <input type="text" id="categoryRemark" name="categoryRemark"  maxlength="125"/>   
+				        <input type="text" id="categoryRemark" name="categoryRemark"  class="easyui-validatebox"   validType="length[1,125]"  invalidMessage="不能超过125个字符！"/>   
 				    </div>   
 			    </div>
 	    </form>

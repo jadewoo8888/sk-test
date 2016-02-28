@@ -29,7 +29,7 @@ function initDataGrid() {
 	        {field:"ipDSpecification",title:'规格型号',minwidth:80},
 			{field:"ipDMetricUnit",title:'单位',minwidth:80},
 			{field:"ipDApplyCount",title:'申购数量',minwidth:80},
-			{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}}
+			{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}}
 		]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};

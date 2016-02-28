@@ -28,7 +28,7 @@ function initDataGrid() {
 		{field:"imName",title:'物品名称',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"lviCount",title:'入库数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}}
+		{field:"lviCount",title:'入库数量',minwidth:80,editor:{ type:'numberbox',options:{min:1,width:80},align:'right',fmType:'int'}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};

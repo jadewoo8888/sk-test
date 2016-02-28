@@ -21,6 +21,8 @@ $(function(){
 function initData() {
 	if(pk) {
 		getCategoryByPk(pk);
+		$('#categoryName').addClass('disableText');
+		$('#categoryName').attr('readonly',true);//禁用输入
 	}
 }
 

@@ -56,7 +56,7 @@ var pk="${param.pk}";
 					</tr>
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_ipRemark" fieldname="ipRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_ipRemark" fieldname="ipRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,125]"  invalidMessage="不能超过125个字符！"></textarea></td>
 					</tr>
 					</table> 
 					

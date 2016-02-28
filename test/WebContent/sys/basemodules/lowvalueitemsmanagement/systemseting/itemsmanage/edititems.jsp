@@ -67,15 +67,15 @@ var pk="${param.pk}";
 							</tr>
 							<tr>
 								<td   class="Edit-Title1">名称<span class="notnullTip">*</span></td>
-								<td   class="Edit-Input1"><input id="id_imName" fieldname="imName" validType="length[1,50]" invalidMessage="不能超过25个字符" class="easyui-validatebox"/></td>
-								<td   class="Edit-Title2">资产分类代码</td>
-								<td   class="Edit-Input2"><input  id="id_imAssetType" fieldname="imAssetType"/></td>
+								<td   class="Edit-Input1"><input id="id_imName" fieldname="imName" class="easyui-validatebox" required="true"  validType="length[1,50]"  invalidMessage="不能超过50个字符！" missingMessage="不能为空"/></td>
+								<td   class="Edit-Title2">资产分类代码<span id="span_imAssetType" class="notnullTip">*</span></td>
+								<td   class="Edit-Input2"><input  id="id_imAssetType" fieldname="imAssetType" readonly="readonly"/></td>
 							</tr>
 							<tr> 
 								<td   class="Edit-Title1">规格</td>
 								<td   class="Edit-Input1"><input  id="id_imSpecification" fieldname="imSpecification" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>
 								<td   class="Edit-Title2">单位<span class="notnullTip">*</span></td>
-								<td   class="Edit-Input2"><input id="id_imMetricUnit" fieldname="imMetricUnit" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>					
+								<td   class="Edit-Input2"><input id="id_imMetricUnit" fieldname="imMetricUnit" required="true" validType="length[1,50]" invalidMessage="不能超过50个字符" class="easyui-validatebox"/></td>					
 							</tr>
 							<tr>
 								<td   class="Edit-Title1">备注</td>

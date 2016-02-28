@@ -4,8 +4,6 @@ import java.util.UUID;
 
 import framework.modules.lowvalueitemsmanagement.dao.ItemManageDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO;
-import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyManagementDAO;
-import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDetailDAO;
 import framework.modules.lowvalueitemsmanagement.dao.LVIStoreRecordDAO;
 import framework.modules.lowvalueitemsmanagement.domain.ItemManage;
@@ -23,7 +21,12 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 
 	@MethodID("addItem")
 	@LogOperate(operate = "新增物品")
-	public void addItem_log_trans(ItemManage itemManage) {
+	public String addItem_log_trans(ItemManage itemManage) {
+		boolean flag = entityDAO.executeFindExists("select 1 from tItemManage where imName = ?", itemManage.getImName());
+		if (flag) {
+			return "物品名称已经存在，请重新输入";
+		}
+		
 		String pk = UUID.randomUUID().toString();
 		itemManage.setPk(pk);
 		String[] updateInfo = DBOperation.getUpdateInfo();
@@ -31,6 +34,7 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 		itemManage.setLastestUpdate(updateInfo[0]);
 		itemManage.setUpdatePerson(updateInfo[2]);
 		entityDAO.save(itemManage);
+		return "";
 	}
 
 	@MethodID("modifyItem")

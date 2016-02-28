@@ -7,7 +7,7 @@ $(function(){
 	$("#return").click(function(){
 		history.go(-1);
 		});	
-	
+	//$('#id_lviSRCount').numberbox({min:1});
 });
 
 

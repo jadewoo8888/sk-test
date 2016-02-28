@@ -52,6 +52,17 @@ function initEditCell(){
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
+	
+	if (approvalRole == 2) {
+		var width = $("td[field=iamListerCheckCount]").children("div.datagrid-cell")[0].clientWidth;
+		$(".datagrid-cell-c1-iamListerCheckCount").width(width);
+	}
+	if (approvalRole == 3) {
+		var width = $("td[field=iamLeaderCheckCount]").children("div.datagrid-cell")[0].clientWidth;
+		$(".datagrid-cell-c1-iamLeaderCheckCount").width(width);
+	}
+	
+	
 }
 
 //自定义查询条件

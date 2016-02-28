@@ -16,6 +16,10 @@ var pk="${param.pk}";
 //var applyPerson = top.strUserAccount;
 var categoryName="${param.categoryName}";
 </script>
+<style type="text/css">
+.datagrid-cell-check input{height:18px;width:15px;}
+.datagrid-header-check input{height:18px;width:15px;}
+</style>
 </head>
 <body class="edit_body" style="background-color:white;" >
 	<div id="id_div_desc" class="head">

@@ -28,7 +28,7 @@ background-color:rgba(180,180,180,0.5);
 .Edit-Title2{width:150px;font-weight: bold;}
 #id_unitAdress{width:638px;}
 .EditPanel{padding-left:10px;}
-
+.EditPanel1 input{font-size:12px;background-color:white;border: 1px solid #E5E5E5;text-indent:5px;line-height:26px;word-break:normal;}
 .colorlink{color:#00afe8;cursor:pointer;}
 
 

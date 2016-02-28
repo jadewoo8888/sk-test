@@ -43,6 +43,9 @@ function initEditCell(){
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
+	
+	var width = $("td[field=lviCount]").children("div.datagrid-cell")[0].clientWidth;
+	$(".datagrid-cell-c1-lviCount").width(width);
 }
 
 //自定义查询条件

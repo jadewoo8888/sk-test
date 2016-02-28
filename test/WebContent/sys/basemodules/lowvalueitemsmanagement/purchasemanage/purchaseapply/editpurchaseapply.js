@@ -129,6 +129,9 @@ function initEditCell(){
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
+	
+	var width = $("td[field=ipDApplyCount]").children("div.datagrid-cell")[0].clientWidth;
+	$(".datagrid-cell-c1-ipDApplyCount").width(width);
 }
 
 function initDataGrid() {

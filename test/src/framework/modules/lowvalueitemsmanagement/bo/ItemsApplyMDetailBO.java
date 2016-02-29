@@ -1,5 +1,6 @@
 package framework.modules.lowvalueitemsmanagement.bo;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,7 +80,8 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	}
 	
 	@MethodID("getListForPage")
-	public ListForPageBean getListForPage(final int pageNumber, final int pageSize, final List<QueryCondition> queryCond, final String sortCond) {
+	public ListForPageBean getListForPage(final int pageNumber, final int pageSize,
+			final List<QueryCondition> queryCond, final String sortCond) {
 		ListForPageBean listForPageBean = new ListForPageBean();
 		QueryConditionAssembler assembler = getQueryConditionAssembler(queryCond, sortCond);
 		int totalCount = entityDAO.getTotalCountForPage(assembler);
@@ -88,10 +90,32 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
 		}
 		if (rowList != null) {
-			for (ItemsApplyMDetail itemsApplyMDetail : rowList) {
-				LowValueItems lowValueItems = lowValueItemsDAO.executeFindEntity(LowValueItems.class, "select * from tLowValueItems where LVIItemManagePK = ?", itemsApplyMDetail.getIamItemManagePK());
-				if (lowValueItems != null) {//设置库存
-					itemsApplyMDetail.setItemStoreCount(lowValueItems.getLviCount());
+
+			/*
+			 * for (QueryCondition queryCondition : queryCond) { if
+			 * (queryCondition.getFn() != null &&
+			 * queryCondition.getFn().equals("itemsApplyMPK")) {
+			 * 
+			 * } }
+			 */
+			for (ItemsApplyMDetail itemsApplyMDetail : rowList) {//给库存赋值
+				ItemManage itemManage = entityDAO.executeFindEntity(ItemManage.class,"select * from tItemManage where pk = ?",itemsApplyMDetail.getItemManagePK());
+				if (itemManage != null) {
+					String imType = itemManage.getImType();
+					if (imType.equals("WPLB_002")) {//固定资产：从入库登记功能中读取该物品对应的所有固定资产分类代码中，使用人为空的数量之和。
+						String imAssetType = itemManage.getImAssetType();
+						String atStoreSql = "SELECT SUM(assetRegAssetCurCount) FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='')  AND assetRegAssetType = ? AND assetRegEnprCode = ?  AND assetRegCheckFlag='SJZT_01'";
+						BigDecimal storeCount = (BigDecimal)entityDAO.executeFindUnique(atStoreSql, imAssetType,itemsApplyMDetail.getOrgCode());
+						//BigDecimal storeCount = (BigDecimal) entityDAO.executeFindUnique(atStoreSql, "001006001003","001502004001");
+						itemsApplyMDetail.setItemStoreCount(storeCount == null ? 0 : Integer.parseInt(storeCount+""));
+					} else {//低值品：从低值品仓库管理中读取
+						LowValueItems lowValueItems = lowValueItemsDAO.executeFindEntity(LowValueItems.class,
+								"select * from tLowValueItems where LVIItemManagePK = ?",
+								itemsApplyMDetail.getItemManagePK());
+						if (lowValueItems != null) {// 设置库存
+							itemsApplyMDetail.setItemStoreCount(lowValueItems.getLviCount());
+						}
+					}	
 				}
 			}
 		}
@@ -99,7 +123,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		FKOper.getInstance().setDisplay(rowList);
 		listForPageBean.setRows(rowList);
 		return listForPageBean;
-		
+
 	}
 	
 	@MethodID("issueItems")
@@ -108,7 +132,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		for (String itemsApplyMDetailPk : itemsApplyMDetailPkArr) {
 			ItemsApplyMDetail itemsApplyMDetail = entityDAO.findById(itemsApplyMDetailPk);
 			//第一步：修改低值品仓库管理对应物品的库存（减少的库存量等于行装科领导审核通过的数量）
-			LowValueItems lowValueItems = lowValueItemsDAO.executeFindEntity(LowValueItems.class, "select * from tLowValueItems where LVIItemManagePK = ?", itemsApplyMDetail.getIamItemManagePK());
+			LowValueItems lowValueItems = lowValueItemsDAO.executeFindEntity(LowValueItems.class, "select * from tLowValueItems where LVIItemManagePK = ?", itemsApplyMDetail.getItemManagePK());
 			lowValueItems.setLviCount(lowValueItems.getLviCount() - itemsApplyMDetail.getIamLeaderCheckCount());
 			lowValueItemsDAO.attachDirty(lowValueItems);
 			//第二步：发放成功后，将申领单状态变更为“已发放”，更新发放人和发放日期

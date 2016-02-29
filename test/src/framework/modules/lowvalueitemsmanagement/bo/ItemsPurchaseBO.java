@@ -13,6 +13,7 @@ import framework.modules.approve.dao.ApprovalDAO;
 import framework.modules.approve.domain.Approval;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDetailDAO;
+import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyManagement;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsPurchase;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsPurchaseDetail;
 import framework.sys.basemodule.bo.BOBase;
@@ -35,7 +36,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	
 	@MethodID("addItemPurchase")
 	@LogOperate(operate = "新增物品采购申请")
-	public void addItemPurchase_log_trans(ItemsPurchase itemsPurchase, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,List<Append> appendList) {
+	public void addItemPurchase_log_trans(ItemsPurchase itemsPurchase, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport, String itemsApplyMPK, List<Append> appendList) {
 		String itemsPurchasePk = UUID.randomUUID().toString();
 		itemsPurchase.setPk(itemsPurchasePk);
 		String ipCode = GlobalCache.getBusinBillNoFactoryService().getWPCGNo();
@@ -64,6 +65,12 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 		if (ifReport) {
 			LogOperateManager.operate("上报物品采购申请");
 			this.upreportItemsPurchase_log_trans(itemsPurchasePk);
+			//更新申领单位采购中
+			String strSql = "update tItemsApplyManagement set IAMCheckFlag='FSCCQWPFS_003'  where pk = ? ";
+			if (itemsApplyMPK != null && !itemsApplyMPK.equals("")) {
+				entityDAO.executeSql(strSql, itemsApplyMPK);
+			}
+			
 		}
 		
 		/** 第二步：处理附件信息 * */
@@ -72,7 +79,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	
 	@MethodID("modifyItemPurchase")
 	@LogOperate(operate = "修改物品采购申请")
-	public void modifyItemPurchase_log_trans(String pk, String ipRemark, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,List<Append> appendList){
+	public void modifyItemPurchase_log_trans(String pk, String ipRemark, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,String itemsApplyMPK, List<Append> appendList){
 		ItemsPurchase itemsPurchase = entityDAO.findById(pk);
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		itemsPurchase.setLastestUpdate(updateInfo[0]);
@@ -94,6 +101,11 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 		if (ifReport) {
 			LogOperateManager.operate("上报物品采购申请");
 			this.upreportItemsPurchase_log_trans(pk);
+			//更新申领单位采购中
+			String strSql = "update tItemsApplyManagement set IAMCheckFlag='FSCCQWPFS_003'  where pk = ? ";
+			if (itemsApplyMPK != null && !itemsApplyMPK.equals("")) {
+				entityDAO.executeSql(strSql, itemsApplyMPK);
+			}
 		}
 		
 		/** 第二步：处理附件信息 * */

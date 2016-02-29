@@ -113,13 +113,47 @@ function initModifyDataGrid() {
         {field:"ipDTypeDisplay",title:'类别',minwidth:80},
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
 		{field:"ipDMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{width:80},align:'right',fmType:'int'}},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
+		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{min:1},align:'right',fmType:'int'}},
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""; else return value;}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
+	 datagrid = new DataGrid(customOptions,dataGridOptions);
+}
+
+function initIssuePurchaseDataGrid() {
+	
+	//自定义查询条件
+	function setCustomQueryCondition() {
+		var customQCArr = new Array();
+		//单位条件
+		var mpkQc = new Object();
+		mpkQc.fn = 'itemsApplyMPK';
+		mpkQc.oper = ARY_STR_EQUAL[0];
+		mpkQc.value1 = itemsApplyMPK;
+		customQCArr.push(mpkQc);
+		
+	    return customQCArr;
+	}
+	
+	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
+	 var _columns =  
+	 [[
+		{field:"imName",title:'物品名称',minwidth:80},
+		{field:"imType",title:'类别编码',minwidth:80},
+        {field:"imTypeDisplay",title:'类别',minwidth:80},
+        {field:"imSpecification",title:'规格型号',minwidth:80},
+		{field:"imMetricUnit",title:'单位',minwidth:80},
+		{field:"iamApplyCount",title:'申领数量',minwidth:80},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{min:1},align:'right',fmType:'int'}},
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80}
+	]];
+	 
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
@@ -135,10 +169,14 @@ function initEditCell(){
 }
 
 function initDataGrid() {
-	if (pk) {
-		initModifyDataGrid();
+	if (itemsApplyMPK) {
+		initIssuePurchaseDataGrid();
 	} else {
-		initAddDataGrid();
+		if (pk) {
+			initModifyDataGrid();
+		} else {
+			initAddDataGrid();
+		}
 	}
 }
 
@@ -170,7 +208,6 @@ function initComBindFunc() {
 function save(ifReport) {
 	var itemsPurchase = packageItemsPurchaseData();
 	var itemsPurchaseMdetailList = packageItemsPurchaseDetailData();
-	debugger;
 	if (pk) {
 		summitEdit(itemsPurchaseMdetailList,ifReport);
 	} else {
@@ -182,7 +219,7 @@ function summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsPurchaseBO',
 			'addItemPurchase', 
-			 [itemsPurchase,itemsPurchaseMdetailList,ifReport,getAppendData()],
+			 [itemsPurchase,itemsPurchaseMdetailList,ifReport,itemsApplyMPK,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
@@ -190,7 +227,8 @@ function summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport) {
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
 					top.layer.alert(ifReport?'上报成功 ':'保存成功',{icon: 6, closeBtn:2});
-					history.go(-1);
+					//history.go(-1);
+					location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/listpurchaseapply.jsp';
 				}		
 			}
 		);
@@ -201,7 +239,7 @@ function summitEdit(itemsPurchaseMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsPurchaseBO',
 			'modifyItemPurchase', 
-			 [pk,ipRemark,itemsPurchaseMdetailList,ifReport,getAppendData()],
+			 [pk,ipRemark,itemsPurchaseMdetailList,ifReport,itemsApplyMPK,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
@@ -209,7 +247,8 @@ function summitEdit(itemsPurchaseMdetailList,ifReport) {
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
 					top.layer.alert(ifReport?'上报成功 ':'修改成功 ',{icon: 6, closeBtn:2});
-					history.go(-1);
+					//history.go(-1);
+					location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/listpurchaseapply.jsp';
 				}		
 			}
 		);
@@ -236,6 +275,7 @@ function packageItemsPurchaseDetailData() {
 	 	
 	 	var itemsPurchaseDetail = new Object();
 	 	itemsPurchaseDetail.ipDItemManagePK = row[i].pk;
+	 	
 	 	if (pk) {
 	 		itemsPurchaseDetail.ipDType= row[i].ipDType;
 		 	itemsPurchaseDetail.ipDName = row[i].ipDName;

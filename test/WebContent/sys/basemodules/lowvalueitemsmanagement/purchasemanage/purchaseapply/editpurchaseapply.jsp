@@ -13,6 +13,7 @@ var business="${param.business}";
 var categoryPk="${param.categoryPk}";
 var categoryName="${param.categoryName}";
 var pk="${param.pk}";
+var itemsApplyMPK = "${param.itemsApplyMPK}";
 </script>
 <style type="text/css">
 .datagrid-cell-check input{height:18px;width:15px;}

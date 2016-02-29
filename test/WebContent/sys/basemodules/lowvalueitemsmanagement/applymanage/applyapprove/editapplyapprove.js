@@ -19,11 +19,11 @@ function buttonBind(){
  * 初始化表格信息
  **/
 function initDataGrid() {
-	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80};
+	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}};
 	if (approvalRole == 2) {
 		iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
 	}
-	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80};
+	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}};
 	if (approvalRole == 3) {
 		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
 	}

@@ -126,6 +126,22 @@ function issueFn() {
 			}
 		);
 }
+//固定资产发放
+function assetTypeFn() {
+	top.layer.open({
+		type:2,
+		title:'选择固定资产 ',
+		shift:1,
+		closeBtn :2,
+		area:['900px','628px'],
+		shade:false,
+		zIndex:'2015', 
+		success:function(layero){
+	   		top.layer.setTop(layero); 
+		},
+		content:contextPath+'/core/componentmodule/assetselect/listAssetSelect.jsp'
+	});
+}
 
 function purchaseFn() {
 	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk="+pk+"&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;

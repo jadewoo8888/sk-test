@@ -47,20 +47,24 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 		itemsPurchase.setIpApprovalFlag("WPSLZT_001");//未提交
 		
 		
-		itemsPurchase.setInsertTime(updateInfo[0]);
+		/*itemsPurchase.setInsertTime(updateInfo[0]);
 		itemsPurchase.setLastestUpdate(updateInfo[0]);
-		itemsPurchase.setUpdatePerson(updateInfo[2]);
+		itemsPurchase.setUpdatePerson(updateInfo[2]);*/
 		
-		entityDAO.save(itemsPurchase);
+		int ipPurchaseCountSum = 0;
 		
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
 			itemsPurchaseDetail.setIpDItemsPurchasePK(itemsPurchasePk);
-			itemsPurchaseDetail.setInsertTime(updateInfo[0]);
+			/*itemsPurchaseDetail.setInsertTime(updateInfo[0]);
 			itemsPurchaseDetail.setLastestUpdate(updateInfo[0]);
-			itemsPurchaseDetail.setUpdatePerson(updateInfo[2]);
+			itemsPurchaseDetail.setUpdatePerson(updateInfo[2]);*/
 			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
+			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
 		}
+		
+		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
+		entityDAO.save(itemsPurchase);
 		
 		if (ifReport) {
 			LogOperateManager.operate("上报物品采购申请");
@@ -85,9 +89,11 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 		itemsPurchase.setLastestUpdate(updateInfo[0]);
 		itemsPurchase.setUpdatePerson(updateInfo[2]);
 		itemsPurchase.setIpRemark(ipRemark);
-		entityDAO.attachDirty(itemsPurchase);
+		
 		
 		entityDAO.executeSql("delete from tItemsPurchaseDetail t where t.IPDItemsPurchasePK=?", pk);
+		
+		int ipPurchaseCountSum = 0;
 		
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
@@ -96,7 +102,12 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 			itemsPurchaseDetail.setLastestUpdate(updateInfo[0]);
 			itemsPurchaseDetail.setUpdatePerson(updateInfo[2]);
 			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
+			
+			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
 		}
+		
+		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
+		entityDAO.attachDirty(itemsPurchase);
 		
 		if (ifReport) {
 			LogOperateManager.operate("上报物品采购申请");

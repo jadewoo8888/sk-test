@@ -42,7 +42,7 @@ var business="${param.business}";
 								<td   class="Edit-Input1"><input id="id_applyPerson" fieldname="applyPerson" class="disableText" readonly="readonly"/></td>
 								
 								<td   class="Edit-Title2">申领日期</td>
-								<td   class="Edit-Input2"><input  id="id_itemsApplyDate"  fieldname="itemsApplyDate" readonly="readonly"/></td>
+								<td   class="Edit-Input2"><input  id="id_itemsApplyDate" class="disableText" fieldname="itemsApplyDate" readonly="readonly"/></td>
 							</tr>
 							
 					<tr>

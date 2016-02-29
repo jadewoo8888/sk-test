@@ -146,7 +146,6 @@ function initComBindFunc() {
 function save(ifReport) {
 	var itemsApplyManagement = packageItemsApplyManData();
 	var itemsApplyMdetailList = packageItemsApplyMDetailData();
-	debugger;
 	if (pk) {
 		summitEdit(itemsApplyMdetailList,ifReport);
 	} else {

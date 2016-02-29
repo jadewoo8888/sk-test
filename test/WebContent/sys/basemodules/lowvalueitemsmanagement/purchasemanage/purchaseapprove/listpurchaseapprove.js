@@ -33,7 +33,7 @@ function initDataGrid() {
 		}},
 		
 		//{field:"pk",title:'主键',minwidth:200, hidden:true},
-		{field:"ipCode",title:'申领单号',minwidth:80},
+		{field:"ipCode",title:'申购单号',minwidth:80},
 		{field:"ipCategoryPKDisplay",title:'类目',minwidth:80},
         {field:"ipDeptCodeDisplay",title:'申领部门',minwidth:100},
         {field:"ipApplyPerson",title:'申购人',minwidth:80},

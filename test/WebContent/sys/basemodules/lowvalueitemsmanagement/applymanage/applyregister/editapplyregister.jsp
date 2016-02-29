@@ -75,7 +75,7 @@ var categoryName="${param.categoryName}";
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
-	           		<div class="editTitle">资产附件</div>						           			
+	           		<div class="editTitle">申领附件</div>						           			
 					<hr  class="editline"/>
 	           	</div>
 	            <div   class="editTips"></div> 

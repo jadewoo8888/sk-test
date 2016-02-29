@@ -44,8 +44,12 @@ function initEditCell(){
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
+	/*var width = $("td[field=ipDApproveCount]").children("div.datagrid-cell")[0].clientWidth;
+	$(".datagrid-cell-c1-ipDApproveCount").children("input.datagrid-editable-input").width(width);*/
+	
 	var width = $("td[field=ipDApproveCount]").children("div.datagrid-cell")[0].clientWidth;
-	$(".datagrid-cell-c1-ipDApproveCount").children("input.datagrid-editable-input").width(width);
+	var cssWidth = 'width:'+width+'px!important;';
+	$(".datagrid-cell-c1-ipDApproveCount").css("cssText",cssWidth);
 }
 
 //自定义查询条件

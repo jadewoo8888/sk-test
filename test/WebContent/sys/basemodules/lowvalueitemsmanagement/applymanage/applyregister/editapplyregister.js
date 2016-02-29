@@ -92,7 +92,8 @@ function initEditCell(){
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
 	var width = $("td[field=iamApplyCount]").children("div.datagrid-cell")[0].clientWidth;
-	$(".datagrid-cell-c1-iamApplyCount").width(width);
+	var cssWidth = 'width:'+width+'px!important;';
+	$(".datagrid-cell-c1-iamApplyCount").css("cssText",cssWidth);
 }
 
 //自定义查询条件

@@ -67,10 +67,11 @@ function showCategoryListSuccFunc(result) {
 	var html = "";
 	var len = result.length;
 	for (var i = 0; i < len;i++) {
-		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddApplyPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
+		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'"'; 
+		html += 'class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddApplyPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
 	}
 	//页面层
-	layer.open({
+	layer.open({//这种窗口是我们找官方的，按钮onclick可以找到toAddApplyPage方法。
 		title:'选择类目',
 	    type: 1,
 	    //skin: 'layui-layer-rim', //加上边框
@@ -78,7 +79,7 @@ function showCategoryListSuccFunc(result) {
 	    content: html
 	});
 	
-	/*top.layer.open({//这种窗口与框架的一致，但onclick找不到toAddApplyPage方法。
+	/*top.layer.open({//这种窗口与框架的一致，但按钮onclick找不到toAddApplyPage方法。
 		title:'选择类目',
 	    type: 1,
 	    closeBtn :2,

@@ -41,6 +41,9 @@ function initEditCell(){
 			editors[0].target.numberbox('setValue',row[i].ipDApproveCount);
 		}
 	}
+	var width = $("td[field=ipDPurchaseCount]").children("div.datagrid-cell")[0].clientWidth;
+	var cssWidth = 'width:'+width+'px!important;';
+	$(".datagrid-cell-c1-ipDPurchaseCount").css("cssText",cssWidth);
 }
 
 //自定义查询条件

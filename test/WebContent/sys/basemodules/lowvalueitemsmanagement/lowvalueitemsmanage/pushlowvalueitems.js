@@ -45,7 +45,8 @@ function initEditCell(){
 	}
 	
 	var width = $("td[field=lviCount]").children("div.datagrid-cell")[0].clientWidth;
-	$(".datagrid-cell-c1-lviCount").width(width);
+	var cssWidth = 'width:'+width+'px!important;';
+	$(".datagrid-cell-c1-lviCount").css("cssText",cssWidth);
 }
 
 //自定义查询条件

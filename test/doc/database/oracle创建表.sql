@@ -198,6 +198,7 @@ create table TITEMSPURCHASE
 (
   pk                 VARCHAR2(50) not null,
   ipcode             VARCHAR2(50),
+  ipitemsapplypk     VARCHAR2(50),
   ipcategorypk       VARCHAR2(50),
   iporgcode          VARCHAR2(50),
   ipdeptcode         VARCHAR2(50),

@@ -13,6 +13,9 @@
          <property name="ipCode" type="java.lang.String">
             <column name="IPCode" length="50" />
         </property>
+         <property name="ipItemsApplyPK" type="java.lang.String">
+            <column name="ipItemsApplyPK" length="20" />
+        </property>
          <property name="ipCategoryPK" type="java.lang.String">
             <column name="IPCategoryPK" length="50" />
         </property>
@@ -58,6 +61,5 @@
          <property name="updatePerson" type="java.lang.String">
             <column name="UpdatePerson" length="20" />
         </property>
-        
     </class>
 </hibernate-mapping>

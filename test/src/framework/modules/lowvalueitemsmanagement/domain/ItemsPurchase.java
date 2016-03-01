@@ -7,6 +7,7 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 
 	private String pk = "";
 	private String ipCode = "";
+	private String ipItemsApplyPK;
 	@FK(ref = Ref.Category)
 	private String ipCategoryPK = "";
 	@FK(ref = Ref.Organization)
@@ -168,7 +169,12 @@ public class ItemsPurchase implements java.io.Serializable, Cloneable{
 	public void setIpApprovalFlagDisplay(String ipApprovalFlagDisplay) {
 		this.ipApprovalFlagDisplay = ipApprovalFlagDisplay;
 	}
-	
+	public String getIpItemsApplyPK() {
+		return ipItemsApplyPK;
+	}
+	public void setIpItemsApplyPK(String ipItemsApplyPK) {
+		this.ipItemsApplyPK = ipItemsApplyPK;
+	}
 	
 	
 }

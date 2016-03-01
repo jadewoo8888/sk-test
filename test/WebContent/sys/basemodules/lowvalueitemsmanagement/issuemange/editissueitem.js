@@ -57,6 +57,12 @@ function setCustomQueryCondition() {
 	mpkQc.value1 = pk;
 	customQCArr.push(mpkQc);
 	
+	var appCountQc = new Object();
+	appCountQc.fn = 'iamApplyCount';
+	appCountQc.oper = ARY_STR_NOTEQUAL[0];
+	appCountQc.value1 = '0';
+	customQCArr.push(appCountQc);
+	
     return customQCArr;
 }
 
@@ -145,7 +151,7 @@ function assetTypeFn() {
 
 function purchaseFn() {
 	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk="+pk+"&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?itemsApplyMPK='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business=issuePurchaseOpr';
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?ipItemsApplyPK='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business=issuePurchaseOpr';
 }
 /**
  * 设置附件

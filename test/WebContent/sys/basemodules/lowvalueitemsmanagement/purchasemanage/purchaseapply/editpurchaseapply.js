@@ -132,7 +132,7 @@ function initIssuePurchaseDataGrid() {
 		var mpkQc = new Object();
 		mpkQc.fn = 'itemsApplyMPK';
 		mpkQc.oper = ARY_STR_EQUAL[0];
-		mpkQc.value1 = itemsApplyMPK;
+		mpkQc.value1 = ipItemsApplyMPK;
 		customQCArr.push(mpkQc);
 		
 	    return customQCArr;
@@ -169,7 +169,7 @@ function initEditCell(){
 }
 
 function initDataGrid() {
-	if (itemsApplyMPK) {
+	if (ipItemsApplyMPK) {
 		initIssuePurchaseDataGrid();
 	} else {
 		if (pk) {
@@ -219,7 +219,7 @@ function summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsPurchaseBO',
 			'addItemPurchase', 
-			 [itemsPurchase,itemsPurchaseMdetailList,ifReport,itemsApplyMPK,getAppendData()],
+			 [itemsPurchase,itemsPurchaseMdetailList,ifReport,ipItemsApplyMPK,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
@@ -239,7 +239,7 @@ function summitEdit(itemsPurchaseMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsPurchaseBO',
 			'modifyItemPurchase', 
-			 [pk,ipRemark,itemsPurchaseMdetailList,ifReport,itemsApplyMPK,getAppendData()],
+			 [pk,ipRemark,itemsPurchaseMdetailList,ifReport,ipItemsApplyMPK,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击

@@ -36,43 +36,36 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	
 	@MethodID("addItemPurchase")
 	@LogOperate(operate = "新增物品采购申请")
-	public void addItemPurchase_log_trans(ItemsPurchase itemsPurchase, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport, String itemsApplyMPK, List<Append> appendList) {
+	public void addItemPurchase_log_trans(ItemsPurchase itemsPurchase, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport, String ipItemsApplyMPK, List<Append> appendList) {
 		String itemsPurchasePk = UUID.randomUUID().toString();
-		itemsPurchase.setPk(itemsPurchasePk);
-		String ipCode = GlobalCache.getBusinBillNoFactoryService().getWPCGNo();
-		itemsPurchase.setIpCode(ipCode);
+		int ipPurchaseCountSum = 0;//采购合计
 		
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		
-		itemsPurchase.setIpApprovalFlag("WPSLZT_001");//未提交
-		
-		
-		/*itemsPurchase.setInsertTime(updateInfo[0]);
-		itemsPurchase.setLastestUpdate(updateInfo[0]);
-		itemsPurchase.setUpdatePerson(updateInfo[2]);*/
-		
-		int ipPurchaseCountSum = 0;
-		
-		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
+		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {//生成采购单明细，保存
 			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
 			itemsPurchaseDetail.setIpDItemsPurchasePK(itemsPurchasePk);
-			/*itemsPurchaseDetail.setInsertTime(updateInfo[0]);
-			itemsPurchaseDetail.setLastestUpdate(updateInfo[0]);
-			itemsPurchaseDetail.setUpdatePerson(updateInfo[2]);*/
 			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
 			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
 		}
 		
+		//生成采购单，保存
+		itemsPurchase.setPk(itemsPurchasePk);
+		String ipCode = GlobalCache.getBusinBillNoFactoryService().getWPCGNo();
+		itemsPurchase.setIpCode(ipCode);
+		if (ipItemsApplyMPK != null && !ipItemsApplyMPK.equals("")) {
+			itemsPurchase.setIpItemsApplyPK(ipItemsApplyMPK);
+		}
+		
+		itemsPurchase.setIpApprovalFlag("WPSLZT_001");//默认为未提交状态
 		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
 		entityDAO.save(itemsPurchase);
 		
-		if (ifReport) {
+		if (ifReport) {//如果是上报，将提交审批，并修改状态为待审批
 			LogOperateManager.operate("上报物品采购申请");
 			this.upreportItemsPurchase_log_trans(itemsPurchasePk);
-			//更新申领单位采购中
+			//如果是通过发放申购的，则需更新申领单位采购中
 			String strSql = "update tItemsApplyManagement set IAMCheckFlag='FSCCQWPFS_003'  where pk = ? ";
-			if (itemsApplyMPK != null && !itemsApplyMPK.equals("")) {
-				entityDAO.executeSql(strSql, itemsApplyMPK);
+			if (ipItemsApplyMPK != null && !ipItemsApplyMPK.equals("")) {//是否是通过发放申购的
+				entityDAO.executeSql(strSql, ipItemsApplyMPK);
 			}
 			
 		}
@@ -83,39 +76,33 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	
 	@MethodID("modifyItemPurchase")
 	@LogOperate(operate = "修改物品采购申请")
-	public void modifyItemPurchase_log_trans(String pk, String ipRemark, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,String itemsApplyMPK, List<Append> appendList){
-		ItemsPurchase itemsPurchase = entityDAO.findById(pk);
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		itemsPurchase.setLastestUpdate(updateInfo[0]);
-		itemsPurchase.setUpdatePerson(updateInfo[2]);
-		itemsPurchase.setIpRemark(ipRemark);
-		
+	public void modifyItemPurchase_log_trans(String pk, String ipRemark, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,String ipItemsApplyMPK, List<Append> appendList){
 		
 		entityDAO.executeSql("delete from tItemsPurchaseDetail t where t.IPDItemsPurchasePK=?", pk);
 		
-		int ipPurchaseCountSum = 0;
+		ItemsPurchase itemsPurchase = entityDAO.findById(pk);
+		itemsPurchase.setIpRemark(ipRemark);
+		
+		int ipPurchaseCountSum = 0;//采购合计
 		
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
 			itemsPurchaseDetail.setIpDItemsPurchasePK(itemsPurchase.getPk());
-			itemsPurchaseDetail.setInsertTime(updateInfo[0]);
-			itemsPurchaseDetail.setLastestUpdate(updateInfo[0]);
-			itemsPurchaseDetail.setUpdatePerson(updateInfo[2]);
 			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
 			
 			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
 		}
-		
+		//更新采购单
 		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
 		entityDAO.attachDirty(itemsPurchase);
 		
 		if (ifReport) {
 			LogOperateManager.operate("上报物品采购申请");
 			this.upreportItemsPurchase_log_trans(pk);
-			//更新申领单位采购中
+			//如果是通过发放申购的，则需更新申领单位采购中
 			String strSql = "update tItemsApplyManagement set IAMCheckFlag='FSCCQWPFS_003'  where pk = ? ";
-			if (itemsApplyMPK != null && !itemsApplyMPK.equals("")) {
-				entityDAO.executeSql(strSql, itemsApplyMPK);
+			if (ipItemsApplyMPK != null && !ipItemsApplyMPK.equals("")) {
+				entityDAO.executeSql(strSql, ipItemsApplyMPK);
 			}
 		}
 		
@@ -127,7 +114,14 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	@LogOperate(operate = "删除一条物品采购申请")
 	public String deleteItemPurchase_log_trans(String pk) {
 		String return_tips = "";
-		entityDAO.delete(entityDAO.findById(pk));
+		ItemsPurchase itemsPurchase = entityDAO.findById(pk);
+		//如通过物品发放功能生成的申购单，删除时要将申领单改回已审批状态。
+		if (itemsPurchase.getIpItemsApplyPK() != null && !itemsPurchase.getIpItemsApplyPK().equals("")) {
+			String updateIAMSql = "update tItemsApplyManagement t set t.IAMCheckFlag='FSCCQWPFS_001' where t.pk=? ";//FSCCQWPFS_001已审批
+			entityDAO.executeSql(updateIAMSql, "");
+		}
+		
+		entityDAO.delete(itemsPurchase);
 		entityDAO.executeSql("delete from tItemsPurchaseDetail t where t.IPDItemsPurchasePK=?", pk);
 		
 		/** 第二步：删除对应的附件信息 * */
@@ -249,41 +243,6 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	private void genSynTaken() {
 
 	}
-	
-	/*@MethodID("getListForPagePurchaseStatus")
-	public ListForPageBean getListForPage(final int pageNumber, final int pageSize, final List<QueryCondition> queryCond, final String sortCond) {
-		ListForPageBean listForPageBean = new ListForPageBean();
-		QueryConditionAssembler assembler = getQueryConditionAssembler(queryCond, sortCond);
-		int totalCount = entityDAO.getTotalCountForPage(assembler);
-		List<ItemsPurchase> rowList = null;
-		if (totalCount > 0) {
-			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
-		}
-		if (rowList != null) {
-			for (ItemsPurchase ItemsPurchase : rowList) {
-				if (ItemsPurchase.getIpApprovalFlag().equals("WPSLZT_001")) {
-					ItemsPurchase.setItemStatusDisplay("未上报");
-				} else if(ItemsPurchase.getIpApprovalFlag().equals("WPSLZT_002")) {
-					ItemsPurchase.setItemStatusDisplay("已上报");
-				} else if(ItemsPurchase.getIpApprovalFlag().equals("WPSLZT_003")) {
-					ItemsPurchase.setItemStatusDisplay("审批中");
-				} else if(ItemsPurchase.getIamCheckFlag ().equals("FSCCQWPFS_001") || ItemsPurchase.getIpApprovalFlag().equals("WPSLZT_004") || ItemsPurchase.getIpApprovalFlag().equals("WPSLZT_005")) {
-					ItemsPurchase.setItemStatusDisplay("已审批");
-				} else if(ItemsPurchase.getIamCheckFlag().equals("FSCCQWPFS_003")) {
-					ItemsPurchase.setItemStatusDisplay("采购中");
-				} else if(ItemsPurchase.getIamCheckFlag().equals("FSCCQWPFS_002")) {
-					ItemsPurchase.setItemStatusDisplay("待发放");
-				} else if(ItemsPurchase.getIamCheckFlag().equals("FSCCQWPFS_004")) {
-					ItemsPurchase.setItemStatusDisplay("已发放");
-				}
-			}
-		}
-		listForPageBean.setTotal(totalCount);
-		FKOper.getInstance().setDisplay(rowList);
-		listForPageBean.setRows(rowList);
-		return listForPageBean;
-		
-	}*/
 
 	public ItemsPurchaseDetailDAO getItemsPurchaseDetailDAO() {
 		return itemsPurchaseDetailDAO;

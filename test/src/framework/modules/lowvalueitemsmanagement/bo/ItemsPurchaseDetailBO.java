@@ -101,7 +101,6 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	@MethodID("pushOneStore")
 	@LogOperate(operate = "单个物品入库")
 	public void pushOneStore_log_trans(String itemsPurchaseDetailPk) {
-		System.out.println(itemsPurchaseDetailPk);
 		
 		ItemsPurchaseDetail itemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetailPk);
 		
@@ -114,6 +113,7 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		//2、更新入库数量合计
 		ItemsPurchase itemsPurchase = itemsPurchaseDAO.findById(itemsPurchaseDetail.getIpDItemsPurchasePK());
 		itemsPurchase.setIpStoreCountSum(itemsPurchase.getIpStoreCountSum() + itemsPurchaseDetail.getIpDPurchaseCount());
+		itemsPurchaseDAO.attachDirty(itemsPurchase);
 		//3、单独登记一条入库记录
 		LVIStoreRecord lviStoreRecord = new LVIStoreRecord();
 		lviStoreRecord.setLviSRCategoryPK(itemsPurchase.getIpCategoryPK());
@@ -131,10 +131,6 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		lviStoreRecord.setLviSRSpecification(itemsPurchaseDetail.getIpDSpecification());
 		lviStoreRecord.setLviSRType(itemsPurchaseDetail.getIpDType());
 		lviStoreRecord.setPk(UUID.randomUUID().toString());
-		
-		lviStoreRecord.setInserttime(updateInfo[0]);
-		lviStoreRecord.setLastestUpdate(updateInfo[0]);
-		lviStoreRecord.setUpdatePerson(updateInfo[2]);
 		
 		lviStoreRecordDAO.save(lviStoreRecord);
 		
@@ -159,6 +155,13 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 			lowValueItem.setLviType(itemsPurchaseDetail.getIpDType());
 			lowValueItem.setPk(UUID.randomUUID().toString());
 			lowValueItemsDAO.save(lowValueItem);
+		}
+		//5、如通过物品发放功能生成的申购单，整张单的全部物品入库后要将申领单的状态改为待发放。
+		//采购数量=入库数量,则表示完全入库
+		String ipItemsApplyPK = itemsPurchase.getIpItemsApplyPK();
+		if(ipItemsApplyPK != null && !ipItemsApplyPK.equals("") && itemsPurchase.getIpPurchaseCountSum() == itemsPurchase.getIpStoreCountSum()) {
+			String updateIAMSql = "update tItemsApplyManagement t set t.IAMCheckFlag='FSCCQWPFS_002' where t.pk=? ";//FSCCQWPFS_002待发放
+			entityDAO.executeSql(updateIAMSql, "");
 		}
 	}
 

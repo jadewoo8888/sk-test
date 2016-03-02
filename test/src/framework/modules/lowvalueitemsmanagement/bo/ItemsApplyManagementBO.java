@@ -23,7 +23,6 @@ import framework.sys.context.applicationworker.MethodID;
 import framework.sys.foreignkeytranslation.FKOper;
 import framework.sys.log.LogOperate;
 import framework.sys.log.LogOperateManager;
-import framework.sys.tools.DBOperation;
 
 @LogOperate(menu = "低值易耗品物品申领管理")
 public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, ItemsApplyManagement> {
@@ -36,38 +35,33 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	
 	public static String Menu_ItemsApplyMan_Check = "MENU_10_01_02";//申领审批菜单
 	
+	/**
+	 * 
+	 * @param itemsApplyManagement
+	 * @param itemsApplyMdetailList
+	 * @param ifReport
+	 * @param appendList
+	 */
 	@MethodID("addItemApply")
 	@LogOperate(operate = "新增物品申领")
 	public void addItemApply_log_trans(ItemsApplyManagement itemsApplyManagement, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList) {
+		/** 第一步：新增物品申领 * */
+		//新增物品申领
 		String applyManagementPk = UUID.randomUUID().toString();
 		itemsApplyManagement.setPk(applyManagementPk);
 		String applyCode = GlobalCache.getBusinBillNoFactoryService().getWPSLNo();
 		itemsApplyManagement.setItemsApplyCode(applyCode);
-		
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		
-		//itemsApplyManagement.setApplyPerson(updateInfo[2]);//日期格式
-		//itemsApplyManagement.setItemsApplyDate(updateInfo[0]);
-		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_002");//待发放
-		itemsApplyManagement.setItemsApplyFlag("WPSLZT_001");//未提交
-		//itemsApplyManagement.setItemsIssueLister("");
-		//itemsApplyManagement.setItemsIssueDate("");
-		
-		itemsApplyManagement.setInsertTime(updateInfo[0]);
-		itemsApplyManagement.setLastestUpdate(updateInfo[0]);
-		itemsApplyManagement.setUpdatePerson(updateInfo[2]);
-		
+		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_002");//默认待发放
+		itemsApplyManagement.setItemsApplyFlag("WPSLZT_001");//默认未提交
 		entityDAO.save(itemsApplyManagement);
 		
+		//保存申领明细列表
 		for (ItemsApplyMDetail itemsApplyMdetail : itemsApplyMdetailList) {
 			itemsApplyMdetail.setPk(UUID.randomUUID().toString());
 			itemsApplyMdetail.setItemsApplyMPK(applyManagementPk);
-			itemsApplyMdetail.setInsertTime(updateInfo[0]);
-			itemsApplyMdetail.setLastestUpdate(updateInfo[0]);
-			itemsApplyMdetail.setUpdatePerson(updateInfo[2]);
 			itemsApplyMDetailDAO.save(itemsApplyMdetail);
 		}
-		
+		//上报
 		if (ifReport) {
 			LogOperateManager.operate("上报物品申领");
 			this.upreportItemsApply_log_trans(applyManagementPk);
@@ -77,27 +71,32 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		appendBO.processAppend(appendList, applyManagementPk, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
 	}
 	
+	/**
+	 * 
+	 * @param pk
+	 * @param itemsApplyRemark
+	 * @param itemsApplyMdetailList
+	 * @param ifReport
+	 * @param appendList
+	 */
 	@MethodID("modifyItemApply")
 	@LogOperate(operate = "修改物品申领")
 	public void modifyItemApply_log_trans(String pk, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList){
+		/** 第一步：修改物品申领 * */
+		//修改物品申领
 		ItemsApplyManagement itemsApplyManagement = entityDAO.findById(pk);
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		itemsApplyManagement.setLastestUpdate(updateInfo[0]);
-		itemsApplyManagement.setUpdatePerson(updateInfo[2]);
 		itemsApplyManagement.setItemsApplyRemark(itemsApplyRemark);
 		entityDAO.attachDirty(itemsApplyManagement);
-		
+		/**先删除所有明细，再添加明细，等于做更新操作**/
+		//删除所有的物品申领明细
 		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
-		
+		//重新生成相应的物品申领明显
 		for (ItemsApplyMDetail itemsApplyMdetail : itemsApplyMdetailList) {
 			itemsApplyMdetail.setPk(UUID.randomUUID().toString());
 			itemsApplyMdetail.setItemsApplyMPK(itemsApplyManagement.getPk());
-			itemsApplyMdetail.setInsertTime(updateInfo[0]);
-			itemsApplyMdetail.setLastestUpdate(updateInfo[0]);
-			itemsApplyMdetail.setUpdatePerson(updateInfo[2]);
 			itemsApplyMDetailDAO.save(itemsApplyMdetail);
 		}
-		
+		//上报
 		if (ifReport) {
 			LogOperateManager.operate("上报物品申领");
 			this.upreportItemsApply_log_trans(pk);
@@ -107,20 +106,30 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		appendBO.processAppend(appendList, pk, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
 	}
 	
+	/**
+	 * 
+	 * @param pk
+	 * @return
+	 */
 	@MethodID("deleteItemApply")
 	@LogOperate(operate = "删除一条物品申领")
 	public String deleteItemApply_log_trans(String pk) {
-		String return_tips = "";
+		/** 第一步：删除物品申领 * */
 		entityDAO.delete(entityDAO.findById(pk));
+		/** 第二步：删除对应的物品申领明细 * */
 		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
 		
-		/** 第二步：删除对应的附件信息 * */
+		/** 第三步：删除对应的附件信息 * */
 		String pkArr[] = {pk};
 		appendBO.deleteAppendByBusinessCode(pkArr, AppendBusinessType.TYYWLX_024);
-		return return_tips;
+		return "";
 
 	}
 	
+	/**
+	 * 
+	 * @param pk
+	 */
 	@MethodID("upreportItemsApply")
 	@LogOperate(operate = "上报物品申领登记")
 	public void upreportItemsApply_log_trans(String pk) {
@@ -135,6 +144,8 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	
 	/**
 	 * 上报动作
+	 * @param itemsApplyManagement
+	 * @return
 	 */
 	private ApproveResult _upreport(ItemsApplyManagement itemsApplyManagement) {
 		String[] sysPara = {Menu_ItemsApplyMan_Check,itemsApplyManagement.getOrgCode(),itemsApplyManagement.getItemsApplyDeptCode()};

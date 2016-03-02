@@ -6,7 +6,7 @@ import framework.modules.lowvalueitemsmanagement.domain.LVIPopRecord;
 import framework.sys.basemodule.bo.BOBase;
 import framework.sys.log.LogOperate;
 
-@LogOperate(menu = "低值易耗品物品管理")
+@LogOperate(menu = "低值品出库记录管理")
 public class LVIPopRecordBO  extends BOBase<LVIPopRecordDAO, LVIPopRecord>{
 
 

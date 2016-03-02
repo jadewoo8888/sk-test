@@ -27,7 +27,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		
 		for (LowValueItems newLowValueItems : lowValueItemsList) {
-			//判断是否已经存在，如果已经存在则更新数量，不存在就新增一条记录
+			//判断仓库记录是否已经存在，如果已经存在则更新数量，不存在就新增一条记录
 			String strSql = "SELECT * FROM tLowValueItems WHERE LVIItemManagePK = ?";
 			LowValueItems lowValueItemOld = entityDAO.executeFindEntity(LowValueItems.class, strSql, newLowValueItems.getLviItemManagePK());
 			if (lowValueItemOld != null) {
@@ -35,15 +35,12 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 				entityDAO.attachDirty(lowValueItemOld);
 			} else {
 				newLowValueItems.setPk(UUID.randomUUID().toString());
-				newLowValueItems.setInserttime(updateInfo[0]);
-				newLowValueItems.setLastestUpdate(updateInfo[0]);
-				newLowValueItems.setUpdatePerson(updateInfo[2]);
 				entityDAO.save(newLowValueItems);
 			}
 			//单独登记一条入库记录
 			LVIStoreRecord lviStoreRecord = new LVIStoreRecord();
 			lviStoreRecord.setLviSRCategoryPK(newLowValueItems.getLviCategoryPK());
-			lviStoreRecord.setLviSRCount(newLowValueItems.getLviCount());//采购数量=入库数量？
+			lviStoreRecord.setLviSRCount(newLowValueItems.getLviCount());
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			lviStoreRecord.setLviSRDate(df.format(new Date()));
 			lviStoreRecord.setLviSRItemManagePK(newLowValueItems.getLviItemManagePK());
@@ -58,32 +55,9 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 			lviStoreRecord.setLviSRType(newLowValueItems.getLviType());
 			lviStoreRecord.setPk(UUID.randomUUID().toString());
 			
-			lviStoreRecord.setInserttime(updateInfo[0]);
-			lviStoreRecord.setLastestUpdate(updateInfo[0]);
-			lviStoreRecord.setUpdatePerson(updateInfo[2]);
-			
 			lviStoreRecordDAO.save(lviStoreRecord);
 		}
 	}
-	/*
-	@MethodID("modifyItem")
-	@LogOperate(operate = "修改物品")
-	public void modifyItem_log_trans(ItemManage itemManage) {
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		itemManage.setLastestUpdate(updateInfo[0]);
-		itemManage.setUpdatePerson(updateInfo[2]);
-		entityDAO.attachDirty(itemManage);
-	}
-
-	@MethodID("deleteItem")
-	@LogOperate(operate = "删除一条物品")
-	public void deleteItem_log_trans(String pk) {
-		// 对应物品存在物品申领单或物品采购单、低值品入库记录时不允许删除
-		String return_tips = "";
-		entityDAO.delete(entityDAO.findById(pk));
-		return return_tips;
-
-	}*/
 
 	public LVIStoreRecordDAO getLviStoreRecordDAO() {
 		return lviStoreRecordDAO;

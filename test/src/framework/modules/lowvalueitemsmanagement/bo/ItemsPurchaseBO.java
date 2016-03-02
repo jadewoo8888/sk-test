@@ -13,7 +13,6 @@ import framework.modules.approve.dao.ApprovalDAO;
 import framework.modules.approve.domain.Approval;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsPurchaseDetailDAO;
-import framework.modules.lowvalueitemsmanagement.domain.ItemsApplyManagement;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsPurchase;
 import framework.modules.lowvalueitemsmanagement.domain.ItemsPurchaseDetail;
 import framework.sys.basemodule.bo.BOBase;
@@ -21,7 +20,6 @@ import framework.sys.cache.GlobalCache;
 import framework.sys.context.applicationworker.MethodID;
 import framework.sys.log.LogOperate;
 import framework.sys.log.LogOperateManager;
-import framework.sys.tools.DBOperation;
 
 @LogOperate(menu = "低值易耗品采购申请")
 public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
@@ -77,20 +75,21 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	@MethodID("modifyItemPurchase")
 	@LogOperate(operate = "修改物品采购申请")
 	public void modifyItemPurchase_log_trans(String pk, String ipRemark, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,String ipItemsApplyMPK, List<Append> appendList){
-		
+		/**全部删除明细，然后把最新的全部插入，就等于更新操作**/
+		//全部删除采购申请明细
 		entityDAO.executeSql("delete from tItemsPurchaseDetail t where t.IPDItemsPurchasePK=?", pk);
 		
 		ItemsPurchase itemsPurchase = entityDAO.findById(pk);
 		itemsPurchase.setIpRemark(ipRemark);
 		
-		int ipPurchaseCountSum = 0;//采购合计
-		
+		int ipPurchaseCountSum = 0;//采购合计值
+		//全部插入采购明细
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
 			itemsPurchaseDetail.setIpDItemsPurchasePK(itemsPurchase.getPk());
 			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
 			
-			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
+			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();//采购合计
 		}
 		//更新采购单
 		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
@@ -106,7 +105,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 			}
 		}
 		
-		/** 第二步：处理附件信息 * */
+		/** 处理附件信息 * */
 		appendBO.processAppend(appendList, pk, AppendBusinessType.TYYWLX_026, itemsPurchase.getIpOrgCode());
 	}
 	
@@ -115,16 +114,17 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	public String deleteItemPurchase_log_trans(String pk) {
 		String return_tips = "";
 		ItemsPurchase itemsPurchase = entityDAO.findById(pk);
-		//如通过物品发放功能生成的申购单，删除时要将申领单改回已审批状态。
+		/** 第一步：如通过物品发放功能生成的申购单，删除时要将申领单改回已审批状态。 * */
 		if (itemsPurchase.getIpItemsApplyPK() != null && !itemsPurchase.getIpItemsApplyPK().equals("")) {
 			String updateIAMSql = "update tItemsApplyManagement t set t.IAMCheckFlag='FSCCQWPFS_001' where t.pk=? ";//FSCCQWPFS_001已审批
 			entityDAO.executeSql(updateIAMSql, "");
 		}
-		
+		/** 第二步：删除一条物品采购申请单 * */
 		entityDAO.delete(itemsPurchase);
+		/** 第三步：删除一条物品采购申请明细 * */
 		entityDAO.executeSql("delete from tItemsPurchaseDetail t where t.IPDItemsPurchasePK=?", pk);
 		
-		/** 第二步：删除对应的附件信息 * */
+		/** 第四步：删除对应的附件信息 * */
 		String pkArr[] = {pk};
 		appendBO.deleteAppendByBusinessCode(pkArr, AppendBusinessType.TYYWLX_026);
 		return return_tips;

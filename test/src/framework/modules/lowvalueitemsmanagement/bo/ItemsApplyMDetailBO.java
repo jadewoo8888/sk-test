@@ -1,7 +1,6 @@
 package framework.modules.lowvalueitemsmanagement.bo;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.UUID;
 
 import framework.core.sql.QueryCondition;
 import framework.core.sql.QueryConditionAssembler;
-import framework.modules.lowvalueitemsmanagement.dao.ItemManageDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyMDetailDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemsApplyManagementDAO;
 import framework.modules.lowvalueitemsmanagement.dao.LVIPopRecordDAO;
@@ -38,19 +36,12 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	public void addItemsApplyMDetail_log_trans(ItemsApplyMDetail itemsApplyMDetail) {
 		String pk = UUID.randomUUID().toString();
 		itemsApplyMDetail.setPk(pk);
-		/*String[] updateInfo = DBOperation.getUpdateInfo();
-		itemsApplyMDetail.setInsertTime(updateInfo[0]);
-		itemsApplyMDetail.setLastestUpdate(updateInfo[0]);
-		itemsApplyMDetail.setUpdatePerson(updateInfo[2]);*/
 		entityDAO.save(itemsApplyMDetail);
 	}
 	
 	@MethodID("modifyItemsApplyMDetail")
 	@LogOperate(operate = "修改物品申领明细")
 	public void modifyItemsApplyMDetail_log_trans(ItemsApplyMDetail itemsApplyMDetail){
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		itemsApplyMDetail.setLastestUpdate(updateInfo[0]);
-		itemsApplyMDetail.setUpdatePerson(updateInfo[2]);
 		entityDAO.attachDirty(itemsApplyMDetail);
 	}
 	
@@ -63,16 +54,22 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 
 	}
 	
+	/**
+	 * 审批物品申领明细，设置审批数量
+	 * @param itemsApplyMDetailList 物品申领明细列表
+	 * @param roleType 审批角色值  2：审核人，3：核准人
+	 */
 	@MethodID("approvalItemMDtailCount")
 	@LogOperate(operate = "审批物品申领明细")
 	public void approvalItemMDtailCount_log_trans(List<ItemsApplyMDetail> itemsApplyMDetailList, int roleType){
-		if (roleType == 2 || roleType == 3) {
+		//设置审批数量
+		if (roleType == 2 || roleType == 3) {//2：审核人，3：核准人
 			for (ItemsApplyMDetail itemsApplyMDetail : itemsApplyMDetailList) {
 				ItemsApplyMDetail dbItemsApplyMDetail = entityDAO.findById(itemsApplyMDetail.getPk());
-				if (roleType == 2) {
-					dbItemsApplyMDetail.setIamListerCheckCount(itemsApplyMDetail.getIamListerCheckCount());
-				} else if (roleType == 3) {
-					dbItemsApplyMDetail.setIamLeaderCheckCount(itemsApplyMDetail.getIamLeaderCheckCount());
+				if (roleType == 2) {//如果审批角色是审核人
+					dbItemsApplyMDetail.setIamListerCheckCount(itemsApplyMDetail.getIamListerCheckCount());//设置经办人审核数量
+				} else if (roleType == 3) {//如果审批角色是核准人
+					dbItemsApplyMDetail.setIamLeaderCheckCount(itemsApplyMDetail.getIamLeaderCheckCount());//设置行装科领导审核数量
 				}
 				entityDAO.attachDirty(dbItemsApplyMDetail);
 			}
@@ -90,14 +87,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
 		}
 		if (rowList != null) {
-
-			/*
-			 * for (QueryCondition queryCondition : queryCond) { if
-			 * (queryCondition.getFn() != null &&
-			 * queryCondition.getFn().equals("itemsApplyMPK")) {
-			 * 
-			 * } }
-			 */
+			/**遍历申领明细，给每个申领明细库存赋值**/
 			for (ItemsApplyMDetail itemsApplyMDetail : rowList) {//给库存赋值
 				ItemManage itemManage = entityDAO.executeFindEntity(ItemManage.class,"select * from tItemManage where pk = ?",itemsApplyMDetail.getItemManagePK());
 				if (itemManage != null) {
@@ -126,6 +116,10 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 
 	}
 	
+	/**
+	 * 发放物品
+	 * @param itemsApplyMDetailPkArr 申领明细pk
+	 */
 	@MethodID("issueItems")
 	@LogOperate(operate = "发放物品")
 	public void issueItems_log_trans(String[] itemsApplyMDetailPkArr) {
@@ -148,8 +142,6 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			
 			//第三步：每个物品新增一条出库记录（发放数量等于行装科领导审核通过的数量）
 			LVIPopRecord lviPopRecord = new LVIPopRecord();
-			//lviPopRecord.setInserttime(inserttime);
-			//lviPopRecord.setLastestUpdate(lastestUpdate);
 			lviPopRecord.setLviPRApplyPerson(itemsApplyManagement.getApplyPerson());
 			lviPopRecord.setLviPRCategoryPK(itemsApplyManagement.getCategoryManagementPK());
 			lviPopRecord.setLviPRCount(itemsApplyMDetail.getIamLeaderCheckCount());
@@ -162,7 +154,6 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			lviPopRecord.setLviPRSpecification(itemsApplyMDetail.getImSpecification());
 			lviPopRecord.setLviPRType(itemsApplyMDetail.getImType());
 			lviPopRecord.setPk(UUID.randomUUID().toString());
-			//lviPopRecord.setUpdatePerson(updatePerson);
 			lviPopRecordDAO.save(lviPopRecord);
 			
 		}

@@ -33,7 +33,7 @@
 			<ref bean="ItemManageDAO" />
 		</property>
 		
-		<property name="itemsApplyMDetailDAO">
+		<!-- <property name="itemsApplyMDetailDAO">
 			<ref bean="ItemsApplyMDetailDAO" />
 		</property>
 		
@@ -43,7 +43,7 @@
 		
 		<property name="lviStoreRecordDAO">
 			<ref bean="LVIStoreRecordDAO" />
-		</property>
+		</property> -->
 	</bean>
 	
 	<bean id="ItemsApplyManagementDAO"

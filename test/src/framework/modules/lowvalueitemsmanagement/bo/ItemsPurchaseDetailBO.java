@@ -30,19 +30,12 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	public void addItemsPurchaseDetail_log_trans(ItemsPurchaseDetail itemsPurchaseDetail) {
 		String pk = UUID.randomUUID().toString();
 		itemsPurchaseDetail.setPk(pk);
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		itemsPurchaseDetail.setInsertTime(updateInfo[0]);
-		itemsPurchaseDetail.setLastestUpdate(updateInfo[0]);
-		itemsPurchaseDetail.setUpdatePerson(updateInfo[2]);
 		entityDAO.save(itemsPurchaseDetail);
 	}
 	
 	@MethodID("modifyItemsPurchaseDetail")
 	@LogOperate(operate = "修改物品采购申请明细")
 	public void modifyItemsPurchaseDetail_log_trans(ItemsPurchaseDetail itemsPurchaseDetail){
-		String[] updateInfo = DBOperation.getUpdateInfo();
-		itemsPurchaseDetail.setLastestUpdate(updateInfo[0]);
-		itemsPurchaseDetail.setUpdatePerson(updateInfo[2]);
 		entityDAO.attachDirty(itemsPurchaseDetail);
 	}
 	
@@ -69,15 +62,15 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	@LogOperate(operate = "修改物品采购数量")
 	public void modifyPurchaseCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList, String ipDItemsPurchasePK){
 		
-		int ipPurchaseCountSum = 0;//采购数量合计
+		int ipPurchaseCountSum = 0;//采购数量合计值
 		
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
 			dbItemsPurchaseDetail.setIpDPurchaseCount(itemsPurchaseDetail.getIpDPurchaseCount());
 			entityDAO.attachDirty(dbItemsPurchaseDetail);
-			ipPurchaseCountSum += dbItemsPurchaseDetail.getIpDPurchaseCount();
+			ipPurchaseCountSum += dbItemsPurchaseDetail.getIpDPurchaseCount();//采购数量合计
 		}
-		//合计采购数量
+		//更新物品申请单的合计采购数量
 		ItemsPurchase itemsPurchase = itemsPurchaseDAO.findById(ipDItemsPurchasePK);
 		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
 		itemsPurchaseDAO.attachDirty(itemsPurchase);

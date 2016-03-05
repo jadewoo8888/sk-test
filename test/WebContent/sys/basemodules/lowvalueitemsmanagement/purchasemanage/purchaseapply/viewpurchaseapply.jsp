@@ -56,14 +56,13 @@ function initDataGrid() {
 //自定义查询条件
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
-	//单位条件
 	//采购申请条件
 	var qc = new Object();
 	qc.fn = 'ipDItemsPurchasePK';
 	qc.oper = ARY_STR_EQUAL[0];
 	qc.value1 = pk;
 	customQCArr.push(qc);
-	
+	//采购数量大于0
 	var appCountQc = new Object();
 	appCountQc.fn = 'ipDApplyCount';
 	appCountQc.oper = ARY_STR_NOTEQUAL[0];

@@ -11,7 +11,7 @@ $(function () {
 	setItemStatus();
 	initDataGrid();
 	initComBindFunc(); 
-	getCategoryComboboxData();
+	initCategoryCombo();
 	initDeptBox();
 	
 });
@@ -22,6 +22,8 @@ $(function () {
  **/
 function initDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
+	//注：只有单据状态是“未提交”的才有【修改】、【删除】、【上报】操作；只有审批通过并且未入库的单据才有【入库前修改】、【入库】操作；所有状态的记录都有【查看】操作。
+	//入库数量合计<采购数量合计即表示未入库
 	 var _columns =  
 	 [[
 	 	{field:'option',title:'操作',minwidth:280,formatter:function(value,row,index){
@@ -36,9 +38,6 @@ function initDataGrid() {
 				html += "<a href='javascript:void(0);' onclick='pushPurchaseStore(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >入库</a>";
 			}
  			return html;
- 			//【修改】、【删除】、【上报】、【查看】、【入库前修改】、【入库】
- 			//注：只有单据状态是“未提交”的才有【修改】、【删除】、【上报】操作；只有审批通过并且未入库的单据才有【入库前修改】、【入库】操作；所有状态的记录都有【查看】操作。
- 			//入库数量合计<采购数量合计即表示未入库
 		}}, 
 		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"ipCode",title:'申购单号',minwidth:80},
@@ -58,6 +57,9 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
+/**
+ * 显示弹出类目列表窗口
+ */
 function showCategoryListLayer() {
 	if(!judgeOpeCollectOrg()) {
 		return;
@@ -70,12 +72,16 @@ function showCategoryListLayer() {
 	);
 }
 
+/**
+ * 类目列表窗口
+ * @param result
+ */
 function showCategoryListSuccFunc(result) {
 	
 	var html = "";
 	var len = result.length;
 	for (var i = 0; i < len;i++) {
-		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddApplyPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
+		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toPurchaseapplyPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
 	}
 	//页面层
 	layer.open({
@@ -86,7 +92,7 @@ function showCategoryListSuccFunc(result) {
 	    content: html
 	});
 	
-	/*top.layer.open({//这种窗口与框架的一致，但onclick找不到toAddApplyPage方法。
+	/*top.layer.open({//这种窗口与框架的一致，但onclick找不到toPurchaseapplyPage方法。
 	title:'选择类目',
     type: 1,
     closeBtn :2,
@@ -96,7 +102,12 @@ function showCategoryListSuccFunc(result) {
 });*/
 };
 
-function toAddApplyPage(pk,categoryName) {
+/**
+ * 跳转采购申请页面
+ * @param pk
+ * @param categoryName
+ */
+function toPurchaseapplyPage(pk,categoryName) {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 };
 
@@ -145,7 +156,10 @@ function initDeptBox(){
 	}
 }
 
-function getCategoryComboboxData() {
+/**
+ * 类目下拉框
+ */
+function initCategoryCombo() {
 	function ajaxCategory(){
 		Ajax.service(
 			'CategoryManagementBO',
@@ -293,6 +307,9 @@ function reportone(pk){
 	});
 }
 
+/**
+ * 状态选择下拉框
+ */
 function setItemStatus(){
 	//设置状态选择下拉框
 	$("#itemStatusDisplay").combobox({
@@ -342,7 +359,7 @@ function getItemStatus() {
 //自定义查询条件
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
-	
+	//申购人，只取本申购人的
 	var QC1 = new Object();
 	QC1.fn = "ipApplyPerson";
 	QC1.oper = ARY_STR_EQUAL[0];
@@ -352,14 +369,3 @@ function setCustomQueryCondition() {
 	return customQCArr;
 }
 
-/*function setCustomQueryCondition() {
-	var customQCArr = new Array();
-	//审批人条件
-	orgQc = new Object();
-	orgQc.fn = '';
-	orgQc.oper = ARY_STR_NULLOPER[0];
-	orgQc.value1 = 'AllowApprPerson like \'%|'+ top.strUserAccount +'|%\' or Linkers like \'%|'+ top.strUserAccount +'|%\'';
-	customQCArr.push(orgQc);
-	
-    return customQCArr;
-}*/

@@ -52,10 +52,14 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
-//自定义查询条件
+/**
+ * 
+ *自定义查询条件
+ * 查询该申领单下所有不为0的明细
+ */
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
-	//单位条件
+	
 	var mpkQc = new Object();
 	mpkQc.fn = 'itemsApplyMPK';
 	mpkQc.oper = ARY_STR_EQUAL[0];
@@ -65,7 +69,7 @@ function setCustomQueryCondition() {
 	var appCountQc = new Object();
 	appCountQc.fn = 'iamApplyCount';
 	appCountQc.oper = ARY_STR_NOTEQUAL[0];
-	appCountQc.value1 = '0';
+	appCountQc.value1 = '0';//
 	customQCArr.push(appCountQc);
     return customQCArr;
 }
@@ -100,17 +104,6 @@ function dataFill(obj){
 	$("#id_applyPerson").val(obj.applyPersonDisplay);
 	$("#id_itemsApplyDate").val(obj.itemsApplyDate);
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
-	 /*  // 开始遍历赋值 
-	  for(var p in obj){
-		  var $element=$("#id_"+p);
-		  if($element[0]&&obj[p]!=null){	
-				  if(obj[p+"Display"]){
-					  $element.html(obj[p+"Display"]);
-				  }else{
-					  $element.html(obj[p]);
-				  }     			  	
-		  }
-	  } */
 }
 /**
  * 设置附件

@@ -1,6 +1,6 @@
 //列表表格对象
 var datagrid = null;
-var mainObj = new Object();
+//var mainObj = new Object();
 /**
  * 初始化方法
  **/ 
@@ -11,6 +11,9 @@ $(function () {
 	setAppenFrame();
 });
 
+/**
+ * 初始化默认值
+ */
 function initDefaultValue() {
 	$("#id_itemsApplyDeptCode").val(top.strUserDeptName);
 	$("#id_applyPerson").val(top.strUserName);
@@ -37,13 +40,14 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
+/**初始化编辑的单元格**/
 function initEditCell(){
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
-	
+	//编辑单元格的宽带会被框架（审批的样式）样式覆盖，这里处理覆盖的样式
 	var width = $("td[field=lviCount]").children("div.datagrid-cell")[0].clientWidth;
 	var cssWidth = 'width:'+width+'px!important;';
 	$(".datagrid-cell-c1-lviCount").css("cssText",cssWidth);
@@ -52,7 +56,7 @@ function initEditCell(){
 //自定义查询条件
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
-	//单位条件
+	//类目条件
 	var categoryQc = new Object();
 	categoryQc.fn = 'imCategoryPK';
 	categoryQc.oper = ARY_STR_EQUAL[0];
@@ -81,6 +85,9 @@ function initComBindFunc() {
 	
 }
 
+/**
+ * 入库
+ */
 function save() {
 	var lowValueItemsList = packagelowValueItemsData();
 	
@@ -101,6 +108,10 @@ function save() {
 		);
 }
 
+/**
+ * 打包低值品仓库
+ * @returns {Array}
+ */
 function packagelowValueItemsData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');

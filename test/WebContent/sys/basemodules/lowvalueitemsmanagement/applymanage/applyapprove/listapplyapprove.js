@@ -10,7 +10,7 @@ var datagrid = null;
 $(function () { 
 	initDataGrid();
 	initComBindFunc(); 
-	getCategoryComboboxData();
+	initCategoryCombo();
 	initDeptBox();
 	setItemStatus();
 });
@@ -31,7 +31,6 @@ function initDataGrid() {
 			}
  			return html;
 		}}, 
-		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"itemsApplyCode",title:'申领单号',minwidth:80},
 		{field:"categoryManagementPKDisplay",title:'类目',minwidth:80},
         {field:"itemsApplyDeptCodeDisplay",title:'申领部门',minwidth:100},
@@ -89,7 +88,8 @@ function initDeptBox(){
 	}
 }
 
-function getCategoryComboboxData() {
+/**初始化类目下拉框。根据角色编码查找：下拉类目列表包含自己角色的和类目角色为空的**/
+function initCategoryCombo() {
 	function ajaxCategory(){
 		Ajax.service(
 			'CategoryManagementBO',
@@ -114,13 +114,13 @@ function getCategoryComboboxData() {
 	});
 }
 
-//审批
+//审批页面
 function approval(pk){
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/editapplyapprove.jsp?pk='+pk+'&business='+STR_CHECK;
 }
 
 /**
- * 查看
+ * 查看页面
  **/
 function viewone(pk){
 	top.layer.open({

@@ -1,7 +1,7 @@
 //加载完成执行 
 $(function(){	
 	initData();
-	getCategoryComboboxData();
+	initCategoryCombo();
 	initAssetTypeBox();
 	
 });
@@ -215,17 +215,19 @@ function submitModify(submitPackage){
  			}
  	  );
 }
-
-function getCategoryComboboxData() {
+/**
+ * 类目下拉框
+ */
+function initCategoryCombo() {
 	Ajax.service(
 		'CategoryManagementBO',
 		'findCategoryByGroupCode', 
 		[top.strUserGroupCode],
-		getCategoryComboboxDataSuccFunc
+		initCategoryComboSuccFunc
 	);
 }
 
-function getCategoryComboboxDataSuccFunc(result) {
+function initCategoryComboSuccFunc(result) {
 	$('#id_imCategoryPK').combobox("loadData",result);  
 	 if (result.length > 0) {
 		 $('#id_imCategoryPK').combobox('select', result[0].pk);
@@ -256,18 +258,14 @@ function initAssetTypeBox(){
 	}
 }
 
+/**
+ * 类别选择：当是固定资产时，资产分类代码是必填
+ */
 function imTypeChangeFn() {
 	var type = $('#id_imType').combobox('getValue');
 	if (type == 'WPLB_002') {
 		$('#span_imAssetType').show();
-		/*//$('#id_imAssetType').searchbox('textbox').validatebox({required: true, missingMessage:'必填 '});
-		$('#id_imAssetType').validatebox({required: true, missingMessage:'必填 '});
-		//$('#id_imAssetType').attr("class", "easyui-validatebox");
-		$("id_imAssetType").addClass("easyui-validatebox");*/
 	} else {
 		$('#span_imAssetType').hide();
-		/*$("id_imAssetType").removeClass("easyui-validatebox");
-		$("id_imAssetType").removeAttr("required");
-		$("id_imAssetType").removeAttr("missingMessage");*/
 	}
 }

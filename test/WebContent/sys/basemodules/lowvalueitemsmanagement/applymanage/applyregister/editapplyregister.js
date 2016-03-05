@@ -12,6 +12,9 @@ $(function () {
 	setAppenFrame();
 });
 
+/**
+ * 初始化默认值
+ */
 function initDefaultValue() {
 	if (pk) {
 		//设置头信息
@@ -27,6 +30,10 @@ function initDefaultValue() {
 	}
 }
 
+/**
+ * 根据PK获取物品申领一条，并赋值给相应的字段
+ * @param pk
+ */
 function getItemsApplyByPk(pk) {
 	
 	Ajax.service(
@@ -46,6 +53,10 @@ function getItemsApplyByPk(pk) {
 	  	);
 }
 
+/**
+ * 字段赋值
+ * @param obj
+ */
 function dataFill(obj) {
 		categoryName = obj.categoryName;
 		$("#id_categoryManagementPK").val(categoryName);
@@ -74,29 +85,30 @@ function initDataGrid() {
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
-	 
+	 /**如果是新增，直接读取类目的所有物品**/
 	 var classID = 'ItemManageBO';
 	 var customQueryCondition = setCustomQueryCondition1;
-	 if (business == STR_REGISTER_MODIFY) {
+	 if (business == STR_REGISTER_MODIFY) {//如果是修改，读取申领明细列表。
 		 classID = 'ItemsApplyMDetailBO';
 		 customQueryCondition = setCustomQueryCondition2;
 	 }
 	 var customOptions = {tableID:'id_table_grid',classID:classID,columns:_columns,sortInfo:_sortInfo,customQCFunc:customQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
-
+/**初始化编辑的单元格**/
 function initEditCell(){
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
+	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
 	var width = $("td[field=iamApplyCount]").children("div.datagrid-cell")[0].clientWidth;
 	var cssWidth = 'width:'+width+'px!important;';
 	$(".datagrid-cell-c1-iamApplyCount").css("cssText",cssWidth);
 }
 
-//自定义查询条件
+//新增的自定义查询条件
 function setCustomQueryCondition1() {
 	var customQCArr = new Array();
 	//单位条件
@@ -108,7 +120,7 @@ function setCustomQueryCondition1() {
     return customQCArr;
 }
 
-//自定义查询条件
+//修改的自定义查询条件
 function setCustomQueryCondition2() {
 	var customQCArr = new Array();
 	//单位条件
@@ -128,7 +140,7 @@ function initComBindFunc() {
 		save(false);
 	});
 	$("#id_btn_report").click(function () {
-		save(true);
+		save(true);//上报
 	});
 	//查询按钮处理事件
 	$("#id_btn_query").click(function () {
@@ -140,9 +152,12 @@ function initComBindFunc() {
 	$("#id_bt_return").click(function(){
 		history.go(-1);
 		});
-	
 }
 
+/**
+ * 
+ * @param ifReport 是否上报
+ */
 function save(ifReport) {
 	var itemsApplyManagement = packageItemsApplyManData();
 	var itemsApplyMdetailList = packageItemsApplyMDetailData();
@@ -153,6 +168,12 @@ function save(ifReport) {
 	}
 }
 
+/**
+ * 新增
+ * @param itemsApplyManagement 申购单
+ * @param itemsApplyMdetailList 申购单明细列表
+ * @param ifReport 是否上报
+ */
 function summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsApplyManagementBO',
@@ -171,8 +192,13 @@ function summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport) {
 		);
 };
 
+/**
+ * 修改
+ * @param itemsApplyMdetailList 申购单明细列表
+ * @param ifReport 是否上报
+ */
 function summitEdit(itemsApplyMdetailList,ifReport) {
-	var itemsApplyRemark = $("#id_itemsApplyRemark").val();
+	var itemsApplyRemark = $("#id_itemsApplyRemark").val();//备注
 	Ajax.service(
 			'ItemsApplyManagementBO',
 			'modifyItemApply', 
@@ -190,6 +216,10 @@ function summitEdit(itemsApplyMdetailList,ifReport) {
 		);
 };
 
+/**
+ * 
+ * 打包申购单
+ */
 function packageItemsApplyManData() {
 	var itemsApplyMan = new Object();
  	itemsApplyMan.categoryName = categoryName;
@@ -203,6 +233,10 @@ function packageItemsApplyManData() {
  	return itemsApplyMan;
 }
 
+/**
+ * 
+ * 打包申购单明细
+ */
 function packageItemsApplyMDetailData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
@@ -212,7 +246,6 @@ function packageItemsApplyMDetailData() {
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
 	 	
 	 	var itemsApplyMDetail = new Object();
-	 	//物品申领表PKitemsApplyMDetail.ItemsApplyMPK
 	 	itemsApplyMDetail.categoryManagementPK = categoryPk;
 	 	itemsApplyMDetail.itemManagePK = row[i].pk;
 	 	itemsApplyMDetail.orgCode = top.strFilterOrgCode;
@@ -223,124 +256,12 @@ function packageItemsApplyMDetailData() {
 	 	itemsApplyMDetail.imSpecification= row[i].imSpecification;
 	 	itemsApplyMDetail.imMetricUnit= row[i].imMetricUnit;
 	 	itemsApplyMDetail.iamApplyCount = editors[0].target.numberbox('getValue');
-	 	//itemsApplyMDetail.iamListerCheckCount = editors[1].target.numberbox('getValue');
-	 	//itemsApplyMDetail.iamLeaderCheckCount = editors[2].target.numberbox('getValue');
 	 	itemsApplyMDetail.iamItemManagePK = row[i].pk;
 	 	
    		rowsData.push(itemsApplyMDetail);
 	}
 	return rowsData;
 }
-
-/**
- * 新增
- **/
-/*function addone() {
-	if(!judgeOpeCollectOrg()) {
-		return;
-	}
- 	window.location.href = "edititems.jsp?busitype=add";
-}
-
-//修改
-function modifyone(pk){
-		location.href='edititems.jsp?pk='+pk+'&busitype=modify';
-
-}*/
-
-/**
- * 删除
- **/
-/*function deleteone(pk) {
-	top.layer.open({
-		title:'删除数据',
-		icon: 3,
-		area:['300px','160px'],
-		btn:['确定', '取消'],
-		content:'确定要删除选中的数据吗？',
-		shift:1,
-		closeBtn :2,
-		yes: function(index){
-			top.layer.close(index);
-			deleteService(pk);		
-	    }
-	});	
-}
-
-*//**
- * 发送删除请求
- **//*
-function deleteService(pk) {
-	Ajax.service(
-		'ItemManageBO',
-		'deleteItem', 
-		[pk],
-		deleteServiceSuccFunc,
-		serviceFailureFunc
-	);
-}
-
-*//**
- * 删除请求成功回调函数
- **//*
-function deleteServiceSuccFunc(data) {
-	if(data!="null"&&data.length>0){
-		top.layer.alert(data,{closeBtn :2,icon:5});
-		changeBtnDisabled(false);
-	}else{	    				
-		top.layer.alert('删除成功 ',{icon:6,closeBtn :2});
-		datagrid.query();
-	}	
-}
-
-*//**
- * 请求失败回调函数,删除，注销，撤销注销失败等均调用此方法
- **//*
-function serviceFailureFunc() {
-	top.layer.alert('删除数据出现错误，请联系管理员 ',{icon:5,closeBtn :2});
-} */
-
-
-/*function initCategoryCombo() {
-	$('#category').combobox({
-		onBeforeLoad: function(param){
-			ajaxCategory();
-		},
-		valueField:'pk',
-		textField:'categoryName',
-		width:180,
-		height:26,
-		panelHeight:100,
-		editable:false
-	});
-}
-
-function ajaxCategory(){
-	Ajax.service(
-		'CategoryManagementBO',
-		'findAll', 
-		[],
-		function(result){
-			$('#category').combobox("loadData",result);
-		}
-	);
-}*/
-
-/*function getImType() {
-	var checkedQc = new Object();
-	checkedQc.fn = '';
-	checkedQc.oper = 14;
-	var contratStatusDisplay=$('#imType').combobox('getValue');
-	
-	if (contratStatusDisplay== '2'){
-		checkedQc.value1 = "(IMType = 'WPLB_001')";
-	}else if(contratStatusDisplay== '3'){
-		checkedQc.value1 = "(IMType = 'WPLB_002')";
-	}else{
-		checkedQc.value1 = "(1=1)";
-	}
-    return checkedQc;
-}*/
 
 /**
  * 设置附件

@@ -11,7 +11,7 @@ $(function () {
 	setItemStatus();
 	initDataGrid();
 	initComBindFunc(); 
-	getCategoryComboboxData();
+	initCategoryCombo();
 	initDeptBox();
 	
 });
@@ -33,7 +33,6 @@ function initDataGrid() {
 			}
  			return html;
 		}}, 
-		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"itemsApplyCode",title:'申领单号',minwidth:80},
 		{field:"categoryManagementPKDisplay",title:'类目',minwidth:80},
         {field:"itemsApplyDeptCodeDisplay",title:'申领部门',minwidth:100},
@@ -50,6 +49,9 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
+/**
+ * 弹出类目列表
+ */
 function showCategoryListLayer() {
 	if(!judgeOpeCollectOrg()) {
 		return;
@@ -61,7 +63,9 @@ function showCategoryListLayer() {
 		showCategoryListSuccFunc
 	);
 }
-
+/**
+ * 类目列表窗口
+ */
 function showCategoryListSuccFunc(result) {
 	
 	var html = "";
@@ -89,6 +93,11 @@ function showCategoryListSuccFunc(result) {
 	});*/
 };
 
+/**
+ * 跳转申领页面
+ * @param pk 
+ * @param categoryName
+ */
 function toAddApplyPage(pk,categoryName) {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 };
@@ -138,7 +147,8 @@ function initDeptBox(){
 	}
 }
 
-function getCategoryComboboxData() {
+/**初始化类目下拉框。根据角色编码查找：下拉类目列表包含自己角色的和类目角色为空的**/
+function initCategoryCombo() {
 	function ajaxCategory(){
 		Ajax.service(
 			'CategoryManagementBO',
@@ -271,6 +281,9 @@ function reportone(pk){
 	});
 }
 
+/**
+ * 设置单据状态
+ */
 function setItemStatus(){
 	//设置状态选择下拉框
 	$("#itemStatusDisplay").combobox({
@@ -330,15 +343,3 @@ function setCustomQueryCondition() {
 	
 	return customQCArr;
 }
-
-/*function setCustomQueryCondition() {
-	var customQCArr = new Array();
-	//审批人条件
-	orgQc = new Object();
-	orgQc.fn = '';
-	orgQc.oper = ARY_STR_NULLOPER[0];
-	orgQc.value1 = 'AllowApprPerson like \'%|'+ top.strUserAccount +'|%\' or Linkers like \'%|'+ top.strUserAccount +'|%\'';
-	customQCArr.push(orgQc);
-	
-    return customQCArr;
-}*/

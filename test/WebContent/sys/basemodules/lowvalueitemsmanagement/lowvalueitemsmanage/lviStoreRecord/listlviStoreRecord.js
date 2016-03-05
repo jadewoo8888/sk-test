@@ -63,6 +63,9 @@ function initComBindFunc() {
 	initCombobox();
 }
 
+/**
+ * 类别下拉框
+ */
 function initCombobox() {
 	if($('#lviSRType')[0])
 		$('#lviSRType').combobox({    
@@ -196,7 +199,10 @@ function modifyone(pk){
 		location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/lviStoreRecord/editlviStoreRecord.jsp?pk='+pk+'&business='+STR_REGISTER_MODIFY;
 
 }
-
+/**
+ * 类目下拉框
+ * 初始化类目下拉框。根据角色编码查找：下拉类目列表包含自己角色的和类目角色为空的
+ */
 function initCategoryCombo() {
 	$('#category').combobox({
 		onBeforeLoad: function(param){

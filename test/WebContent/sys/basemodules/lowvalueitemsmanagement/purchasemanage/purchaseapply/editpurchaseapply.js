@@ -12,6 +12,10 @@ $(function () {
 	setAppenFrame();
 });
 
+/**
+ * 默认值
+ * 
+ **/
 function initDefaultValue() {
 	$("#id_ipCategoryPK").val(categoryName);
 	if (pk) {
@@ -27,6 +31,10 @@ function initDefaultValue() {
 	}
 }
 
+/**
+ * 根据pk获取物品采购单
+ * @param pk
+ */
 function getItemsPurchaseByPk(pk) {
 	
 	Ajax.service(
@@ -54,13 +62,12 @@ function dataFill(obj) {
 }
 
 /**
- * 初始化表格信息
+ * 初始化新增的物品采购表格
  **/
-
 function initAddDataGrid() {
 	
 	//自定义查询条件
-	function setCustomQueryCondition(){
+	function setCustomQueryCondition() {
 		var customQCArr = new Array();
 		//类目条件
 		var categoryQc = new Object();
@@ -87,10 +94,11 @@ function initAddDataGrid() {
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
-	 
-	 
 }
 
+/**
+ * 初始化修改的物品采购表格
+ **/
 function initModifyDataGrid() {
 	
 	//自定义查询条件
@@ -123,12 +131,15 @@ function initModifyDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
+/**
+ * 初始化发放采购物品表格（当发放物品时，库存不够，然后就转到这里采购）
+ **/
 function initIssuePurchaseDataGrid() {
 	
 	//自定义查询条件
 	function setCustomQueryCondition() {
 		var customQCArr = new Array();
-		//单位条件
+		//申购单pk条件
 		var mpkQc = new Object();
 		mpkQc.fn = 'itemsApplyMPK';
 		mpkQc.oper = ARY_STR_EQUAL[0];
@@ -156,25 +167,28 @@ function initIssuePurchaseDataGrid() {
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
-
+/**初始化编辑的单元格**/
 function initEditCell(){
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
-	
+	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
 	var width = $("td[field=ipDApplyCount]").children("div.datagrid-cell")[0].clientWidth;
 	$(".datagrid-cell-c1-ipDApplyCount").width(width);
 }
 
+/**
+ * 初始化表格
+ */
 function initDataGrid() {
-	if (ipItemsApplyMPK) {
+	if (ipItemsApplyMPK) {//通过发放界面转到申购页面
 		initIssuePurchaseDataGrid();
 	} else {
-		if (pk) {
+		if (pk) {//直接修改
 			initModifyDataGrid();
-		} else {
+		} else {//新增
 			initAddDataGrid();
 		}
 	}
@@ -204,7 +218,10 @@ function initComBindFunc() {
 		});
 	
 }
-
+/**
+ * 
+ * @param ifReport 是否上报
+ */
 function save(ifReport) {
 	var itemsPurchase = packageItemsPurchaseData();
 	var itemsPurchaseMdetailList = packageItemsPurchaseDetailData();
@@ -215,6 +232,12 @@ function save(ifReport) {
 	}
 }
 
+/**
+ * 新增
+ * @param itemsPurchase
+ * @param itemsPurchaseMdetailList
+ * @param ifReport 是否上报
+ */
 function summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsPurchaseBO',
@@ -234,6 +257,11 @@ function summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport) {
 		);
 };
 
+/**
+ * 修改
+ * @param itemsPurchaseMdetailList
+ * @param ifReport 是否上报
+ */
 function summitEdit(itemsPurchaseMdetailList,ifReport) {
 	var ipRemark = $("#id_ipRemark").val();
 	Ajax.service(
@@ -254,6 +282,9 @@ function summitEdit(itemsPurchaseMdetailList,ifReport) {
 		);
 };
 
+/**
+ * 打包采购单
+ */
 function packageItemsPurchaseData() {
 	var itemsPurchase = new Object();
 	itemsPurchase.ipCategoryPK = categoryPk;
@@ -265,6 +296,10 @@ function packageItemsPurchaseData() {
  	return itemsPurchase;
 }
 
+/**
+ * 打包采购明细
+ * @returns {Array}
+ */
 function packageItemsPurchaseDetailData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
@@ -276,12 +311,12 @@ function packageItemsPurchaseDetailData() {
 	 	var itemsPurchaseDetail = new Object();
 	 	itemsPurchaseDetail.ipDItemManagePK = row[i].pk;
 	 	
-	 	if (pk) {
+	 	if (pk) {//修改
 	 		itemsPurchaseDetail.ipDType= row[i].ipDType;
 		 	itemsPurchaseDetail.ipDName = row[i].ipDName;
 		 	itemsPurchaseDetail.ipDSpecification= row[i].ipDSpecification;
 		 	itemsPurchaseDetail.ipDMetricUnit= row[i].ipDMetricUnit;
-	 	} else {
+	 	} else {//新增或者通过发放采购
 	 		itemsPurchaseDetail.ipDName = row[i].imName;
 		 	itemsPurchaseDetail.ipDType = row[i].imType;
 		 	itemsPurchaseDetail.ipDSpecification= row[i].imSpecification;

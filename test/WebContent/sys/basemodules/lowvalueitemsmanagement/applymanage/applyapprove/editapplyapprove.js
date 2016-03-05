@@ -1,7 +1,7 @@
 var mainObj = new Object();
 var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 var approvalModule;
-var approvalRole;
+var approvalRole;//审批角色值 ，2：审核人，3：核准人
 //加载完成执行 
 $(function(){
 	setAppenFrame(); 		//加载附件页面
@@ -16,15 +16,15 @@ function buttonBind(){
 	$("#return").click(function(){history.go(-1);});
 }
 /**
- * 初始化表格信息
+ * 初始化表格信息，跟进审批角色初始化
  **/
 function initDataGrid() {
 	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}};
-	if (approvalRole == 2) {
+	if (approvalRole == 2) {//审核人
 		iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
 	}
 	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}};
-	if (approvalRole == 3) {
+	if (approvalRole == 3) {//核准人
 		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
 	}
 	
@@ -46,13 +46,16 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
+/**
+ * 初始化可编辑单元格
+ */
 function initEditCell(){
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
-	
+	//处理可编辑单元格输入框宽度
 	if (approvalRole == 2) {
 		var width = $("td[field=iamListerCheckCount]").children("div.datagrid-cell")[0].clientWidth;
 		$(".datagrid-cell-c1-iamListerCheckCount").width(width);
@@ -68,13 +71,13 @@ function initEditCell(){
 //自定义查询条件
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
-	//单位条件
+	//只查询本申领单的明细
 	var mpkQc = new Object();
 	mpkQc.fn = 'itemsApplyMPK';
 	mpkQc.oper = ARY_STR_EQUAL[0];
 	mpkQc.value1 = pk;
 	customQCArr.push(mpkQc);
-	
+	//只查询明细申请数量大于0的
 	var appCountQc = new Object();
 	appCountQc.fn = 'iamApplyCount';
 	appCountQc.oper = ARY_STR_NOTEQUAL[0];

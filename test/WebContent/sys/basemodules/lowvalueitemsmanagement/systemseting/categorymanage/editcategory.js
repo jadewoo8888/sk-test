@@ -54,7 +54,7 @@ function getCategoryByPkFailureFunc() {
 }
 
 //数据封装 
-function dataPackage(busitype){debugger;
+function dataPackage(busitype){
 	var categoryObj = new Object();
 	categoryObj.categoryName = $("#categoryName").val();
 	categoryObj.categoryRemark = $("#categoryRemark").val();

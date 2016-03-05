@@ -138,7 +138,9 @@ function serviceFailureFunc() {
 	top.layer.alert('删除数据出现错误，请联系管理员 ',{icon:5,closeBtn :2});
 } 
 
-
+/**
+ * 类目下拉框
+ */
 function initCategoryCombo() {
 	$('#category').combobox({
 		onBeforeLoad: function(param){
@@ -163,7 +165,10 @@ function ajaxCategory(){
 		}
 	);
 }
-
+/**
+ * 类别查询条件
+ * 
+ */
 function getImType() {
 	var checkedQc = new Object();
 	checkedQc.fn = '';

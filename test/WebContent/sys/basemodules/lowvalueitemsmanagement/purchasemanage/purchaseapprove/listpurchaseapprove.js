@@ -10,7 +10,7 @@ var datagrid = null;
 $(function () { 
 	initDataGrid();
 	initComBindFunc(); 
-	getCategoryComboboxData();
+	initCategoryCombo();
 	initDeptBox();
 	setItemStatus();
 });
@@ -91,8 +91,10 @@ function initDeptBox(){
 		$('#deptCode').attr('treevalue',code);
 	}
 }
-
-function getCategoryComboboxData() {
+/**
+ * 类目下拉框
+ */
+function initCategoryCombo() {
 	function ajaxCategory(){
 		Ajax.service(
 			'CategoryManagementBO',
@@ -140,7 +142,9 @@ function viewone(pk,categoryName){
 		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/viewpurchaseapprove.jsp?pk='+pk+'&categoryName='+categoryName
 	});
 }
-
+/**
+ * 状态选择下拉框
+ */
 function setItemStatus(){
 	 //申请单状态 查询条件控件初始化
 	 $("#ipApprovalFlag").combobox({

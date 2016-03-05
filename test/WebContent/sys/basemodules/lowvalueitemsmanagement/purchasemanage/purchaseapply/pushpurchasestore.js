@@ -11,6 +11,9 @@ $(function(){
 	initComBindFunc();
 });
 
+/**
+ * 是否包含固定物品
+ */
 function isIncludeAssetFn() {
 	Ajax.service(
 			'ItemsPurchaseDetailBO',
@@ -38,8 +41,8 @@ function initDataGrid() {
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
+		 //全部是低值品时只支持批量入库；包含固定资产时，只支持单类物品入库，并且不能重复入库
 	 [[	{field:'option',title:'操作',minwidth:80,hidden:!isIncludeAsset,formatter:function(value,row,index){
-		 //if (row.ipDType)
 		 var html = "";
 		 //已入库数量小于采购数量时，显示[入库]按钮
 		 if (row.ipDStoreCount < row.ipDPurchaseCount) {
@@ -82,7 +85,7 @@ function setCustomQueryCondition() {
 	qc.oper = ARY_STR_EQUAL[0];
 	qc.value1 = pk;
 	customQCArr.push(qc);
-	//申购数量大于0
+	//采购数量大于0
 	var appCountQc = new Object();
 	appCountQc.fn = 'ipDApplyCount';
 	appCountQc.oper = ARY_STR_GREATER[0];
@@ -110,7 +113,10 @@ function dataFill(obj){
 	$("#id_ipRemark").val(obj.ipRemark);
 }
 
-
+/**
+ * 打包采购单明细
+ * @returns {Array}
+ */
 function packageItemsPurchaseDetailData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
@@ -121,17 +127,22 @@ function packageItemsPurchaseDetailData() {
 	 	var itemsPurchaseDetail = new Object();
 	 	itemsPurchaseDetail.ipDItemManagePK = row[i].pk;
 	 	
-	 	
    		rowsData.push(itemsPurchaseDetail);
 	}
 	return rowsData;
 }
 
+/**
+ * 入库操作
+ * @param itemsPurchaseDetaiPk
+ * @param ipDType
+ * @param ipDItemManagePK
+ */
 function pushStore(itemsPurchaseDetaiPk,ipDType,ipDItemManagePK) {
-	if (ipDType == 'WPLB_002') {//固定资产
+	if (ipDType == 'WPLB_002') {//单类固定资产入库
 		getItemByPk(ipDItemManagePK,itemsPurchaseDetaiPk);
 	} else {
-		Ajax.service(
+		Ajax.service(//单类低值品入库
 				'ItemsPurchaseDetailBO',
 				'pushOneStore', 
 				 [itemsPurchaseDetaiPk],
@@ -188,6 +199,9 @@ function storage(assetRegAssetType,purchaseDetailPK){
 	);
 }
 
+/**
+ * 批量入库
+ */
 function batchPushStore() {
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;

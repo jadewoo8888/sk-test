@@ -63,7 +63,9 @@ function initComBindFunc() {
 	
 	initCombobox();
 }
-
+/**
+ * 类别下拉框
+ */
 function initCombobox() {
 	if($('#lviType')[0])
 		$('#lviType').combobox({    
@@ -90,14 +92,16 @@ function pushstore() {
 	}
 	selPushStoreWay();
 }
-
+/**
+ * 显示选择入库方式窗口
+ */
 function selPushStoreWay() {
 	var html = '<div style="padding: 5px;text-align: center;"><input type="button" class="bt_list_function" value="采购申请单入库" onclick="toPurchasePage();"/></div>';
 	html += '<div style="padding: 5px;text-align: center;"><input type="button" class="bt_list_function" value="自行入库" onclick="showCategoryListLayer();"/></div>';
 	
 	//页面层
 	layer.open({
-		title:'选择类目',
+		title:'请选择入库方式',
 	    type: 1,
 	    skin: 'layui-layer-rim', //加上边框
 	    area: ['180px', '220px'], //宽高
@@ -105,10 +109,16 @@ function selPushStoreWay() {
 	});
 };
 
+/**
+ * 跳转到申购页面
+ */
 function toPurchasePage() {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/listpurchaseapply.jsp';
 };
 
+/**
+ * 显示类目选择窗口
+ */
 function showCategoryListLayer() {
 	Ajax.service(
 		'CategoryManagementBO',
@@ -123,7 +133,7 @@ function showCategoryListSuccFunc(result) {
 	var html = "";
 	var len = result.length;
 	for (var i = 0; i < len;i++) {
-		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddApplyPage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
+		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddItemStorePage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
 	}
 	//页面层
 	layer.open({
@@ -134,22 +144,26 @@ function showCategoryListSuccFunc(result) {
 	    content: html
 	});
 };
-
-function toAddApplyPage(pk,categoryName) {
+//入库
+function toAddItemStorePage(pk,categoryName) {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 };
-
+//发放
 function toIssueitemPage() {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/issuemange/listissueitem.jsp';
 }
-
+//入库记录
 function toPushstorerecordPage() {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/lviStoreRecord/listlviStoreRecord.jsp';
 }
-
+//出库记录
 function toPopstorerecordPage() {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/lviPopRecord/listlviPopRecord.jsp';
 }
+/**
+ * 类目下拉框
+ * 初始化类目下拉框。根据角色编码查找：下拉类目列表包含自己角色的和类目角色为空的
+ */
 function initCategoryCombo() {
 	$('#category').combobox({
 		onBeforeLoad: function(param){
@@ -174,8 +188,8 @@ function ajaxCategory(){
 		}
 	);
 }
-
-function getImType() {
+//
+/*function getImType() {
 	var checkedQc = new Object();
 	checkedQc.fn = '';
 	checkedQc.oper = 14;
@@ -189,4 +203,4 @@ function getImType() {
 		checkedQc.value1 = "(1=1)";
 	}
     return checkedQc;
-}
+}*/

@@ -7,7 +7,7 @@
 <script src="${contextPath}/sys/basemodules/lowvalueitemsmanagement/issuemange/editissueitem.js" type="text/javascript"></script>
 <script> 
 //查询pk
-var pk="${param.pk}";//物品申领表PK
+var itemsApplyMPK="${param.pk}";//物品申领表PK
 var categoryPk="${param.categoryPk}";//类目表PK
 var categoryName="${param.categoryName}";
 //业务类型

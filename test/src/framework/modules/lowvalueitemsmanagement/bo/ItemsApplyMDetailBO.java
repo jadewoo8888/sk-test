@@ -94,8 +94,11 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 					String imType = itemManage.getImType();
 					if (imType.equals("WPLB_002")) {//固定资产：从入库登记功能中读取该物品对应的所有固定资产分类代码中，使用人为空的数量之和。
 						String imAssetType = itemManage.getImAssetType();
-						String atStoreSql = "SELECT SUM(assetRegAssetCurCount) FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='')  AND assetRegAssetType = ? AND assetRegEnprCode = ?  AND assetRegCheckFlag='SJZT_01'";
-						BigDecimal storeCount = (BigDecimal)entityDAO.executeFindUnique(atStoreSql, imAssetType,itemsApplyMDetail.getOrgCode());
+						String atStoreSql = "SELECT SUM(assetRegAssetCurCount) FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='')  AND assetRegAssetType like ? AND assetRegEnprCode = ?  AND assetRegCheckFlag='SJZT_01'";
+						System.out.println("imAssetType:"+imAssetType);
+						System.out.println("OrgCode:"+itemsApplyMDetail.getOrgCode());
+						System.out.println("atStoreSql:"+atStoreSql);
+						BigDecimal storeCount = (BigDecimal)entityDAO.executeFindUnique(atStoreSql, imAssetType+"%",itemsApplyMDetail.getOrgCode());
 						//BigDecimal storeCount = (BigDecimal) entityDAO.executeFindUnique(atStoreSql, "001006001003","001502004001");
 						itemsApplyMDetail.setItemStoreCount(storeCount == null ? 0 : Integer.parseInt(storeCount+""));
 					} else {//低值品：从低值品仓库管理中读取
@@ -122,7 +125,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	 */
 	@MethodID("issueItems")
 	@LogOperate(operate = "发放物品")
-	public void issueItems_log_trans(String[] itemsApplyMDetailPkArr) {
+	public void issueItems_log_trans(String itemsApplyMPK, String[] itemsApplyMDetailPkArr) {
 		for (String itemsApplyMDetailPk : itemsApplyMDetailPkArr) {
 			ItemsApplyMDetail itemsApplyMDetail = entityDAO.findById(itemsApplyMDetailPk);
 			//第一步：修改低值品仓库管理对应物品的库存（减少的库存量等于行装科领导审核通过的数量）
@@ -155,8 +158,11 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			lviPopRecord.setLviPRType(itemsApplyMDetail.getImType());
 			lviPopRecord.setPk(UUID.randomUUID().toString());
 			lviPopRecordDAO.save(lviPopRecord);
-			
 		}
+		
+		//清除申购数量为0的申购明细，目的是清除没用的数据。这些数据的存在是在新建和修改申购明细的时候，批量增加的。/
+		String delApplyItemsSql = "delete from titemsApplyMDetail t where t.IAMApplyCount=0 and t.itemsapplympk=?";
+		entityDAO.executeSql(delApplyItemsSql, itemsApplyMPK);
 		
 	}
 

@@ -37,16 +37,14 @@ function initDataGrid() {
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
-
+/**初始化编辑的单元格**/
 function initEditCell(){
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
-	/*var width = $("td[field=ipDApproveCount]").children("div.datagrid-cell")[0].clientWidth;
-	$(".datagrid-cell-c1-ipDApproveCount").children("input.datagrid-editable-input").width(width);*/
-	
+	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
 	var width = $("td[field=ipDApproveCount]").children("div.datagrid-cell")[0].clientWidth;
 	var cssWidth = 'width:'+width+'px!important;';
 	$(".datagrid-cell-c1-ipDApproveCount").css("cssText",cssWidth);
@@ -55,13 +53,13 @@ function initEditCell(){
 //自定义查询条件
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
-	//单位条件
+	//采购申请条件
 	var mpkQc = new Object();
 	mpkQc.fn = 'ipDItemsPurchasePK';
 	mpkQc.oper = ARY_STR_EQUAL[0];
 	mpkQc.value1 = pk;
 	customQCArr.push(mpkQc);
-	
+	//采购数量大于0
 	var appCountQc = new Object();
 	appCountQc.fn = 'ipDApplyCount';
 	appCountQc.oper = ARY_STR_NOTEQUAL[0];
@@ -178,6 +176,10 @@ function approvalsave(type,data){
  	  );
 }
 
+/**
+ * 打包采购明细
+ * @returns {Array}
+ */
 function packageApprovalPurchaseDetail() {
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;

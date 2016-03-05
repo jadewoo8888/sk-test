@@ -53,7 +53,9 @@ function initComBindFunc() {
 		datagrid.showExport();
 	}); 
 }
-
+/**
+ * 类别下拉框
+ */
 function initTypeCombobox() {
 	if($('#itemType')[0])
 		$('#itemType').combobox({    
@@ -71,6 +73,10 @@ function initTypeCombobox() {
 		});
 }
 
+/**
+ * 类目下拉框
+ * 初始化类目下拉框。根据角色编码查找：下拉类目列表包含自己角色的和类目角色为空的
+ */
 function initCategoryCombo() {
 	$('#category').combobox({
 		onBeforeLoad: function(param){

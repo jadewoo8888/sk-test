@@ -11,7 +11,7 @@ $(function () {
 	setCheckStatus();
 	initDataGrid();
 	initComBindFunc(); 
-	getCategoryComboboxData();
+	initCategoryCombo();
 	initDeptBox();
 });
 
@@ -88,8 +88,8 @@ function initDeptBox(){
 		$('#deptCode').attr('treevalue',code);
 	}
 }
-
-function getCategoryComboboxData() {
+/**初始化类目下拉框。根据角色编码查找：下拉类目列表包含自己角色的和类目角色为空的**/
+function initCategoryCombo() {
 	function ajaxCategory(){
 		Ajax.service(
 			'CategoryManagementBO',

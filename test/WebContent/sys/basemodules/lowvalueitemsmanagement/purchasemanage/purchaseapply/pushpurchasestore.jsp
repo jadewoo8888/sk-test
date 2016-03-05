@@ -3,6 +3,7 @@
 <!DOCTYPE HTML>
 <html> 
 <head>
+<title>采购申请-->入库</title>
 <link href="pushpurchasestore.css" rel="stylesheet" type="text/css" />
 <style>
 .colorblack{color: #000000;}
@@ -23,7 +24,7 @@ var pk="${param.pk}";
 </head>
 <body class="edit_body" style="background-color:white;" >
 	<div id="id_div_desc" class="head">
-		<span class="head-title"></span>
+		<span class="head-title">物品入库</span>
 		<span class="head-tx"></span>
 	</div>
 	

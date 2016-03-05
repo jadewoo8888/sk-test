@@ -2,7 +2,8 @@
 /**
  * 打开资产选择页面,具体页面可定义两个方法：
  * 方法1：需要时定义，getAssetSelectedData,返回已选中的资产数据assetRegAssetNo(6.0中相当于pk)数组,若没有数据时返回null即可
- * 方法2：必须定义，updateAssetSelectedData(selectRowData),用于接收返回的资产对象数组
+ * 方法2：必须定义，updateAssetSelectedData(selectRowData)，用于接收返回的资产对象数组
+ * 方法3：需要时定义，setAssetComponentQC，返回页面自定义资产查询条件，若业务类型有一些除了assetcheckflag和资产状态status以外的查询条件,均在次方法内定义返回
  *
  * @param strSelecttype 选择类型，mul：多选 sgl:单选
  * @param strBusitype 业务类型，目前可定义的业务类型有：
@@ -10,6 +11,7 @@
  * 1、assetregbill（入库单登记-->选择未对账资产）
  * 2、assetaccount（资产入账-->选择未对账资产）
  * 3、assetwriteoff（资产处置）
+ * 4、assetissue（低值易耗品-->资产发放）
  **/
 function openAssetSelect(strSelecttype, strBusitype,strBusiPK) {
 	top.layer.open({type:2, title:"\u8d44\u4ea7\u9009\u62e9", shift:1, closeBtn:2, area:["1240px", "600px"], content:contextPath + "/core/componentmodule/assetselect/listAssetSelect.jsp?selecttype=" + strSelecttype + "&busitype=" + strBusitype + "&busipk="+strBusiPK+"&openwindowname=" + window.name});

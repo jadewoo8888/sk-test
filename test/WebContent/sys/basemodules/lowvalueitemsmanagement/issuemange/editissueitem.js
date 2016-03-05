@@ -54,7 +54,7 @@ function setCustomQueryCondition() {
 	var mpkQc = new Object();
 	mpkQc.fn = 'itemsApplyMPK';
 	mpkQc.oper = ARY_STR_EQUAL[0];
-	mpkQc.value1 = pk;
+	mpkQc.value1 = itemsApplyMPK;
 	customQCArr.push(mpkQc);
 	
 	var appCountQc = new Object();
@@ -65,7 +65,9 @@ function setCustomQueryCondition() {
 	
     return customQCArr;
 }
-
+/**
+ *根据条件显示发放或者采购
+ */
 function ifShowIssueBtFn() {
 	var ifIssue = true;
 	var row = datagrid.dataGridObj.datagrid('getRows');
@@ -87,7 +89,7 @@ function ifShowIssueBtFn() {
 
 //获取信息 
 function getInfo(){
-	Ajax.service('ItemsApplyManagementBO','findById',[pk],
+	Ajax.service('ItemsApplyManagementBO','findById',[itemsApplyMPK],
 			function(obj){
 				//数据填充 
 	      	 	dataFill(obj);
@@ -106,6 +108,7 @@ function dataFill(obj){
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
 }
 
+/**低值品发放**/
 function issueFn() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
@@ -115,11 +118,11 @@ function issueFn() {
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
 		pkArr.push(row[i].pk);
 	}
-    
-    Ajax.service(
+    //assetTypeFn();
+   Ajax.service(
 			'ItemsApplyMDetailBO',
 			'issueItems', 
-			 [pkArr],
+			 [itemsApplyMPK,pkArr],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
@@ -134,31 +137,37 @@ function issueFn() {
 }
 //固定资产发放
 function assetTypeFn() {
-	top.layer.open({
-		type:2,
-		title:'选择固定资产 ',
-		shift:1,
-		closeBtn :2,
-		area:['900px','628px'],
-		shade:false,
-		zIndex:'2015', 
-		success:function(layero){
-	   		top.layer.setTop(layero); 
-		},
-		content:contextPath+'/core/componentmodule/assetselect/listAssetSelect.jsp'
-	});
+	
+	openAssetSelect('mul','assetissue',itemsApplyMPK);
 }
 
+/**固定资产查询条件：1、使用人为空；2、类别为固定资产；3、本用户的机构编号**/
+function setAssetComponentQC() {
+var customQCArr = new Array();
+	assetQc = new Object();
+	assetQc.fn = '';
+	assetQc.oper = ARY_STR_NULLOPER[0];
+	assetQc.value1 = "(assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='')  AND assetRegAssetType = 'WPLB_002' AND assetRegEnprCode = '"+top.strUserOrgCode+"'";
+	customQCArr.push(assetQc);
+    return customQCArr;
+	
+}
+
+function updateAssetSelectedData(selectRowData) {debugger;
+	alert(selectRowData)
+}
+
+/**申购**/
 function purchaseFn() {
 	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk="+pk+"&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?ipItemsApplyPK='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business=issuePurchaseOpr';
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?ipItemsApplyPK='+itemsApplyMPK+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business=issuePurchaseOpr';
 }
 /**
  * 设置附件
  **/
 function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+STR_VIEW+'&businesscode='+pk;
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+STR_VIEW+'&businesscode='+itemsApplyMPK;
 }
 /** 
  * 获取附件数据

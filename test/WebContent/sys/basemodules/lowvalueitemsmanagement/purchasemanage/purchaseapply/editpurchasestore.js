@@ -30,7 +30,7 @@ function initDataGrid() {
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
-
+/**初始化编辑的单元格**/
 function initEditCell(){
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
@@ -41,6 +41,7 @@ function initEditCell(){
 			editors[0].target.numberbox('setValue',row[i].ipDApproveCount);
 		}
 	}
+	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
 	var width = $("td[field=ipDPurchaseCount]").children("div.datagrid-cell")[0].clientWidth;
 	var cssWidth = 'width:'+width+'px!important;';
 	$(".datagrid-cell-c1-ipDPurchaseCount").css("cssText",cssWidth);
@@ -96,7 +97,10 @@ function dataFill(obj){
 	$("#id_ipRemark").val(obj.ipRemark);
 }
 
-
+/**
+ * 打包采购明细
+ * @returns {Array}
+ */
 function packageItemsPurchaseDetailData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
@@ -114,6 +118,9 @@ function packageItemsPurchaseDetailData() {
 	return rowsData;
 }
 
+/**
+ * 保存采购明细（入库前修改）
+ */
 function save() {
 	var purchaseDetailList = packageItemsPurchaseDetailData();
 	

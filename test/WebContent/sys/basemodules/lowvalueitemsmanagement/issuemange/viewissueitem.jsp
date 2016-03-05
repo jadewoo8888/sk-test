@@ -52,7 +52,11 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
-//自定义查询条件
+/**
+ * 
+ *自定义查询条件
+ * 查询该申领单下所有不为0的明细
+ */
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
 	//单位条件

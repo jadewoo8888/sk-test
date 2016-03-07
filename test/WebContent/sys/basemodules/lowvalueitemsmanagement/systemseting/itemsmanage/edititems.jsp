@@ -69,7 +69,7 @@ var pk="${param.pk}";
 								<td   class="Edit-Title1">名称<span class="notnullTip">*</span></td>
 								<td   class="Edit-Input1"><input id="id_imName" fieldname="imName" class="easyui-validatebox" required="true"  validType="length[1,50]"  invalidMessage="不能超过50个字符！" missingMessage="不能为空"/></td>
 								<td   class="Edit-Title2">资产分类代码<span id="span_imAssetType" class="notnullTip">*</span></td>
-								<td   class="Edit-Input2"><input  id="id_imAssetType" fieldname="imAssetType" readonly="readonly"/></td>
+								<td   class="Edit-Input2"><input  id="id_imAssetType" fieldname="imAssetType" class="disableText" readonly="readonly"/></td>
 							</tr>
 							<tr> 
 								<td   class="Edit-Title1">规格</td>

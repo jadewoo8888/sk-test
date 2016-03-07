@@ -77,12 +77,12 @@ function addone() {
 	/*if(!judgeOpeCollectOrg()) {
 		return;
 	}*/
- 	window.location.href = "edititems.jsp?business=add";
+ 	window.location.href = "edititems.jsp?business="+STR_REGISTER_ADDNEW;
 }
 
 //修改
 function modifyone(pk){
-		location.href='edititems.jsp?pk='+pk+'&business=modify';
+		location.href='edititems.jsp?pk='+pk+'&business='+STR_REGISTER_MODIFY;
 
 }
 

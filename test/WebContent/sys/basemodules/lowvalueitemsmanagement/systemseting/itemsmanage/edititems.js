@@ -2,7 +2,7 @@
 $(function(){	
 	initData();
 	initCategoryCombo();
-	initAssetTypeBox();
+	//initAssetTypeBox();
 	
 });
 
@@ -17,14 +17,16 @@ function initData() {
 		});	
 	
 	$('#id_imType').combobox({  
-        onChange:function(){  
+		onChange:function(){  
         	imTypeChangeFn(); 
         }
         });  
 	
 	//编辑事务读取数据 
-	if(business=="modify"){
-		$("#businesstext").html("修改类目 ");
+	if(pk){
+		$('#id_div_desc .head-title').html('修改物品');
+	} else {
+		$('#id_div_desc .head-title').html('新增物品');
 	}
 	
 	$('#span_imAssetType').hide();
@@ -136,16 +138,20 @@ function getDataPackage(){
 function savedata(){
 	if($("#EditPanel").form("validate")){
 		$("#save").attr("disabled", true);
-		edit(business);
+		edit();
 	}else{
 		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
 	}
 }
 
 //新增修改 
-function edit(business){
+function edit(){
 	var itemObj = getDataPackage();
-	if (business == 'add') {
+	/*var type = itemObj.imType;
+	if (type == 'WPLB_001') {
+		itemObj.imAssetType = '';
+	}*/
+	if (business == STR_REGISTER_ADDNEW) {
 		submitAdd(itemObj);
 	} else {
 		itemObj.pk = pk;
@@ -245,7 +251,7 @@ function initAssetTypeBox(){
 		searcher:function(value,name){ 
 				//选择资产分类树
 		   		var treeValue = $('#id_imAssetType').attr('treevalue');  
-		 		var treeOption = {selType:'sgl',defaultSelecteds:treeValue,callBackFunction:acTreeCallBack};
+		 		var treeOption = {selType:'mul',defaultSelecteds:treeValue,callBackFunction:acTreeCallBack};
 			  	top.acTree(treeOption);
 		}
 	});
@@ -262,10 +268,29 @@ function initAssetTypeBox(){
  * 类别选择：当是固定资产时，资产分类代码是必填
  */
 function imTypeChangeFn() {
+	initAssetTypeBox();
 	var type = $('#id_imType').combobox('getValue');
 	if (type == 'WPLB_002') {
+		$('.searchbox-button').show();
 		$('#span_imAssetType').show();
+		$('.searchbox-text').removeClass('disableText');
+		
+		/*$('.searchbox-text').addClass('easyui-validatebox');
+		$('.searchbox-text').attr('required',true);
+		$('.searchbox-text').attr('missingMessage','不能为空');*/
+		$('.searchbox-text').validatebox({
+		    required: true,
+		    missingMessage:'必填 ' 
+		});
 	} else {
+		$('.searchbox-button').hide();
 		$('#span_imAssetType').hide();
+		$('.searchbox-text').addClass('disableText');
+		$('#id_imAssetType').searchbox('setValue','');
+		$('#id_imAssetType').attr('treevalue','');
+		
+		$('.searchbox-text').removeClass('easyui-validatebox');
+		$('.searchbox-text').removeAttr('required');
+		$('.searchbox-text').removeAttr('missingMessage');
 	}
 }

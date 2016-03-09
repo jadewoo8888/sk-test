@@ -247,7 +247,13 @@ function packageItemsApplyMDetailData() {
 	 	
 	 	var itemsApplyMDetail = new Object();
 	 	itemsApplyMDetail.categoryManagementPK = categoryPk;
-	 	itemsApplyMDetail.itemManagePK = row[i].itemManagePK;
+	 	if (pk) {
+	 		itemsApplyMDetail.itemManagePK = row[i].itemManagePK;
+	 		itemsApplyMDetail.iamItemManagePK = row[i].iamItemManagePK;
+	 	} else {
+	 		itemsApplyMDetail.itemManagePK = row[i].pk;
+	 		itemsApplyMDetail.iamItemManagePK = row[i].pk;
+	 	}
 	 	itemsApplyMDetail.orgCode = top.strFilterOrgCode;
 	 	itemsApplyMDetail.itemsApplyDeptCode = top.strUserDeptCode;
 	 	itemsApplyMDetail.imName = row[i].imName;
@@ -256,7 +262,7 @@ function packageItemsApplyMDetailData() {
 	 	itemsApplyMDetail.imSpecification= row[i].imSpecification;
 	 	itemsApplyMDetail.imMetricUnit= row[i].imMetricUnit;
 	 	itemsApplyMDetail.iamApplyCount = editors[0].target.numberbox('getValue');
-	 	itemsApplyMDetail.iamItemManagePK = row[i].itemManagePK;
+	 	
 	 	
    		rowsData.push(itemsApplyMDetail);
 	}

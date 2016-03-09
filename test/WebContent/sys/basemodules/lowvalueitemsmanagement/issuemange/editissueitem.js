@@ -234,7 +234,7 @@ function updateAssetSelectedData(selectRowData) {
 	
 	assetApplyItemAssetTypeArr.shift();//选择确定完成之后，就删除固定资产类物品的资产类别编码数组的当前值（即第一个元素）
 	assetApplyItemPkArr.shift();//选择确定完成之后，就删除固定资产类物品的PK数组的当前值（即第一个元素）
-	showAssetSelPage();//选择确定完成之后，接着显示第二个页面选择
+	showAssetSelPage();//选择确定完成之后，接着显示第二个页面选择，直到所有固定资产类物品选择资产完成
 }
 
 /**申购**/

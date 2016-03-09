@@ -8,7 +8,6 @@ import framework.sys.basemodule.bo.BOBase;
 import framework.sys.context.applicationworker.MethodID;
 import framework.sys.log.LogOperate;
 import framework.sys.log.LogOperateManager;
-import framework.sys.tools.DBOperation;
 
 @LogOperate(menu = "低值易耗品物品管理")
 public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {

@@ -1,3 +1,9 @@
+//var allApplyItemPkArr = new Array();//所有物品PK数值
+var assetApplyItemAssetTypeArr = new Array();//固定资产类物品的资产类别编码数组
+var assetApplyItemPkArr = new Array();//固定资产类物品PK数组
+//var imAssetTypeArrStrArr = new Array();//固定资产类物品的固定资产编码数组，用于拼接固定资产查询条件
+var assetRegAssetNoArr = new Array();//被选择了的固定资产编码数组
+var assetRegAssetTypeQC = "";//固定资产查询条件:根据固定资产编码模糊查询 AND (assetRegAssetType like '固定资产编码1%' or assetRegAssetType like '固定资产编码2%' or assetRegAssetType like '固定资产编码3%')
 //加载完成执行 
 $(function(){
 	setAppenFrame(); 		//加载附件页面
@@ -9,7 +15,7 @@ $(function(){
 //按钮事件 
 function buttonBind(){
 	$("#id_bt_issue").click(function () {
-		issueFn();
+		issueButtonOper();
 	});
 	$("#id_bt_purchase").click(function () {
 		purchaseFn();
@@ -108,24 +114,42 @@ function dataFill(obj){
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
 }
 
-/**低值品发放**/
-function issueFn() {
-	
+/**
+ * 
+ * 打包申购单明细
+ */
+function packageItemsApplyMDetailData() {
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
-    var pkArr = new Array();
+    var rowsData = new Array();
     for(var i=0;i<rowLen;i++) {
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
-		pkArr.push(row[i].pk);
+	 	
+	 	var itemsApplyMDetail = new Object();
+	 	itemsApplyMDetail.categoryManagementPK = categoryPk;
+	 	itemsApplyMDetail.pk = row[i].pk;
+	 	itemsApplyMDetail.imType = row[i].imType;
+	 	itemsApplyMDetail.imAssetType = row[i].imAssetType;
+   		rowsData.push(itemsApplyMDetail);
 	}
-    //assetTypeFn();
-   Ajax.service(
+	return rowsData;
+}
+
+/**物品发放**/
+function issueItems() {
+	var pkArr = new Array();
+	var rowsData = packageItemsApplyMDetailData();
+	for (var i = 0; i < rowsData.length; i++) {
+		pkArr.push(rowsData[i].pk);
+	}
+	
+	Ajax.service(
 			'ItemsApplyMDetailBO',
 			'issueItems', 
-			 [itemsApplyMPK,pkArr],
-			function(result){
+			 [itemsApplyMPK,top.strUserName,pkArr,assetRegAssetNoArr],
+			function(result) {
 				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				//$("#id_bt_issue").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
@@ -135,26 +159,82 @@ function issueFn() {
 			}
 		);
 }
-//固定资产发放
-function assetTypeFn() {
+
+
+/**发放按钮操作**/
+function issueButtonOper() {
+	//$("#id_bt_issue").attr("disabled", true); // 按钮可点击
 	
-	openAssetSelect('mul','assetissue',itemsApplyMPK);
+	assetApplyItemAssetTypeArr.length = 0;//固定资产类物品的资产类别编码数组
+	assetApplyItemPkArr.length = 0;//固定资产类物品PK数组
+	assetRegAssetNoArr.length = 0;//被选择了的固定资产编码数组
+	assetRegAssetTypeQC = "";//固定资产查询条件
+	
+	var rowsData = packageItemsApplyMDetailData();
+	for (var i = 0; i < rowsData.length; i++) {
+		if (rowsData[i].imType == 'WPLB_002') {//如果是固定资产
+			assetApplyItemPkArr.push(rowsData[i].pk);//固定资产类物品PK数值
+			assetApplyItemAssetTypeArr.push(rowsData[i].imAssetType);//固定资产类物品的资产类别编码
+		}
+	}
+	
+	showAssetSelPage();
 }
 
-/**固定资产查询条件：1、使用人为空；2、类别为固定资产；3、本用户的机构编号**/
+//显示固定资产发放选择页面，如果有多少个固定资产就弹出多少个选择页面
+function showAssetSelPage() {
+	if (assetApplyItemPkArr.length > 0) {
+		
+		genAssetRegAssetTypeQC(assetApplyItemAssetTypeArr[0]);//拼接查询sql
+		
+		openAssetSelect('mul','assetissue',assetApplyItemPkArr[0]);//打开资产选择页面
+	} else {//固定资产选择完成后，就调用后台，更新后台信息
+		issueItems();
+	}
+	
+}
+/**
+ * 根据资产分类值拼接资产查询条件
+ * @param imAssetTypeArrStr 资产分类值
+ */
+function genAssetRegAssetTypeQC(imAssetTypeArrStr) {
+	assetRegAssetTypeQC = " AND (";
+		
+	var imAssetTypeArr = imAssetTypeArrStr.split(',');
+	for (var i = 0; i < imAssetTypeArr.length; i++) {
+		if (i != imAssetTypeArr.length - 1) {
+			assetRegAssetTypeQC += "assetRegAssetType like '"+imAssetTypeArr[i]+"%' or ";
+		} else {
+			assetRegAssetTypeQC += "assetRegAssetType like '"+imAssetTypeArr[i]+"%'";
+		}
+	}
+	
+	assetRegAssetTypeQC +=") ";
+}
+
+/**固定资产查询条件：1、使用人为空；2、固定资产编码；3、本用户的机构编号**/
 function setAssetComponentQC() {
 var customQCArr = new Array();
 	assetQc = new Object();
 	assetQc.fn = '';
 	assetQc.oper = ARY_STR_NULLOPER[0];
-	assetQc.value1 = "(assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='')  AND assetRegAssetType = 'WPLB_002' AND assetRegEnprCode = '"+top.strUserOrgCode+"'";
+	assetQc.value1 = "(assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='') "+assetRegAssetTypeQC+" AND assetRegEnprCode = '"+top.strUserOrgCode+"'";
 	customQCArr.push(assetQc);
     return customQCArr;
 	
 }
-
-function updateAssetSelectedData(selectRowData) {debugger;
-	alert(selectRowData)
+/**
+ *  选择资产分类后的回调函数
+ * @param selectRowData
+ */
+function updateAssetSelectedData(selectRowData) {
+	for (var i = 0; i < selectRowData.length; i++) {
+		assetRegAssetNoArr.push(selectRowData[i].assetRegAssetNo);//把选择了的固定资产编码存放起来，以便更新
+	}
+	
+	assetApplyItemAssetTypeArr.shift();//选择确定完成之后，就删除固定资产类物品的资产类别编码数组的当前值（即第一个元素）
+	assetApplyItemPkArr.shift();//选择确定完成之后，就删除固定资产类物品的PK数组的当前值（即第一个元素）
+	showAssetSelPage();//选择确定完成之后，接着显示第二个页面选择
 }
 
 /**申购**/

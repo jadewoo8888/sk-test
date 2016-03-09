@@ -169,9 +169,9 @@ function getItemByPk(ipDItemManagePK,itemsPurchaseDetaiPk) {
 	Ajax.service(
 	  		'ItemManageBO',
 	  		'findById', 
-	  		[pk],
+	  		[ipDItemManagePK],
 	  		function(obj){
-	  			storage(obj.imAssetType,itemsPurchaseDetaiPk);
+	  			storage(obj.imAssetType.split(','),itemsPurchaseDetaiPk);
 	  		},
 	  		function(data){
 	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
@@ -188,7 +188,7 @@ function storage(assetRegAssetType,purchaseDetailPK){
 	Ajax.service(			
 			'CardTemplateBO',
 			'getCardTemplateByAssetType', 
-			 [[assetRegAssetType]],
+			 [assetRegAssetType],
 			function(cardcode){
 				if(cardcode!="null"){
 					window.location.href = url +'?business='+STR_REGISTER_ADDNEW+'&purchaseDetailPK='+purchaseDetailPK+'&cardcode='+cardcode.pk+'&cardname='+encodeURI(encodeURI(cardcode.cardName));					

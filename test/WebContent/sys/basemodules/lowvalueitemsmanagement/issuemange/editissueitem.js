@@ -194,7 +194,7 @@ function showAssetSelPage() {
 	
 }
 /**
- * 根据资产分类值拼接资产查询条件
+ * 根据资产分类值拼接资产查询条件（框架提供的函数名）
  * @param imAssetTypeArrStr 资产分类值
  */
 function genAssetRegAssetTypeQC(imAssetTypeArrStr) {
@@ -212,7 +212,10 @@ function genAssetRegAssetTypeQC(imAssetTypeArrStr) {
 	assetRegAssetTypeQC +=") ";
 }
 
-/**固定资产查询条件：1、使用人为空；2、固定资产编码；3、本用户的机构编号**/
+/**
+ * （框架提供的函数名）
+ * 固定资产查询条件：1、使用人为空；2、固定资产编码；3、本用户的机构编号
+ */
 function setAssetComponentQC() {
 var customQCArr = new Array();
 	assetQc = new Object();

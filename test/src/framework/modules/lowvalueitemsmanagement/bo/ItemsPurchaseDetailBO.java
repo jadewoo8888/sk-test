@@ -83,6 +83,58 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	}
 	
 	/**
+	 * 单个固定资产物品入库（与单个低值品物品入库功能类似，只是需求不是很明确，故分开来写）
+	 * @param itemsPurchaseDetailPk
+	 * @param assetCount
+	 */
+	@MethodID("pushOneAssetStore")
+	@LogOperate(operate = "单个固定资产物品入库")
+	public void pushOneAssetStore_log_trans(String itemsPurchaseDetailPk, int assetCount) {
+		String[] updateInfo = DBOperation.getUpdateInfo();
+		
+		ItemsPurchaseDetail itemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetailPk);
+		
+		ItemsPurchase itemsPurchase = itemsPurchaseDAO.findById(itemsPurchaseDetail.getIpDItemsPurchasePK());
+				
+		//1、单独登记一条入库记录
+		LVIStoreRecord lviStoreRecord = new LVIStoreRecord();
+		lviStoreRecord.setLviSRCategoryPK(itemsPurchase.getIpCategoryPK());
+		lviStoreRecord.setLviSRCount(itemsPurchaseDetail.getIpDPurchaseCount());//采购数量=入库数量？
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		lviStoreRecord.setLviSRDate(df.format(new Date()));
+		lviStoreRecord.setLviSRItemManagePK(itemsPurchaseDetail.getIpDItemManagePK());
+		lviStoreRecord.setLviSRMetricUnit(itemsPurchaseDetail.getIpDMetricUnit());
+		lviStoreRecord.setLviSRName(itemsPurchaseDetail.getIpDName());
+		lviStoreRecord.setLviSROrgCode(itemsPurchase.getIpOrgCode());
+		lviStoreRecord.setLviSRPerson(updateInfo[2]);
+		lviStoreRecord.setLviSRPurchasePK(itemsPurchase.getPk());
+		lviStoreRecord.setLviSRRemark("");
+		lviStoreRecord.setLviSRSpecification(itemsPurchaseDetail.getIpDSpecification());
+		lviStoreRecord.setLviSRType(itemsPurchaseDetail.getIpDType());
+		lviStoreRecord.setPk(UUID.randomUUID().toString());
+		lviStoreRecordDAO.save(lviStoreRecord);
+		
+		//2、将已入库数量更新为登记的固定资产数量(累加)
+		int newIpStoreCountSum = itemsPurchase.getIpStoreCountSum() + assetCount;
+		itemsPurchase.setIpStoreCountSum(newIpStoreCountSum);
+		itemsPurchaseDAO.attachDirty(itemsPurchase);
+		
+		//3、更新后的已入库数量等于采购数量时，物品的状态变更为“已入库”。
+		itemsPurchaseDetail.setIpDStoreCount(assetCount);
+		if (assetCount == itemsPurchaseDetail.getIpDPurchaseCount()) {
+			itemsPurchaseDetail.setIpDCheckFlag("SJZT_01");//已完全入库
+		}
+		entityDAO.attachDirty(itemsPurchaseDetail);
+		
+		//4、如通过物品发放功能生成的申购单，整张单的全部物品入库后要将申领单的状态改为待发放。
+		//采购数量=入库数量,则表示完全入库
+		String ipItemsApplyPK = itemsPurchase.getIpItemsApplyPK();
+		if(ipItemsApplyPK != null && !ipItemsApplyPK.equals("") && itemsPurchase.getIpPurchaseCountSum() == itemsPurchase.getIpStoreCountSum()) {
+			String updateIAMSql = "update tItemsApplyManagement t set t.IAMCheckFlag='FSCCQWPFS_002' where t.pk=? ";//FSCCQWPFS_002待发放
+			entityDAO.executeSql(updateIAMSql, "");
+		}
+	}
+	/**
 	 * 
 	 * 1、更新tItemsPurchase的入库数量合计
 	 * 2、将已入库数量更新为采购数量的值，将单据中状态为“未入库”的物品的状态变更为“已入库”。更新tItemsPurchaseDetail的已入库数量；更新tItemsPurchaseDetail状态标识为“已入库”
@@ -92,7 +144,7 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	 * @param purchaseDetailPk
 	 */
 	@MethodID("pushOneStore")
-	@LogOperate(operate = "单个物品入库")
+	@LogOperate(operate = "单个低值品物品入库")
 	public void pushOneStore_log_trans(String itemsPurchaseDetailPk) {
 		
 		ItemsPurchaseDetail itemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetailPk);

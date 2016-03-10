@@ -140,32 +140,41 @@ function packageItemsPurchaseDetailData() {
  */
 function pushStore(itemsPurchaseDetaiPk,ipDType,ipDItemManagePK) {
 	if (ipDType == 'WPLB_002') {//单类固定资产入库
-		getItemByPk(ipDItemManagePK,itemsPurchaseDetaiPk);
+		pushOneAssetStore(ipDItemManagePK,itemsPurchaseDetaiPk);
 	} else {
-		Ajax.service(//单类低值品入库
-				'ItemsPurchaseDetailBO',
-				'pushOneStore', 
-				 [itemsPurchaseDetaiPk],
-				function(result){
-					$('body').removeLoading();     // 关闭遮挡层
-					//$("#id_btn_save").attr("disabled", false); // 按钮可点击
-					if(result!=null&&result!=""){		
-						top.layer.alert(result,{icon: 5, closeBtn:2});
-					}else{
-						top.layer.alert('入库成功',{icon: 6, closeBtn:2});
-						//history.go(-1);
-						 window.location.reload();
-					}		
-				}
-			);
+		pushOneStore(itemsPurchaseDetaiPk);
 	}
 	
 }
+/**
+ * 单个低值品物品入库
+ * @param itemsPurchaseDetaiPk
+ */
+function pushOneStore(itemsPurchaseDetaiPk) {
+	Ajax.service(//单类低值品入库
+			'ItemsPurchaseDetailBO',
+			'pushOneStore', 
+			 [itemsPurchaseDetaiPk],
+			function(result){
+				$('body').removeLoading();     // 关闭遮挡层
+				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				if(result!=null&&result!=""){		
+					top.layer.alert(result,{icon: 5, closeBtn:2});
+				}else{
+					top.layer.alert('入库成功',{icon: 6, closeBtn:2});
+					//history.go(-1);
+					 window.location.reload();
+				}		
+			}
+		);
+};
+
 
 /** 
- * 根据编码获取物品信息
+ * 单类固定资产入库
+ * 说明：入库后的更新数据由系统集成的固定资产入库功能去调用java接口：pushOneAssetStore_log_trans(String itemsPurchaseDetailPk, int assetCount)
  **/
-function getItemByPk(ipDItemManagePK,itemsPurchaseDetaiPk) {
+function pushOneAssetStore(ipDItemManagePK,itemsPurchaseDetaiPk) {
 	Ajax.service(
 	  		'ItemManageBO',
 	  		'findById', 
@@ -179,7 +188,7 @@ function getItemByPk(ipDItemManagePK,itemsPurchaseDetaiPk) {
 	  	);
 }
 /**
-*	入库接口
+*	入库接口（框架提供的）
 *	assetRegAssetType:物品所属资产类别
 *	purchaseDetailPK:采购明细pk
 **/

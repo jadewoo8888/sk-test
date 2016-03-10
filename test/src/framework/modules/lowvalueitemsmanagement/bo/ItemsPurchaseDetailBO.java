@@ -90,29 +90,12 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	@MethodID("pushOneAssetStore")
 	@LogOperate(operate = "单个固定资产物品入库")
 	public void pushOneAssetStore_log_trans(String itemsPurchaseDetailPk, int assetCount) {
-		String[] updateInfo = DBOperation.getUpdateInfo();
 		
 		ItemsPurchaseDetail itemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetailPk);
 		
 		ItemsPurchase itemsPurchase = itemsPurchaseDAO.findById(itemsPurchaseDetail.getIpDItemsPurchasePK());
 				
-		//1、单独登记一条入库记录
-		LVIStoreRecord lviStoreRecord = new LVIStoreRecord();
-		lviStoreRecord.setLviSRCategoryPK(itemsPurchase.getIpCategoryPK());
-		lviStoreRecord.setLviSRCount(itemsPurchaseDetail.getIpDPurchaseCount());//采购数量=入库数量？
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		lviStoreRecord.setLviSRDate(df.format(new Date()));
-		lviStoreRecord.setLviSRItemManagePK(itemsPurchaseDetail.getIpDItemManagePK());
-		lviStoreRecord.setLviSRMetricUnit(itemsPurchaseDetail.getIpDMetricUnit());
-		lviStoreRecord.setLviSRName(itemsPurchaseDetail.getIpDName());
-		lviStoreRecord.setLviSROrgCode(itemsPurchase.getIpOrgCode());
-		lviStoreRecord.setLviSRPerson(updateInfo[2]);
-		lviStoreRecord.setLviSRPurchasePK(itemsPurchase.getPk());
-		lviStoreRecord.setLviSRRemark("");
-		lviStoreRecord.setLviSRSpecification(itemsPurchaseDetail.getIpDSpecification());
-		lviStoreRecord.setLviSRType(itemsPurchaseDetail.getIpDType());
-		lviStoreRecord.setPk(UUID.randomUUID().toString());
-		lviStoreRecordDAO.save(lviStoreRecord);
+		//1、保存到入库登记的未对账标签下，在数据库中保存对应的申购单号。（该步骤由固定资产入库登记页面完成）
 		
 		//2、将已入库数量更新为登记的固定资产数量(累加)
 		int newIpStoreCountSum = itemsPurchase.getIpStoreCountSum() + assetCount;

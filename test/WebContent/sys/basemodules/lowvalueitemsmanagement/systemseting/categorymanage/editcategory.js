@@ -1,4 +1,4 @@
-
+var oldcategoryName = '';
 //加载完成执行 
 $(function(){	
 	initData();
@@ -21,8 +21,8 @@ $(function(){
 function initData() {
 	if(pk) {
 		getCategoryByPk(pk);
-		$('#categoryName').addClass('disableText');
-		$('#categoryName').attr('readonly',true);//禁用输入
+		//$('#categoryName').addClass('disableText');
+		//$('#categoryName').attr('readonly',true);//禁用输入
 	}
 }
 
@@ -44,7 +44,8 @@ function getCategoryByPkSuccFunc(data) {
  **/
 function callUpdateData(rows) {
 	var row = rows[0];
-	$("#categoryName").val(row.categoryName);
+	oldcategoryName = row.categoryName;
+	$("#categoryName").val(oldcategoryName);
 	$("#categoryRemark").val(row.categoryRemark);
 }
 
@@ -61,6 +62,10 @@ function dataPackage(busitype){
 	categoryObj.groupCode = $("input[name = groupCode]").val();
 	if (busitype == 'modify') {
 		categoryObj.pk = pk;
+		categoryObj.ifEditName = true;
+		if (oldcategoryName == categoryObj.categoryName) {
+			categoryObj.ifEditName = false;
+		}
 	}
 	
 	return categoryObj;

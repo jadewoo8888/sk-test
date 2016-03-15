@@ -33,8 +33,17 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	
 	@MethodID("modifyCategory")
 	@LogOperate(operate = "修改类目")
-	public void modifyCategory_log_trans(CategoryManagement categoryManagement){
+	public String modifyCategory_log_trans(CategoryManagement categoryManagement){
+		if (categoryManagement.isIfEditName()) {
+			boolean flag = entityDAO.executeFindExists("select 1 from tCategoryManagement where categoryName = ?", categoryManagement.getCategoryName());
+			if (flag) {
+				LogOperateManager.unlog();
+				return "类目名称已经存在，请重新输入";
+			}
+		}
 		entityDAO.attachDirty(categoryManagement);
+		
+		return "";
 	}
 	
 	@MethodID("deleteCategory")

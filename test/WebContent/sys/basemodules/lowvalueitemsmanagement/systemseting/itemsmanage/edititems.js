@@ -227,8 +227,8 @@ function submitModify(submitPackage){
 function initCategoryCombo() {
 	Ajax.service(
 		'CategoryManagementBO',
-		'findCategoryByGroupCode', 
-		[top.strUserGroupCode],
+		'findAll', 
+		[],
 		initCategoryComboSuccFunc
 	);
 }

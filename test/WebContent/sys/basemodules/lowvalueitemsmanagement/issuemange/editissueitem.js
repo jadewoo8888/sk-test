@@ -216,7 +216,7 @@ function genAssetRegAssetTypeQC(imAssetTypeArrStr) {
  * （框架提供的函数名）
  * 固定资产查询条件：1、使用人为空；2、固定资产编码；3、本用户的机构编号
  */
-function setAssetComponentQC() {
+function setAssetSelectQC() {
 var customQCArr = new Array();
 	assetQc = new Object();
 	assetQc.fn = '';

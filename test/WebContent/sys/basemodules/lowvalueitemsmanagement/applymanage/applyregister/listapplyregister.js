@@ -290,6 +290,9 @@ function setItemStatus(){
 		valueField: 'value',
 		textField: 'text',
 		data:[{
+			'value':"",
+			'text':'全部'
+		},{
 			'value':"WPSLZT_001",
 			'text':'未上报'
 		},{

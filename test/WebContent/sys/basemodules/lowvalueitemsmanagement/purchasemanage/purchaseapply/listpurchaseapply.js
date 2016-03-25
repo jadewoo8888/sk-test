@@ -275,7 +275,7 @@ function reportone(pk){
 	top.layer.open({
 		title:'提示 ',
 		icon: 3,
-		area:['250px','150px'],
+		area:['320px','150px'],
 		btn:['确定','取消'],
 		content:'是否确认将申购单提交审批？',
 		shift:1,

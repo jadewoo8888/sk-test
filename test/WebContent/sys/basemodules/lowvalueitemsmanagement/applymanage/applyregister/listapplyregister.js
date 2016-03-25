@@ -77,8 +77,9 @@ function showCategoryListSuccFunc(result) {
 	layer.open({//这种窗口是我们找官方的，按钮onclick可以找到toAddApplyPage方法。
 		title:'选择类目',
 	    type: 1,
+	    closeBtn :2,
 	    //skin: 'layui-layer-rim', //加上边框
-	    area: ['180px', '220px'], //宽高
+	    area: ['250px', '250px'], //宽高
 	    content: html
 	});
 	

@@ -103,10 +103,26 @@ function selPushStoreWay() {
 	layer.open({
 		title:'请选择入库方式',
 	    type: 1,
-	    skin: 'layui-layer-rim', //加上边框
-	    area: ['180px', '220px'], //宽高
+	    closeBtn :2,
+	    //skin: 'layui-layer-rim', //加上边框
+	    area: ['300px', '200px'], //宽高
 	    content: html
 	});
+	
+	/*top.layer.open({
+		type:2,
+		title:'请选择入库方式 ',
+		shift:1,
+		closeBtn :2,
+		area:['250x','200px'],
+		shade:false,
+		zIndex:'2015', 
+		success:function(layero){
+	   		top.layer.setTop(layero); 
+		},
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/selStoreWay.jsp'
+	});*/
+	
 };
 
 /**
@@ -139,8 +155,9 @@ function showCategoryListSuccFunc(result) {
 	layer.open({
 		title:'请选择入库方式',
 	    type: 1,
-	    skin: 'layui-layer-rim', //加上边框
-	    area: ['180px', '220px'], //宽高
+	    closeBtn :2,
+	   // skin: 'layui-layer-rim', //加上边框
+	    area: ['250px', '250px'], //宽高
 	    content: html
 	});
 };

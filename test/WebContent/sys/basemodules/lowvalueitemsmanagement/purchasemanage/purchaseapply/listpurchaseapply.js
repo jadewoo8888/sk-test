@@ -87,8 +87,9 @@ function showCategoryListSuccFunc(result) {
 	layer.open({
 		title:'选择类目',
 	    type: 1,
+	    closeBtn :2,
 	    //skin: 'layui-layer-rim', //加上边框
-	    area: ['180px', '220px'], //宽高
+	    area: ['250px', '250px'], //宽高
 	    content: html
 	});
 	

@@ -86,15 +86,15 @@ var categoryName="${param.categoryName}";
 			</div>	
 	    </div>  
 	    
-	    <div title="审批意见" id="id_div_approvaloption">
+	    <!-- <div title="审批意见" id="id_div_approvaloption">
 
 	    </div>  
 	    
 	    <div title="审批路线图" id="approval_img">
 
 	    </div> 
-	    <!--审批按钮栏  -->
-	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
+	    审批按钮栏 
+	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div> -->
 	</div>
 	
 	<div style="background-color:white;height:100px;"></div>

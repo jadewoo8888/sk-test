@@ -26,10 +26,21 @@ var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 
 //加载完成执行 
 $(function(){
+	initComBindFunc();
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
 	initDataGrid();
 });
+function initComBindFunc() {
+	$("#id_btn_return").click(function () {
+		var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+        parent.layer.close(index);
+	}); 
+	$("#id_btn_export").click(function () {
+		datagrid.showExport();
+	}); 
+	
+}
 /**
  * 初始化表格信息
  **/
@@ -138,7 +149,10 @@ function getAppendData() {
 		<span class="head-title"></span>
 		<span class="head-tx"></span>
 	</div>
-	
+	<div class="clearfloat">
+				<input type="button" id="id_btn_return" class="bt_list_function" value="返回" />
+				<input type="button" id="id_btn_export" class="bt_list_function" value="导出" />
+			</div>
 	<div  id="tabs" class="easyui-tabs clearfloat">	
 		<div title="基本信息" id="basic" > 
 			<div class="EditPanel" id="EditPanel" >			
@@ -206,7 +220,7 @@ function getAppendData() {
 
 	    </div> 
 	</div>
-	<div style="background-color:white;height:100px;"></div>
+	<div style="background-color:white;height:10px;"></div>
 
 	</body>
 </html>

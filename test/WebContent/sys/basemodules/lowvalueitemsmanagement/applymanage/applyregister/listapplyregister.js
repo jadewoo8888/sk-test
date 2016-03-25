@@ -3,7 +3,6 @@
  */
 //列表表格对象
 var datagrid = null;
-
 /**
  * 初始化方法
  **/ 
@@ -13,9 +12,9 @@ $(function () {
 	initComBindFunc(); 
 	initCategoryCombo();
 	initDeptBox();
+	initParameter();
 	
 });
-
 
 /**
  * 初始化表格信息
@@ -191,7 +190,7 @@ function viewone(pk){
 		title:'查看登记信息 ',
 		shift:1,
 		closeBtn :2,
-		area:['900px','628px'],
+		area:['1024px','600px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){

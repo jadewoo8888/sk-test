@@ -214,10 +214,10 @@ function pushPurchaseStore(pk,categoryName){
 function viewone(pk,categoryName){
 	top.layer.open({
 		type:2,
-		title:'查看登记信息 ',
+		title:'查看采购申请 ',
 		shift:1,
 		closeBtn :2,
-		area:['900px','628px'],
+		area:['900px','588px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){

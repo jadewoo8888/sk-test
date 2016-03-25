@@ -26,7 +26,7 @@ function initDataGrid() {
 	//入库数量合计<采购数量合计即表示未入库
 	 var _columns =  
 	 [[
-	 	{field:'option',title:'操作',minwidth:280,formatter:function(value,row,index){
+	 	{field:'option',title:'操作',minwidth:200,formatter:function(value,row,index){
 	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >查看</a>";
 			if (row.ipApprovalFlag == 'WPSLZT_001') {
 				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >修改</a>";

@@ -143,7 +143,7 @@ function getCheckStatus(){
 	checkedQc.fn = '';
 	checkedQc.oper = 14;
 	var checkStatusDisplay=$('#checkStatusDisplay').combobox('getValue');
-	if (checkStatusDisplay != '') {
+	if (checkStatusDisplay != '' && checkStatusDisplay != '全部') {
 		checkedQc.value1 = "((iamCheckFlag = '"+checkStatusDisplay+"'))";
 	} else {
 		checkedQc.value1 = "(1=1)";
@@ -158,10 +158,10 @@ function setCheckStatus(){
 		valueField: 'value',
 		textField: 'text',
 		data:[
-		   /*   {
-			'value':"",
+		   {
+			'value':"全部",
 			'text':'全部'
-			},*/
+			},
 			{
 				'value':"FSCCQWPFS_002",
 				'text':'待发放'

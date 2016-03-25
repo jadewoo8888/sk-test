@@ -23,7 +23,7 @@ form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; 
 .combo{margin-left:10px;}
 .validatebox-tip{margin-top: -2px}
 .shaixuan .numberbox-f{height: 32px !important;width: 203px;margin-left: 10px;}
-
+.notnullTip{color:red;vertical-align: middle;margin-left:3px;}
 #submit{width:50px}
 #return{width:50px}
 </style>
@@ -38,15 +38,15 @@ form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; 
 		  	<form id="ff" method="post" style="width:400px; margin-left:50px; margin-top:50px">   
 		  		<div class="EditPanel">
 				    <div>   
-				        <label for="type">名称<span>*</span>:</label>
+				        <label for="type">名称<span class="notnullTip">*</span></label>
 				        <input id="categoryName" name="categoryName" class="easyui-validatebox" required="true"  validType="length[1,50]"  invalidMessage="不能超过50个字符！" missingMessage="不能为空" />   
 				    </div>   
 				    <div style="height:30px">   
-				        <label for="type">角色:</label>
+				        <label for="type">角色</label>
 				        <input id="groupCode" name="groupCode"/>    
 				    </div>  
 				    <div>   
-				        <label for="type">备注:</label>
+				        <label for="type">备注</label>
 				        <input type="text" id="categoryRemark" name="categoryRemark"  class="easyui-validatebox"   validType="length[1,125]"  invalidMessage="不能超过125个字符！"/>   
 				    </div>   
 			    </div>

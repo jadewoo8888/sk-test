@@ -62,9 +62,9 @@ function dataPackage(busitype){
 	categoryObj.groupCode = $("input[name = groupCode]").val();
 	if (pk) {
 		categoryObj.pk = pk;
-		categoryObj.isEditName = true;
+		categoryObj.editedName = true;
 		if (oldcategoryName == categoryObj.categoryName) {
-			categoryObj.isEditName = false;
+			categoryObj.editedName = false;
 		}
 	}
 	

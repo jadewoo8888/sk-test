@@ -34,7 +34,7 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	@MethodID("modifyCategory")
 	@LogOperate(operate = "修改类目")
 	public String modifyCategory_log_trans(CategoryManagement categoryManagement){
-		if (categoryManagement.isEditName()) {
+		if (categoryManagement.isEditedName()) {
 			boolean flag = entityDAO.executeFindExists("select 1 from tCategoryManagement where categoryName = ?", categoryManagement.getCategoryName());
 			if (flag) {
 				LogOperateManager.unlog();

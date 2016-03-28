@@ -158,9 +158,9 @@ function edit(){
 	if (business == STR_REGISTER_ADDNEW) {
 		submitAdd(itemObj);
 	} else {
-		itemObj.isEditName = true;
+		itemObj.editedName = true;
 		if (oldImName == itemObj.imName) {
-			itemObj.isEditName = false;
+			itemObj.editedName = false;
 		}
 		
 		itemObj.pk = pk;

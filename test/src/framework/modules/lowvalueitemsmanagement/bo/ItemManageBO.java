@@ -35,7 +35,7 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 	@MethodID("modifyItem")
 	@LogOperate(operate = "修改物品")
 	public String modifyItem_log_trans(ItemManage itemManage) {
-		if (itemManage.isEditName()) {
+		if (itemManage.isEditedName()) {
 			boolean flag = entityDAO.executeFindExists("select 1 from tItemManage where imName = ?", itemManage.getImName());
 			if (flag) {
 				LogOperateManager.unlog();

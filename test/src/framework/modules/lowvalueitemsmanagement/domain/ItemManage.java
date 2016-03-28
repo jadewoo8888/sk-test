@@ -27,7 +27,7 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	private String imAssetTypeDisplay = "";
 	
 	//外字段
-	private boolean isEditName;//名字是否已修改
+	private boolean editedName;//是否有修改名字
 		
 	public String getPk() {
 		return pk;
@@ -113,11 +113,11 @@ public class ItemManage implements java.io.Serializable, Cloneable {
 	public void setImAssetTypeDisplay(String imAssetTypeDisplay) {
 		this.imAssetTypeDisplay = imAssetTypeDisplay;
 	}
-	public boolean isEditName() {
-		return isEditName;
+	public boolean isEditedName() {
+		return editedName;
 	}
-	public void setEditName(boolean isEditName) {
-		this.isEditName = isEditName;
+	public void setEditedName(boolean editedName) {
+		this.editedName = editedName;
 	}
 	
 }

@@ -12,7 +12,7 @@ $(function () {
 	initComBindFunc(); 
 	initCategoryCombo();
 	initDeptBox();
-	initParameter();
+	//initParameter();
 	
 });
 

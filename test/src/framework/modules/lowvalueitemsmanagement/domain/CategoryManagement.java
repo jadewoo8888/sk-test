@@ -18,7 +18,7 @@ public class CategoryManagement implements java.io.Serializable, Cloneable {
 	private String groupCodeDisplay = "";
 	
 	//外字段
-	private boolean ifEditName;//是否修改名字
+	private boolean isEditName;//名字是否已修改
 	
 	public String getPk() {
 		return pk;
@@ -68,11 +68,11 @@ public class CategoryManagement implements java.io.Serializable, Cloneable {
 	public void setGroupCodeDisplay(String groupCodeDisplay) {
 		this.groupCodeDisplay = groupCodeDisplay;
 	}
-	public boolean isIfEditName() {
-		return ifEditName;
+	public boolean isEditName() {
+		return isEditName;
 	}
-	public void setIfEditName(boolean ifEditName) {
-		this.ifEditName = ifEditName;
+	public void setEditName(boolean isEditName) {
+		this.isEditName = isEditName;
 	}
 	
 	

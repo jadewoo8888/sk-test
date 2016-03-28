@@ -243,7 +243,7 @@ function updateAssetSelectedData(selectRowData) {
 /**申购**/
 function purchaseFn() {
 	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk="+pk+"&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?ipItemsApplyPK='+itemsApplyMPK+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business=issuePurchaseOpr';
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?ipItemsApplyMPK='+itemsApplyMPK+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business=issuePurchaseOpr';
 }
 /**
  * 设置附件

@@ -158,8 +158,8 @@ function initIssuePurchaseDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{min:1},align:'right',fmType:'int'}},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80}
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{min:1},align:'right',fmType:'int'}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
@@ -169,10 +169,13 @@ function initIssuePurchaseDataGrid() {
 }
 /**初始化编辑的单元格**/
 function initEditCell(){
-	var row = datagrid.dataGridObj.datagrid('getRows');
-	var rowLen = row.length;
+	var rows = datagrid.dataGridObj.datagrid('getRows');
+	var rowLen = rows.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
+		var editors = datagrid.dataGridObj.datagrid('getEditors', i);
+		var v = rows[i]['iamLeaderCheckCount'];
+		editors[0].target.numberbox('setValue',v);
 	}
 	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
 	var width = $("td[field=ipDApplyCount]").children("div.datagrid-cell")[0].clientWidth;

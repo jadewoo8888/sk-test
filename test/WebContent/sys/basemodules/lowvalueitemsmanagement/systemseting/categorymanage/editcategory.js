@@ -60,11 +60,11 @@ function dataPackage(busitype){
 	categoryObj.categoryName = $("#categoryName").val();
 	categoryObj.categoryRemark = $("#categoryRemark").val();
 	categoryObj.groupCode = $("input[name = groupCode]").val();
-	if (busitype == 'modify') {
+	if (pk) {
 		categoryObj.pk = pk;
-		categoryObj.ifEditName = true;
+		categoryObj.isEditName = true;
 		if (oldcategoryName == categoryObj.categoryName) {
-			categoryObj.ifEditName = false;
+			categoryObj.isEditName = false;
 		}
 	}
 	

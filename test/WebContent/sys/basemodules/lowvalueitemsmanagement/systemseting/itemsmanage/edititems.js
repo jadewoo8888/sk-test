@@ -1,3 +1,4 @@
+var oldImName = '';
 //加载完成执行 
 $(function(){	
 	initData();
@@ -33,8 +34,8 @@ function initData() {
 	
 	if(pk) {
 		getItemByPk(pk);
-		$('#id_imName').addClass('disableText');
-		$('#id_imName').attr('readonly',true);//禁用输入
+		//$('#id_imName').addClass('disableText');
+		//$('#id_imName').attr('readonly',true);//禁用输入
 	}
 }
 
@@ -82,6 +83,9 @@ function dataFill(obj){
 		  		 	}*/
 		  		 	
 		  		 	$("#id_"+p).val(obj[p]);		  		 	
+			     }
+			     if (p=='imName') {
+			    	 oldImName = obj[p];
 			     }
 		  }
 	  }
@@ -154,6 +158,11 @@ function edit(){
 	if (business == STR_REGISTER_ADDNEW) {
 		submitAdd(itemObj);
 	} else {
+		itemObj.isEditName = true;
+		if (oldImName == itemObj.imName) {
+			itemObj.isEditName = false;
+		}
+		
 		itemObj.pk = pk;
 		submitModify(itemObj);
 	}

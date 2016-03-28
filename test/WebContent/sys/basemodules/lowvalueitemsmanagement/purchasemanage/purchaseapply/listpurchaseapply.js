@@ -218,7 +218,7 @@ function viewone(pk,categoryName){
 		title:'查看采购申请 ',
 		shift:1,
 		closeBtn :2,
-		area:['900px','588px'],
+		area:[(window.screen.width*0.6)+'px',(window.screen.height*0.8)+'px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){

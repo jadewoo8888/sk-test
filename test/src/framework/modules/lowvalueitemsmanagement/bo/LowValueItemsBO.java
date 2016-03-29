@@ -27,35 +27,37 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 		String[] updateInfo = DBOperation.getUpdateInfo();
 		
 		for (LowValueItems newLowValueItems : lowValueItemsList) {
-			//判断仓库记录是否已经存在，如果已经存在则更新数量，不存在就新增一条记录
-			String strSql = "SELECT * FROM tLowValueItems WHERE LVIItemManagePK = ?";
-			LowValueItems lowValueItemOld = entityDAO.executeFindEntity(LowValueItems.class, strSql, newLowValueItems.getLviItemManagePK());
-			if (lowValueItemOld != null) {
-				lowValueItemOld.setLviCount(lowValueItemOld.getLviCount() + newLowValueItems.getLviCount());
-				entityDAO.attachDirty(lowValueItemOld);
-			} else {
-				newLowValueItems.setPk(UUID.randomUUID().toString());
-				entityDAO.save(newLowValueItems);
+			if (newLowValueItems.getLviCount() > 0) {//控制入库数量大于0的才可以入库
+				//判断仓库记录是否已经存在，如果已经存在则更新数量，不存在就新增一条记录
+				String strSql = "SELECT * FROM tLowValueItems WHERE LVIItemManagePK = ?";
+				LowValueItems lowValueItemOld = entityDAO.executeFindEntity(LowValueItems.class, strSql, newLowValueItems.getLviItemManagePK());
+				if (lowValueItemOld != null) {
+					lowValueItemOld.setLviCount(lowValueItemOld.getLviCount() + newLowValueItems.getLviCount());
+					entityDAO.attachDirty(lowValueItemOld);
+				} else {
+					newLowValueItems.setPk(UUID.randomUUID().toString());
+					entityDAO.save(newLowValueItems);
+				}
+				//单独登记一条入库记录
+				LVIStoreRecord lviStoreRecord = new LVIStoreRecord();
+				lviStoreRecord.setLviSRCategoryPK(newLowValueItems.getLviCategoryPK());
+				lviStoreRecord.setLviSRCount(newLowValueItems.getLviCount());
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				lviStoreRecord.setLviSRDate(df.format(new Date()));
+				lviStoreRecord.setLviSRItemManagePK(newLowValueItems.getLviItemManagePK());
+				lviStoreRecord.setLviSRMetricUnit(newLowValueItems.getLviMetricUnit());
+				lviStoreRecord.setLviSRName(newLowValueItems.getLviName());
+				lviStoreRecord.setLviSRDeptCode(deptCode);
+				lviStoreRecord.setLviSROrgCode(orgCode);
+				lviStoreRecord.setLviSRPerson(updateInfo[2]);
+				lviStoreRecord.setLviSRPurchasePK(newLowValueItems.getPk());
+				lviStoreRecord.setLviSRRemark("");
+				lviStoreRecord.setLviSRSpecification(newLowValueItems.getLviSpecification());
+				lviStoreRecord.setLviSRType(newLowValueItems.getLviType());
+				lviStoreRecord.setPk(UUID.randomUUID().toString());
+				
+				//lviStoreRecordDAO.save(lviStoreRecord);
 			}
-			//单独登记一条入库记录
-			LVIStoreRecord lviStoreRecord = new LVIStoreRecord();
-			lviStoreRecord.setLviSRCategoryPK(newLowValueItems.getLviCategoryPK());
-			lviStoreRecord.setLviSRCount(newLowValueItems.getLviCount());
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			lviStoreRecord.setLviSRDate(df.format(new Date()));
-			lviStoreRecord.setLviSRItemManagePK(newLowValueItems.getLviItemManagePK());
-			lviStoreRecord.setLviSRMetricUnit(newLowValueItems.getLviMetricUnit());
-			lviStoreRecord.setLviSRName(newLowValueItems.getLviName());
-			lviStoreRecord.setLviSRDeptCode(deptCode);
-			lviStoreRecord.setLviSROrgCode(orgCode);
-			lviStoreRecord.setLviSRPerson(updateInfo[2]);
-			lviStoreRecord.setLviSRPurchasePK(newLowValueItems.getPk());
-			lviStoreRecord.setLviSRRemark("");
-			lviStoreRecord.setLviSRSpecification(newLowValueItems.getLviSpecification());
-			lviStoreRecord.setLviSRType(newLowValueItems.getLviType());
-			lviStoreRecord.setPk(UUID.randomUUID().toString());
-			
-			lviStoreRecordDAO.save(lviStoreRecord);
 		}
 	}
 

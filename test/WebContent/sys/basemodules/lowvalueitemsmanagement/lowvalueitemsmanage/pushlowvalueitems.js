@@ -119,17 +119,18 @@ function packagelowValueItemsData() {
     var rowsData = new Array();
     for(var i=0;i<rowLen;i++) {
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
-	 	
-	 	var lowValueItems = new Object();
-	 	lowValueItems.lviCategoryPK = categoryPk;
-	 	lowValueItems.lviItemManagePK = row[i].pk;
-	 	lowValueItems.lviName = row[i].imName;
-	 	lowValueItems.lviType = row[i].imType;
-	 	lowValueItems.lviSpecification = row[i].imSpecification;
-	 	lowValueItems.lviMetricUnit = row[i].imMetricUnit;
-	 	lowValueItems.lviCount = editors[0].target.numberbox('getValue');
-	 	
-   		rowsData.push(lowValueItems);
+		var lviCount = editors[0].target.numberbox('getValue');
+		if (lviCount > 0) {//控制入库数量大于0的才可以入库
+			var lowValueItems = new Object();
+			lowValueItems.lviCount = lviCount;
+		 	lowValueItems.lviCategoryPK = categoryPk;
+		 	lowValueItems.lviItemManagePK = row[i].pk;
+		 	lowValueItems.lviName = row[i].imName;
+		 	lowValueItems.lviType = row[i].imType;
+		 	lowValueItems.lviSpecification = row[i].imSpecification;
+		 	lowValueItems.lviMetricUnit = row[i].imMetricUnit;
+		 	rowsData.push(lowValueItems);
+		}
 	}
 	return rowsData;
 }

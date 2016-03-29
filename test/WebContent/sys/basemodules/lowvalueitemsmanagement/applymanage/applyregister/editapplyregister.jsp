@@ -11,7 +11,7 @@
 //业务类型
 var business="${param.business}";
 var categoryPk="${param.categoryPk}";
-var pk="${param.pk}";
+var itemsApplyMPK="${param.itemsApplyMPK}";
 //var itemsApplyDeptCode = top.strUserDeptCode;
 //var applyPerson = top.strUserAccount;
 var categoryName="${param.categoryName}";

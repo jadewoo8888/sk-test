@@ -16,10 +16,10 @@ $(function () {
  * 初始化默认值
  */
 function initDefaultValue() {
-	if (pk) {
+	if (itemsApplyMPK) {
 		//设置头信息
 		$('#id_div_desc .head-title').html('修改申领登记');
-		getItemsApplyByPk(pk);
+		getItemsApplyByPk(itemsApplyMPK);
 	} else {
 		$('#id_div_desc .head-title').html('新增申领登记');
 		
@@ -32,14 +32,14 @@ function initDefaultValue() {
 
 /**
  * 根据PK获取物品申领一条，并赋值给相应的字段
- * @param pk
+ * @param itemsApplyMPK
  */
-function getItemsApplyByPk(pk) {
+function getItemsApplyByPk(itemsApplyMPK) {
 	
 	Ajax.service(
 	  		'ItemsApplyManagementBO',
 	  		'findById', 
-	  		[pk],
+	  		[itemsApplyMPK],
 	  		function(obj){
 	  		 	mainObj = obj;
 				//数据填充 
@@ -68,6 +68,11 @@ function dataFill(obj) {
 	 	//applyPerson = obj.applyPerson;
 }
 
+function checkIamApplyCount(value) {
+	if(value < 1) {
+		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
+	}
+}
 /**
  * 初始化表格信息
  **/
@@ -79,7 +84,7 @@ function initDataGrid() {
         {field:"imTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{min:1},align:'right',fmType:'int'}}
+		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount},align:'right',fmType:'int'}}
 		/*{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}},
 		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}}*/
 	]];
@@ -127,7 +132,7 @@ function setCustomQueryCondition2() {
 	var itemsApplyQc = new Object();
 	itemsApplyQc.fn = 'itemsApplyMPK';
 	itemsApplyQc.oper = ARY_STR_EQUAL[0];
-	itemsApplyQc.value1 = pk;
+	itemsApplyQc.value1 = itemsApplyMPK;
 	customQCArr.push(itemsApplyQc);
     return customQCArr;
 }
@@ -161,7 +166,7 @@ function initComBindFunc() {
 function save(ifReport) {
 	var itemsApplyManagement = packageItemsApplyManData();
 	var itemsApplyMdetailList = packageItemsApplyMDetailData();
-	if (pk) {
+	if (itemsApplyMPK) {
 		summitEdit(itemsApplyMdetailList,ifReport);
 	} else {
 		summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport);
@@ -202,7 +207,7 @@ function summitEdit(itemsApplyMdetailList,ifReport) {
 	Ajax.service(
 			'ItemsApplyManagementBO',
 			'modifyItemApply', 
-			 [pk,itemsApplyRemark,itemsApplyMdetailList,ifReport,getAppendData()],
+			 [itemsApplyMPK,itemsApplyRemark,itemsApplyMdetailList,ifReport,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
 				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
@@ -240,6 +245,7 @@ function packageItemsApplyManData() {
 function packageItemsApplyMDetailData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
+	//var row = datagrid.dataGridObj.datagrid('getChecked');
 	var rowLen = row.length;
     var rowsData = new Array();
     for(var i=0;i<rowLen;i++) {
@@ -247,7 +253,7 @@ function packageItemsApplyMDetailData() {
 	 	
 	 	var itemsApplyMDetail = new Object();
 	 	itemsApplyMDetail.categoryManagementPK = categoryPk;
-	 	if (pk) {
+	 	if (itemsApplyMPK) {
 	 		itemsApplyMDetail.itemManagePK = row[i].itemManagePK;
 	 		itemsApplyMDetail.iamItemManagePK = row[i].iamItemManagePK;
 	 	} else {
@@ -261,7 +267,12 @@ function packageItemsApplyMDetailData() {
 	 	itemsApplyMDetail.imType = row[i].imType;
 	 	itemsApplyMDetail.imSpecification= row[i].imSpecification;
 	 	itemsApplyMDetail.imMetricUnit= row[i].imMetricUnit;
-	 	itemsApplyMDetail.iamApplyCount = editors[0].target.numberbox('getValue');
+	 	var appCount = editors[0].target.numberbox('getValue');
+	 	if (appCount < 0) {
+	 		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
+	 		return;
+	 	}
+	 	itemsApplyMDetail.iamApplyCount = appCount;
 	 	
 	 	
    		rowsData.push(itemsApplyMDetail);
@@ -274,7 +285,7 @@ function packageItemsApplyMDetailData() {
  **/
 function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+pk;
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+itemsApplyMPK;
 }
 
 /** 

@@ -142,10 +142,7 @@ function getAppendData() {
 		<span class="head-title"></span>
 		<span class="head-tx"></span>
 	</div>
-	<div class="clearfloat">
-				<input type="button" id="id_btn_return" class="bt_list_function" value="返回" />
-				<input type="button" id="id_btn_export" class="bt_list_function" value="导出" />
-			</div>
+	
 	<div  id="tabs" class="easyui-tabs clearfloat">	
 		<div title="基本信息" id="basic" > 
 			<div class="EditPanel" id="EditPanel" >			
@@ -181,7 +178,7 @@ function getAppendData() {
 					</tr>
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="disableText"  readonly="readonly"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:580px;resize: none' class="disableText"  readonly="readonly"></textarea></td>
 					</tr>
 					</table> 
 					
@@ -213,8 +210,10 @@ function getAppendData() {
 
 	    </div> 
 	</div>
-	<div style="background-color:white;height:10px;"></div>
-
+	<div id="id_div_secondStep"  class="Editinput" style="width:100%;position:fixed;bottom:38px;padding-top:3px;padding-bottom:3px;padding-left:400px;background-color:#CCCCCC;">
+		<input type="button" class="bt_ensure" value="导出" id="id_btn_export"></input>
+		<input type="button" class="bt_cancel" value="返回" id="id_btn_return"></input>
+	</div>
 	</body>
 </html>
 

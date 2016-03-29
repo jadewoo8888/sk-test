@@ -174,11 +174,11 @@ function initCategoryCombo() {
 }
 
 //修改
-function modifyone(pk,categoryPk){
+function modifyone(itemsApplyMPK,categoryPk){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
-	location.href='editapplyregister.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business='+STR_REGISTER_MODIFY;
+	location.href='editapplyregister.jsp?itemsApplyMPK='+itemsApplyMPK+'&categoryPk='+categoryPk+'&business='+STR_REGISTER_MODIFY;
 
 }
 

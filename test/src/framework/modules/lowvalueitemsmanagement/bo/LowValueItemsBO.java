@@ -25,7 +25,6 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 	public void addLowValueItems_log_trans(List<LowValueItems> lowValueItemsList, String orgCode, String deptCode) {
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
-		
 		for (LowValueItems newLowValueItems : lowValueItemsList) {
 			if (newLowValueItems.getLviCount() > 0) {//控制入库数量大于0的才可以入库
 				//判断仓库记录是否已经存在，如果已经存在则更新数量，不存在就新增一条记录
@@ -50,7 +49,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 				lviStoreRecord.setLviSRDeptCode(deptCode);
 				lviStoreRecord.setLviSROrgCode(orgCode);
 				lviStoreRecord.setLviSRPerson(updateInfo[2]);
-				lviStoreRecord.setLviSRPurchasePK(newLowValueItems.getPk());
+				//lviStoreRecord.setLviSRPurchasePK("");采购单PK
 				lviStoreRecord.setLviSRRemark("");
 				lviStoreRecord.setLviSRSpecification(newLowValueItems.getLviSpecification());
 				lviStoreRecord.setLviSRType(newLowValueItems.getLviType());

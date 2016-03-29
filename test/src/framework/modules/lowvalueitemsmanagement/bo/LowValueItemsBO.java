@@ -56,7 +56,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 				lviStoreRecord.setLviSRType(newLowValueItems.getLviType());
 				lviStoreRecord.setPk(UUID.randomUUID().toString());
 				
-				//lviStoreRecordDAO.save(lviStoreRecord);
+				lviStoreRecordDAO.save(lviStoreRecord);
 			}
 		}
 	}

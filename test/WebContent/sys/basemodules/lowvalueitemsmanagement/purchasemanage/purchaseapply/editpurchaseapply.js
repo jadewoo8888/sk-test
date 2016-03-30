@@ -96,7 +96,7 @@ function initAddDataGrid() {
 		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell1};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -105,7 +105,7 @@ function initAddDataGrid() {
 /**
  * 初始化修改的物品采购表格
  **/
-function initModifyDataGrid() {alert(pk)
+function initModifyDataGrid() {
 	
 	//自定义查询条件
 	function setCustomQueryCondition(){
@@ -131,10 +131,23 @@ function initModifyDataGrid() {alert(pk)
 		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""; else return value;}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell1};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
+}
+
+/**初始化编辑的单元格**/
+function initEditCell1(){
+	var row = datagrid.dataGridObj.datagrid('getRows');
+	var rowLen = row.length;
+	for (var i = 0; i < rowLen; i++) {
+		datagrid.dataGridObj.datagrid('beginEdit', i);
+	}
+	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
+	var width = $("td[field=ipDApplyCount]").children("div.datagrid-cell")[0].clientWidth;
+	var cssWidth = 'width:'+width+'px!important;';
+	$(".datagrid-cell-c1-ipDApplyCount").css("cssText",cssWidth);
 }
 
 /**
@@ -168,13 +181,14 @@ function initIssuePurchaseDataGrid() {
 		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell2};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
+
 /**初始化编辑的单元格**/
-function initEditCell(){
+function initEditCell2(){
 	var rows = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = rows.length;
 	for (var i = 0; i < rowLen; i++) {

@@ -105,7 +105,7 @@ function initAddDataGrid() {
 /**
  * 初始化修改的物品采购表格
  **/
-function initModifyDataGrid() {
+function initModifyDataGrid() {alert(pk)
 	
 	//自定义查询条件
 	function setCustomQueryCondition(){
@@ -309,7 +309,7 @@ function packageItemsPurchaseData() {
  * 打包采购明细
  * @returns {Array}
  */
-function packageItemsPurchaseDetailData() {
+/*function packageItemsPurchaseDetailData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
@@ -318,23 +318,81 @@ function packageItemsPurchaseDetailData() {
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
 	 	
 	 	var itemsPurchaseDetail = new Object();
-	 	itemsPurchaseDetail.ipDItemManagePK = row[i].pk;
 	 	
 	 	if (pk) {//修改
 	 		itemsPurchaseDetail.ipDType= row[i].ipDType;
 		 	itemsPurchaseDetail.ipDName = row[i].ipDName;
 		 	itemsPurchaseDetail.ipDSpecification= row[i].ipDSpecification;
 		 	itemsPurchaseDetail.ipDMetricUnit= row[i].ipDMetricUnit;
+	 		itemsPurchaseDetail.pk = row[i].pk;
 	 	} else {//新增或者通过发放采购
 	 		itemsPurchaseDetail.ipDName = row[i].imName;
 		 	itemsPurchaseDetail.ipDType = row[i].imType;
 		 	itemsPurchaseDetail.ipDSpecification= row[i].imSpecification;
 		 	itemsPurchaseDetail.ipDMetricUnit= row[i].imMetricUnit;
+		 	itemsPurchaseDetail.ipDItemManagePK = row[i].pk;
 	 	}
 	 	
 	 	itemsPurchaseDetail.ipDApplyCount = editors[0].target.numberbox('getValue');
 	 	
    		rowsData.push(itemsPurchaseDetail);
+	}
+	return rowsData;
+}*/
+
+/**
+ * 
+ * 打包采购明细
+ */
+function packageItemsPurchaseDetailData() {
+	
+	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
+	var checkRowsLen = checkRows.length;
+	if (checkRowsLen < 1) {
+		var msg = '请选择要采购的物品，并填写申购数量！';
+		if (pk) {
+			msg = '请选择要修改物品！';
+		}
+		top.layer.alert(msg,{closeBtn :2,icon:7});
+ 		return;
+	}
+	
+    var rowsData = new Array();
+    var allRows = datagrid.dataGridObj.datagrid('getRows');
+	var allRowsLen = allRows.length;
+	
+    for(var i=0;i<allRowsLen;i++) {
+		
+		var isChecked = false;
+		 for (var j=0;j<checkRowsLen;j++) {
+			 if(checkRows[j].pk==allRows[i].pk){    //是否被选中
+			    	isChecked = true;
+			    	break;
+			    }
+		 }
+		 if (isChecked) {
+			 var editors = $('#id_table_grid').datagrid('getEditors', i);
+			 
+			 var itemsPurchaseDetail = new Object();
+			 if (pk) {//修改
+			 		itemsPurchaseDetail.pk = allRows[i].pk;//物品采购明细表PK
+			 	} else {//新增或者通过发放采购
+			 		itemsPurchaseDetail.ipDName = allRows[i].imName;
+				 	itemsPurchaseDetail.ipDType = allRows[i].imType;
+				 	itemsPurchaseDetail.ipDSpecification= allRows[i].imSpecification;
+				 	itemsPurchaseDetail.ipDMetricUnit= allRows[i].imMetricUnit;
+				 	itemsPurchaseDetail.ipDItemManagePK = allRows[i].pk;
+			 	}
+			 	
+			 	var ipDApplyCount = editors[0].target.numberbox('getValue');
+			 	if (ipDApplyCount < 0) {
+			 		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
+			 		return;
+			 	}
+			 	itemsPurchaseDetail.ipDApplyCount = ipDApplyCount;
+			 	
+		   		rowsData.push(itemsPurchaseDetail);
+		 }
 	}
 	return rowsData;
 }

@@ -42,7 +42,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
 			itemsPurchaseDetail.setIpDItemsPurchasePK(itemsPurchasePk);
 			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
-			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
+			//ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
 		}
 		
 		//生成采购单，保存
@@ -74,39 +74,40 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	
 	@MethodID("modifyItemPurchase")
 	@LogOperate(operate = "修改物品采购申请")
-	public void modifyItemPurchase_log_trans(String pk, String ipRemark, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,String ipItemsApplyMPK, List<Append> appendList){
-		/**全部删除明细，然后把最新的全部插入，就等于更新操作**/
-		//全部删除采购申请明细
-		entityDAO.executeSql("delete from tItemsPurchaseDetail t where t.IPDItemsPurchasePK=?", pk);
-		
-		ItemsPurchase itemsPurchase = entityDAO.findById(pk);
+	public void modifyItemPurchase_log_trans(String ipDItemsPurchasePK, String ipRemark, List<ItemsPurchaseDetail> itemsPurchaseDetailList, boolean ifReport,String ipItemsApplyMPK, List<Append> appendList){
+		//更新采购单备注
+		ItemsPurchase itemsPurchase = entityDAO.findById(ipDItemsPurchasePK);
 		itemsPurchase.setIpRemark(ipRemark);
-		
-		int ipPurchaseCountSum = 0;//采购合计值
-		//全部插入采购明细
-		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
-			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
-			itemsPurchaseDetail.setIpDItemsPurchasePK(itemsPurchase.getPk());
-			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
-			
-			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();//采购合计
-		}
-		//更新采购单
-		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
 		entityDAO.attachDirty(itemsPurchase);
+		//int ipPurchaseCountSum = 0;//采购合计值
+		
+		//修改采购申请明细的申领数量
+		String strSql1 = "select * from tItemsPurchaseDetail t where t.pk=?";
+		ItemsPurchaseDetail dbItemsPurchaseDetail = null;
+		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
+			dbItemsPurchaseDetail = entityDAO.executeFindEntity(ItemsPurchaseDetail.class, strSql1, itemsPurchaseDetail.getPk());
+			dbItemsPurchaseDetail.setIpDApplyCount(itemsPurchaseDetail.getIpDApplyCount());
+			itemsPurchaseDetailDAO.attachDirty(dbItemsPurchaseDetail);
+			
+			//ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();//采购合计
+		}
+				
+		//更新采购单
+		//itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
+		//entityDAO.attachDirty(itemsPurchase);
 		
 		if (ifReport) {
 			LogOperateManager.operate("上报物品采购申请");
-			this.upreportItemsPurchase_log_trans(pk);
+			this.upreportItemsPurchase_log_trans(ipDItemsPurchasePK);
 			//如果是通过发放申购的，则需更新申领单位采购中
-			String strSql = "update tItemsApplyManagement set IAMCheckFlag='FSCCQWPFS_003'  where pk = ? ";
+			String strSql2 = "update tItemsApplyManagement set IAMCheckFlag='FSCCQWPFS_003'  where pk = ? ";
 			if (ipItemsApplyMPK != null && !ipItemsApplyMPK.equals("")) {
-				entityDAO.executeSql(strSql, ipItemsApplyMPK);
+				entityDAO.executeSql(strSql2, ipItemsApplyMPK);
 			}
 		}
 		
 		/** 处理附件信息 * */
-		appendBO.processAppend(appendList, pk, AppendBusinessType.TYYWLX_026, itemsPurchase.getIpOrgCode());
+		appendBO.processAppend(appendList, ipDItemsPurchasePK, AppendBusinessType.TYYWLX_026, itemsPurchase.getIpOrgCode());
 	}
 	
 	@MethodID("deleteItemPurchase")

@@ -13,6 +13,23 @@
 .editTips{text-align:left;}
 #id_unitAdress{width:638px;}
 .EditPanel{padding-left:10px;}
+
+.bt_ensure[type="button"]{
+	width:auto;
+    height: 18px;
+    margin-left: 8px;
+    text-indent: 0px;
+    cursor: pointer;
+    padding: 0px 10px;
+    display: inline-block;
+    color: #ffffff !important;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    border-radius: 2px;
+    background-color: #1fb5ad;
+    border: medium none;
+}
 </style> 
 <script src="pushpurchasestore.js" type="text/javascript"></script>
 <script> 

@@ -70,7 +70,7 @@ function dataFill(obj) {
 
 function checkIamApplyCount(value) {
 	if(value < 1) {
-		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
+		top.layer.alert('申领数量不能小于"1"',{closeBtn :2,icon:7});
 	}
 }
 /**
@@ -291,8 +291,8 @@ function packageItemsApplyMDetailData() {
 			 	}
 			 	
 			 	var appCount = editors[0].target.numberbox('getValue');
-			 	if (appCount < 0) {
-			 		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
+			 	if (appCount < 1) {
+			 		top.layer.alert('申领数量不能小于"1"',{closeBtn :2,icon:7});
 			 		return;
 			 	}
 			 	itemsApplyMDetail.iamApplyCount = appCount;

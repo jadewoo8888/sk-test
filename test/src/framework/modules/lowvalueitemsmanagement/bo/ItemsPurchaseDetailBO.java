@@ -68,7 +68,7 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
 			dbItemsPurchaseDetail.setIpDPurchaseCount(itemsPurchaseDetail.getIpDPurchaseCount());
 			entityDAO.attachDirty(dbItemsPurchaseDetail);
-			ipPurchaseCountSum += dbItemsPurchaseDetail.getIpDPurchaseCount();//采购数量合计
+			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount() - dbItemsPurchaseDetail.getIpDPurchaseCount();//采购数量合计
 		}
 		//更新物品申请单的合计采购数量
 		ItemsPurchase itemsPurchase = itemsPurchaseDAO.findById(ipDItemsPurchasePK);

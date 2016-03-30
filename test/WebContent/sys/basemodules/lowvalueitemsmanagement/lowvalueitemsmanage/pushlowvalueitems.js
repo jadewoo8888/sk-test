@@ -21,6 +21,12 @@ function initDefaultValue() {
 	$("#id_categoryManagementPK").val(categoryName);
 }
 
+function checkLviCount(value) {
+	if(value < 1) {
+		top.layer.alert('申购数量不能小于"1"',{closeBtn :2,icon:7});
+	}
+}
+
 /**
  * 初始化表格信息
  **/
@@ -31,7 +37,7 @@ function initDataGrid() {
 		{field:"imName",title:'物品名称',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"lviCount",title:'入库数量',minwidth:80,editor:{ type:'numberbox',options:{min:1,width:80},align:'right',fmType:'int'}}
+		{field:"lviCount",title:'入库数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkLviCount,width:80},align:'right',fmType:'int'}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
@@ -112,7 +118,7 @@ function save() {
  * 打包低值品仓库
  * @returns {Array}
  */
-function packagelowValueItemsData() {
+/*function packagelowValueItemsData() {
 	
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
@@ -131,6 +137,55 @@ function packagelowValueItemsData() {
 		 	lowValueItems.lviMetricUnit = row[i].imMetricUnit;
 		 	rowsData.push(lowValueItems);
 		}
+	}
+	return rowsData;
+}*/
+
+/**
+ * 打包低值品仓库
+ * @returns {Array}
+ */
+function packagelowValueItemsData() {
+	
+	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
+	var checkRowsLen = checkRows.length;
+	if (checkRowsLen < 1) {
+		var msg = '请选择要入库的物品，并填写入库数量！';
+		top.layer.alert(msg,{closeBtn :2,icon:7});
+ 		return;
+	}
+	
+    var rowsData = new Array();
+    var allRows = datagrid.dataGridObj.datagrid('getRows');
+	var allRowsLen = allRows.length;
+	
+    for(var i=0;i<allRowsLen;i++) {
+		
+		var isChecked = false;
+		 for (var j=0;j<checkRowsLen;j++) {
+			 if(checkRows[j].pk==allRows[i].pk){    //是否被选中
+			    	isChecked = true;
+			    	break;
+			    }
+		 }
+		 if (isChecked) {
+			var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
+			var lviCount = editors[0].target.numberbox('getValue');
+			if (lviCount < 1) {
+		 		top.layer.alert('入库数量不能小于"1"',{closeBtn :2,icon:7});
+		 		return;
+		 	}
+		 	
+		 	var lowValueItems = new Object();
+			lowValueItems.lviCount = lviCount;
+		 	lowValueItems.lviCategoryPK = categoryPk;
+		 	lowValueItems.lviItemManagePK = allRows[i].pk;
+		 	lowValueItems.lviName = allRows[i].imName;
+		 	lowValueItems.lviType = allRows[i].imType;
+		 	lowValueItems.lviSpecification = allRows[i].imSpecification;
+		 	lowValueItems.lviMetricUnit = allRows[i].imMetricUnit;
+		 	rowsData.push(lowValueItems);
+		 }
 	}
 	return rowsData;
 }

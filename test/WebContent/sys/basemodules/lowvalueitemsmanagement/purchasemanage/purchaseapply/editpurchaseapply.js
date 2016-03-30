@@ -63,7 +63,7 @@ function dataFill(obj) {
 
 function checkIpDApplyCount(value) {
 	if(value < 1) {
-		top.layer.alert('申购数量不能小于"0"',{closeBtn :2,icon:7});
+		top.layer.alert('申购数量不能小于"1"',{closeBtn :2,icon:7});
 	}
 }
 
@@ -399,8 +399,8 @@ function packageItemsPurchaseDetailData() {
 			 	}
 			 	
 			 	var ipDApplyCount = editors[0].target.numberbox('getValue');
-			 	if (ipDApplyCount < 0) {
-			 		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
+			 	if (ipDApplyCount < 1) {
+			 		top.layer.alert('申领数量不能小于"1"',{closeBtn :2,icon:7});
 			 		return;
 			 	}
 			 	itemsPurchaseDetail.ipDApplyCount = ipDApplyCount;

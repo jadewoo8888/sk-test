@@ -244,9 +244,17 @@ function packageItemsApplyManData() {
  */
 function packageItemsApplyMDetailData() {
 	
-	var row = datagrid.dataGridObj.datagrid('getRows');
-	//var row = datagrid.dataGridObj.datagrid('getChecked');
+	//var row = datagrid.dataGridObj.datagrid('getRows');
+	var row = datagrid.dataGridObj.datagrid('getChecked');
 	var rowLen = row.length;
+	if (rowLen < 1) {
+		var msg = '请选择要申领的物品，并填写申领数量！';
+		if (itemsApplyMPK) {
+			msg = '请选择要修改物品！';
+		}
+		top.layer.alert(msg,{closeBtn :2,icon:7});
+ 		return;
+	}
     var rowsData = new Array();
     for(var i=0;i<rowLen;i++) {
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	

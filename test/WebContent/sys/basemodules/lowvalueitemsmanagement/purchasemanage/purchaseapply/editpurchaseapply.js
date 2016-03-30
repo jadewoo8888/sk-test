@@ -61,6 +61,12 @@ function dataFill(obj) {
 		$("#id_ipRemark").val(obj.ipRemark);
 }
 
+function checkIpDApplyCount(value) {
+	if(value < 1) {
+		top.layer.alert('申购数量不能小于"0"',{closeBtn :2,icon:7});
+	}
+}
+
 /**
  * 初始化新增的物品采购表格
  **/
@@ -86,7 +92,7 @@ function initAddDataGrid() {
         {field:"imTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{min:1,width:80},align:'right',fmType:'int'}},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount,width:80},align:'right',fmType:'int'}},
 		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
 	]];
 	 
@@ -121,7 +127,7 @@ function initModifyDataGrid() {
         {field:"ipDTypeDisplay",title:'类别',minwidth:80},
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
 		{field:"ipDMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{min:1},align:'right',fmType:'int'}},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}},
 		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""; else return value;}}
 	]];
 	 
@@ -159,7 +165,7 @@ function initIssuePurchaseDataGrid() {
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
 		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{min:1},align:'right',fmType:'int'}}
+		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};

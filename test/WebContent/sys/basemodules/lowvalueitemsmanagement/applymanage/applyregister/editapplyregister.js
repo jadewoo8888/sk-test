@@ -273,7 +273,7 @@ function packageItemsApplyMDetailData() {
 			 
 			 var itemsApplyMDetail = new Object();
 			 	//新增时，读取物品列表。修改时，读取的是物品申领管理明细表
-			 	if (itemsApplyMPK) {
+			 	if (itemsApplyMPK) {//如果是修改
 			 		//itemsApplyMDetail.itemManagePK = row[i].itemManagePK;
 			 		//itemsApplyMDetail.iamItemManagePK = row[i].iamItemManagePK;
 			 		itemsApplyMDetail.pk = allRows[i].pk;//物品申领管理明细表PK

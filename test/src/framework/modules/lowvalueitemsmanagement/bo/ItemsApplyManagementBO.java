@@ -73,7 +73,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	
 	/**
 	 * 
-	 * @param pk
+	 * @param itemsApplyMPK
 	 * @param itemsApplyRemark
 	 * @param itemsApplyMdetailList
 	 * @param ifReport
@@ -81,29 +81,30 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	 */
 	@MethodID("modifyItemApply")
 	@LogOperate(operate = "修改物品申领")
-	public void modifyItemApply_log_trans(String pk, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList){
+	public void modifyItemApply_log_trans(String itemsApplyMPK, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList){
 		/** 第一步：修改物品申领 * */
-		//修改物品申领
-		ItemsApplyManagement itemsApplyManagement = entityDAO.findById(pk);
+		//修改物品申领备注
+		ItemsApplyManagement itemsApplyManagement = entityDAO.findById(itemsApplyMPK);
 		itemsApplyManagement.setItemsApplyRemark(itemsApplyRemark);
 		entityDAO.attachDirty(itemsApplyManagement);
-		/**先删除所有明细，再添加明细，等于做更新操作**/
-		//删除所有的物品申领明细
-		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
-		//重新生成相应的物品申领明显
+		
+		//修改物品申领明细的申领数量
+		String strSql = "select * from tItemsApplyMDetail t where t.pk=?";
+		ItemsApplyMDetail dbItemsApplyMDetail = null;
 		for (ItemsApplyMDetail itemsApplyMdetail : itemsApplyMdetailList) {
-			itemsApplyMdetail.setPk(UUID.randomUUID().toString());
-			itemsApplyMdetail.setItemsApplyMPK(itemsApplyManagement.getPk());
-			itemsApplyMDetailDAO.save(itemsApplyMdetail);
+			dbItemsApplyMDetail = entityDAO.executeFindEntity(ItemsApplyMDetail.class, strSql, itemsApplyMdetail.getPk());
+			dbItemsApplyMDetail.setIamApplyCount(itemsApplyMdetail.getIamApplyCount());
+			itemsApplyMDetailDAO.attachDirty(dbItemsApplyMDetail);
 		}
+		
 		//上报
 		if (ifReport) {
 			LogOperateManager.operate("上报物品申领");
-			this.upreportItemsApply_log_trans(pk);
+			this.upreportItemsApply_log_trans(itemsApplyMPK);
 		}
 		
 		/** 第二步：处理附件信息 * */
-		appendBO.processAppend(appendList, pk, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
+		appendBO.processAppend(appendList, itemsApplyMPK, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
 	}
 	
 	/**

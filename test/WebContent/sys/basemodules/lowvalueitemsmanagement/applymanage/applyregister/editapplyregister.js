@@ -76,14 +76,14 @@ function checkIamApplyCount(value) {
 /**
  * 初始化表格信息
  **/
-function initDataGrid() {
+function initDataGrid() {//新增时，读取物品列表。修改时，读取的是物品申领管理明细表
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},
-        {field:"imTypeDisplay",title:'类别',minwidth:80},
-        {field:"imSpecification",title:'规格型号',minwidth:80},
-		{field:"imMetricUnit",title:'单位',minwidth:80},
+		{field:"imName",title:'物品名称',minwidth:80},//物品和物品申领管理明细表的字段一样
+        {field:"imTypeDisplay",title:'类别',minwidth:80},//物品和物品申领管理明细表的字段一样
+        {field:"imSpecification",title:'规格型号',minwidth:80},//物品和物品申领管理明细表的字段一样
+		{field:"imMetricUnit",title:'单位',minwidth:80},//物品和物品申领管理明细表的字段一样
 		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount},align:'right',fmType:'int'}}
 		/*{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}},
 		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}}*/
@@ -244,10 +244,9 @@ function packageItemsApplyManData() {
  */
 function packageItemsApplyMDetailData() {
 	
-	//var row = datagrid.dataGridObj.datagrid('getRows');
-	var row = datagrid.dataGridObj.datagrid('getChecked');
-	var rowLen = row.length;
-	if (rowLen < 1) {
+	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
+	var checkRowsLen = checkRows.length;
+	if (checkRowsLen < 1) {
 		var msg = '请选择要申领的物品，并填写申领数量！';
 		if (itemsApplyMPK) {
 			msg = '请选择要修改物品！';
@@ -255,35 +254,51 @@ function packageItemsApplyMDetailData() {
 		top.layer.alert(msg,{closeBtn :2,icon:7});
  		return;
 	}
+	
     var rowsData = new Array();
-    for(var i=0;i<rowLen;i++) {
-		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
-	 	
-	 	var itemsApplyMDetail = new Object();
-	 	itemsApplyMDetail.categoryManagementPK = categoryPk;
-	 	if (itemsApplyMPK) {
-	 		itemsApplyMDetail.itemManagePK = row[i].itemManagePK;
-	 		itemsApplyMDetail.iamItemManagePK = row[i].iamItemManagePK;
-	 	} else {
-	 		itemsApplyMDetail.itemManagePK = row[i].pk;
-	 		itemsApplyMDetail.iamItemManagePK = row[i].pk;
-	 	}
-	 	itemsApplyMDetail.orgCode = top.strFilterOrgCode;
-	 	itemsApplyMDetail.itemsApplyDeptCode = top.strUserDeptCode;
-	 	itemsApplyMDetail.imName = row[i].imName;
-	 	itemsApplyMDetail.imAssetType = row[i].imAssetType;
-	 	itemsApplyMDetail.imType = row[i].imType;
-	 	itemsApplyMDetail.imSpecification= row[i].imSpecification;
-	 	itemsApplyMDetail.imMetricUnit= row[i].imMetricUnit;
-	 	var appCount = editors[0].target.numberbox('getValue');
-	 	if (appCount < 0) {
-	 		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
-	 		return;
-	 	}
-	 	itemsApplyMDetail.iamApplyCount = appCount;
-	 	
-	 	
-   		rowsData.push(itemsApplyMDetail);
+    var allRows = datagrid.dataGridObj.datagrid('getRows');
+	var allRowsLen = allRows.length;
+	
+    for(var i=0;i<allRowsLen;i++) {
+		
+		var isChecked = false;
+		 for (var j=0;j<checkRowsLen;j++) {
+			 if(checkRows[j].pk==allRows[i].pk){    //是否被选中
+			    	isChecked = true;
+			    	break;
+			    }
+		 }
+		 if (isChecked) {
+			 var editors = $('#id_table_grid').datagrid('getEditors', i);
+			 
+			 var itemsApplyMDetail = new Object();
+			 	//新增时，读取物品列表。修改时，读取的是物品申领管理明细表
+			 	if (itemsApplyMPK) {
+			 		//itemsApplyMDetail.itemManagePK = row[i].itemManagePK;
+			 		//itemsApplyMDetail.iamItemManagePK = row[i].iamItemManagePK;
+			 		itemsApplyMDetail.pk = allRows[i].pk;//物品申领管理明细表PK
+			 	} else {
+			 		itemsApplyMDetail.categoryManagementPK = categoryPk;
+			 		itemsApplyMDetail.itemManagePK = allRows[i].pk;//物品PK
+			 		itemsApplyMDetail.iamItemManagePK = allRows[i].pk;
+			 		itemsApplyMDetail.imName = allRows[i].imName;
+				 	itemsApplyMDetail.imAssetType = allRows[i].imAssetType;
+				 	itemsApplyMDetail.imType = allRows[i].imType;
+				 	itemsApplyMDetail.imSpecification= allRows[i].imSpecification;
+				 	itemsApplyMDetail.imMetricUnit= allRows[i].imMetricUnit;
+				 	itemsApplyMDetail.orgCode = top.strFilterOrgCode;
+				 	itemsApplyMDetail.itemsApplyDeptCode = top.strUserDeptCode;
+			 	}
+			 	
+			 	var appCount = editors[0].target.numberbox('getValue');
+			 	if (appCount < 0) {
+			 		top.layer.alert('申领数量不能小于"0"',{closeBtn :2,icon:7});
+			 		return;
+			 	}
+			 	itemsApplyMDetail.iamApplyCount = appCount;
+			    //alert(allRows[i].imName+'==='+appCount)
+		   		rowsData.push(itemsApplyMDetail);
+		 }
 	}
 	return rowsData;
 }

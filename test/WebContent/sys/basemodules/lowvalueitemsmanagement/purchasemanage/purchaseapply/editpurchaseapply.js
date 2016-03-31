@@ -9,7 +9,7 @@ $(function () {
 	initDefaultValue();
 	initDataGrid();
 	initComBindFunc(); 
-	setAppenFrame();
+	//setAppenFrame();
 });
 
 /**
@@ -62,7 +62,7 @@ function getItemsPurchaseByPk(pk) {
 				//数据填充 
 	      	 	dataFill(obj);
 	      	 	//审批数据初始化
-	      	 	setApprovalOption(obj);
+	      	 	//setApprovalOption(obj);
 	  		},
 	  		function(data){
 	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});

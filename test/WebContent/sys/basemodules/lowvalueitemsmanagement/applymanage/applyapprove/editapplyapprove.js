@@ -15,15 +15,40 @@ function buttonBind(){
 	//返回页面
 	$("#return").click(function(){history.go(-1);});
 }
+
+var approveStep = 0;
+
+function getItemsApplyManagementByPk(itemsApplyMPK) {
+	
+	Ajax.service(
+	  		'ItemsApplyManagementBO',
+	  		'findById', 
+	  		[itemsApplyMPK],
+	  		function(obj){
+	  			if (obj.linkers != null && obj.linkers != 'null') {
+	  				var linkers = obj.linkers;
+		  			approveStep =(linkers.split('|')).length - 1;
+		  			//alert(approveStep)
+	  			}
+	  			
+	  			initDataGrid();
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
+
+
 /**
  * 初始化表格信息，跟进审批角色初始化
  **/
 function initDataGrid() {
-	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}};
+	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}};
 	if (approvalRole == 2) {//审核人
 		iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
 	}
-	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}};
+	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if (approveStep == 4) return value;else return '';}};
 	if (approvalRole == 3) {//核准人
 		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
 	}
@@ -112,7 +137,8 @@ function dataFill(obj){
 
 function getApprovalRoleFn() {
 	approvalRole = approvalModule.curNodeInfo.node.approvalRole;
-	initDataGrid();
+	getItemsApplyManagementByPk(pk);
+	//initDataGrid();
 }
 //审批数据初始化
 function setApprovalOption() {

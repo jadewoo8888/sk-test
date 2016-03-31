@@ -17,7 +17,7 @@
 <script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
 <script> 
 //查询pk
-var pk="${param.pk}";
+var itemsApplyMPK="${param.pk}";
 //业务类型
 var business=STR_VIEW;
 
@@ -29,7 +29,8 @@ $(function(){
 	initComBindFunc();
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
-	initDataGrid();
+	getItemsApplyManagementByPk(itemsApplyMPK);
+	//initDataGrid();
 });
 
 /**
@@ -45,6 +46,30 @@ function initComBindFunc() {
 	}); 
 	
 }
+
+var approveStep = 0;
+
+function getItemsApplyManagementByPk(itemsApplyMPK) {
+	
+	Ajax.service(
+	  		'ItemsApplyManagementBO',
+	  		'findById', 
+	  		[itemsApplyMPK],
+	  		function(obj){
+	  			if (obj.linkers != null && obj.linkers != 'null') {
+	  				var linkers = obj.linkers;
+		  			approveStep =(linkers.split('|')).length - 1;
+		  			//alert(approveStep)
+	  			}
+	  			
+	  			initDataGrid();
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
+
 /**
  * 初始化表格信息
  **/
@@ -57,9 +82,16 @@ function initDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80}
+		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}},
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if (approveStep == 4) return value;else return '';}}
 	]];
+	 
+	/*  if (approveStep == 3) {alert()
+		 _columns.push({field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80});
+	 } else if (approveStep == 4) {
+		 _columns.push({field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80});
+		 _columns.push({field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80});
+	 } */
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
 	 
@@ -78,7 +110,7 @@ function setCustomQueryCondition() {
 	var mpkQc = new Object();
 	mpkQc.fn = 'itemsApplyMPK';
 	mpkQc.oper = ARY_STR_EQUAL[0];
-	mpkQc.value1 = pk;
+	mpkQc.value1 = itemsApplyMPK;
 	customQCArr.push(mpkQc);
 	
 	var appCountQc = new Object();
@@ -91,7 +123,7 @@ function setCustomQueryCondition() {
 
 //获取信息 
 function getInfo(){
-	Ajax.service('ItemsApplyManagementBO','findById',[pk],
+	Ajax.service('ItemsApplyManagementBO','findById',[itemsApplyMPK],
 			function(obj){
 				dataFill(obj);	
 				
@@ -125,7 +157,7 @@ function dataFill(obj){
  **/
 function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+pk;
+	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+itemsApplyMPK;
 }
 /** 
  * 获取附件数据

@@ -89,13 +89,13 @@ var pk="${param.pk}";
 			</div>	
 	    </div>  
 	    
-	    <div title="审批意见" id="id_div_approvaloption">
+	    <!-- <div title="审批意见" id="id_div_approvaloption">
 
 	    </div>  
 	    
 	    <div title="审批路线图" id="approval_img">
 
-	    </div> 
+	    </div>  -->
 	</div>
 	
 	<div style="background-color:white;height:100px;"></div>

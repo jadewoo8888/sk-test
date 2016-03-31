@@ -18,6 +18,7 @@
 <script> 
 //查询pk
 var pk="${param.pk}";
+var categoryPk = '';
 //业务类型
 var business=STR_VIEW;
 var categoryName="${param.categoryName}";
@@ -27,8 +28,9 @@ var approvalBusiType = "SPYWLX_015";//物品采购审批路径
 $(function(){
 	initComBindFunc();
 	setAppenFrame(); 		//加载附件页面
-	getInfo();				//获取信息 
-	initDataGrid();
+	getInfo();				//获取信息
+	getItemsPurchasByPk(pk);
+	//initDataGrid();
 });
 function initComBindFunc() {
 	$("#id_btn_return").click(function () {
@@ -40,6 +42,46 @@ function initComBindFunc() {
 	}); 
 	
 }
+
+function getCategoryByPk(categoryPk) {
+	
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		'findById', 
+	  		[categoryPk],
+	  		function(obj){
+	  			categoryName = obj.categoryName;
+	  			$("#id_ipCategoryPK").val(categoryName);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
+
+var approveStep = 0;
+
+function getItemsPurchasByPk(ipDItemsPurchasePK) {
+	
+	Ajax.service(
+	  		'ItemsPurchaseBO',
+	  		'findById', 
+	  		[ipDItemsPurchasePK],
+	  		function(obj){
+	  			if (obj.linkers != null && obj.linkers != 'null') {
+	  				var linkers = obj.linkers;
+		  			approveStep =(linkers.split('|')).length - 1;
+		  			//alert(approveStep)
+	  			}
+	  			getCategoryByPk(obj.ipCategoryPK);
+	  			initDataGrid();
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
+
 /**
  * 初始化表格信息
  **/
@@ -53,9 +95,9 @@ function initDataGrid() {
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
 		{field:"ipDMetricUnit",title:'单位',minwidth:80},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:80},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:100},
-		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80},
-		{field:"ipDStoreCount",title:'已入库数量',minwidth:80}
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:100,formatter:function(value){if (approveStep == 2) return value;else return '';}},
+		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80,formatter:function(value){if (approveStep == 2) return value;else return '';}},
+		{field:"ipDStoreCount",title:'已入库数量',minwidth:80,formatter:function(value){if (approveStep == 2) return value;else return '';}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
@@ -107,7 +149,7 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	$("#id_ipCategoryPK").val(categoryName);
+	//$("#id_ipCategoryPK").val(categoryName);
 	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);

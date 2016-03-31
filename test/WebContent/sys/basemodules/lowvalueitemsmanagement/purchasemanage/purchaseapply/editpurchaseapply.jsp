@@ -86,11 +86,11 @@ var ipItemsApplyMPK = "${param.ipItemsApplyMPK}";
 			</div>	
 	    </div>  
 	    
-	    <div title="审批意见" id="id_div_approvaloption">
+	    <!-- <div title="审批意见" id="id_div_approvaloption">
 
 	    </div>  
 	    
-	    <div title="审批路线图" id="approval_img">
+	    <div title="审批路线图" id="approval_img"> -->
 
 	    </div> 
 	    <!--审批按钮栏  -->

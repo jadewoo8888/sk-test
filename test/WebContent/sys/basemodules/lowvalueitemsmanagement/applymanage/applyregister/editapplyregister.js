@@ -9,7 +9,7 @@ $(function () {
 	initDefaultValue();
 	initDataGrid();
 	initComBindFunc(); 
-	setAppenFrame();
+	//setAppenFrame();
 });
 
 /**

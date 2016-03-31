@@ -226,7 +226,8 @@ function viewone(pk,categoryName){
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&categoryName='+categoryName
+		//content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&categoryName='+categoryName
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk
 	});
 }
 

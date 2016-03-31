@@ -163,7 +163,8 @@ function showCategoryListSuccFunc(result) {
 };
 //入库
 function toAddItemStorePage(pk,categoryName) {
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
+	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&business='+STR_REGISTER_ADDNEW;
 };
 //发放
 function toIssueitemPage() {

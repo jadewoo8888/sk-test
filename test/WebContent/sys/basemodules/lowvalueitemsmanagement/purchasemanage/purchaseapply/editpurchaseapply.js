@@ -17,7 +17,7 @@ $(function () {
  * 
  **/
 function initDefaultValue() {
-	$("#id_ipCategoryPK").val(categoryName);
+	getCategoryByPk(categoryPk);
 	if (pk) {
 		//设置头信息
 		$('#id_div_desc .head-title').html('修改采购申请');
@@ -29,6 +29,22 @@ function initDefaultValue() {
 		$("#id_ipApplyPerson").val(top.strUserName);
 		$("#id_ipPurchaseDate").val(serverDate);
 	}
+}
+
+function getCategoryByPk(categoryPk) {
+	
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		'findById', 
+	  		[categoryPk],
+	  		function(obj){
+	  			categoryName = obj.categoryName;
+	  			$("#id_ipCategoryPK").val(categoryName);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
 }
 
 /**
@@ -55,6 +71,7 @@ function getItemsPurchaseByPk(pk) {
 }
 
 function dataFill(obj) {
+		$("#id_ipCategoryPK").val(categoryName);
 		$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 		$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 		$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);

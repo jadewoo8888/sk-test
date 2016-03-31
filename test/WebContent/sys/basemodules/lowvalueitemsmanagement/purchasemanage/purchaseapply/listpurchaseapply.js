@@ -109,7 +109,8 @@ function showCategoryListSuccFunc(result) {
  * @param categoryName
  */
 function toPurchaseapplyPage(pk,categoryName) {
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
+	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?categoryPk='+pk+'&business='+STR_REGISTER_ADDNEW;
 };
 
 /**
@@ -190,7 +191,8 @@ function modifyone(pk,categoryPk,categoryName){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
+	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business='+STR_REGISTER_MODIFY;
 
 }
 

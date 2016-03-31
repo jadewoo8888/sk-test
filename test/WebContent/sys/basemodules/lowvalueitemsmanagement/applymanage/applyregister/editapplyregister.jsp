@@ -14,7 +14,7 @@ var categoryPk="${param.categoryPk}";
 var itemsApplyMPK="${param.itemsApplyMPK}";
 //var itemsApplyDeptCode = top.strUserDeptCode;
 //var applyPerson = top.strUserAccount;
-var categoryName="${param.categoryName}";
+var categoryName="";
 </script>
 <style type="text/css">
 .datagrid-cell-check input{height:18px;width:15px;}

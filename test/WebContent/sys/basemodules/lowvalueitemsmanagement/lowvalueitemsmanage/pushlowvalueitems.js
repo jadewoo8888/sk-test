@@ -15,10 +15,28 @@ $(function () {
  * 初始化默认值
  */
 function initDefaultValue() {
+	getCategoryByPk(categoryPk);
+	
 	$("#id_itemsApplyDeptCode").val(top.strUserDeptName);
 	$("#id_applyPerson").val(top.strUserName);
 	$("#id_itemsApplyDate").val(serverDate);
-	$("#id_categoryManagementPK").val(categoryName);
+	
+}
+
+function getCategoryByPk(categoryPk) {
+	
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		'findById', 
+	  		[categoryPk],
+	  		function(obj){
+	  			categoryName = obj.categoryName;
+	  			$("#id_categoryManagementPK").val(categoryName);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
 }
 
 function checkLviCount(value) {

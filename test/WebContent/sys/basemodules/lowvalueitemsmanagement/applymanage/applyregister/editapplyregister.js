@@ -22,12 +22,28 @@ function initDefaultValue() {
 		getItemsApplyByPk(itemsApplyMPK);
 	} else {
 		$('#id_div_desc .head-title').html('新增申领登记');
-		
-		$("#id_itemsApplyDeptCode").val(top.strUserDeptName);
-		$("#id_applyPerson").val(top.strUserName);
-		$("#id_itemsApplyDate").val(serverDate);
-		$("#id_categoryManagementPK").val(categoryName);
+		getCategoryByPk(categoryPk);
 	}
+}
+
+function getCategoryByPk(categoryPk) {
+	
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		'findById', 
+	  		[categoryPk],
+	  		function(obj){
+	  			categoryName = obj.categoryName;
+	  			$("#id_categoryManagementPK").val(categoryName);
+	  			$("#id_itemsApplyDeptCode").val(top.strUserDeptName);
+	  			$("#id_applyPerson").val(top.strUserName);
+	  			$("#id_itemsApplyDate").val(serverDate);
+	  			$("#id_categoryManagementPK").val(categoryName);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
 }
 
 /**

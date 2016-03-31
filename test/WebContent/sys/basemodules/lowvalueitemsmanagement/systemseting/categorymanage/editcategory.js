@@ -60,6 +60,7 @@ function dataPackage(busitype){
 	categoryObj.categoryName = $("#categoryName").val();
 	categoryObj.categoryRemark = $("#categoryRemark").val();
 	categoryObj.groupCode = $("input[name = groupCode]").val();
+	//categoryObj.groupCode = $('#groupCode').combobox('getValues');
 	if (pk) {
 		categoryObj.pk = pk;
 		categoryObj.editedName = true;
@@ -156,6 +157,7 @@ function submitModify(submitPackage){
 
 //初始化角色下拉列表
 function initRoleCombo() {
+	
 	//选择角色
 	$('#groupCode').combobox({
 		onBeforeLoad: function(param){
@@ -164,11 +166,27 @@ function initRoleCombo() {
 		valueField:'groupCode',
 		textField:'groupName',
 		width:220,
+		//multiple:true,
 		value: groupCode == 'null' ? "" : groupCode,
 		//height:26,
 		//panelHeight:100,
 		editable:false
 	});
+	
+	/*if($('#unitPurpose')[0])
+		$('#unitPurpose').combobox({    
+		    data:data_unitPurpose,  
+		    editable:false,
+		    panelHeight:100,
+		    multiple:true,
+		    height:28,
+		    width:120,
+		    valueField:'classifyCode',
+		    textField:'classifyName',
+		    onLoadSuccess: function () { //数据加载完毕事件
+
+	        }  
+		});*/
 }
 
 //角色加载
@@ -182,5 +200,9 @@ function ajaxRole(){
 			$('#groupCode').combobox("loadData",result);
 		}
 	);
+}
+
+function test() {
+	$('#Id').combobox('setValues','key1,key2,key3'.split(','))
 }
 

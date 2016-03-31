@@ -46,13 +46,19 @@ public class LVIStoreRecordBO  extends BOBase<LVIStoreRecordDAO, LVIStoreRecord>
 				//更新申购单的入库数量合计（数量减少）
 				String strSql1 = "select * from tItemsPurchase where PK = ?";
 				ItemsPurchase itemsPurchase = entityDAO.executeFindEntity(ItemsPurchase.class, strSql1, lviStoreRecord.getLviSRPurchasePK());
-				itemsPurchase.setIpStoreCountSum(itemsPurchase.getIpStoreCountSum() - lviStoreRecord.getLviSRCount());
-				itemsPurchaseDAO.attachDirty(itemsPurchase);
+				if (itemsPurchase != null) {
+					itemsPurchase.setIpStoreCountSum(itemsPurchase.getIpStoreCountSum() - lviStoreRecord.getLviSRCount());
+					itemsPurchaseDAO.attachDirty(itemsPurchase);
+				}
+				
 				//更新申购单明细的已入库数量（数量减少）
 				String strSql2 = "select * from tItemsPurchaseDetail where IPDItemsPurchasePK = ? and IPDItemManagePK = ?";
 				ItemsPurchaseDetail itemsPurchaseDetail = entityDAO.executeFindEntity(ItemsPurchaseDetail.class, strSql2, lviStoreRecord.getLviSRPurchasePK(),lviStoreRecord.getLviSRItemManagePK());
-				itemsPurchaseDetail.setIpDStoreCount(itemsPurchaseDetail.getIpDStoreCount() - lviStoreRecord.getLviSRCount());
-				itemsPurchaseDetailDAO.attachDirty(itemsPurchaseDetail);
+				if (itemsPurchaseDetail != null) {
+					itemsPurchaseDetail.setIpDStoreCount(itemsPurchaseDetail.getIpDStoreCount() - lviStoreRecord.getLviSRCount());
+					itemsPurchaseDetailDAO.attachDirty(itemsPurchaseDetail);
+				}
+				
 			}
 		}
 		return "";

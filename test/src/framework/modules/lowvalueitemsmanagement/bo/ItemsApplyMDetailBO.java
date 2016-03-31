@@ -193,8 +193,8 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		itemsApplyManagementDAO.attachDirty(itemsApplyManagement);
 
 		//第四步：清除脏数据（清除申购数量为0的申购明细，目的是清除没用的数据。这些数据的存在是在新建和修改申购明细的时候，批量增加的。）
-		String delApplyItemsSql = "delete from titemsApplyMDetail t where t.IAMApplyCount=0 and t.itemsapplympk=?";
-		entityDAO.executeSql(delApplyItemsSql, itemsApplyMPK);
+		/*String delApplyItemsSql = "delete from titemsApplyMDetail t where t.IAMApplyCount=0 and t.itemsapplympk=?";
+		entityDAO.executeSql(delApplyItemsSql, itemsApplyMPK);*/
 
 	}
 

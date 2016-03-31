@@ -130,7 +130,7 @@ function approval(pk,categoryPk,categoryName){
 function viewone(pk,categoryName){
 	top.layer.open({
 		type:2,
-		title:'查看登记信息 ',
+		title:'查看采购信息 ',
 		shift:1,
 		closeBtn :2,
 		area:['900px','628px'],

@@ -20,7 +20,7 @@
 //业务类型
 var business="${param.business}";
 var categoryPk="${param.categoryPk}";
-var categoryName="${param.categoryName}";
+var categoryName="";
 var pk="${param.pk}";
 </script>
 </head>

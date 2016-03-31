@@ -35,7 +35,7 @@ function initDataGrid() {
 			}
 			if (row.ipApprovalFlag == 'WPSLZT_004' && (row.ipPurchaseCountSum == 0 || row.ipStoreCountSum  < row.ipPurchaseCountSum)) {
 				html += "<a href='javascript:void(0);' onclick='modifyPushStore(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
-				html += "<a href='javascript:void(0);' onclick='pushPurchaseStore(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >入库</a>";
+				html += "<a href='javascript:void(0);' onclick='pushPurchaseStore(\""+row.pk+"\",\""+row.ipCategoryPK+"\")' >入库</a>";
 			}
  			return html;
 		}}, 
@@ -205,11 +205,11 @@ function modifyPushStore(pk,categoryPk,categoryName){
 }
 
 //入库
-function pushPurchaseStore(pk,categoryName){
+function pushPurchaseStore(pk,ipCategoryPK){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/pushpurchasestore.jsp?pk='+pk+'&categoryName='+categoryName+'&business='+STR_VIEW;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/pushpurchasestore.jsp?pk='+pk+'&ipCategoryPK='+ipCategoryPK+'&business='+STR_VIEW;
 }
 /**
  * 查看

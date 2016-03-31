@@ -5,6 +5,7 @@ var approvalBusiType = "SPYWLX_015";//物品采购审批路径
 $(function(){
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
+	getCategoryByPk(categoryPk);
 	initDataGrid();
 	initComBindFunc();
 });
@@ -65,6 +66,23 @@ function setCustomQueryCondition() {
     return customQCArr;
 }
 
+function getCategoryByPk(categoryPk) {
+	
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		'findById', 
+	  		[categoryPk],
+	  		function(obj){
+	  			categoryName = obj.categoryName;
+	  			$("#id_ipCategoryPK").val(categoryName);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
+
+
 //获取信息 
 function getInfo(){
 	Ajax.service('ItemsPurchaseBO','findById',[pk],
@@ -90,7 +108,7 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	$("#id_ipCategoryPK").val(categoryName);
+	//$("#id_ipCategoryPK").val(categoryName);
 	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);

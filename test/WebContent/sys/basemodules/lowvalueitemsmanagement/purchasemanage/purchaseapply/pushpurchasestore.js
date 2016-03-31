@@ -9,6 +9,7 @@ $(function(){
 	isIncludeAssetFn();
 	//initDataGrid();
 	initComBindFunc();
+	getCategoryByPk(ipCategoryPK);
 });
 
 /**
@@ -66,16 +67,6 @@ function initDataGrid() {
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 
-/*function test(data) {
-	var rows = data.rows;
-	for (var i = 0; i < rows.length; i++) {
-		if (rows[i].ipDType == 'WPLB_002') {
-			isIncludeAsset = true;
-			$("#id_"+rows[i].pk).hide();
-			break;
-		}
-	}
-}*/
 //自定义查询条件
 function setCustomQueryCondition() {
 	var customQCArr = new Array();
@@ -93,6 +84,22 @@ function setCustomQueryCondition() {
 	customQCArr.push(appCountQc);
     return customQCArr;
 }
+//获取类目
+function getCategoryByPk(categoryPk) {
+	
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		'findById', 
+	  		[categoryPk],
+	  		function(obj){
+	  			categoryName = obj.categoryName;alert(obj.categoryName)
+	  			$("#id_ipCategoryPK").val(categoryName);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
 
 //获取信息 
 function getInfo(){
@@ -106,7 +113,7 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	$("#id_ipCategoryPK").val(categoryName);
+	//$("#id_ipCategoryPK").val(categoryName);
 	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);

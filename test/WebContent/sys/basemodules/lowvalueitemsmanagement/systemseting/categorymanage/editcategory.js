@@ -23,6 +23,8 @@ function initData() {
 		getCategoryByPk(pk);
 		//$('#categoryName').addClass('disableText');
 		//$('#categoryName').attr('readonly',true);//禁用输入
+	} else {
+		//$('#groupCode').combobox('setValues','')
 	}
 }
 
@@ -47,6 +49,10 @@ function callUpdateData(rows) {
 	oldcategoryName = row.categoryName;
 	$("#categoryName").val(oldcategoryName);
 	$("#categoryRemark").val(row.categoryRemark);
+	if (row.groupCode != null) {
+		$('#groupCode').combobox('setValues',row.groupCode.split(','));
+	}
+	
 }
 
 function getCategoryByPkFailureFunc() {
@@ -59,8 +65,9 @@ function dataPackage(busitype){
 	var categoryObj = new Object();
 	categoryObj.categoryName = $("#categoryName").val();
 	categoryObj.categoryRemark = $("#categoryRemark").val();
-	categoryObj.groupCode = $("input[name = groupCode]").val();
-	//categoryObj.groupCode = $('#groupCode').combobox('getValues');
+	//categoryObj.groupCode = $("input[name = groupCode]").val();
+	categoryObj.groupCode = $('#groupCode').combobox('getValues').join();
+	
 	if (pk) {
 		categoryObj.pk = pk;
 		categoryObj.editedName = true;
@@ -166,27 +173,13 @@ function initRoleCombo() {
 		valueField:'groupCode',
 		textField:'groupName',
 		width:220,
-		//multiple:true,
+		multiple:true,
 		value: groupCode == 'null' ? "" : groupCode,
 		//height:26,
 		//panelHeight:100,
 		editable:false
 	});
 	
-	/*if($('#unitPurpose')[0])
-		$('#unitPurpose').combobox({    
-		    data:data_unitPurpose,  
-		    editable:false,
-		    panelHeight:100,
-		    multiple:true,
-		    height:28,
-		    width:120,
-		    valueField:'classifyCode',
-		    textField:'classifyName',
-		    onLoadSuccess: function () { //数据加载完毕事件
-
-	        }  
-		});*/
 }
 
 //角色加载
@@ -196,13 +189,10 @@ function ajaxRole(){
 		'findAll', 
 		[],
 		function(result){
-			result.push({groupCode:'',groupName:'无'});
+			//result.push({groupCode:'',groupName:'无'});
 			$('#groupCode').combobox("loadData",result);
 		}
 	);
 }
 
-function test() {
-	$('#Id').combobox('setValues','key1,key2,key3'.split(','))
-}
 

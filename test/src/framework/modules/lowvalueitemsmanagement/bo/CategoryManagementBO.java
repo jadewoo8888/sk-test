@@ -65,8 +65,9 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	 */
 	@MethodID("findCategoryByGroupCode")
 	public List<CategoryManagement> findCategoryByGroupCode(String groupCode) {
-		 String strSql = "select * from tCategoryManagement where groupCode = ? or groupCode is null";
-	     List<CategoryManagement> list = entityDAO.executeFind(CategoryManagement.class , strSql ,groupCode);
+		 //String strSql = "select * from tCategoryManagement where groupCode = ? or groupCode is null";
+		String strSql = "select * from tCategoryManagement where groupCode like ? or groupCode is null";
+	     List<CategoryManagement> list = entityDAO.executeFind(CategoryManagement.class , strSql ,"%"+groupCode+"%");
 		return list;
 	}
 
@@ -78,12 +79,4 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 		this.itemManageDAO = itemManageDAO;
 	}
 	
-	public static void main(String[] args) {
-		String as = "|演示账号|演示账号|";
-		String[] aa = as.split("\\|");
-		for (String a : aa) {
-			System.out.println(a);
-		}
-		System.out.println(as.split("\\|").length-1);
-	}
 }

@@ -21,7 +21,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 	private LVIStoreRecordDAO lviStoreRecordDAO;
 	
 	@MethodID("addLowValueItems")
-	@LogOperate(operate = "新增低值品仓库")
+	@LogOperate(operate = "新增低值品")
 	public void addLowValueItems_log_trans(List<LowValueItems> lowValueItemsList, String orgCode, String deptCode) {
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();

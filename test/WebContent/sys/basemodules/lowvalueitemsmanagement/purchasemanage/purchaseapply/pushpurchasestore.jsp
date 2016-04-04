@@ -37,7 +37,7 @@
 var business=STR_VIEW;
 //var categoryName="${param.categoryName}";
 var categoryName="";
-var ipCategoryPK = "${param.ipCategoryPK}";alert(ipCategoryPK)
+var ipCategoryPK = "${param.ipCategoryPK}";
 var pk="${param.pk}";
 </script>
 </head>

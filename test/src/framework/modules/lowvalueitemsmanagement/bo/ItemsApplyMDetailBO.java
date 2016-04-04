@@ -31,7 +31,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	private LVIPopRecordDAO lviPopRecordDAO;
 	private ItemsApplyManagementDAO itemsApplyManagementDAO;
 
-	@MethodID("addItemsApplyMDetail")
+	/*@MethodID("addItemsApplyMDetail")
 	@LogOperate(operate = "新增物品申领明细")
 	public void addItemsApplyMDetail_log_trans(ItemsApplyMDetail itemsApplyMDetail) {
 		String pk = UUID.randomUUID().toString();
@@ -52,7 +52,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		entityDAO.delete(entityDAO.findById(pk));
 		return return_tips;
 
-	}
+	}*/
 
 	/**
 	 * 审批物品申领明细，设置审批数量
@@ -62,7 +62,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	 * @param roleType
 	 *            审批角色值 2：审核人，3：核准人
 	 */
-	@MethodID("approvalItemMDtailCount")
+	//@MethodID("approvalItemMDtailCount")
 	@LogOperate(operate = "审批物品申领明细")
 	public void approvalItemMDtailCount_log_trans(List<ItemsApplyMDetail> itemsApplyMDetailList, int roleType) {
 		// 设置审批数量

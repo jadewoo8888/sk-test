@@ -25,7 +25,7 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	private LVIStoreRecordDAO lviStoreRecordDAO;
 	private LowValueItemsDAO lowValueItemsDAO;
 	
-	@MethodID("addItemsPurchaseDetail")
+	/*@MethodID("addItemsPurchaseDetail")
 	@LogOperate(operate = "新增物品采购申请明细")
 	public void addItemsPurchaseDetail_log_trans(ItemsPurchaseDetail itemsPurchaseDetail) {
 		String pk = UUID.randomUUID().toString();
@@ -46,10 +46,10 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		entityDAO.delete(entityDAO.findById(pk));
 		return return_tips;
 
-	}
+	}*/
 	
-	@MethodID("approvalApplyCount")
-	@LogOperate(operate = "审批物品申购数量")
+	//@MethodID("approvalApplyCount")
+	@LogOperate(operate = "更新物品审批的申购数量")
 	public void approveApplyCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList){
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());

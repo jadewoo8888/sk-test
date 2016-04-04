@@ -92,7 +92,7 @@ function getCategoryByPk(categoryPk) {
 	  		'findById', 
 	  		[categoryPk],
 	  		function(obj){
-	  			categoryName = obj.categoryName;alert(obj.categoryName)
+	  			categoryName = obj.categoryName;
 	  			$("#id_ipCategoryPK").val(categoryName);
 	  		},
 	  		function(data){

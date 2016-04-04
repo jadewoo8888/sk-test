@@ -43,8 +43,8 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	 * @param appendList
 	 */
 	@MethodID("addItemApply")
-	@LogOperate(operate = "新增物品申领")
-	public void addItemApply_log_trans(ItemsApplyManagement itemsApplyManagement, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList) {
+	@LogOperate(operate = "新增物品申领登记")
+	public String addItemApply_log_trans(ItemsApplyManagement itemsApplyManagement, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList) {
 		/** 第一步：新增物品申领 * */
 		//新增物品申领
 		String applyManagementPk = UUID.randomUUID().toString();
@@ -69,6 +69,8 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		
 		/** 第二步：处理附件信息 * */
 		appendBO.processAppend(appendList, applyManagementPk, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
+		
+		return "";
 	}
 	
 	/**
@@ -80,8 +82,8 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	 * @param appendList
 	 */
 	@MethodID("modifyItemApply")
-	@LogOperate(operate = "修改物品申领")
-	public void modifyItemApply_log_trans(String itemsApplyMPK, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList){
+	@LogOperate(operate = "修改物品申领登记")
+	public String modifyItemApply_log_trans(String itemsApplyMPK, String itemsApplyRemark, List<ItemsApplyMDetail> itemsApplyMdetailList, boolean ifReport,List<Append> appendList){
 		/** 第一步：修改物品申领 * */
 		//修改物品申领备注
 		ItemsApplyManagement itemsApplyManagement = entityDAO.findById(itemsApplyMPK);
@@ -99,12 +101,14 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		
 		//上报
 		if (ifReport) {
-			LogOperateManager.operate("上报物品申领");
+			LogOperateManager.operate("上报物品申领登记");
 			this.upreportItemsApply_log_trans(itemsApplyMPK);
 		}
 		
 		/** 第二步：处理附件信息 * */
 		appendBO.processAppend(appendList, itemsApplyMPK, AppendBusinessType.TYYWLX_024, itemsApplyManagement.getOrgCode());
+		
+		return "";
 	}
 	
 	/**
@@ -113,7 +117,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	 * @return
 	 */
 	@MethodID("deleteItemApply")
-	@LogOperate(operate = "删除一条物品申领")
+	@LogOperate(operate = "删除一条物品申领登记")
 	public String deleteItemApply_log_trans(String pk) {
 		/** 第一步：删除物品申领 * */
 		entityDAO.delete(entityDAO.findById(pk));

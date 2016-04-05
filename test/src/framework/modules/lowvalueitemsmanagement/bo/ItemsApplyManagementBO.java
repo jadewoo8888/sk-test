@@ -57,7 +57,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		
 		//保存申领明细列表
 		for (ItemsApplyMDetail itemsApplyMdetail : itemsApplyMdetailList) {
-			itemsApplyMdetail.setPk(UUID.randomUUID().toString());
+			//itemsApplyMdetail.setPk(UUID.randomUUID().toString());
 			itemsApplyMdetail.setItemsApplyMPK(applyManagementPk);
 			itemsApplyMDetailDAO.save(itemsApplyMdetail);
 		}
@@ -301,13 +301,13 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		this.itemsApplyMDetailBO = itemsApplyMDetailBO;
 	}
 
-	public static String getMenu_ItemsApplyMan_Check() {
+	/*public static String getMenu_ItemsApplyMan_Check() {
 		return Menu_ItemsApplyMan_Check;
 	}
 
 	public static void setMenu_ItemsApplyMan_Check(String menu_ItemsApplyMan_Check) {
 		Menu_ItemsApplyMan_Check = menu_ItemsApplyMan_Check;
-	}
+	}*/
 
 	public ApprovalBO getApprovalBO() {
 		return approvalBO;

@@ -50,7 +50,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 		entityDAO.save(itemsPurchase);
 		
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {//生成采购单明细，保存
-			itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
+			//itemsPurchaseDetail.setPk(UUID.randomUUID().toString());
 			itemsPurchaseDetail.setIpDItemsPurchasePK(itemsPurchasePk);
 			itemsPurchaseDetailDAO.save(itemsPurchaseDetail);
 			//ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();

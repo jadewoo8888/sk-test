@@ -21,7 +21,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 	private LVIStoreRecordDAO lviStoreRecordDAO;
 	
 	@MethodID("addLowValueItems")
-	@LogOperate(operate = "新增低值品")
+	@LogOperate(operate = "新增低值品入库")
 	public void addLowValueItems_log_trans(List<LowValueItems> lowValueItemsList, String orgCode, String deptCode) {
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
@@ -34,7 +34,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 					lowValueItemOld.setLviCount(lowValueItemOld.getLviCount() + newLowValueItems.getLviCount());
 					entityDAO.attachDirty(lowValueItemOld);
 				} else {
-					newLowValueItems.setPk(UUID.randomUUID().toString());
+					//newLowValueItems.setPk(UUID.randomUUID().toString());
 					entityDAO.save(newLowValueItems);
 				}
 				//单独登记一条入库记录
@@ -53,7 +53,7 @@ public class LowValueItemsBO extends BOBase<LowValueItemsDAO, LowValueItems> {
 				lviStoreRecord.setLviSRRemark("");
 				lviStoreRecord.setLviSRSpecification(newLowValueItems.getLviSpecification());
 				lviStoreRecord.setLviSRType(newLowValueItems.getLviType());
-				lviStoreRecord.setPk(UUID.randomUUID().toString());
+				//lviStoreRecord.setPk(UUID.randomUUID().toString());
 				
 				lviStoreRecordDAO.save(lviStoreRecord);
 			}

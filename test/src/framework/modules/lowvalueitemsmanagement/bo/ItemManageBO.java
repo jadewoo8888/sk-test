@@ -25,8 +25,8 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 			LogOperateManager.unlog();
 			return_tips = "物品名称已经存在，请重新输入";
 		} else {
-			String pk = UUID.randomUUID().toString();
-			itemManage.setPk(pk);
+			//String pk = UUID.randomUUID().toString();
+			//itemManage.setPk(pk);
 			entityDAO.save(itemManage);
 		}
 		return return_tips;

@@ -8,7 +8,7 @@
     <class name="framework.modules.lowvalueitemsmanagement.domain.LowValueItems" table="tLowValueItems">
         <id name="pk" type="java.lang.String">
             <column name="PK" length="50" />
-            <generator class="assigned" />
+            <generator class="uuid" />
         </id>
          <property name="lviCategoryPK" type="java.lang.String">
             <column name="LVICategoryPK" length="50" />

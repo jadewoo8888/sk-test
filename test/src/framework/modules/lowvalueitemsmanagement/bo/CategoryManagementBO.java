@@ -24,8 +24,8 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 			LogOperateManager.unlog();
 			return "类目名称已经存在，请重新输入";
 		}
-		String pk = UUID.randomUUID().toString();
-		categoryManagement.setPk(pk);
+		//String pk = UUID.randomUUID().toString();
+		//categoryManagement.setPk(pk);
 		entityDAO.save(categoryManagement);
 		
 		return "";

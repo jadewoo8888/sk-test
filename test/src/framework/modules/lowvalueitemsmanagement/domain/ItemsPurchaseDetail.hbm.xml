@@ -8,7 +8,7 @@
     <class name="framework.modules.lowvalueitemsmanagement.domain.ItemsPurchaseDetail" table="tItemsPurchaseDetail">
         <id name="pk" type="java.lang.String">
             <column name="PK" length="50" />
-            <generator class="assigned" />
+            <generator class="uuid" />
         </id>
          <property name="ipDItemsPurchasePK" type="java.lang.String">
             <column name="ipDItemsPurchasePK" length="50" />

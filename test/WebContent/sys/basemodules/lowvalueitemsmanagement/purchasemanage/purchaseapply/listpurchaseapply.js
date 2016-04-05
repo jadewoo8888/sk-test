@@ -201,7 +201,8 @@ function modifyPushStore(pk,categoryPk,categoryName){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_VIEW;
+	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_VIEW;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
 }
 
 //入库
@@ -209,7 +210,7 @@ function pushPurchaseStore(pk,ipCategoryPK){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/pushpurchasestore.jsp?pk='+pk+'&ipCategoryPK='+ipCategoryPK+'&business='+STR_VIEW;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/pushpurchasestore.jsp?pk='+pk+'&ipCategoryPK='+ipCategoryPK+'&business='+STR_REGISTER_MODIFY;
 }
 /**
  * 查看
@@ -227,7 +228,7 @@ function viewone(pk,categoryName){
 	   		top.layer.setTop(layero); 
 		},
 		//content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&categoryName='+categoryName
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&business='+STR_VIEW
 	});
 }
 

@@ -17,7 +17,7 @@ $(function () {
  */
 function getDetailDataInfo() {
 	if (strControlType == "MODIFY") {
-		appendObj = openWindow.appendDatagrid.getSelectedData()[0];
+		appendObj = openWindow.$('#'+areaID).data().getSelectedData();
 		fillData(appendObj);
 	}
 }
@@ -34,7 +34,7 @@ function fillData(appendObj) {
  * 取得打开当前窗口的窗口的对象
  **/
 function initOpenWindow() {  
-	openWindow = window.open("",  'listcommonupload');
+	openWindow = window.open("", openWindowName);
 }
 /**
  * 为页面上的组件添加事件处理方法
@@ -75,7 +75,7 @@ function save() {
 	} else {
 		$('#id_body_append').addLoading({msg: '正在保存，请稍后...'})
 		var appendRow = appendObjFactory();
-		openWindow.addAppendRow(appendRow);
+		openWindow.$('#'+areaID).data().callbackfunc(appendRow);
 		$('#id_body_append').removeLoading();
 		cancel();
 	}
@@ -94,7 +94,7 @@ function uploadSuccesFunc(data) {
 		if(strControlType == STR_REGISTER_ADDNEW) {
 			appendRow.orgCode = top.strFilterOrgCode;
 		}
-		openWindow.addAppendRow(appendRow);
+		openWindow.$('#'+areaID).data().callbackfunc(appendRow);
 		changeBtnDisabled(false);
 		$('#id_body_append').removeLoading();
 		cancel();

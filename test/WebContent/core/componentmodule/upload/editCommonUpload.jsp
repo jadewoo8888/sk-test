@@ -4,6 +4,9 @@
 	String strBusiType = request.getParameter("busitype");//业务类型
  	String strControlType = request.getParameter("controltype");//具体业务操作类型，与列表的strControlType不同，这里指的是列表新增，修改按钮对应的类型
 	String strBusinessCode = request.getParameter("businesscode");//业务pk
+	String openWindowName = request.getParameter("openwindowname");//打开选择附件页面的窗口名称
+	String areaID = request.getParameter("areaid");//父窗口中，附件区域的id
+
 %>
 <!doctype html>
 <html>
@@ -16,6 +19,8 @@
  		var strBusiType = "<%=strBusiType%>"; 
 		var strBusinessCode = "<%=strBusinessCode%>";
 		var strControlType = "<%=strControlType%>";
+		var openWindowName = "<%=openWindowName%>";
+		var areaID = "<%=areaID%>";
 		</script>
 		<style>
 </style>

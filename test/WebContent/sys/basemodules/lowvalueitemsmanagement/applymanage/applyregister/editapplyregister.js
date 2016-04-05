@@ -9,6 +9,7 @@ $(function () {
 	initDefaultValue();
 	initDataGrid();
 	initComBindFunc(); 
+	initAppend();
 	//setAppenFrame();
 });
 
@@ -322,17 +323,36 @@ function packageItemsApplyMDetailData() {
 /**
  * 设置附件
  **/
-function setAppenFrame() {    
+/*function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
 	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+itemsApplyMPK;
+}*/
+
+/**
+ * 设置附件
+ **/
+function initAppend() {
+	var opt = {controlType:business,businessCode:itemsApplyMPK,businessType:'TYYWLX_024'};
+	$('#id_div_appendarea').commonupload(opt);
 }
 
 /** 
  * 获取附件数据
  **/
-function getAppendData() {
+/*function getAppendData() {
 	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
 	var appendData = appendFrameObj.getAppendData();
+	return appendData;
+}*/
+
+/** 
+ * 获取附件数据
+ **/
+function getAppendData() {
+	var appendData = null;
+	if($('#id_div_appendarea').data()) {
+		appendData = $('#id_div_appendarea').data().getAppendData();
+	}
 	return appendData;
 }
 

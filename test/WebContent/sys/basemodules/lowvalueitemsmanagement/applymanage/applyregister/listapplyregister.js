@@ -198,7 +198,7 @@ function viewone(pk){
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk+'&business='+STR_VIEW
 	});
 }
 

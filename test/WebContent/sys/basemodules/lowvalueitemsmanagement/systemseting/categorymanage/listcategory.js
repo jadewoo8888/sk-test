@@ -21,12 +21,12 @@ function initDataGrid() {
 	 var _columns =  
 	 [[
 	 	{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
-			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.groupCode+"\")' >修改</a>";
+			var html = "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\")' >修改</a>";
 			html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
 			//html += "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
  			return html;
 		}}, 
-		{field:"pk",title:'主键',minwidth:200, hidden:true},
+		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"categoryName",title:'名称',minwidth:150},
 		{field:"groupCodeDisplay",title:'适用角色组',minwidth:160},
         {field:"categoryRemark",title:'备注',minwidth:160}
@@ -72,8 +72,8 @@ function addone() {
 }
 
 //修改
-function modifyone(pk,groupCode){
-		location.href='editcategroy.jsp?pk='+pk+'&business='+STR_REGISTER_MODIFY+'&groupCode='+groupCode;
+function modifyone(pk){
+		location.href='editcategroy.jsp?pk='+pk+'&business='+STR_REGISTER_MODIFY;
 
 }
 

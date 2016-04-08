@@ -9,7 +9,7 @@
 var business="${param.business}";
 var pk="${param.pk}";
 //角色编号 
-var groupCode="${param.groupCode}";
+var groupCode="";
 
 </script>
 <style type="text/css">

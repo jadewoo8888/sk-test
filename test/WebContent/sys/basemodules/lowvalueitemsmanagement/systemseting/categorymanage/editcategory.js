@@ -33,32 +33,40 @@ function initData() {
  **/
 function getCategoryByPk(pk) {
 	$("body").addLoading({msg:"正在获取信息，请稍后..."});
-	Ajax.service("CategoryManagementBO", "findByProperty", ['pk',pk], getCategoryByPkSuccFunc, getCategoryByPkFailureFunc);
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		//'findById', //此处办法ajax无法调用，故无奈才用findByProperty
+	  		//[pk],
+	  		"findByProperty", 
+	  		['pk',pk],
+	  		function(obj){
+	  		var data = obj[0];
+				//数据填充 
+	  			callUpdateData(data);
+	  		},
+	  		function(data){
+	  			//top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  			$("body").removeLoading();
+	  			top.layer.alert("\u83b7\u53d6\u5904\u7f6e\u5355\u57fa\u672c\u4fe1\u606f\u51fa\u73b0\u9519\u8bef\uff0c\u8bf7\u8054\u7cfb\u7ba1\u7406\u5458 ", {icon:5, closeBtn:2});
+	  		}
+	  	);
 }
 
-function getCategoryByPkSuccFunc(data) {
-	callUpdateData(data);
-	$("body").removeLoading();
-}
 
 /**
  * 选择回调方法
  **/
-function callUpdateData(rows) {
-	var row = rows[0];
-	oldcategoryName = row.categoryName;
+function callUpdateData(data) {
+	groupCode = data.groupCode;
+	oldcategoryName = data.categoryName;
 	$("#categoryName").val(oldcategoryName);
-	$("#categoryRemark").val(row.categoryRemark);
-	if (row.groupCode != null) {
-		$('#groupCode').combobox('setValues',row.groupCode.split(','));
+	$("#categoryRemark").val(data.categoryRemark);
+	if (data.groupCode != null) {
+		$('#groupCode').combobox('setValues',data.groupCode.split(','));
 	}
-	
+	$("body").removeLoading();
 }
 
-function getCategoryByPkFailureFunc() {
-	$("body").removeLoading();
-	top.layer.alert("\u83b7\u53d6\u5904\u7f6e\u5355\u57fa\u672c\u4fe1\u606f\u51fa\u73b0\u9519\u8bef\uff0c\u8bf7\u8054\u7cfb\u7ba1\u7406\u5458 ", {icon:5, closeBtn:2});
-}
 
 //数据封装 
 function dataPackage(business){
@@ -174,7 +182,7 @@ function initRoleCombo() {
 		textField:'groupName',
 		width:220,
 		multiple:true,
-		value: groupCode == 'null' ? "" : groupCode,
+		value: groupCode,
 		//height:26,
 		//panelHeight:100,
 		editable:false

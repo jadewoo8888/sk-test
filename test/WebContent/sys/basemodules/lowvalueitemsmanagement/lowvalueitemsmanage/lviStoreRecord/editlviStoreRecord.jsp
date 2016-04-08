@@ -4,6 +4,7 @@
 <html> 
 <head>
 <script type="text/javascript" src="editlviStoreRecord.js"></script> 
+<script src="${contextPath}/core/componentmodule/upload/jquery.commonupload.js" type="text/javascript"></script>
 <style>
 @charset "utf-8";
 textarea{resize:none;overflow:hidden;}
@@ -105,7 +106,7 @@ var pk="${param.pk}";
 			</div>
 		</div>
 		
-		<div title="附件" id="attached">
+		<!-- <div title="附件" id="attached">
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
@@ -118,7 +119,12 @@ var pk="${param.pk}";
 					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
 				</div>	
 			</div>	
-	    </div> 
+	    </div>  -->
+	    
+	    <div title="附件信息">
+		    <div id='id_div_appendarea' style="margin-top:8px;margin-left:30px;">
+		    </div>
+		</div>
 	     
 	</div>
 	<div style="background-color:white;height:100px;"></div>

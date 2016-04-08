@@ -7,6 +7,7 @@
 <link href="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.css" rel="stylesheet" type="text/css" />
 <script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
 <script src="${contextPath}/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/editapplyapprove.js" type="text/javascript"></script>
+<script src="${contextPath}/core/componentmodule/upload/jquery.commonupload.js" type="text/javascript"></script>
 <script> 
 //查询pk
 var pk="${param.pk}";
@@ -68,7 +69,7 @@ var business="${param.business}";
 			</div>
 		</div> 
 	     
-	      <div title="附件" id="attached">
+	     <!--  <div title="附件" id="attached">
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
@@ -81,7 +82,12 @@ var business="${param.business}";
 					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
 				</div>	
 			</div>	
-	    </div>  
+	    </div>  --> 
+	    
+	    <div title="附件信息">
+		    <div id='id_div_appendarea' style="margin-top:8px;margin-left:30px;">
+		    </div>
+		</div>
 	    
 	    <div title="审批意见" id="id_div_approvaloption">
 

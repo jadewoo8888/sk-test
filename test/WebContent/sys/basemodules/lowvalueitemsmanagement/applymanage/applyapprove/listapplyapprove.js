@@ -116,7 +116,8 @@ function initCategoryCombo() {
 
 //审批页面
 function approval(pk){
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/editapplyapprove.jsp?pk='+pk+'&business='+STR_CHECK;
+	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/editapplyapprove.jsp?pk='+pk+'&business='+STR_CHECK;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/editapplyapprove.jsp?pk='+pk+'&business='+STR_VIEW;
 }
 
 /**
@@ -135,7 +136,7 @@ function viewone(pk){
 	   		top.layer.setTop(layero); 
 		},
 		//content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyapprove/viewapplyapprove.jsp?pk='+pk
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk+'&business='+STR_VIEW
 	});
 }
 

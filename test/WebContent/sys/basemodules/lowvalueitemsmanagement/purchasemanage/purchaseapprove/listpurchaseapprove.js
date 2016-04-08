@@ -121,7 +121,8 @@ function initCategoryCombo() {
 
 //审批
 function approval(pk,categoryPk,categoryName){
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/editpurchaseapprove.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
+	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/editpurchaseapprove.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/editpurchaseapprove.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_VIEW;
 }
 
 /**
@@ -140,7 +141,7 @@ function viewone(pk,categoryName){
 	   		top.layer.setTop(layero); 
 		},
 		//content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/viewpurchaseapprove.jsp?pk='+pk+'&categoryName='+categoryName
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&business='+STR_VIEW
 	});
 }
 /**

@@ -15,6 +15,7 @@
 .EditPanel{padding-left:10px;}
 </style> 
 <script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
+<script src="${contextPath}/core/componentmodule/upload/jquery.commonupload.js" type="text/javascript"></script>
 <script> 
 //查询pk
 var itemsApplyMPK="${param.pk}";
@@ -27,7 +28,7 @@ var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 //加载完成执行 
 $(function(){
 	initComBindFunc();
-	setAppenFrame(); 		//加载附件页面
+	initAppend();//加载附件页面
 	getInfo();				//获取信息 
 	getItemsApplyManagementByPk(itemsApplyMPK);
 	//initDataGrid();
@@ -152,19 +153,23 @@ function dataFill(obj){
 	$("#id_itemsApplyDate").val(obj.itemsApplyDate);
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
 }
+
 /**
  * 设置附件
  **/
-function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+itemsApplyMPK;
+function initAppend() {
+	var opt = {controlType:business,businessCode:itemsApplyMPK,businessType:'TYYWLX_024'};
+	$('#id_div_appendarea').commonupload(opt);
 }
+
 /** 
  * 获取附件数据
  **/
 function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
+	var appendData = null;
+	if($('#id_div_appendarea').data()) {
+		appendData = $('#id_div_appendarea').data().getAppendData();
+	}
 	return appendData;
 }
 </script>
@@ -219,20 +224,10 @@ function getAppendData() {
 			</div>
 		</div> 
 	     
-	      <div title="附件" id="attached">
-			<div class="pd10">
-			   <div class="editItem">
-			   		<div class="editlogo"></div>
-	           		<div class="editTitle">申领附件</div>						           			
-					<hr  class="editline"/>
-	           	</div>
-	            <div   class="editTips"></div> 
-	
-				<div style="margin-top:8px;margin-left:30px;">
-					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
-				</div>	
-			</div>	
-	    </div>  
+	    <div title="附件信息">
+		    <div id='id_div_appendarea' style="margin-top:8px;margin-left:30px;">
+		    </div>
+		</div>
 	    
 	    <div title="审批意见" id="id_div_approvaloption">
 

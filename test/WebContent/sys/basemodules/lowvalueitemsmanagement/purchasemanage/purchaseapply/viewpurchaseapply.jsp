@@ -15,6 +15,7 @@
 .EditPanel{padding-left:10px;}
 </style> 
 <script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
+<script src="${contextPath}/core/componentmodule/upload/jquery.commonupload.js" type="text/javascript"></script>
 <script> 
 //查询pk
 var pk="${param.pk}";
@@ -27,7 +28,8 @@ var approvalBusiType = "SPYWLX_015";//物品采购审批路径
 //加载完成执行 
 $(function(){
 	initComBindFunc();
-	setAppenFrame(); 		//加载附件页面
+	//setAppenFrame(); 		//加载附件页面
+	initAppend(); 		//加载附件页面
 	getInfo();				//获取信息
 	getItemsPurchasByPk(pk);
 	//initDataGrid();
@@ -158,16 +160,27 @@ function dataFill(obj){
 /**
  * 设置附件
  **/
-function setAppenFrame() {    
+/* function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
 	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_026&controltype='+business+'&businesscode='+pk;
+} */
+
+/**
+ * 设置附件
+ **/
+function initAppend() {
+	var opt = {controlType:business,businessCode:pk,businessType:'TYYWLX_026'};
+	$('#id_div_appendarea').commonupload(opt);
 }
+
 /** 
  * 获取附件数据
  **/
 function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
+	var appendData = null;
+	if($('#id_div_appendarea').data()) {
+		appendData = $('#id_div_appendarea').data().getAppendData();
+	}
 	return appendData;
 }
 </script>
@@ -222,7 +235,7 @@ function getAppendData() {
 			</div>
 		</div> 
 	     
-	      <div title="附件" id="attached">
+	      <!-- <div title="附件" id="attached">
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
@@ -235,7 +248,12 @@ function getAppendData() {
 					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
 				</div>	
 			</div>	
-	    </div>  
+	    </div>   -->
+	    
+	     <div title="附件信息">
+		    <div id='id_div_appendarea' style="margin-top:8px;margin-left:30px;">
+		    </div>
+		</div>
 	    
 	    <div title="审批意见" id="id_div_approvaloption">
 

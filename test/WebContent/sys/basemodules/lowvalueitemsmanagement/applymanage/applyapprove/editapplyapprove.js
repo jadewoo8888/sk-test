@@ -4,7 +4,7 @@ var approvalModule;
 var approvalRole;//审批角色值 ，2：审核人，3：核准人
 //加载完成执行 
 $(function(){
-	setAppenFrame(); 		//加载附件页面
+	initAppend(); 		//加载附件页面
 	getInfo();				//获取信息 
 	//initDataGrid();
 	buttonBind();
@@ -242,15 +242,26 @@ function packageApprovalItemMDtail() {
 /**
  * 设置附件
  **/
-function setAppenFrame() {    
+/*function setAppenFrame() {    
 	var appendFrameObj = document.getElementById('id_iframe_append');
 	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+STR_VIEW+'&businesscode='+pk;
+}*/
+
+/**
+ * 设置附件
+ **/
+function initAppend() {
+	var opt = {controlType:business,businessCode:pk,businessType:'TYYWLX_024'};
+	$('#id_div_appendarea').commonupload(opt);
 }
+
 /** 
  * 获取附件数据
  **/
 function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
+	var appendData = null;
+	if($('#id_div_appendarea').data()) {
+		appendData = $('#id_div_appendarea').data().getAppendData();
+	}
 	return appendData;
 }

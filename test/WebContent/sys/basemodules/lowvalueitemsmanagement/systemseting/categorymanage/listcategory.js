@@ -68,12 +68,12 @@ function addone() {
 	/*if(!judgeOpeCollectOrg()) {
 		return;
 	}*/
- 	window.location.href = "editcategroy.jsp?busitype=add";
+ 	window.location.href = "editcategroy.jsp?business="+STR_REGISTER_ADDNEW;
 }
 
 //修改
 function modifyone(pk,groupCode){
-		location.href='editcategroy.jsp?pk='+pk+'&busitype=modify&groupCode='+groupCode;
+		location.href='editcategroy.jsp?pk='+pk+'&business='+STR_REGISTER_MODIFY+'&groupCode='+groupCode;
 
 }
 

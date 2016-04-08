@@ -9,7 +9,7 @@ $(function(){
 		});	
 	
 	//编辑事务读取数据 
-	if(busitype=="modify"){
+	if(business==STR_REGISTER_ADDNEW){
 		$("#businesstext").html("修改类目 ");
 	}
 });
@@ -61,7 +61,7 @@ function getCategoryByPkFailureFunc() {
 }
 
 //数据封装 
-function dataPackage(busitype){
+function dataPackage(business){
 	var categoryObj = new Object();
 	categoryObj.categoryName = $("#categoryName").val();
 	categoryObj.categoryRemark = $("#categoryRemark").val();
@@ -81,15 +81,15 @@ function dataPackage(busitype){
 
 //保存 
 function savedata(){
-	edit(busitype);
+	edit(business);
 }
 
 //新增修改 
-function edit(busitype){
+function edit(business){
 	// 验证通过则返回为true
 	if($("#ff").form("validate")){
-		var categoryObj = dataPackage(busitype);
-		if (busitype == 'add') {
+		var categoryObj = dataPackage(business);
+		if (business == STR_REGISTER_ADDNEW) {
 			submitAdd(categoryObj);
 		} else {
 			submitModify(categoryObj);

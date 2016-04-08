@@ -6,7 +6,7 @@
     <script type="text/javascript" src="editcategory.js"></script> 
 <script type="text/javascript">
 //事务 
-var busitype="${param.busitype}";
+var business="${param.business}";
 var pk="${param.pk}";
 //角色编号 
 var groupCode="${param.groupCode}";

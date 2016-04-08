@@ -1,6 +1,5 @@
 package framework.modules.lowvalueitemsmanagement.bo;
 
-import java.util.UUID;
 
 import framework.modules.lowvalueitemsmanagement.dao.ItemManageDAO;
 import framework.modules.lowvalueitemsmanagement.domain.ItemManage;
@@ -71,7 +70,8 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 			return "该物品已经入库，不能删除！";
 		}
 		
-		entityDAO.delete(entityDAO.findById(pk));
+		//entityDAO.delete(entityDAO.findById(pk));
+		entityDAO.executeSql("delete from tItemManage t where t.pk = ?",pk);
 		
 		return "";
 

@@ -86,7 +86,16 @@ function setCustomQueryCondition() {
 	categoryQc.oper = ARY_STR_EQUAL[0];
 	categoryQc.value1 = categoryPk;
 	customQCArr.push(categoryQc);
+	
+	//只查询低值品
+	var lvItemQc = new Object();
+	lvItemQc.fn = 'imType';
+	lvItemQc.oper = ARY_STR_EQUAL[0];
+	lvItemQc.value1 = 'WPLB_001';
+	customQCArr.push(lvItemQc);
+	
     return customQCArr;
+    
 }
 
 /**

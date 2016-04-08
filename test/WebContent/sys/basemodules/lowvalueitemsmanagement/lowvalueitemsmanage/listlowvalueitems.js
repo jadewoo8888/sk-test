@@ -149,11 +149,12 @@ function showCategoryListSuccFunc(result) {
 	var html = "";
 	var len = result.length;
 	for (var i = 0; i < len;i++) {
-		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddItemStorePage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
+		//html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddItemStorePage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
+		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddItemStorePage(\''+result[i].pk+'\');"/></div>';
 	}
 	//页面层
 	layer.open({
-		title:'请选择入库方式',
+		title:'请选择类目',
 	    type: 1,
 	    closeBtn :2,
 	   // skin: 'layui-layer-rim', //加上边框
@@ -161,11 +162,39 @@ function showCategoryListSuccFunc(result) {
 	    content: html
 	});
 };
-//入库
-function toAddItemStorePage(pk,categoryName) {
-	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&business='+STR_REGISTER_ADDNEW;
+
+/**
+ * 自行入库
+ * 类目中包含低值品才能入库
+ */
+function toAddItemStorePage(pk) {
+	Ajax.service(
+	  		'ItemManageBO',
+	  		'findByProperty', 
+	  		['imCategoryPK',pk],
+	  		function(rows){
+	  			var ifIncludeLVItem = false;//是否包含低值品
+	  			for (var i = 0; i < rows.length; i++) {
+	  				if (rows[i].imType == 'WPLB_001') {
+	  					ifIncludeLVItem = true;
+	  					break;
+	  				}
+	  			}
+	  			
+	  			if (ifIncludeLVItem) {
+	  				//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
+		  			location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&business='+STR_REGISTER_ADDNEW;
+	  			} else {
+	  				top.layer.alert('该类目中无低值品，请重新选择类目！', {icon: 5,closeBtn :2});
+	  			}
+	  		
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
 };
+
 //发放
 function toIssueitemPage() {
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/issuemange/listissueitem.jsp';

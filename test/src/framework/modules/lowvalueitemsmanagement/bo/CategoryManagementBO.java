@@ -89,7 +89,7 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	@MethodID("findCategoryByGroupCode")
 	public List<CategoryManagement> findCategoryByGroupCode(String groupCode) {
 		 //String strSql = "select * from tCategoryManagement where groupCode = ? or groupCode is null";
-		String strSql = "select * from tCategoryManagement where groupCode like ? or groupCode is null";
+		String strSql = "select * from tCategoryManagement where groupCode like ? or groupCode is null or groupCode=''";
 	     List<CategoryManagement> list = entityDAO.executeFind(CategoryManagement.class , strSql ,"%"+groupCode+"%");
 		return list;
 	}

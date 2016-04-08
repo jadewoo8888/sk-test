@@ -10,6 +10,7 @@ import framework.sys.basemodule.bo.BOBase;
 import framework.sys.context.applicationworker.MethodID;
 import framework.sys.log.LogOperate;
 import framework.sys.log.LogOperateManager;
+import framework.sys.tools.DBOperation;
 
 @LogOperate(menu = "低值易耗品类目管理")
 public class CategoryManagementBO extends BOBase<CategoryManagementDAO, CategoryManagement>{
@@ -30,6 +31,28 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 		
 		return "";
 	}
+	
+	/*@MethodID("modifyCategory")
+	@LogOperate(operate = "修改类目")
+	public String modifyCategory_log_trans(CategoryManagement categoryManagement){
+		CategoryManagement oldCategoryManagement = entityDAO.findById(categoryManagement.getPk());
+		if (!categoryManagement.getCategoryName().equals(oldCategoryManagement.getCategoryName())) {//如果修改了名字，就需要判断名字是否存在
+			boolean flag = entityDAO.executeFindExists("select 1 from tCategoryManagement where categoryName = ?", categoryManagement.getCategoryName());
+			if (flag) {
+				LogOperateManager.unlog();
+				return "类目名称已经存在，请重新输入";
+			}
+		} else {
+			//entityDAO.attachDirty(categoryManagement);//这里出错。故只能用另一种方式修改类目。
+			//错误信息：a different object with the same identifier value was already associated with the session。
+			String[] updateInfo = DBOperation.getUpdateInfo();
+			categoryManagement.setLastestUpdate(updateInfo[0]);
+			categoryManagement.setUpdatePerson(updateInfo[2]);
+			entityDAO.merge(categoryManagement);
+		}
+		
+		return "";
+	}*/
 	
 	@MethodID("modifyCategory")
 	@LogOperate(operate = "修改类目")

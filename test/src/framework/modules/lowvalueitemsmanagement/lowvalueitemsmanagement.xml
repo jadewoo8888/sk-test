@@ -15,9 +15,9 @@
 		<property name="entityDAO">
 			<ref bean="CategoryManagementDAO" />
 		</property>
-		<property name="itemManageDAO">
+		<!-- <property name="itemManageDAO">
 			<ref bean="ItemManageDAO" />
-		</property>
+		</property> -->
 	</bean>
 	
 	<bean id="ItemManageDAO"

@@ -1,7 +1,7 @@
 package framework.modules.lowvalueitemsmanagement.bo;
 
 import java.util.List;
-import java.util.UUID;
+//import java.util.UUID;
 
 import framework.modules.lowvalueitemsmanagement.dao.CategoryManagementDAO;
 import framework.modules.lowvalueitemsmanagement.dao.ItemManageDAO;
@@ -14,7 +14,7 @@ import framework.sys.log.LogOperateManager;
 @LogOperate(menu = "低值易耗品类目管理")
 public class CategoryManagementBO extends BOBase<CategoryManagementDAO, CategoryManagement>{
 
-	private ItemManageDAO itemManageDAO;
+	//private ItemManageDAO itemManageDAO;
 	
 	@MethodID("addCategory")
 	@LogOperate(operate = "新增类目")
@@ -49,12 +49,12 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 	@MethodID("deleteCategory")
 	@LogOperate(operate = "删除一条类目")
 	public String deleteCategory_log_trans(String pk) {
-		boolean isExistItem = itemManageDAO.executeFindExists("select 1 from titemManage where imCategoryPK=?", pk);
+		boolean isExistItem = entityDAO.executeFindExists("select 1 from tItemManage where imCategoryPK = ?", pk);
 		if (isExistItem) {
 			LogOperateManager.unlog();
 			return "类目在物品管理表中有记录时，不允许删除";
 		}
-		entityDAO.delete(entityDAO.findById(pk));
+		entityDAO.executeSql("delete from tCategoryManagement t where t.pk = ?",pk);
 		return "";
 	}
 	/**
@@ -71,12 +71,12 @@ public class CategoryManagementBO extends BOBase<CategoryManagementDAO, Category
 		return list;
 	}
 
-	public ItemManageDAO getItemManageDAO() {
+	/*public ItemManageDAO getItemManageDAO() {
 		return itemManageDAO;
 	}
 
 	public void setItemManageDAO(ItemManageDAO itemManageDAO) {
 		this.itemManageDAO = itemManageDAO;
-	}
+	}*/
 	
 }

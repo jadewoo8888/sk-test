@@ -19,7 +19,7 @@ var data_imType=${json:classify("STD_WPLB")};
 	<div id="id_div_basequery" class="shaixuan clearfloat">
 		<div class="clearfloat">
 			<input type="button" id="id_btn_addnew" class="bt_list_function"
-				value="+ 新增" /> <input type="button" id="id_btn_export"
+				value="+ 新建" /> <input type="button" id="id_btn_export"
 				class="bt_list_function" value="导出" />
 		</div>
 		<div class="clearfloat mtop10">

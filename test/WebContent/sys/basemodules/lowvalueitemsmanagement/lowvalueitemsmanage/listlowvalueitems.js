@@ -25,7 +25,7 @@ function initDataGrid() {
 		{field:"lviCount",title:'库存',minwidth:80},
 		{field:"imRemark",title:'备注',minwidth:150}
 	]];
-	 var dataGridOptions ={};
+	 var dataGridOptions ={checkbox:false};
 	 var customOptions = {tableID:'id_table_grid',classID:'LowValueItemsBO',columns:_columns,sortInfo:_sortInfo};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }

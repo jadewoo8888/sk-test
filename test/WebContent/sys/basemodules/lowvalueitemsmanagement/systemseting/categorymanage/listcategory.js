@@ -31,7 +31,7 @@ function initDataGrid() {
 		{field:"groupCodeDisplay",title:'适用角色组',minwidth:160},
         {field:"categoryRemark",title:'备注',minwidth:160}
 	]];
-	 var dataGridOptions ={};
+	 var dataGridOptions ={checkbox:false};
 	 var customOptions = {tableID:'id_table_grid',classID:'CategoryManagementBO',columns:_columns,sortInfo:_sortInfo};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }

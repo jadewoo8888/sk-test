@@ -33,7 +33,7 @@ function initDataGrid() {
 		{field:"lviSRDate",title:'入库日期',minwidth:80},
 		{field:"lviSRRemark",title:'备注',minwidth:150}
 	]];
-	 var dataGridOptions ={};
+	 var dataGridOptions ={checkbox:true};
 	 var customOptions = {tableID:'id_table_grid',classID:'LVIStoreRecordBO',columns:_columns,sortInfo:_sortInfo};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }

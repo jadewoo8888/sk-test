@@ -42,7 +42,7 @@ function initDataGrid() {
         {field:"itemsApplyRemark",title:'备注',minwidth:160}
 	]];
 	 
-	 var dataGridOptions ={checkbox:true};
+	 var dataGridOptions ={checkbox:false};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',methodID:'getListForPageItemStatus',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition,
 			 orgField:"orgCode",deptField:'itemsApplyDeptCode'};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);

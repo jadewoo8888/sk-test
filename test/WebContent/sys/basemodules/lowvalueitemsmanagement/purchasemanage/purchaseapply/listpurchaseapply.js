@@ -51,7 +51,7 @@ function initDataGrid() {
         {field:"ipRemark",title:'备注',minwidth:160}
 	]];
 	 
-	 var dataGridOptions ={checkbox:true};
+	 var dataGridOptions ={checkbox:false};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition,
 			 orgField:"ipOrgCode",deptField:'ipDeptCode'};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);

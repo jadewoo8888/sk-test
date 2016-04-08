@@ -45,7 +45,6 @@ function initDataGrid() {
 	]];
 	 
 	 var dataGridOptions ={checkbox:false};
-	 var dataGridOptions ={checkbox:true};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition,
 			 orgField:"ipOrgCode",deptField:'ipDeptCode'};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions); 

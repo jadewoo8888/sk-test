@@ -105,7 +105,7 @@ function selPushStoreWay() {
 	    type: 1,
 	    closeBtn :2,
 	    //skin: 'layui-layer-rim', //加上边框
-	    area: ['300px', '200px'], //宽高
+	    area: ['250px', '250px'], //宽高
 	    content: html
 	});
 	

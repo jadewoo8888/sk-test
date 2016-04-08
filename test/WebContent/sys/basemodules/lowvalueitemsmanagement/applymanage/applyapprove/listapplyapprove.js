@@ -71,7 +71,7 @@ function initComBindFunc() {
 function initDeptBox(){
 	//申领部门搜索  
 	$('#deptCode').searchbox({ 
-		prompt:'申领部门',
+		//prompt:'申领部门',
 		searcher:function(value,name){ 
 				//选择申领部门树
 		   		var treeValue = $('#deptCode').attr('treevalue');  

@@ -30,7 +30,7 @@ function initDataGrid() {
 		{field:"imMetricUnit",title:'计量单位',minwidth:200},
 		{field:"imRemark",title:'备注',minwidth:150}
 	]];
-	 var dataGridOptions ={};
+	 var dataGridOptions ={checkbox:false};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }

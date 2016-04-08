@@ -25,36 +25,16 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	private LVIStoreRecordDAO lviStoreRecordDAO;
 	private LowValueItemsDAO lowValueItemsDAO;
 	
-	/*@MethodID("addItemsPurchaseDetail")
-	@LogOperate(operate = "新增物品采购申请明细")
-	public void addItemsPurchaseDetail_log_trans(ItemsPurchaseDetail itemsPurchaseDetail) {
-		String pk = UUID.randomUUID().toString();
-		itemsPurchaseDetail.setPk(pk);
-		entityDAO.save(itemsPurchaseDetail);
-	}
-	
-	@MethodID("modifyItemsPurchaseDetail")
-	@LogOperate(operate = "修改物品采购申请明细")
-	public void modifyItemsPurchaseDetail_log_trans(ItemsPurchaseDetail itemsPurchaseDetail){
-		entityDAO.attachDirty(itemsPurchaseDetail);
-	}
-	
-	@MethodID("deleteItemsPurchaseDetail")
-	@LogOperate(operate = "删除一条物品采购申请明细")
-	public String deleteItemsPurchaseDetail_log_trans(String pk) {
-		String return_tips = "";
-		entityDAO.delete(entityDAO.findById(pk));
-		return return_tips;
-
-	}*/
 	
 	//@MethodID("approvalApplyCount")
 	@LogOperate(operate = "更新物品审批的申购数量")
 	public void approveApplyCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList){
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
-			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
+			String strSql = "update tItemsPurchaseDetail t set t.IPDApproveCount=? where t.pk=?";
+			entityDAO.executeSql(strSql, itemsPurchaseDetail.getIpDApproveCount(),itemsPurchaseDetail.getPk());
+			/*ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
 			dbItemsPurchaseDetail.setIpDApproveCount(itemsPurchaseDetail.getIpDApproveCount());
-			entityDAO.attachDirty(dbItemsPurchaseDetail);
+			entityDAO.attachDirty(dbItemsPurchaseDetail);*/
 		}
 	}
 	
@@ -65,9 +45,12 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		int ipPurchaseCountSum = 0;//采购数量合计值
 		
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
+			//查出原来的采购明细记录。1、更新采购数量。2、为采购数量合计值
 			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
+			
 			dbItemsPurchaseDetail.setIpDPurchaseCount(itemsPurchaseDetail.getIpDPurchaseCount());
 			entityDAO.attachDirty(dbItemsPurchaseDetail);
+			
 			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount() - dbItemsPurchaseDetail.getIpDPurchaseCount();//采购数量合计
 		}
 		//更新物品申请单的合计采购数量
@@ -114,7 +97,7 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		String ipItemsApplyPK = itemsPurchase.getIpItemsApplyPK();
 		if(ipItemsApplyPK != null && !ipItemsApplyPK.equals("") && itemsPurchase.getIpPurchaseCountSum() == itemsPurchase.getIpStoreCountSum()) {
 			String updateIAMSql = "update tItemsApplyManagement t set t.IAMCheckFlag='FSCCQWPFS_002' where t.pk=? ";//FSCCQWPFS_002待发放
-			entityDAO.executeSql(updateIAMSql, "");
+			entityDAO.executeSql(updateIAMSql, ipItemsApplyPK);
 		}
 	}
 	/**

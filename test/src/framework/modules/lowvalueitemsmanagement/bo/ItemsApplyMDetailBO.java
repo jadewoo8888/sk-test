@@ -31,29 +31,6 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	private LVIPopRecordDAO lviPopRecordDAO;
 	private ItemsApplyManagementDAO itemsApplyManagementDAO;
 
-	/*@MethodID("addItemsApplyMDetail")
-	@LogOperate(operate = "新增物品申领明细")
-	public void addItemsApplyMDetail_log_trans(ItemsApplyMDetail itemsApplyMDetail) {
-		String pk = UUID.randomUUID().toString();
-		itemsApplyMDetail.setPk(pk);
-		entityDAO.save(itemsApplyMDetail);
-	}
-
-	@MethodID("modifyItemsApplyMDetail")
-	@LogOperate(operate = "修改物品申领明细")
-	public void modifyItemsApplyMDetail_log_trans(ItemsApplyMDetail itemsApplyMDetail) {
-		entityDAO.attachDirty(itemsApplyMDetail);
-	}
-
-	@MethodID("deleteItemsApplyMDetail")
-	@LogOperate(operate = "删除一条物品申领明细")
-	public String deleteItemsApplyMDetail_log_trans(String pk) {
-		String return_tips = "";
-		entityDAO.delete(entityDAO.findById(pk));
-		return return_tips;
-
-	}*/
-
 	/**
 	 * 审批物品申领明细，设置审批数量
 	 * 
@@ -90,7 +67,12 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
 		}
 		if (rowList != null) {
-			/** 遍历申领明细，给每个申领明细库存赋值 **/
+			/** 遍历申领明细，给每个申领明细库存赋值 
+			 * 1、查找申领明细的物品
+			 * 2、判断物品是固定资产还是地址品，如果是固定资产，就根据物品的资产分类代码查找固定资产的总库存。如果是低值品，从低值品仓库管理中查询库存。
+			 * 3、给申领明细（注意：是申领明细，而不是物品）库存。
+			 * 
+			 * **/
 			for (ItemsApplyMDetail itemsApplyMDetail : rowList) {// 给库存赋值
 				ItemManage itemManage = entityDAO.executeFindEntity(ItemManage.class,
 						"select * from tItemManage where pk = ?", itemsApplyMDetail.getItemManagePK());
@@ -110,15 +92,8 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 
 						}
 						atStoreSqlBuf.append(")");
-						// System.out.println("imAssetType:"+imAssetType);
-						//System.out.println("OrgCode:" + itemsApplyMDetail.getOrgCode());
-						//System.out.println("atStoreSql:" + atStoreSqlBuf.toString());
 
-						BigDecimal storeCount = (BigDecimal) entityDAO.executeFindUnique(atStoreSqlBuf.toString(),
-								itemsApplyMDetail.getOrgCode());
-						// BigDecimal storeCount = (BigDecimal)
-						// entityDAO.executeFindUnique(atStoreSql,
-						// "001006001003","001502004001");
+						BigDecimal storeCount = (BigDecimal) entityDAO.executeFindUnique(atStoreSqlBuf.toString(),itemsApplyMDetail.getOrgCode());
 						itemsApplyMDetail.setItemStoreCount(storeCount == null ? 0 : Integer.parseInt(storeCount + ""));
 					} else {// 低值品：从低值品仓库管理中读取
 						LowValueItems lowValueItems = lowValueItemsDAO.executeFindEntity(LowValueItems.class,
@@ -150,8 +125,8 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	public void issueItems_log_trans(String itemsApplyMPK,String ApplyPersonName, String[] itemsApplyMDetailPkArr,String[] assetRegAssetNoArr) {
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
-		SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String now = sFormat.format(new Date());
+		//SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+		//String now = sFormat.format(new Date());
 		
 		ItemsApplyManagement itemsApplyManagement = itemsApplyManagementDAO.executeFindEntity(ItemsApplyManagement.class, "select * from tItemsApplyManagement where pk = ?", itemsApplyMPK);
 		
@@ -173,7 +148,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 				lviPopRecord.setLviPRApplyPerson(itemsApplyManagement.getApplyPerson());
 				lviPopRecord.setLviPRCategoryPK(itemsApplyManagement.getCategoryManagementPK());
 				lviPopRecord.setLviPRCount(itemsApplyMDetail.getIamLeaderCheckCount());
-				lviPopRecord.setLviPRDate(now);
+				lviPopRecord.setLviPRDate(updateInfo[0].substring(0, 10));
 				lviPopRecord.setLviPRItemManagePK(itemsApplyMDetail.getIamItemManagePK());
 				lviPopRecord.setLviPRMetricUnit(itemsApplyMDetail.getImMetricUnit());
 				lviPopRecord.setLviPRName(itemsApplyMDetail.getImName());
@@ -189,7 +164,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		//第三步：发放成功后，将申领单状态变更为“已发放”，更新发放人和发放日期
 		itemsApplyManagement.setIamCheckFlag("FSCCQWPFS_004");
 		itemsApplyManagement.setItemsIssueLister(updateInfo[2]);
-		itemsApplyManagement.setItemsIssueDate(now);
+		itemsApplyManagement.setItemsIssueDate(updateInfo[0].substring(0, 10));
 		itemsApplyManagementDAO.attachDirty(itemsApplyManagement);
 
 		//第四步：清除脏数据（清除申购数量为0的申购明细，目的是清除没用的数据。这些数据的存在是在新建和修改申购明细的时候，批量增加的。）

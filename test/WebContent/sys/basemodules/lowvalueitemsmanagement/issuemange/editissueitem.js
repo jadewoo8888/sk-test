@@ -149,7 +149,7 @@ function issueItems() {
 			 [itemsApplyMPK,top.strUserName,pkArr,assetRegAssetNoArr],
 			function(result) {
 				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_bt_issue").attr("disabled", false); // 按钮可点击
+				$("#id_bt_issue").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
@@ -165,20 +165,40 @@ function issueItems() {
 function issueButtonOper() {
 	//$("#id_bt_issue").attr("disabled", true); // 按钮可点击
 	
-	assetApplyItemAssetTypeArr.length = 0;//固定资产类物品的资产类别编码数组
-	assetApplyItemPkArr.length = 0;//固定资产类物品PK数组
-	assetRegAssetNoArr.length = 0;//被选择了的固定资产编码数组
-	assetRegAssetTypeQC = "";//固定资产查询条件
-	
-	var rowsData = packageItemsApplyMDetailData();
-	for (var i = 0; i < rowsData.length; i++) {
-		if (rowsData[i].imType == 'WPLB_002') {//如果是固定资产
-			assetApplyItemPkArr.push(rowsData[i].pk);//固定资产类物品PK数值
-			assetApplyItemAssetTypeArr.push(rowsData[i].imAssetType);//固定资产类物品的资产类别编码
+	$("#id_bt_issue").attr("disabled", true);
+	top.layer.open({
+		title:'物品发放',
+		icon: 3,
+		area:['300px','150px'],
+		btn:['确定', '取消'],
+		content:'你确定要发放物品吗？',
+		shift:1,
+		closeBtn :2,
+		yes: function(index){
+				$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层		
+				
+				assetApplyItemAssetTypeArr.length = 0;//固定资产类物品的资产类别编码数组
+				assetApplyItemPkArr.length = 0;//固定资产类物品PK数组
+				assetRegAssetNoArr.length = 0;//被选择了的固定资产编码数组
+				assetRegAssetTypeQC = "";//固定资产查询条件
+				
+				var rowsData = packageItemsApplyMDetailData();
+				for (var i = 0; i < rowsData.length; i++) {
+					if (rowsData[i].imType == 'WPLB_002') {//如果是固定资产
+						assetApplyItemPkArr.push(rowsData[i].pk);//固定资产类物品PK数值
+						assetApplyItemAssetTypeArr.push(rowsData[i].imAssetType);//固定资产类物品的资产类别编码
+					}
+				}
+				
+				showAssetSelPage();
+
+	    },
+	    cancel: function(index){
+			$("#id_bt_issue").attr("disabled", false);
 		}
-	}
+	});	
 	
-	showAssetSelPage();
+	
 }
 
 //显示固定资产发放选择页面，如果有多少个固定资产就弹出多少个选择页面
@@ -191,7 +211,8 @@ function showAssetSelPage() {
 	} else {//固定资产选择完成后，就调用后台，更新后台信息
 		issueItems();
 	}
-	
+	$('body').removeLoading();     // 关闭遮挡层
+	$("#id_bt_issue").attr("disabled", false); // 按钮可点击
 }
 /**
  * 根据资产分类值拼接资产查询条件（框架提供的函数名）

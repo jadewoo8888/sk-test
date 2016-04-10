@@ -94,17 +94,36 @@ function savedata(){
 
 //新增修改 
 function edit(business){
-	// 验证通过则返回为true
+	
 	if($("#ff").form("validate")){
-		var categoryObj = dataPackage(business);
-		if (business == STR_REGISTER_ADDNEW) {
-			submitAdd(categoryObj);
-		} else {
-			submitModify(categoryObj);
-		}
-	}else{
-		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
+		$("#submit").attr("disabled", true);
+		top.layer.open({
+			title:'保存类目',
+			icon: 3,
+			area:['260px','150px'],
+			btn:['确定', '取消'],
+			content:'你确定要保存类目吗？',
+			shift:1,
+			closeBtn :2,
+			yes: function(index){		    	 			    	 		
+					 $('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层	
+					 
+					 var categoryObj = dataPackage(business);
+						if (business == STR_REGISTER_ADDNEW) {
+							submitAdd(categoryObj);
+						} else {
+							submitModify(categoryObj);
+						}
+		    		 
+		    		 top.layer.close(index);												//一般设定yes回调，必须进行手工关闭
+
+		    },
+		    cancel: function(index){
+				$("#submit").attr("disabled", false);
+			}
+		});	
 	}
+	
 }
 
 //提交新增
@@ -116,7 +135,7 @@ function submitAdd(submitPackage){
  			function(data){					
 	    			if(data!="null"&&data.length>0){
 	    				top.layer.alert(data,{closeBtn :2,icon:5});
-	    				$("#save").attr("disabled", false);
+	    				$("#submit").attr("disabled", false);
 	    			}else{	    				
 	    				top.layer.alert("保存成功",{closeBtn :2,icon:6});
 	    				$('#return').click();          // 返回
@@ -124,7 +143,7 @@ function submitAdd(submitPackage){
 	    			$('body').removeLoading();     // 关闭遮挡层
 
  			},function(){
- 					$("#save").attr("disabled", false);
+ 					$("#submit").attr("disabled", false);
  					$('body').removeLoading();     // 关闭遮挡层
 
  					top.layer.alert('保存错误',{closeBtn :2,icon:5});
@@ -143,7 +162,8 @@ function submitModify(submitPackage){
 
 	    			if(data!="null"&&data.length>0){
 	    				top.layer.alert(data,{closeBtn :2,icon:5});
-	    				$("#save").attr("disabled", false);
+	    				$('body').removeLoading();     // 关闭遮挡层
+	    				$("#submit").attr("disabled", false);
 	    			}else{
 	    				top.layer.open({
 	    					title:'提示',
@@ -162,7 +182,7 @@ function submitModify(submitPackage){
 	    			}			    			
  			},
  			function(){
- 					$("#save").attr("disabled", false);
+ 					$("#submit").attr("disabled", false);
  					$('body').removeLoading();     // 关闭遮挡层
 
  					top.layer.alert('保存错误',{closeBtn :2,icon:5});

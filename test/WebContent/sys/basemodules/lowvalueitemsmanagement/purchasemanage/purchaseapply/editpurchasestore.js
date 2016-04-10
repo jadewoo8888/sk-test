@@ -140,23 +140,45 @@ function packageItemsPurchaseDetailData() {
  * 保存采购明细（入库前修改）
  */
 function save() {
-	var purchaseDetailList = packageItemsPurchaseDetailData();
 	
-	Ajax.service(
-			'ItemsPurchaseDetailBO',
-			'modifyPurchaseCount', 
-			 [purchaseDetailList,pk],
-			function(result){
-				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
-				if(result!=null&&result!=""){		
-					top.layer.alert(result,{icon: 5, closeBtn:2});
-				}else{
-					top.layer.alert('修改采购数量成功',{icon: 6, closeBtn:2});
-					history.go(-1);
-				}		
-			}
-		);
+	$("#id_btn_save").attr("disabled", true);
+	top.layer.open({
+		title:'保存入库前修改',
+		icon: 3,
+		area:['300px','150px'],
+		btn:['确定', '取消'],
+		content:'你确定要修改采购数量吗？',
+		shift:1,
+		closeBtn :2,
+		yes: function(index){
+				$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层		
+				
+				var purchaseDetailList = packageItemsPurchaseDetailData();
+				
+				Ajax.service(
+						'ItemsPurchaseDetailBO',
+						'modifyPurchaseCount', 
+						 [purchaseDetailList,pk],
+						function(result){
+							$('body').removeLoading();     // 关闭遮挡层
+							$("#id_btn_save").attr("disabled", false); // 按钮可点击
+							if(result!=null&&result!=""){		
+								top.layer.alert(result,{icon: 5, closeBtn:2});
+							}else{
+								top.layer.alert('修改采购数量成功',{icon: 6, closeBtn:2});
+								history.go(-1);
+							}		
+						}
+					);
+
+	    		top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+
+	    },
+	    cancel: function(index){
+			$("#id_btn_save").attr("disabled", false);
+		}
+	});	
+	
 }
 /**
  * 设置附件

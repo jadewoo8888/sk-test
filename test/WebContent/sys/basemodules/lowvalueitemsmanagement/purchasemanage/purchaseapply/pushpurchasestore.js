@@ -219,28 +219,50 @@ function storage(assetRegAssetType,purchaseDetailPK){
  * 批量入库
  */
 function batchPushStore() {
-	var row = datagrid.dataGridObj.datagrid('getRows');
-	var rowLen = row.length;
-    var itemsPurchaseDetaiPkArr = new Array();
-    for(var i=0;i<rowLen;i++) {
-    	itemsPurchaseDetaiPkArr.push(row[i].pk);
-    }
-    
-    Ajax.service(
-			'ItemsPurchaseDetailBO',
-			'batchPushStore', 
-			 [itemsPurchaseDetaiPkArr],
-			function(result){
-				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
-				if(result!=null&&result!=""){		
-					top.layer.alert(result,{icon: 5, closeBtn:2});
-				}else{
-					top.layer.alert('批量入库成功',{icon: 6, closeBtn:2});
-					history.go(-1);
-				}		
-			}
-		);
+	
+	$("#id_btn_storeing").attr("disabled", true);
+	top.layer.open({
+		title:'保存物品入库信息',
+		icon: 3,
+		area:['300px','150px'],
+		btn:['确定', '取消'],
+		content:'你确定要入库吗？',
+		shift:1,
+		closeBtn :2,
+		yes: function(index){
+				$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层		
+				
+				var row = datagrid.dataGridObj.datagrid('getRows');
+				var rowLen = row.length;
+			    var itemsPurchaseDetaiPkArr = new Array();
+			    for(var i=0;i<rowLen;i++) {
+			    	itemsPurchaseDetaiPkArr.push(row[i].pk);
+			    }
+			    
+			    Ajax.service(
+						'ItemsPurchaseDetailBO',
+						'batchPushStore', 
+						 [itemsPurchaseDetaiPkArr],
+						function(result){
+							$('body').removeLoading();     // 关闭遮挡层
+							$("#id_btn_storeing").attr("disabled", false); // 按钮可点击
+							if(result!=null&&result!=""){		
+								top.layer.alert(result,{icon: 5, closeBtn:2});
+							}else{
+								top.layer.alert('批量入库成功',{icon: 6, closeBtn:2});
+								history.go(-1);
+							}		
+						}
+					);
+				
+	    		top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+
+	    },
+	    cancel: function(index){
+			$("#id_btn_storeing").attr("disabled", false);
+		}
+	});	
+	
 }
 /**
  * 设置附件

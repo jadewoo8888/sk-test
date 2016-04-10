@@ -181,13 +181,44 @@ function initComBindFunc() {
  * @param ifReport 是否上报
  */
 function save(ifReport) {
-	var itemsApplyManagement = packageItemsApplyManData();
-	var itemsApplyMdetailList = packageItemsApplyMDetailData();
-	if (itemsApplyMPK) {
-		summitEdit(itemsApplyMdetailList,ifReport);
+	
+	var checkRows = $('#id_table_grid').datagrid('getChecked');
+	var checkRowsLen = checkRows.length;
+	if (checkRowsLen < 1) {
+		var msg = '请选择要申领的物品，并填写申领数量！';
+		if (itemsApplyMPK) {
+			msg = '请选择要修改物品！';
+		}
+		top.layer.alert(msg,{closeBtn :2,icon:7});
 	} else {
-		summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport);
+		$("#id_btn_save").attr("disabled", true);
+		top.layer.open({
+			title:'保存申领登记信息',
+			icon: 3,
+			area:['300px','150px'],
+			btn:['确定', '取消'],
+			content:'你确定要保存申领登记信息吗？',
+			shift:1,
+			closeBtn :2,
+			yes: function(index){
+					$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层		
+					
+					var itemsApplyManagement = packageItemsApplyManData();
+					var itemsApplyMdetailList = packageItemsApplyMDetailData();
+					if (itemsApplyMPK) {
+						summitEdit(itemsApplyMdetailList,ifReport);
+					} else {
+						summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport);
+					}
+		    		top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+
+		    },
+		    cancel: function(index){
+				$("#id_btn_save").attr("disabled", false);
+			}
+		});	
 	}
+	
 }
 
 /**
@@ -203,7 +234,7 @@ function summitAdd(itemsApplyManagement,itemsApplyMdetailList,ifReport) {
 			 [itemsApplyManagement,itemsApplyMdetailList,ifReport,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				$("#id_btn_save").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
@@ -227,7 +258,7 @@ function summitEdit(itemsApplyMdetailList,ifReport) {
 			 [itemsApplyMPK,itemsApplyRemark,itemsApplyMdetailList,ifReport,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				$("#id_btn_save").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
@@ -263,21 +294,12 @@ function packageItemsApplyMDetailData() {
 	
 	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
 	var checkRowsLen = checkRows.length;
-	if (checkRowsLen < 1) {
-		var msg = '请选择要申领的物品，并填写申领数量！';
-		if (itemsApplyMPK) {
-			msg = '请选择要修改物品！';
-		}
-		top.layer.alert(msg,{closeBtn :2,icon:7});
- 		return;
-	}
 	
     var rowsData = new Array();
     var allRows = datagrid.dataGridObj.datagrid('getRows');
 	var allRowsLen = allRows.length;
 	
     for(var i=0;i<allRowsLen;i++) {
-		
 		var isChecked = false;
 		 for (var j=0;j<checkRowsLen;j++) {
 			 if(checkRows[j].pk==allRows[i].pk){    //是否被选中
@@ -291,8 +313,6 @@ function packageItemsApplyMDetailData() {
 			 var itemsApplyMDetail = new Object();
 			 	//新增时，读取物品列表。修改时，读取的是物品申领管理明细表
 			 	if (itemsApplyMPK) {//如果是修改
-			 		//itemsApplyMDetail.itemManagePK = row[i].itemManagePK;
-			 		//itemsApplyMDetail.iamItemManagePK = row[i].iamItemManagePK;
 			 		itemsApplyMDetail.pk = allRows[i].pk;//物品申领管理明细表PK
 			 	} else {
 			 		itemsApplyMDetail.categoryManagementPK = categoryPk;
@@ -313,7 +333,6 @@ function packageItemsApplyMDetailData() {
 			 		return;
 			 	}
 			 	itemsApplyMDetail.iamApplyCount = appCount;
-			    //alert(allRows[i].imName+'==='+appCount)
 		   		rowsData.push(itemsApplyMDetail);
 		 }
 	}

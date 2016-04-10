@@ -264,13 +264,44 @@ function initComBindFunc() {
  * @param ifReport 是否上报
  */
 function save(ifReport) {
-	var itemsPurchase = packageItemsPurchaseData();
-	var itemsPurchaseMdetailList = packageItemsPurchaseDetailData();
-	if (pk) {
-		summitEdit(itemsPurchaseMdetailList,ifReport);
+	
+	var checkRows = $('#id_table_grid').datagrid('getChecked');
+	var checkRowsLen = checkRows.length;
+	if (checkRowsLen < 1) {
+		var msg = '请选择要采购的物品，并填写申购数量！';
+		if (pk) {
+			msg = '请选择要修改物品！';
+		}
+		top.layer.alert(msg,{closeBtn :2,icon:7});
 	} else {
-		summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport);
+		$("#id_btn_save").attr("disabled", true);
+		top.layer.open({
+			title:'保存采购申请信息',
+			icon: 3,
+			area:['300px','150px'],
+			btn:['确定', '取消'],
+			content:'你确定要保存采购申请信息吗？',
+			shift:1,
+			closeBtn :2,
+			yes: function(index){
+					$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层		
+					
+					var itemsPurchase = packageItemsPurchaseData();
+					var itemsPurchaseMdetailList = packageItemsPurchaseDetailData();
+					if (pk) {
+						summitEdit(itemsPurchaseMdetailList,ifReport);
+					} else {
+						summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport);
+					}
+		    		top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+
+		    },
+		    cancel: function(index){
+				$("#id_btn_save").attr("disabled", false);
+			}
+		});	
 	}
+	
 }
 
 /**
@@ -286,7 +317,7 @@ function summitAdd(itemsPurchase,itemsPurchaseMdetailList,ifReport) {
 			 [itemsPurchase,itemsPurchaseMdetailList,ifReport,ipItemsApplyMPK,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				$("#id_btn_save").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
@@ -311,7 +342,7 @@ function summitEdit(itemsPurchaseMdetailList,ifReport) {
 			 [pk,ipRemark,itemsPurchaseMdetailList,ifReport,ipItemsApplyMPK,getAppendData()],
 			function(result){
 				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				$("#id_btn_save").attr("disabled", false); // 按钮可点击
 				if(result!=null&&result!=""){		
 					top.layer.alert(result,{icon: 5, closeBtn:2});
 				}else{
@@ -380,14 +411,14 @@ function packageItemsPurchaseDetailData() {
 	
 	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
 	var checkRowsLen = checkRows.length;
-	if (checkRowsLen < 1) {
+	/*if (checkRowsLen < 1) {
 		var msg = '请选择要采购的物品，并填写申购数量！';
 		if (pk) {
 			msg = '请选择要修改物品！';
 		}
 		top.layer.alert(msg,{closeBtn :2,icon:7});
  		return;
-	}
+	}*/
 	
     var rowsData = new Array();
     var allRows = datagrid.dataGridObj.datagrid('getRows');

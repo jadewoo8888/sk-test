@@ -140,12 +140,30 @@ function getDataPackage(){
 
 //保存 
 function savedata(){
+	
 	if($("#EditPanel").form("validate")){
 		$("#save").attr("disabled", true);
-		edit();
-	}else{
-		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
+		top.layer.open({
+			title:'保存物品',
+			icon: 3,
+			area:['260px','150px'],
+			btn:['确定', '取消'],
+			content:'你确定要保存物品吗？',
+			shift:1,
+			closeBtn :2,
+			yes: function(index){		    	 			    	 		
+					 $('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层				    	
+					 edit();
+		    		 
+		    		 top.layer.close(index);												//一般设定yes回调，必须进行手工关闭
+
+		    },
+		    cancel: function(index){
+				$("#save").attr("disabled", false);
+			}
+		});	
 	}
+
 }
 
 //新增修改 

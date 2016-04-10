@@ -41,7 +41,7 @@ function getCategoryByPk(categoryPk) {
 
 function checkLviCount(value) {
 	if(value < 1) {
-		top.layer.alert('入库数量不能小于"1"',{closeBtn :2,icon:7});
+		top.layer.alert('入库数量不能小于1',{closeBtn :2,icon:7});
 	}
 }
 
@@ -122,23 +122,53 @@ function initComBindFunc() {
  * 入库
  */
 function save() {
-	var lowValueItemsList = packagelowValueItemsData();
 	
-	Ajax.service(
-			'LowValueItemsBO',
-			'addLowValueItems', 
-			 [lowValueItemsList,top.strFilterOrgCode,top.strUserDeptCode],
-			function(result){
-				$('body').removeLoading();     // 关闭遮挡层
-				//$("#id_btn_save").attr("disabled", false); // 按钮可点击
-				if(result!=null&&result!=""){		
-					top.layer.alert(result,{icon: 5, closeBtn:2});
-				}else{
-					top.layer.alert('入库成功 ',{icon: 6, closeBtn:2});
-					history.go(-1);
-				}		
+	var checkRows = $('#id_table_grid').datagrid('getChecked');
+	var checkRowsLen = checkRows.length;
+	if (checkRowsLen < 1) {
+		var msg = '请选择要入库的物品，并填写入库数量！';
+		top.layer.alert(msg,{closeBtn :2,icon:7});
+	} else {
+		$("#id_btn_save").attr("disabled", true);
+		top.layer.open({
+			title:'保存低值品入库数量',
+			icon: 3,
+			area:['300px','150px'],
+			btn:['确定', '取消'],
+			content:'你确定要保存低值品入库数量吗？',
+			shift:1,
+			closeBtn :2,
+			yes: function(index){
+					$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层		
+					
+					var lowValueItemsList = packagelowValueItemsData();
+					
+					Ajax.service(
+							'LowValueItemsBO',
+							'addLowValueItems', 
+							 [lowValueItemsList,top.strFilterOrgCode,top.strUserDeptCode],
+							function(result){
+								$('body').removeLoading();     // 关闭遮挡层
+								$("#id_btn_save").attr("disabled", false); // 按钮可点击
+								if(result!=null&&result!=""){		
+									top.layer.alert(result,{icon: 5, closeBtn:2});
+								}else{
+									top.layer.alert('入库成功 ',{icon: 6, closeBtn:2});
+									history.go(-1);
+								}		
+							}
+						);
+					
+		    		top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+
+		    },
+		    cancel: function(index){
+				$("#id_btn_save").attr("disabled", false);
 			}
-		);
+		});	
+	}
+	
+	
 }
 
 /**
@@ -176,11 +206,11 @@ function packagelowValueItemsData() {
 	
 	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
 	var checkRowsLen = checkRows.length;
-	if (checkRowsLen < 1) {
+	/*if (checkRowsLen < 1) {
 		var msg = '请选择要入库的物品，并填写入库数量！';
 		top.layer.alert(msg,{closeBtn :2,icon:7});
  		return;
-	}
+	}*/
 	
     var rowsData = new Array();
     var allRows = datagrid.dataGridObj.datagrid('getRows');

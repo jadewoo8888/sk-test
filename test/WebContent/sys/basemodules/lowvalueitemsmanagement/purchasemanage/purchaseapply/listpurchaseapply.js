@@ -34,7 +34,7 @@ function initDataGrid() {
 				html += "<a href='javascript:void(0);' onclick='reportone(\""+row.pk+"\")' >上报</a>  ";
 			}
 			if (row.ipApprovalFlag == 'WPSLZT_004' && (row.ipPurchaseCountSum == 0 || row.ipStoreCountSum  < row.ipPurchaseCountSum)) {
-				html += "<a href='javascript:void(0);' onclick='modifyPushStore(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >入库前修改</a>";
+				html += "<a href='javascript:void(0);' onclick='modifyPushStore(\""+row.pk+"\",\""+row.ipCategoryPK+"\")' >入库前修改</a>";
 				html += "<a href='javascript:void(0);' onclick='pushPurchaseStore(\""+row.pk+"\",\""+row.ipCategoryPK+"\")' >入库</a>";
 			}
  			return html;
@@ -197,12 +197,13 @@ function modifyone(pk,categoryPk,categoryName){
 }
 
 //入库前修改
-function modifyPushStore(pk,categoryPk,categoryName){
+function modifyPushStore(pk,categoryPk){
 	if(!judgeOpeCollectOrg()) {
 		return;
 	}
 	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_VIEW;
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
+	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchasestore.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business='+STR_REGISTER_MODIFY;
 }
 
 //入库

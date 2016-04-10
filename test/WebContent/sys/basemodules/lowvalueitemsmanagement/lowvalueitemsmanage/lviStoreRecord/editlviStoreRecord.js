@@ -114,33 +114,51 @@ function getDataPackage(){
 
 //保存 
 function savedata(){
-	// 验证通过则返回为true
-	if($("#ff").form("validate")){
-		var storeRecordObj = getDataPackage();
-		 Ajax.service(
-		 			'LVIStoreRecordBO',
-		 			'modifyStoreRecord', 
-		 			[storeRecordObj],
-		 			function(data){					
-			    			if(data!="null"&&data.length>0){
-			    				top.layer.alert(data,{closeBtn :2,icon:5});
-			    				$("#save").attr("disabled", false);
-			    			}else{	    				
-			    				top.layer.alert("保存成功",{closeBtn :2,icon:6});
-			    				$('#return').click();          // 返回
-			    			}	
-			    			$('body').removeLoading();     // 关闭遮挡层
+	
+	if($("#EditPanel").form("validate")){
+		$("#save").attr("disabled", true);
+		top.layer.open({
+			title:'保存低值品入库记录',
+			icon: 3,
+			area:['320px','150px'],
+			btn:['确定', '取消'],
+			content:'你确定要保存低值品入库记录吗？',
+			shift:1,
+			closeBtn :2,
+			yes: function(index){		    	 			    	 		
+					 $('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层				    	
+					 var storeRecordObj = getDataPackage();
+					 Ajax.service(
+					 			'LVIStoreRecordBO',
+					 			'modifyStoreRecord', 
+					 			[storeRecordObj],
+					 			function(data){					
+						    			if(data!="null"&&data.length>0){
+						    				top.layer.alert(data,{closeBtn :2,icon:5});
+						    				$("#save").attr("disabled", false);
+						    			}else{	    				
+						    				top.layer.alert("保存成功",{closeBtn :2,icon:6});
+						    				$('#return').click();          // 返回
+						    			}	
+						    			$('body').removeLoading();     // 关闭遮挡层
 
-		 			},function(){
-		 					$("#save").attr("disabled", false);
-		 					$('body').removeLoading();     // 关闭遮挡层
+					 			},function(){
+					 					$("#save").attr("disabled", false);
+					 					$('body').removeLoading();     // 关闭遮挡层
 
-		 					top.layer.alert('保存错误',{closeBtn :2,icon:5});
-		 			}
-		 	  );
-	}else{
-		 top.layer.alert('请填写完整内容',{icon:7,closeBtn :2}); 
+					 					top.layer.alert('保存错误',{closeBtn :2,icon:5});
+					 			}
+					 	  );
+		    		 
+		    		 top.layer.close(index);												//一般设定yes回调，必须进行手工关闭
+
+		    },
+		    cancel: function(index){
+				$("#save").attr("disabled", false);
+			}
+		});	
 	}
+	
 }
 
 /**

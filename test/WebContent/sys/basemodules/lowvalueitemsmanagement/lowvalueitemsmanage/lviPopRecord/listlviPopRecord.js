@@ -39,7 +39,8 @@ function initDataGrid() {
  **/
 function initComBindFunc() {
 	$("#id_btn_return").click(function () {
-		location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/listlowvalueitems.jsp';
+		//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/listlowvalueitems.jsp';
+		history.go(-1);
 	});
 	//列选功能 
    	$("#id_btn_selecteColumns").click(function(){

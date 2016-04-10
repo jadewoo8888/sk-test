@@ -101,7 +101,7 @@ function batchDelete() {
 	}
 	$("#id_btn_delete").attr("disabled", true);                                                             //按钮不可点击
 	
-	//物业删除提交
+	//删除提交
 	top.layer.open({
 		title:'提示 ',
 		icon: 3,
@@ -128,6 +128,7 @@ function batchDelete() {
 							
 							if(result!=null&&result!=""){		
 								top.layer.alert(result,{icon: 5, closeBtn:2});
+								datagrid.query();
 							}else{
 								top.layer.alert('删除成功 ',{icon: 6, closeBtn:2});
 						    	//刷新
@@ -168,8 +169,8 @@ function deleteone(pk) {
 function deleteService(pk) {
 	Ajax.service(
 		'LVIStoreRecordBO',
-		'deleteStoreRecord', 
-		[pk],
+		'deleteStoreRecordList', 
+		[[pk]],
 		deleteServiceSuccFunc,
 		serviceFailureFunc
 	);
@@ -181,6 +182,7 @@ function deleteService(pk) {
 function deleteServiceSuccFunc(result) {
 	if(result!="null"&&result.length>0){
 		top.layer.alert(result,{icon: 5, closeBtn:2});
+		datagrid.query();
 	}else{	    				
 		top.layer.alert('删除成功 ',{icon:6,closeBtn :2});
 		datagrid.query();

@@ -1,6 +1,5 @@
 //列表表格对象
 var datagrid = null;
-//var mainObj = new Object();
 var approvalBusiType = "SPYWLX_015";
 /**
  * 初始化方法
@@ -9,7 +8,6 @@ $(function () {
 	initDefaultValue();
 	initDataGrid();
 	initComBindFunc(); 
-	//setAppenFrame();
 	initAppend();
 });
 
@@ -62,8 +60,6 @@ function getItemsPurchaseByPk(pk) {
 	  		 	mainObj = obj;
 				//数据填充 
 	      	 	dataFill(obj);
-	      	 	//审批数据初始化
-	      	 	//setApprovalOption(obj);
 	  		},
 	  		function(data){
 	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
@@ -247,13 +243,6 @@ function initComBindFunc() {
 	$("#id_btn_report").click(function () {
 		save(true);
 	});
-	//查询按钮处理事件
-	/*$("#id_btn_query").click(function () {
-		datagrid.query();
-	});
-	$("#id_btn_export").click(function () {
-		datagrid.showExport();
-	});*/ 
 	$("#id_bt_return").click(function(){
 		history.go(-1);
 		});
@@ -369,41 +358,6 @@ function packageItemsPurchaseData() {
 }
 
 /**
- * 打包采购明细
- * @returns {Array}
- */
-/*function packageItemsPurchaseDetailData() {
-	
-	var row = datagrid.dataGridObj.datagrid('getRows');
-	var rowLen = row.length;
-    var rowsData = new Array();
-    for(var i=0;i<rowLen;i++) {
-		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
-	 	
-	 	var itemsPurchaseDetail = new Object();
-	 	
-	 	if (pk) {//修改
-	 		itemsPurchaseDetail.ipDType= row[i].ipDType;
-		 	itemsPurchaseDetail.ipDName = row[i].ipDName;
-		 	itemsPurchaseDetail.ipDSpecification= row[i].ipDSpecification;
-		 	itemsPurchaseDetail.ipDMetricUnit= row[i].ipDMetricUnit;
-	 		itemsPurchaseDetail.pk = row[i].pk;
-	 	} else {//新增或者通过发放采购
-	 		itemsPurchaseDetail.ipDName = row[i].imName;
-		 	itemsPurchaseDetail.ipDType = row[i].imType;
-		 	itemsPurchaseDetail.ipDSpecification= row[i].imSpecification;
-		 	itemsPurchaseDetail.ipDMetricUnit= row[i].imMetricUnit;
-		 	itemsPurchaseDetail.ipDItemManagePK = row[i].pk;
-	 	}
-	 	
-	 	itemsPurchaseDetail.ipDApplyCount = editors[0].target.numberbox('getValue');
-	 	
-   		rowsData.push(itemsPurchaseDetail);
-	}
-	return rowsData;
-}*/
-
-/**
  * 
  * 打包采购明细
  */
@@ -411,14 +365,6 @@ function packageItemsPurchaseDetailData() {
 	
 	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
 	var checkRowsLen = checkRows.length;
-	/*if (checkRowsLen < 1) {
-		var msg = '请选择要采购的物品，并填写申购数量！';
-		if (pk) {
-			msg = '请选择要修改物品！';
-		}
-		top.layer.alert(msg,{closeBtn :2,icon:7});
- 		return;
-	}*/
 	
     var rowsData = new Array();
     var allRows = datagrid.dataGridObj.datagrid('getRows');
@@ -463,27 +409,10 @@ function packageItemsPurchaseDetailData() {
 /**
  * 设置附件
  **/
-/*function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_026&controltype='+business+'&businesscode='+pk;
-}*/
-
-/**
- * 设置附件
- **/
 function initAppend() {
 	var opt = {controlType:business,businessCode:pk,businessType:'TYYWLX_026'};
 	$('#id_div_appendarea').commonupload(opt);
 }
-
-/** 
- * 获取附件数据
- **/
-/*function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
-	return appendData;
-}*/
 
 /** 
  * 获取附件数据

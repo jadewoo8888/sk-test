@@ -7,7 +7,6 @@ $(function(){
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
 	isIncludeAssetFn();
-	//initDataGrid();
 	initComBindFunc();
 	getCategoryByPk(ipCategoryPK);
 });
@@ -113,7 +112,6 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	//$("#id_ipCategoryPK").val(categoryName);
 	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);

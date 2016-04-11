@@ -28,11 +28,9 @@ var approvalBusiType = "SPYWLX_015";//物品采购审批路径
 //加载完成执行 
 $(function(){
 	initComBindFunc();
-	//setAppenFrame(); 		//加载附件页面
 	initAppend(); 		//加载附件页面
 	getInfo();				//获取信息
 	getItemsPurchasByPk(pk);
-	//initDataGrid();
 });
 function initComBindFunc() {
 	$("#id_btn_return").click(function () {
@@ -73,7 +71,6 @@ function getItemsPurchasByPk(ipDItemsPurchasePK) {
 	  			if (obj.linkers != null && obj.linkers != 'null') {
 	  				var linkers = obj.linkers;
 		  			approveStep =(linkers.split('|')).length - 1;
-		  			//alert(approveStep)
 	  			}
 	  			getCategoryByPk(obj.ipCategoryPK);
 	  			initDataGrid();
@@ -151,19 +148,11 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	//$("#id_ipCategoryPK").val(categoryName);
 	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);
 	$("#id_ipRemark").val(obj.ipRemark);
 }
-/**
- * 设置附件
- **/
-/* function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_026&controltype='+business+'&businesscode='+pk;
-} */
 
 /**
  * 设置附件

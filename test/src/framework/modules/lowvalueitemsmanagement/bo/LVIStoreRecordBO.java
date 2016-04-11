@@ -28,49 +28,6 @@ public class LVIStoreRecordBO  extends BOBase<LVIStoreRecordDAO, LVIStoreRecord>
 	private ItemsPurchaseDetailDAO itemsPurchaseDetailDAO; 
 	private ItemsPurchaseDAO itemsPurchaseDAO; 
 	
-	/*@MethodID("deleteStoreRecord")
-	@LogOperate(operate = "删除一条入库记录")
-	public String deleteStoreRecord_log_trans(String pk){
-		String cannotDelRecords = "";//不能删除的入库记录
-		
-		LVIStoreRecord lviStoreRecord = entityDAO.findById(pk);
-		
-		//在执行删除操作前，如果发现删除后会导致库存变成负数，则提醒用户并不予删除
-		String strSql = "SELECT * FROM tLowValueItems WHERE LVIItemManagePK = ?";
-		LowValueItems dbLowValueItem = entityDAO.executeFindEntity(LowValueItems.class, strSql, lviStoreRecord.getLviSRItemManagePK());
-		
-		int count = dbLowValueItem.getLviCount() - lviStoreRecord.getLviSRCount();
-		if (count < 0) {
-			//LogOperateManager.unlog();
-			cannotDelRecords += "["+dbLowValueItem.getLviName()+"]";
-			return cannotDelRecords+"不能删除（因为删除后的库存不能为负数）";
-		} else {
-			entityDAO.delete(lviStoreRecord);
-			
-			dbLowValueItem.setLviCount(count);
-			lowValueItemsDAO.attachDirty(dbLowValueItem);
-			//如该记录是通过采购功能入库的，删除时要更新采购单中对应的物品的已入库数量
-			if (lviStoreRecord.getLviSRPurchasePK() != null && !lviStoreRecord.getLviSRPurchasePK().equals("")) {//是否是采购入库
-				//更新申购单的入库数量合计（数量减少）
-				String strSql1 = "select * from tItemsPurchase where PK = ?";
-				ItemsPurchase itemsPurchase = entityDAO.executeFindEntity(ItemsPurchase.class, strSql1, lviStoreRecord.getLviSRPurchasePK());
-				if (itemsPurchase != null) {
-					itemsPurchase.setIpStoreCountSum(itemsPurchase.getIpStoreCountSum() - lviStoreRecord.getLviSRCount());
-					itemsPurchaseDAO.attachDirty(itemsPurchase);
-				}
-				
-				//更新申购单明细的已入库数量（数量减少）
-				String strSql2 = "select * from tItemsPurchaseDetail where IPDItemsPurchasePK = ? and IPDItemManagePK = ?";
-				ItemsPurchaseDetail itemsPurchaseDetail = entityDAO.executeFindEntity(ItemsPurchaseDetail.class, strSql2, lviStoreRecord.getLviSRPurchasePK(),lviStoreRecord.getLviSRItemManagePK());
-				if (itemsPurchaseDetail != null) {
-					itemsPurchaseDetail.setIpDStoreCount(itemsPurchaseDetail.getIpDStoreCount() - lviStoreRecord.getLviSRCount());
-					itemsPurchaseDetailDAO.attachDirty(itemsPurchaseDetail);
-				}
-				
-			}
-		}
-		return "";
-	}*/
 	
 	@MethodID("deleteStoreRecordList")
 	@LogOperate(operate = "删除入库记录")
@@ -80,7 +37,6 @@ public class LVIStoreRecordBO  extends BOBase<LVIStoreRecordDAO, LVIStoreRecord>
 		//String strSqlStoreRecord = "SELECT * FROM tLVIStoreRecord WHERE pk in ( ? )";
 		String strSqlStoreRecord = "SELECT * FROM tLVIStoreRecord WHERE pk in ( "+pksInSql+" ) and 1=?";
 		List<LVIStoreRecord> lviStoreRecordList = entityDAO.executeFindEntitys(LVIStoreRecord.class, strSqlStoreRecord, "1");
-		//List<LVIStoreRecord> lviStoreRecordList = entityDAO.executeFind(strSqlStoreRecord, pksInSql);
 		for (LVIStoreRecord lviStoreRecord : lviStoreRecordList) {
 			//在执行删除操作前，如果发现删除后会导致库存变成负数，则提醒用户并不予删除
 			String strSql = "SELECT * FROM tLowValueItems WHERE LVIItemManagePK = ?";
@@ -88,7 +44,6 @@ public class LVIStoreRecordBO  extends BOBase<LVIStoreRecordDAO, LVIStoreRecord>
 			
 			int count = dbLowValueItem.getLviCount() - lviStoreRecord.getLviSRCount();
 			if (count < 0) {
-				//cannotDelRecords.append("【"+dbLowValueItem.getLviName()+"】");
 				cannotDelRecords.add(dbLowValueItem.getLviName());
 			} else {
 				entityDAO.delete(lviStoreRecord);
@@ -121,21 +76,6 @@ public class LVIStoreRecordBO  extends BOBase<LVIStoreRecordDAO, LVIStoreRecord>
 		}
 		return "";
 	}
-	
-	/*@MethodID("deleteStoreRecordList")
-	@LogOperate(operate = "批量删除入库记录")
-	public String deleteStoreRecordList_log_trans(String[] pks){
-		
-		
-		for (String pk : pks) {
-			String msg = this.deleteStoreRecord_log_trans(pk);
-			if (!msg.equals("")) {
-				LogOperateManager.unlog();
-				return "部分记录无法删除!";
-			}
-		}
-		return "";
-	}*/
 	
 	@MethodID("modifyStoreRecord")
 	@LogOperate(operate = "修改入库记录")

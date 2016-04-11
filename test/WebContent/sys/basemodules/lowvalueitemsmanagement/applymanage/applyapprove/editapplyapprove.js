@@ -239,13 +239,6 @@ function packageApprovalItemMDtail() {
 	}
     return rowsData;
 }
-/**
- * 设置附件
- **/
-/*function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+STR_VIEW+'&businesscode='+pk;
-}*/
 
 /**
  * 设置附件

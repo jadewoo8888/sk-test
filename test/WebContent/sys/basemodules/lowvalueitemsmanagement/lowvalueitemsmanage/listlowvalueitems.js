@@ -149,7 +149,6 @@ function showCategoryListSuccFunc(result) {
 	var html = "";
 	var len = result.length;
 	for (var i = 0; i < len;i++) {
-		//html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddItemStorePage(\''+result[i].pk+'\',\''+result[i].categoryName+'\');"/></div>';
 		html += '<div style="padding: 5px;text-align: center;"><input type="button" id="category'+i+'" class="bt_list_function" value="'+result[i].categoryName+'" onclick="toAddItemStorePage(\''+result[i].pk+'\');"/></div>';
 	}
 	//页面层
@@ -157,7 +156,6 @@ function showCategoryListSuccFunc(result) {
 		title:'请选择类目',
 	    type: 1,
 	    closeBtn :2,
-	   // skin: 'layui-layer-rim', //加上边框
 	    area: ['250px', '250px'], //宽高
 	    content: html
 	});
@@ -182,7 +180,6 @@ function toAddItemStorePage(pk) {
 	  			}
 	  			
 	  			if (ifIncludeLVItem) {
-	  				//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 		  			location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/lowvalueitemsmanage/pushlowvalueitems.jsp?categoryPk='+pk+'&business='+STR_REGISTER_ADDNEW;
 	  			} else {
 	  				top.layer.alert('该类目中无低值品，请重新选择类目！', {icon: 5,closeBtn :2});
@@ -235,19 +232,3 @@ function ajaxCategory(){
 		}
 	);
 }
-//
-/*function getImType() {
-	var checkedQc = new Object();
-	checkedQc.fn = '';
-	checkedQc.oper = 14;
-	var contratStatusDisplay=$('#imType').combobox('getValue');
-	
-	if (contratStatusDisplay== '2'){
-		checkedQc.value1 = "(IMType = 'WPLB_001')";
-	}else if(contratStatusDisplay== '3'){
-		checkedQc.value1 = "(IMType = 'WPLB_002')";
-	}else{
-		checkedQc.value1 = "(1=1)";
-	}
-    return checkedQc;
-}*/

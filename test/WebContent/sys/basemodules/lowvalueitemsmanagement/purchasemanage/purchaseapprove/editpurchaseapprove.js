@@ -1,7 +1,5 @@
 var mainObj = new Object();
 var approvalBusiType = "SPYWLX_015";//物品申领审批路径
-//var approvalModule;
-//var approvalRole;
 //加载完成执行 
 $(function(){
 	initAppend(); 		//加载附件页面
@@ -92,9 +90,6 @@ function dataFill(obj){
 	$("#id_ipRemark").val(obj.ipRemark);
 }
 
-/*function getApprovalRoleFn() {
-	approvalRole = approvalModule.curNodeInfo.node.approvalRole;
-}*/
 //审批数据初始化
 function setApprovalOption() {
 	var apprvalOption = {
@@ -194,21 +189,6 @@ function packageApprovalPurchaseDetail() {
 	}
     return rowsData;
 }
-/**
- * 设置附件
- **/
-/*function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_026&controltype='+STR_VIEW+'&businesscode='+pk;
-}
-*//** 
- * 获取附件数据
- **//*
-function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
-	return appendData;
-}*/
 
 /**
  * 设置附件

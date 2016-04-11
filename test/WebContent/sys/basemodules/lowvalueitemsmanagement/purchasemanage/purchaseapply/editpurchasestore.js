@@ -89,18 +89,6 @@ function getInfo(){
 			function(obj){
 				dataFill(obj);	
 				
-				//初始化审批信息
-				/*var apprvalOption = {
-					funcType:"DrawApprovalBar", 
-					approvalBarDivID:"id_div_approvaloption", 
-					isReadonly:true, 
-					busiDeptCode:obj.ipDeptCode, 
-					busiType:approvalBusiType, 
-					busiPK:obj.pk, 
-					busiOrgCode:obj.ipOrgCode, 
-					menuId:"MENU_10_03_01"
-				};
-				var am = new ApprovalModule(apprvalOption);*/
 			},function(){
 				top.layer.alert('数据异常 ',{closeBtn :2,icon:5});
 			}
@@ -108,7 +96,6 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	//$("#id_ipCategoryPK").val(categoryName);
 	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);

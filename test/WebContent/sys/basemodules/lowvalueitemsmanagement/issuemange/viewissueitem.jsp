@@ -115,17 +115,6 @@ function dataFill(obj){
 	$("#id_applyPerson").val(obj.applyPersonDisplay);
 	$("#id_itemsApplyDate").val(obj.itemsApplyDate);
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
-	 /*  // 开始遍历赋值 
-	  for(var p in obj){
-		  var $element=$("#id_"+p);
-		  if($element[0]&&obj[p]!=null){	
-				  if(obj[p+"Display"]){
-					  $element.html(obj[p+"Display"]);
-				  }else{
-					  $element.html(obj[p]);
-				  }     			  	
-		  }
-	  } */
 }
 /**
  * 设置附件

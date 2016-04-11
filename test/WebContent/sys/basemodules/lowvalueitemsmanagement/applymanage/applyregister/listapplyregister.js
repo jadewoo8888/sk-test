@@ -12,7 +12,6 @@ $(function () {
 	initComBindFunc(); 
 	initCategoryCombo();
 	initDeptBox();
-	//initParameter();
 	
 });
 
@@ -99,7 +98,6 @@ function showCategoryListSuccFunc(result) {
  * @param categoryName
  */
 function toAddApplyPage(pk,categoryName) {
-	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/editapplyregister.jsp?categoryPk='+pk+'&business='+STR_REGISTER_ADDNEW;
 };
 

@@ -1,7 +1,5 @@
-//var allApplyItemPkArr = new Array();//所有物品PK数值
 var assetApplyItemAssetTypeArr = new Array();//固定资产类物品的资产类别编码数组
 var assetApplyItemPkArr = new Array();//固定资产类物品PK数组
-//var imAssetTypeArrStrArr = new Array();//固定资产类物品的固定资产编码数组，用于拼接固定资产查询条件
 var assetRegAssetNoArr = new Array();//被选择了的固定资产编码数组
 var assetRegAssetTypeQC = "";//固定资产查询条件:根据固定资产编码模糊查询 AND (assetRegAssetType like '固定资产编码1%' or assetRegAssetType like '固定资产编码2%' or assetRegAssetType like '固定资产编码3%')
 //加载完成执行 
@@ -163,9 +161,8 @@ function issueItems() {
 
 /**发放按钮操作**/
 function issueButtonOper() {
-	//$("#id_bt_issue").attr("disabled", true); // 按钮可点击
 	
-	$("#id_bt_issue").attr("disabled", true);
+	$("#id_bt_issue").attr("disabled", true);// 按钮可点击
 	top.layer.open({
 		title:'物品发放',
 		icon: 3,
@@ -263,7 +260,6 @@ function updateAssetSelectedData(selectRowData) {
 
 /**申购**/
 function purchaseFn() {
-	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?pk="+pk+"&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/editpurchaseapply.jsp?ipItemsApplyMPK='+itemsApplyMPK+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business=issuePurchaseOpr';
 }
 /**

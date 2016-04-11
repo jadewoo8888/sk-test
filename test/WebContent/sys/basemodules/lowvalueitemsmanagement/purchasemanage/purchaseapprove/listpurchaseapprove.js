@@ -32,7 +32,6 @@ function initDataGrid() {
  			return html;
 		}},
 		
-		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"ipCode",title:'申购单号',minwidth:80},
 		{field:"ipCategoryPKDisplay",title:'类目',minwidth:80},
         {field:"ipDeptCodeDisplay",title:'申领部门',minwidth:100},
@@ -120,7 +119,6 @@ function initCategoryCombo() {
 
 //审批
 function approval(pk,categoryPk,categoryName){
-	//location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/editpurchaseapprove.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_MODIFY;
 	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/editpurchaseapprove.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_VIEW;
 }
 
@@ -139,7 +137,6 @@ function viewone(pk,categoryName){
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		//content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/viewpurchaseapprove.jsp?pk='+pk+'&categoryName='+categoryName
 		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&business='+STR_VIEW
 	});
 }

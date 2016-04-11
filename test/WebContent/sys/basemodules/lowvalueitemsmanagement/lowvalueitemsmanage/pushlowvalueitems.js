@@ -1,6 +1,5 @@
 //列表表格对象
 var datagrid = null;
-//var mainObj = new Object();
 /**
  * 初始化方法
  **/ 
@@ -175,44 +174,12 @@ function save() {
  * 打包低值品仓库
  * @returns {Array}
  */
-/*function packagelowValueItemsData() {
-	
-	var row = datagrid.dataGridObj.datagrid('getRows');
-	var rowLen = row.length;
-    var rowsData = new Array();
-    for(var i=0;i<rowLen;i++) {
-		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
-		var lviCount = editors[0].target.numberbox('getValue');
-		if (lviCount > 0) {//控制入库数量大于0的才可以入库
-			var lowValueItems = new Object();
-			lowValueItems.lviCount = lviCount;
-		 	lowValueItems.lviCategoryPK = categoryPk;
-		 	lowValueItems.lviItemManagePK = row[i].pk;
-		 	lowValueItems.lviName = row[i].imName;
-		 	lowValueItems.lviType = row[i].imType;
-		 	lowValueItems.lviSpecification = row[i].imSpecification;
-		 	lowValueItems.lviMetricUnit = row[i].imMetricUnit;
-		 	rowsData.push(lowValueItems);
-		}
-	}
-	return rowsData;
-}*/
-
-/**
- * 打包低值品仓库
- * @returns {Array}
- */
 function packagelowValueItemsData() {
 	
 	var checkRows = $('#id_table_grid').datagrid('getChecked');//很奇怪，通过getChecked得到的列和编辑值顺序是倒过来的，即不对应。所以只能用笨的办法来处理。哎
 	var checkRowsLen = checkRows.length;
-	/*if (checkRowsLen < 1) {
-		var msg = '请选择要入库的物品，并填写入库数量！';
-		top.layer.alert(msg,{closeBtn :2,icon:7});
- 		return;
-	}*/
-	
-    var rowsData = new Array();
+    
+	var rowsData = new Array();
     var allRows = datagrid.dataGridObj.datagrid('getRows');
 	var allRowsLen = allRows.length;
 	
@@ -250,27 +217,10 @@ function packagelowValueItemsData() {
 /**
  * 设置附件
  **/
-/*function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_025&controltype='+business+'&businesscode='+pk;
-}*/
-
-/**
- * 设置附件
- **/
 function initAppend() {
 	var opt = {controlType:business,businessCode:pk,businessType:'TYYWLX_025'};
 	$('#id_div_appendarea').commonupload(opt);
 }
-
-/** 
- * 获取附件数据
- **/
-/*function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
-	return appendData;
-}*/
 
 /** 
  * 获取附件数据

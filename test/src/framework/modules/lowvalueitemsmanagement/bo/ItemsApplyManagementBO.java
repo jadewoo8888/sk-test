@@ -301,14 +301,6 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		this.itemsApplyMDetailBO = itemsApplyMDetailBO;
 	}
 
-	/*public static String getMenu_ItemsApplyMan_Check() {
-		return Menu_ItemsApplyMan_Check;
-	}
-
-	public static void setMenu_ItemsApplyMan_Check(String menu_ItemsApplyMan_Check) {
-		Menu_ItemsApplyMan_Check = menu_ItemsApplyMan_Check;
-	}*/
-
 	public ApprovalBO getApprovalBO() {
 		return approvalBO;
 	}

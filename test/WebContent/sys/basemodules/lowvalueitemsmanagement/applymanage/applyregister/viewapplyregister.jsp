@@ -31,7 +31,6 @@ $(function(){
 	initAppend();//加载附件页面
 	getInfo();				//获取信息 
 	getItemsApplyManagementByPk(itemsApplyMPK);
-	//initDataGrid();
 });
 
 /**
@@ -86,13 +85,6 @@ function initDataGrid() {
 		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}},
 		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if (approveStep == 4) return value;else return '';}}
 	]];
-	 
-	/*  if (approveStep == 3) {alert()
-		 _columns.push({field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80});
-	 } else if (approveStep == 4) {
-		 _columns.push({field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80});
-		 _columns.push({field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80});
-	 } */
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
 	 

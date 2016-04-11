@@ -7,7 +7,6 @@ $(function(){
 	$("#return").click(function(){
 		history.go(-1);
 		});	
-	//$('#id_lviSRCount').numberbox({min:1});
 });
 
 
@@ -160,23 +159,6 @@ function savedata(){
 	}
 	
 }
-
-/**
- * 设置附件
- **/
-/*function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_025&controltype='+business+'&businesscode='+pk;
-}
-
-*//** 
- * 获取附件数据
- **//*
-function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
-	return appendData;
-}*/
 
 /**
  * 设置附件

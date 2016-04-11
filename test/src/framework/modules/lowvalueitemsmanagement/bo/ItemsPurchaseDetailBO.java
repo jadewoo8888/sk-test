@@ -26,15 +26,11 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	private LowValueItemsDAO lowValueItemsDAO;
 	
 	
-	//@MethodID("approvalApplyCount")
 	@LogOperate(operate = "更新物品审批的申购数量")
 	public void approveApplyCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList){
 		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
 			String strSql = "update tItemsPurchaseDetail t set t.IPDApproveCount=? where t.pk=?";
 			entityDAO.executeSql(strSql, itemsPurchaseDetail.getIpDApproveCount(),itemsPurchaseDetail.getPk());
-			/*ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
-			dbItemsPurchaseDetail.setIpDApproveCount(itemsPurchaseDetail.getIpDApproveCount());
-			entityDAO.attachDirty(dbItemsPurchaseDetail);*/
 		}
 	}
 	

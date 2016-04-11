@@ -31,7 +31,6 @@ function initDataGrid() {
 			}
  			return html;
 		}}, 
-		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"itemsApplyCode",title:'申领单号',minwidth:80},
 		{field:"categoryManagementPKDisplay",title:'类目',minwidth:80},
         {field:"itemsApplyDeptCodeDisplay",title:'申领部门',minwidth:100},
@@ -134,7 +133,6 @@ function viewone(pk){
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		//content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/issuemange/viewissueitem.jsp?pk='+pk
 		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk
 	});
 }

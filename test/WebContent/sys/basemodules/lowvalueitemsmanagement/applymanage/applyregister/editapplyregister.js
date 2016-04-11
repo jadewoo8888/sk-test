@@ -81,8 +81,6 @@ function dataFill(obj) {
 		$("#id_applyPerson").val(obj.applyPersonDisplay);
 		$("#id_itemsApplyDate").val(obj.itemsApplyDate);
 		$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
-		//itemsApplyDeptCode = obj.itemsApplyDeptCode;
-	 	//applyPerson = obj.applyPerson;
 }
 
 function checkIamApplyCount(value) {
@@ -342,27 +340,10 @@ function packageItemsApplyMDetailData() {
 /**
  * 设置附件
  **/
-/*function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_024&controltype='+business+'&businesscode='+itemsApplyMPK;
-}*/
-
-/**
- * 设置附件
- **/
 function initAppend() {
 	var opt = {controlType:business,businessCode:itemsApplyMPK,businessType:'TYYWLX_024'};
 	$('#id_div_appendarea').commonupload(opt);
 }
-
-/** 
- * 获取附件数据
- **/
-/*function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
-	return appendData;
-}*/
 
 /** 
  * 获取附件数据

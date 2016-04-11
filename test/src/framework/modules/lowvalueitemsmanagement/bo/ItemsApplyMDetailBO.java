@@ -167,21 +167,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		itemsApplyManagement.setItemsIssueDate(updateInfo[0].substring(0, 10));
 		itemsApplyManagementDAO.attachDirty(itemsApplyManagement);
 
-		//第四步：清除脏数据（清除申购数量为0的申购明细，目的是清除没用的数据。这些数据的存在是在新建和修改申购明细的时候，批量增加的。）
-		/*String delApplyItemsSql = "delete from titemsApplyMDetail t where t.IAMApplyCount=0 and t.itemsapplympk=?";
-		entityDAO.executeSql(delApplyItemsSql, itemsApplyMPK);*/
-
 	}
-
-	/**
-	 * 根据PK更新固定资产：最后修改时间，最后修改人，使用人，使用人账号，所属部门，所属单位
-	 * 
-	 * @param updateJson
-	 */
-	/*public void updateIssueAsset_log_trans(Map<String, Object> updateJson) {
-		String strSql = "update TASSETREGIST t set t.lastestupdate=:lastestupdate,t.updateperson=:updateperson,t.assetreguser=:assetreguser,t.assetreguserid=:assetreguserid,t.assetregdeptcode=:assetregdeptcode,t.assetRegEnprCode=:assetRegEnprCode where t.assetRegAssetNo=:assetRegAssetNo";
-		entityDAO.executeSql(strSql, updateJson);
-	}*/
 
 	/**
 	 * 根据assetRegAssetNo更新固定资产：最后修改时间，最后修改人，使用人，使用人账号，所属部门，所属单位

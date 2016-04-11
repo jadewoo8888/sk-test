@@ -11,10 +11,6 @@ import framework.sys.log.LogOperateManager;
 @LogOperate(menu = "低值易耗品物品管理")
 public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 
-	/*private ItemsApplyMDetailDAO itemsApplyMDetailDAO;
-	private ItemsPurchaseDetailDAO itemsPurchaseDetailDAO;
-	private LVIStoreRecordDAO lviStoreRecordDAO;*/
-
 	@MethodID("addItem")
 	@LogOperate(operate = "新增物品")
 	public String addItem_log_trans(ItemManage itemManage) {
@@ -24,8 +20,6 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 			LogOperateManager.unlog();
 			return_tips = "物品名称已经存在，请重新输入";
 		} else {
-			//String pk = UUID.randomUUID().toString();
-			//itemManage.setPk(pk);
 			entityDAO.save(itemManage);
 		}
 		return return_tips;
@@ -34,12 +28,10 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 	@MethodID("modifyItem")
 	@LogOperate(operate = "修改物品")
 	public String modifyItem_log_trans(ItemManage itemManage) {
-		if (itemManage.isEditedName()) {
-			boolean flag = entityDAO.executeFindExists("select 1 from tItemManage where imName = ?", itemManage.getImName());
-			if (flag) {
-				LogOperateManager.unlog();
-				return "物品名称已经存在，请重新输入";
-			}
+		boolean flag = entityDAO.executeFindExists("select 1 from tItemManage where imName = ? and pk != ?", itemManage.getImName(),itemManage.getPk());
+		if (flag) {
+			LogOperateManager.unlog();
+			return "物品名称已经存在，请重新输入";
 		}
 		entityDAO.attachDirty(itemManage);
 		
@@ -70,7 +62,6 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 			return "该物品已经入库，不能删除！";
 		}
 		
-		//entityDAO.delete(entityDAO.findById(pk));
 		entityDAO.executeSql("delete from tItemManage t where t.pk = ?",pk);
 		
 		return "";

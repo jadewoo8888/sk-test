@@ -1,4 +1,3 @@
-var oldcategoryName = '';
 //加载完成执行 
 $(function(){	
 	initData();
@@ -21,10 +20,6 @@ $(function(){
 function initData() {
 	if(pk) {
 		getCategoryByPk(pk);
-		//$('#categoryName').addClass('disableText');
-		//$('#categoryName').attr('readonly',true);//禁用输入
-	} else {
-		//$('#groupCode').combobox('setValues','')
 	}
 }
 
@@ -32,56 +27,38 @@ function initData() {
  * 根据编码获取信息
  **/
 function getCategoryByPk(pk) {
+	
 	$("body").addLoading({msg:"正在获取信息，请稍后..."});
 	Ajax.service(
 	  		'CategoryManagementBO',
-	  		//'findById', //此处办法ajax无法调用，故无奈才用findByProperty
-	  		//[pk],
-	  		"findByProperty", 
-	  		['pk',pk],
+	  		'findById', 
+	  		[pk],
 	  		function(obj){
-	  		var data = obj[0];
-				//数据填充 
-	  			callUpdateData(data);
+	  			groupCode = obj.groupCode;
+	  			$("#categoryName").val(obj.categoryName);
+	  			$("#categoryRemark").val(obj.categoryRemark);
+	  			if (obj.groupCode != null) {
+	  				$('#groupCode').combobox('setValues',obj.groupCode.split(','));
+	  			}
+	  			
+	  			$("body").removeLoading();
+	  			
 	  		},
 	  		function(data){
-	  			//top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
-	  			$("body").removeLoading();
-	  			top.layer.alert("\u83b7\u53d6\u5904\u7f6e\u5355\u57fa\u672c\u4fe1\u606f\u51fa\u73b0\u9519\u8bef\uff0c\u8bf7\u8054\u7cfb\u7ba1\u7406\u5458 ", {icon:5, closeBtn:2});
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
 	  		}
 	  	);
 }
-
-
-/**
- * 选择回调方法
- **/
-function callUpdateData(data) {
-	groupCode = data.groupCode;
-	oldcategoryName = data.categoryName;
-	$("#categoryName").val(oldcategoryName);
-	$("#categoryRemark").val(data.categoryRemark);
-	if (data.groupCode != null) {
-		$('#groupCode').combobox('setValues',data.groupCode.split(','));
-	}
-	$("body").removeLoading();
-}
-
 
 //数据封装 
 function dataPackage(business){
 	var categoryObj = new Object();
 	categoryObj.categoryName = $("#categoryName").val();
 	categoryObj.categoryRemark = $("#categoryRemark").val();
-	//categoryObj.groupCode = $("input[name = groupCode]").val();
 	categoryObj.groupCode = $('#groupCode').combobox('getValues').join();
 	
 	if (pk) {
 		categoryObj.pk = pk;
-		categoryObj.editedName = true;
-		if (oldcategoryName == categoryObj.categoryName) {
-			categoryObj.editedName = false;
-		}
 	}
 	
 	return categoryObj;

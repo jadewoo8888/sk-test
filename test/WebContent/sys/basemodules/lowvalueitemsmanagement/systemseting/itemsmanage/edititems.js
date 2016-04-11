@@ -1,9 +1,7 @@
-var oldImName = '';
 //加载完成执行 
 $(function(){	
 	initData();
 	initCategoryCombo();
-	//initAssetTypeBox();
 	
 });
 
@@ -34,8 +32,6 @@ function initData() {
 	
 	if(pk) {
 		getItemByPk(pk);
-		//$('#id_imName').addClass('disableText');
-		//$('#id_imName').attr('readonly',true);//禁用输入
 	}
 }
 
@@ -76,16 +72,7 @@ function dataFill(obj){
 			    		$("#id_"+p).val(obj[p+"Display"]);
 			    	}
 			     }else{
-		  		 	//特殊字段处理
-		  		 	/*if(p=='assetSysCode'){
-		  		 		getAssetInfo(obj[p]);
-		  		 		continue;
-		  		 	}*/
-		  		 	
 		  		 	$("#id_"+p).val(obj[p]);		  		 	
-			     }
-			     if (p=='imName') {
-			    	 oldImName = obj[p];
 			     }
 		  }
 	  }
@@ -169,18 +156,9 @@ function savedata(){
 //新增修改 
 function edit(){
 	var itemObj = getDataPackage();
-	/*var type = itemObj.imType;
-	if (type == 'WPLB_001') {
-		itemObj.imAssetType = '';
-	}*/
 	if (business == STR_REGISTER_ADDNEW) {
 		submitAdd(itemObj);
 	} else {
-		itemObj.editedName = true;
-		if (oldImName == itemObj.imName) {
-			itemObj.editedName = false;
-		}
-		
 		itemObj.pk = pk;
 		submitModify(itemObj);
 	}

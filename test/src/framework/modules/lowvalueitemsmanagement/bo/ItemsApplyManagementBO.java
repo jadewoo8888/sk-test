@@ -57,7 +57,6 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		
 		//保存申领明细列表
 		for (ItemsApplyMDetail itemsApplyMdetail : itemsApplyMdetailList) {
-			//itemsApplyMdetail.setPk(UUID.randomUUID().toString());
 			itemsApplyMdetail.setItemsApplyMPK(applyManagementPk);
 			itemsApplyMDetailDAO.save(itemsApplyMdetail);
 		}
@@ -120,7 +119,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	@LogOperate(operate = "删除一条物品申领登记")
 	public String deleteItemApply_log_trans(String pk) {
 		/** 第一步：删除物品申领 * */
-		entityDAO.delete(entityDAO.findById(pk));
+		entityDAO.executeSql("delete from tItemManage t where t.pk = ?", pk);
 		/** 第二步：删除对应的物品申领明细 * */
 		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
 		

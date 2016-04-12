@@ -137,7 +137,7 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		lviStoreRecord.setLviSRRemark("");
 		lviStoreRecord.setLviSRSpecification(itemsPurchaseDetail.getIpDSpecification());
 		lviStoreRecord.setLviSRType(itemsPurchaseDetail.getIpDType());
-		lviStoreRecord.setPk(UUID.randomUUID().toString());
+		//lviStoreRecord.setPk(UUID.randomUUID().toString());
 		
 		lviStoreRecordDAO.save(lviStoreRecord);
 		

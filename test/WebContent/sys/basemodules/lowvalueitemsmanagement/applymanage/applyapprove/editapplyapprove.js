@@ -2,6 +2,7 @@ var mainObj = new Object();
 var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 var approvalModule;
 var approvalRole;//审批角色值 ，2：审核人，3：核准人
+var approveStep = 0;//审批步骤。2:部门审批完毕，3：经办人审批完毕，4：行装科领导完毕
 //加载完成执行 
 $(function(){
 	initAppend(); 		//加载附件页面
@@ -15,8 +16,6 @@ function buttonBind(){
 	//返回页面
 	$("#return").click(function(){history.go(-1);});
 }
-
-var approveStep = 0;
 
 function getItemsApplyManagementByPk(itemsApplyMPK) {
 	
@@ -78,6 +77,16 @@ function initEditCell(){
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
+		
+		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
+		if (editors != null && editors.length > 0) {
+			//去掉审批数量默认为“0”
+			var v = editors[0].target.numberbox('getValue');
+			if (v == 0) {
+				editors[0].target.numberbox('setValue','');
+			}
+		}
+		
 	}
 	//处理可编辑单元格输入框宽度
 	if (approvalRole == 2) {
@@ -178,15 +187,42 @@ function setApprovalOption() {
 	});
 }
 
-//审批操作
-function approvalsave(type,data){
-	var approvalItemMDtail = packageApprovalItemMDtail();
+/**
+ * 验证
+ * 1、当审批角色为“审核人”申领单中有物品的“经办人审核数量”没填时，点击“通过”弹出提示“确定后只保存已填写经办人审核数量的物品，是否确认此次操作？
+ * 2、当审批角色为“核准人”申领单中有物品的“行政科领导审核数量”没填时，点击“通过”弹出提示“确定后只保存已填写行装科领导审核数量的物品，是否确认此次操作？
+ */
+function checkApproveCount() {
+	var row = datagrid.dataGridObj.datagrid('getRows');
+	var rowLen = row.length;
+    var rowsData = new Array();
+    for(var i=0;i<rowLen;i++) {
+		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
+		if (editors != null && editors.length > 0) {
+			var checkCount = editors[0].target.numberbox('getValue');
+			if (approvalRole == 2 || approvalRole == 3) {
+				 if (checkCount == 'undefined' || checkCount == '') {
+				 		return false;
+				 	 }
+			}
+		}
+	};
+	
+	return true;
+}
+
+/**
+ * 执行审批操作
+ * @param type
+ * @param data
+ */
+function doApprovalsave(type,data,approvalItemMDtailList) {
 	
 	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
 	Ajax.service(
  			'ItemsApplyManagementBO',
  			'approvalItemsApply', 
- 			[mainObj,data,getAppendData(),type,approvalItemMDtail,approvalRole],
+ 			[mainObj,data,getAppendData(),type,approvalItemMDtailList,approvalRole],
  			function(data){		
 				var tips = "保存信息成功！";
 				if(data != null && type != "1"){
@@ -217,6 +253,51 @@ function approvalsave(type,data){
 				top.layer.alert('审批操作出问题了，请联系管理员。',{closeBtn :2,icon:5});
  			}
  	  );
+
+}
+
+//审批操作
+function approvalsave(type,data){
+	var approvalItemMDtailList = packageApprovalItemMDtail();
+	
+	if (!checkApproveCount()) {
+		var msg = "";
+		if (approvalRole == 2) {
+			msg = "确定后只保存已填写经办人审核数量的物品，是否确认此次操作？";
+		} else if (approvalRole == 3) {
+			msg = "确定后只保存已填写行装科领导审核数量的物品，是否确认此次操作？";
+		}
+		
+		top.layer.open({
+			title:'保存申领审批',
+			icon: 3,
+			area:['450px','160px'],
+			btn:['确定', '取消'],
+			content:msg,
+			shift:1,
+			closeBtn :2,
+			yes: function(index){
+				
+					top.layer.close(index);
+					
+					for (var i = 0; i < approvalItemMDtailList.length; i++) {
+						if (approvalRole == 2 && approvalItemMDtailList[i].iamListerCheckCount == '') {
+							approvalItemMDtailList[i].iamListerCheckCount = 0;//如果为空值，就必须给个默认值为0。因为后台hibernate不允许integer类型的值为null
+						} else if (approvalRole == 3 && approvalItemMDtailList[i].iamLeaderCheckCount == '') {
+							approvalItemMDtailList[i].iamLeaderCheckCount = 0;
+						} 
+					}
+					
+					doApprovalsave(type,data,approvalItemMDtailList);
+					
+		    },
+		    cancel: function(index){
+		    	//top.layer.close(index);
+			}
+		});	
+	} else {
+		doApprovalsave(type,data,approvalItemMDtailList);
+	}
 }
 
 function packageApprovalItemMDtail() {

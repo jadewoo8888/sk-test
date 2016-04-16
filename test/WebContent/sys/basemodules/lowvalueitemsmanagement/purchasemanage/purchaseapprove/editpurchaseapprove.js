@@ -69,6 +69,7 @@ function initEditCell(){
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
+		
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
 		//去掉审批数量默认为“0”
 		var v = editors[0].target.numberbox('getValue');

@@ -328,6 +328,10 @@ function packageItemsApplyMDetailData() {
 			 	var appCount = editors[0].target.numberbox('getValue');
 			 	if (appCount < 1) {
 			 		top.layer.alert('申领数量不能小于1',{closeBtn :2,icon:7});
+			 		
+			 		$('body').removeLoading();     // 关闭遮挡层
+					$("#id_btn_save").attr("disabled", false); // 按钮可点击
+					
 			 		return;
 			 	}
 			 	itemsApplyMDetail.iamApplyCount = appCount;

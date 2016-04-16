@@ -149,6 +149,7 @@ function save() {
 							function(result){
 								$('body').removeLoading();     // 关闭遮挡层
 								$("#id_btn_save").attr("disabled", false); // 按钮可点击
+								
 								if(result!=null&&result!=""){		
 									top.layer.alert(result,{icon: 5, closeBtn:2});
 								}else{
@@ -197,6 +198,10 @@ function packagelowValueItemsData() {
 			var lviCount = editors[0].target.numberbox('getValue');
 			if (lviCount < 1) {
 		 		top.layer.alert('入库数量不能小于1',{closeBtn :2,icon:7});
+		 		
+		 		$('body').removeLoading();     // 关闭遮挡层
+				$("#id_btn_save").attr("disabled", false); // 按钮可点击
+				
 		 		return;
 		 	}
 		 	

@@ -1,11 +1,14 @@
 var mainObj = new Object();
+var approvalModule;
 var approvalBusiType = "SPYWLX_015";//物品申领审批路径
+var approvalRole;//审批角色值 ，2：审核人，3：核准人
 //加载完成执行 
 $(function(){
 	initAppend(); 		//加载附件页面
 	getInfo();				//获取信息 
-	initDataGrid();
+	//initDataGrid();
 	buttonBind();
+	getCategoryByPk(categoryPk);
 });
 
 //按钮事件 
@@ -13,12 +16,37 @@ function buttonBind(){
 	//返回页面
 	$("#return").click(function(){history.go(-1);});
 }
+
+/**
+ * 根据类目pk获取类目，初始化类目名称
+ * @param categoryPk
+ */
+function getCategoryByPk(categoryPk) {
+	
+	Ajax.service(
+	  		'CategoryManagementBO',
+	  		'findById', 
+	  		[categoryPk],
+	  		function(obj){
+	  			$("#id_ipCategoryPK").val(obj.categoryName);
+	  		},
+	  		function(data){
+	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+	  		}
+	  	);
+}
+
 /**
  * 初始化表格信息
  **/
 function initDataGrid() {
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
+	 var ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80};
+		if (approvalRole == 3) {//核准人
+			ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0},align:'right',fmType:'int'}};
+		}
+		
 	 var _columns =  
 		 [[
 			{field:"ipDName",title:'物品名称',minwidth:80},
@@ -27,7 +55,7 @@ function initDataGrid() {
 	        {field:"ipDSpecification",title:'规格型号',minwidth:80},
 			{field:"ipDMetricUnit",title:'单位',minwidth:80},
 			{field:"ipDApplyCount",title:'申购数量',minwidth:80},
-			{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0},align:'right',fmType:'int'}}
+			ipDApproveCountField
 		]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
@@ -41,11 +69,20 @@ function initEditCell(){
 	var rowLen = row.length;
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
+		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
+		//去掉审批数量默认为“0”
+		var v = editors[0].target.numberbox('getValue');
+		if (v == 0) {
+			editors[0].target.numberbox('setValue','');
+		}
+		
 	}
-	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
-	var width = $("td[field=ipDApproveCount]").children("div.datagrid-cell")[0].clientWidth;
-	var cssWidth = 'width:'+width+'px!important;';
-	$(".datagrid-cell-c1-ipDApproveCount").css("cssText",cssWidth);
+	if (approvalRole == 3) {
+		//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
+		var width = $("td[field=ipDApproveCount]").children("div.datagrid-cell")[0].clientWidth;
+		var cssWidth = 'width:'+width+'px!important;';
+		$(".datagrid-cell-c1-ipDApproveCount").css("cssText",cssWidth);
+	}
 }
 
 //自定义查询条件
@@ -83,17 +120,25 @@ function getInfo(){
 }
 //数据填充 
 function dataFill(obj){
-	$("#id_ipCategoryPK").val(categoryName);
+	//$("#id_ipCategoryPK").val(categoryName);
 	$("#id_ipDeptCode").val(obj.ipDeptCodeDisplay);
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);
 	$("#id_ipRemark").val(obj.ipRemark);
 }
 
+/**
+ * 获取审批角色
+ */
+function getApprovalRoleFn() {
+	approvalRole = approvalModule.curNodeInfo.node.approvalRole;
+	initDataGrid();
+}
+
 //审批数据初始化
 function setApprovalOption() {
 	var apprvalOption = {
-		//getApprovalSuccFunc:getApprovalRoleFn,
+		getApprovalSuccFunc:getApprovalRoleFn,
 		funcType:"DrawApprovalBar", 
 		approvalBarDivID:"id_div_approvaloption", 
 		approvalButtonBarDivID:"id_span_buttonArea", 
@@ -115,7 +160,7 @@ function setApprovalOption() {
 			checker:top.strUserName
 		}
 	};
-	var approvalModule = new ApprovalModule(apprvalOption);
+	approvalModule = new ApprovalModule(apprvalOption);
 	$("#tabs").tabs({
 		onSelect:function(title,index){
 			//切换标签时改变校验信息的显示/隐藏
@@ -130,15 +175,35 @@ function setApprovalOption() {
 	});
 }
 
-//审批操作
-function approvalsave(type,data){
-	var approvalPurchaseDetail = packageApprovalPurchaseDetail();
+/**
+ * 验证当审批角色为“核准人”采购单中有物品的“行政科领导审核数量”没填时，点击“通过”弹出提示“确定后只保存已填写行装科领导审核数量的物品，是否确认此次操作？
+ */
+function checkIPDApproveCount() {
+	var row = datagrid.dataGridObj.datagrid('getRows');
+	var rowLen = row.length;
+    var rowsData = new Array();
+    for(var i=0;i<rowLen;i++) {
+		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
+	 	 var approveCount = editors[0].target.numberbox('getValue');
+	 	 if (approveCount == 'undefined' || approveCount == '') {
+	 		return false;
+	 	 }
+	};
+	
+	return true;
+}
+/**
+ * 执行审批操作
+ * @param type
+ * @param data
+ */
+function doApprovalsave(type,data,approvalPurchaseDetailList) {
 	
 	$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层
 	Ajax.service(
  			'ItemsPurchaseBO',
  			'approvalItemsPurchase', 
- 			[mainObj,data,getAppendData(),type,approvalPurchaseDetail],
+ 			[mainObj,data,getAppendData(),type,approvalPurchaseDetailList],
  			function(data){		
 				var tips = "保存信息成功！";
 				if(data != null && type != "1"){
@@ -169,6 +234,44 @@ function approvalsave(type,data){
 				top.layer.alert('审批操作出问题了，请联系管理员。',{closeBtn :2,icon:5});
  			}
  	  );
+
+}
+
+//审批操作
+function approvalsave(type,data){
+	
+	var approvalPurchaseDetailList = packageApprovalPurchaseDetail();
+	
+	if (!checkIPDApproveCount()) {
+		top.layer.open({
+			title:'保存申购审批',
+			icon: 3,
+			area:['450px','160px'],
+			btn:['确定', '取消'],
+			content:'确定后只保存已填写行装科领导审核数量的物品，是否确认此次操作吗？',
+			shift:1,
+			closeBtn :2,
+			yes: function(index){
+				
+					top.layer.close(index);
+					
+					for (var i = 0; i < approvalPurchaseDetailList.length; i++) {
+						if (approvalPurchaseDetailList[i].ipDApproveCount == '') {
+							approvalPurchaseDetailList[i].ipDApproveCount = 0;
+						}
+					}
+					
+					doApprovalsave(type,data,approvalPurchaseDetailList);
+					
+		    },
+		    cancel: function(index){
+		    	//top.layer.close(index);
+			}
+		});	
+	} else {
+		doApprovalsave(type,data,approvalPurchaseDetailList);
+	}
+	
 }
 
 /**

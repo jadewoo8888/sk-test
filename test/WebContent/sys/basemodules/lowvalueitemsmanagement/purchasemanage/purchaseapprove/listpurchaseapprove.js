@@ -27,7 +27,7 @@ function initDataGrid() {
 	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >查看</a>";
 	 		//审批按钮,状态为待审批or审批中，且审批人中包含当前用户时显示
 			if ((row.ipApprovalFlag == 'WPSLZT_002' || row.ipApprovalFlag == 'WPSLZT_003') && row.allowApprPerson.indexOf('|'+ top.strUserAccount +'|')!=-1) {
-				html += "<a href='javascript:void(0);' onclick='approval(\""+row.pk+"\",\""+row.categoryManagementPK+"\",\""+row.ipCategoryPKDisplay+"\")' >审批</a>  ";
+				html += "<a href='javascript:void(0);' onclick='approval(\""+row.pk+"\",\""+row.ipCategoryPK+"\")' >审批</a>  ";
 			}
  			return html;
 		}},
@@ -118,8 +118,8 @@ function initCategoryCombo() {
 }
 
 //审批
-function approval(pk,categoryPk,categoryName){
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/editpurchaseapprove.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_VIEW;
+function approval(pk,categoryPk){
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapprove/editpurchaseapprove.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business='+STR_VIEW;
 }
 
 /**

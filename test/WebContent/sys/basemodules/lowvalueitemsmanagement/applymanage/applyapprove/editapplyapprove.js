@@ -28,7 +28,6 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
 	  			if (obj.linkers != null && obj.linkers != 'null') {
 	  				var linkers = obj.linkers;
 		  			approveStep =(linkers.split('|')).length - 1;
-		  			//alert(approveStep)
 	  			}
 	  			
 	  			initDataGrid();
@@ -138,7 +137,6 @@ function dataFill(obj){
 function getApprovalRoleFn() {
 	approvalRole = approvalModule.curNodeInfo.node.approvalRole;
 	getItemsApplyManagementByPk(pk);
-	//initDataGrid();
 }
 //审批数据初始化
 function setApprovalOption() {

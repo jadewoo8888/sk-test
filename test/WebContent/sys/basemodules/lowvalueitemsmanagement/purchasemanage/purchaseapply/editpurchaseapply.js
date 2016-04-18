@@ -178,6 +178,12 @@ function initIssuePurchaseDataGrid() {
 		mpkQc.oper = ARY_STR_EQUAL[0];
 		mpkQc.value1 = ipItemsApplyMPK;
 		customQCArr.push(mpkQc);
+		//“行装科领导审核数量为0”不需申购
+		var QC2 = new Object();
+		QC2.fn = "iamLeaderCheckCount";
+		QC2.oper = ARY_STR_NOTEQUAL[0];
+		QC2.value1 = '0';
+		customQCArr.push(QC2);
 		
 	    return customQCArr;
 	}

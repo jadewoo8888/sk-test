@@ -42,9 +42,9 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
  * 初始化表格信息，跟进审批角色初始化
  **/
 function initDataGrid() {
-	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}};
+	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:80,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}};
 	if (approvalRole == 2) {//审核人
-		iamListerCheckCountField = {field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
+		iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
 	}
 	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if (approveStep == 4) return value;else return '';}};
 	if (approvalRole == 3) {//核准人

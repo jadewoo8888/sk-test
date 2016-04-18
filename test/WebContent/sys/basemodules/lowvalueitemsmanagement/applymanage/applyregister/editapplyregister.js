@@ -99,9 +99,9 @@ function initDataGrid() {//新增时，读取物品列表。修改时，读取�
         {field:"imTypeDisplay",title:'类别',minwidth:80},//物品和物品申领管理明细表的字段一样
         {field:"imSpecification",title:'规格型号',minwidth:80},//物品和物品申领管理明细表的字段一样
 		{field:"imMetricUnit",title:'单位',minwidth:80},//物品和物品申领管理明细表的字段一样
-		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount},align:'right',fmType:'int'}}
-		/*{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}}*/
+		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount},align:'right',fmType:'int'}},
+		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}},
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};

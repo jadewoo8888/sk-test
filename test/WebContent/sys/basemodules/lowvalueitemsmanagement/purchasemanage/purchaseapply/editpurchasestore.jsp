@@ -16,6 +16,7 @@
 </style> 
 <script src="editpurchasestore.js" type="text/javascript"></script>
 <script src="${contextPath}/sys/basemodules/approval/approvalmodule/ApprovalModule.js" type="text/javascript"></script>
+<script src="${contextPath}/core/componentmodule/upload/jquery.commonupload.js" type="text/javascript"></script>
 <script> 
 //业务类型
 var business="${param.business}";
@@ -74,7 +75,7 @@ var pk="${param.pk}";
 			</div>
 		</div> 
 	     
-	      <div title="附件" id="attached">
+	     <!--  <div title="附件" id="attached">
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
@@ -83,11 +84,14 @@ var pk="${param.pk}";
 	           	</div>
 	            <div   class="editTips"></div> 
 	
-				<div style="margin-top:8px;margin-left:30px;">
-					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
-				</div>	
+					
 			</div>	
-	    </div>  
+	    </div>   -->
+	    
+	    <div title="附件信息">
+		    <div id='id_div_appendarea' style="margin-top:8px;margin-left:30px;">
+		    </div>
+		</div>
 	    
 	    <!-- <div title="审批意见" id="id_div_approvaloption">
 
@@ -95,7 +99,7 @@ var pk="${param.pk}";
 	    
 	    <div title="审批路线图" id="approval_img">
 
-	    </div>  -->
+	    </div> -->
 	</div>
 	
 	<div style="background-color:white;height:100px;"></div>

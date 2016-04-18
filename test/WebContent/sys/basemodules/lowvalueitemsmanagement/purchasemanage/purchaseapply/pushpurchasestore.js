@@ -4,7 +4,7 @@ var approvalBusiType = "SPYWLX_015";//物品采购审批路径
 var isIncludeAsset = false;
 //加载完成执行 
 $(function(){
-	setAppenFrame(); 		//加载附件页面
+	initAppend();//加载附件页面
 	getInfo();				//获取信息 
 	isIncludeAssetFn();
 	initComBindFunc();
@@ -262,19 +262,23 @@ function batchPushStore() {
 	});	
 	
 }
+
 /**
  * 设置附件
  **/
-function setAppenFrame() {    
-	var appendFrameObj = document.getElementById('id_iframe_append');
-	appendFrameObj.src = contextPath+'/core/componentmodule/upload/listCommonUpload.jsp?busitype=TYYWLX_026&controltype='+business+'&businesscode='+pk;
+function initAppend() {
+	var opt = {controlType:business,businessCode:pk,businessType:'TYYWLX_026'};
+	$('#id_div_appendarea').commonupload(opt);
 }
+
 /** 
  * 获取附件数据
  **/
 function getAppendData() {
-	var appendFrameObj = document.getElementById('id_iframe_append').contentWindow;
-	var appendData = appendFrameObj.getAppendData();
+	var appendData = null;
+	if($('#id_div_appendarea').data()) {
+		appendData = $('#id_div_appendarea').data().getAppendData();
+	}
 	return appendData;
 }
 

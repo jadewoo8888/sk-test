@@ -72,20 +72,6 @@ var categoryName="";
 			</div>
 		</div> 
 	     
-	     <!--  <div title="附件" id="attached">
-			<div class="pd10">
-			   <div class="editItem">
-			   		<div class="editlogo"></div>
-	           		<div class="editTitle">申领附件</div>						           			
-					<hr  class="editline"/>
-	           	</div>
-	            <div   class="editTips"></div> 
-	
-				<div style="margin-top:8px;margin-left:30px;">
-					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
-				</div>	
-			</div>	
-	    </div>   -->
 	    
 	    <div title="附件信息">
 		    <div id='id_div_appendarea' style="margin-top:8px;margin-left:30px;">
@@ -93,15 +79,15 @@ var categoryName="";
 		</div>
 	    
 	    
-	    <!-- <div title="审批意见" id="id_div_approvaloption">
+	    <div title="审批意见" id="id_div_approvaloption">
 
 	    </div>  
 	    
 	    <div title="审批路线图" id="approval_img">
 
 	    </div> 
-	    审批按钮栏 
-	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div> -->
+	    <!-- 审批按钮栏 --> 
+	<div class="Editinput"><span id="id_span_buttonArea"></span><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
 	</div>
 	
 	<div style="background-color:white;height:100px;"></div>

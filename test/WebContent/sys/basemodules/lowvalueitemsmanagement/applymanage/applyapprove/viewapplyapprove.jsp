@@ -41,7 +41,7 @@ function initDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80},
+		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:80},
 		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80}
 	]];
 	 
@@ -167,7 +167,7 @@ function getAppendData() {
 			</div>
 		</div> 
 	     
-	      <div title="附件" id="attached">
+	      <!-- <div title="附件" id="attached">
 			<div class="pd10">
 			   <div class="editItem">
 			   		<div class="editlogo"></div>
@@ -180,7 +180,7 @@ function getAppendData() {
 					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
 				</div>	
 			</div>	
-	    </div>  
+	    </div> -->  
 	    
 	    <div title="审批意见" id="id_div_approvaloption">
 

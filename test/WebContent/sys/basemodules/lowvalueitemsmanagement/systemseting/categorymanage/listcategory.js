@@ -140,6 +140,7 @@ function initRoleCombo() {
 		textField:'groupName',
 		width:180,
 		height:26,
+		multiple:true,
 		panelHeight:100,
 		editable:false
 	});

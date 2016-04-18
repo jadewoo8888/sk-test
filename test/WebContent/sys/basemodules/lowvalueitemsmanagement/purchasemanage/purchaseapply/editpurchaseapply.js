@@ -354,11 +354,14 @@ function summitEdit(itemsPurchaseMdetailList,ifReport) {
  */
 function packageItemsPurchaseData() {
 	var itemsPurchase = new Object();
-	itemsPurchase.ipCategoryPK = categoryPk;
-	itemsPurchase.ipOrgCode = top.strFilterOrgCode;
-	itemsPurchase.ipDeptCode = top.strUserDeptCode;
-	itemsPurchase.ipApplyPerson = top.strUserAccount;
-	itemsPurchase.ipPurchaseDate = $("#id_ipPurchaseDate").val();
+	if (business=STR_REGISTER_ADDNEW) {
+		itemsPurchase.ipCategoryPK = categoryPk;
+		itemsPurchase.ipOrgCode = top.strFilterOrgCode;
+		itemsPurchase.ipDeptCode = top.strUserDeptCode;
+		itemsPurchase.ipApplyPerson = top.strUserAccount;
+		itemsPurchase.ipPurchaseDate = $("#id_ipPurchaseDate").val();
+	}
+	
 	itemsPurchase.ipRemark = $("#id_ipRemark").val();
  	return itemsPurchase;
 }

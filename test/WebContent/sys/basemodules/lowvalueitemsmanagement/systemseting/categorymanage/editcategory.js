@@ -8,8 +8,10 @@ $(function(){
 		});	
 	
 	//编辑事务读取数据 
-	if(business==STR_REGISTER_ADDNEW){
-		$("#businesstext").html("修改类目 ");
+	if(pk){
+		$('#id_div_desc .head-title').html('修改类目');
+	} else {
+		$('#id_div_desc .head-title').html('新增类目');
 	}
 });
 

@@ -46,7 +46,7 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 			
 			dbItemsPurchaseDetail.setIpDPurchaseCount(itemsPurchaseDetail.getIpDPurchaseCount());
 			entityDAO.attachDirty(dbItemsPurchaseDetail);
-			
+			//后来的合计值=原来的合计值+修改采购数量差值（修改后的采购数量-原来的采购数量）
 			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount() - dbItemsPurchaseDetail.getIpDPurchaseCount();//采购数量合计
 		}
 		//更新物品申请单的合计采购数量

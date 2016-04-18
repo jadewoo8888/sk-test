@@ -252,7 +252,7 @@ function initCategoryComboSuccFunc(result) {
 function initAssetTypeBox(){
 	//资产分类代码搜索  
 	$('#id_imAssetType').searchbox({ 
-		prompt:'资产分类代码',
+		//prompt:'资产分类代码',
 		searcher:function(value,name){ 
 				//选择资产分类树
 		   		var treeValue = $('#id_imAssetType').attr('treevalue');  

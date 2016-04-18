@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@include file="/core/jspf/head.jspf"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE HTML>
+<html> 
 <head>
     <script type="text/javascript" src="editcategory.js"></script> 
 <script type="text/javascript">
@@ -13,19 +13,43 @@ var groupCode="";
 
 </script>
 <style type="text/css">
-body{ width:100%;height:100%;}
-form div{ margin-top:10px}
-label{ width:80px; display:block; text-align:right; float:left; margin:0 auto;font-size:14px;color: #555;}
-label span{color:red;}
-form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; padding:0 8px; height:26px; border:1px solid #95B8E7;}
+@charset "utf-8";
+textarea{resize:none;overflow:hidden;}
+/*编辑页面公共样式star*/
 
-/*easyui控件样式*/
-.combo{margin-left:10px;}
-.validatebox-tip{margin-top: -2px}
-.shaixuan .numberbox-f{height: 32px !important;width: 203px;margin-left: 10px;}
+/*编辑页面公共样式end*/
+.panel-header, .panel-body{border-color:#E5E5E5;}
+.biao .panel-body{border:1px solid rgb(180,180,180) !important;}
+/*编辑区域信息*/
+.editItem{height:26px;line-height:26px;vertical-align:middle;}
+.editlogo{width:3px;height:20px;display:inline-block;background-color:#1fb5ad;margin-top:2px;margin-right:10px;float:left;}
+.editTitle{display:inline-block;float:left;margin-right:20px;width:60px;font-size:13px;}
+.editline{height:1px;border:none;border-top:1px solid rgb(210,210,210);position:relative;top:12px;}
+.editTips{color:#666666;padding-left:90px;position:relative;top:-9px;}
+/*保存、返回按钮*/
+.Editinput{
+width:100%;
+position:fixed;
+bottom:38px;
+padding-top:5px;
+padding-bottom:5px;
+padding-left:400px;
+background-color: rgba(180,180,180,0.5);
+}
+.colorblack{color: #000000;}
 .notnullTip{color:red;vertical-align: middle;margin-left:3px;}
-#submit{width:50px}
-#return{width:50px}
+.Edit-Title1{width:200px;}
+#id_unitAdress{width:638px;}
+.EditPanel{padding-left:10px;}
+.EditPanel input{font-size: 12px;
+    background-color: white;
+    height: 30px;
+    width: 218px;
+    border: 1px solid #E5E5E5;
+    text-indent: 5px;
+    line-height: 26px;
+    word-break: normal;}
+.colorlink{color:#00afe8;cursor:pointer;}
 </style>
 </head> 
 <body class="edit_body"> 
@@ -34,30 +58,34 @@ form div input{margin-left:10px; width:200px; font-size:12px; line-height:20px; 
 		<span class="head-tx"></span>
 	</div>
 	
-	<div class="shaixuan clearfloat ">
-		  	<form id="ff" method="post" style="width:400px; margin-left:50px; margin-top:50px">   
-		  		<div class="EditPanel">
-				    <div>   
-				        <label for="type">名称<span class="notnullTip">*</span></label>
-				        <input id="categoryName" name="categoryName" class="easyui-validatebox" required="true"  validType="length[1,50]"  invalidMessage="不能超过50个字符！" missingMessage="不能为空" />   
-				    </div>   
-				    <div style="height:30px">   
-				        <label for="type">角色</label>
-				        <input id="groupCode" name="groupCode"/>    
-				    </div>  
-				    <div>   
-				        <label for="type">备注</label>
-				        <input type="text" id="categoryRemark" name="categoryRemark"  class="easyui-validatebox"   validType="length[1,125]"  invalidMessage="不能超过125个字符！"/>   
-				    </div>   
-			    </div>
-	    </form>
+	<div class="EditPanel" id="EditPanel" >			
+           	<div class="editItem">
+				<hr  class="editline"/>
+           	</div>
+                     <table cellSpacing=1 cellPadding=0>
+                     		<tr>
+								<td   class="Edit-Title1">名称<span class="notnullTip">*</span></td>
+								<td   class="Edit-Input1"><input id="categoryName" name="categoryName" class="easyui-validatebox" required="true"  validType="length[1,50]"  invalidMessage="不能超过50个字符！" missingMessage="不能为空" /></td>
+							</tr>
+							<tr>
+								<td   class="Edit-Title2">角色</td>
+								<td   class="Edit-Input2">
+								 <input id="groupCode" name="groupCode"/>    
+								</td>
+						    </tr>
+						    <tr>
+								<td   class="Edit-Title2">备注</td>
+								<td   class="Edit-Input2">
+								 <input type="text" id="categoryRemark" name="categoryRemark"  class="easyui-validatebox"   validType="length[1,125]"  invalidMessage="不能超过125个字符！"/>   
+								</td>
+							</tr>
+			 </table> 
+			 <div style="height:50px;">
+			 </div>                           		
 	</div>
-		<div class="tb_row">
-		    <div style="margin-left:150px;padding-top:15px;">
-		    	<input type="button" id="submit"  onclick="savedata()" class="bt_ensure" value="保存" />  
-		    	<input type="button" id="return" class="bt_cancel" value="返回" />
-	    	</div>
-	    </div>
-	</div>
-</body>
+			
+	<div style="background-color:white;height:100px;"></div>
+	<div class="Editinput"><input type="button" id="save" class="bt_ensure" onclick="savedata()" value="保存"></input><input id="return" type="button" class="bt_cancel" value="返回"></input></div>
+
+	</body>
 </html>

@@ -50,6 +50,7 @@ background-color: rgba(180,180,180,0.5);
     line-height: 26px;
     word-break: normal;}
 .colorlink{color:#00afe8;cursor:pointer;}
+.edit_body{padding:5px 10px 10px 10px;overflow:auto;}
 </style>
 </head> 
 <body class="edit_body"> 

@@ -60,11 +60,6 @@
 .shaixuan .searchbox-button{float:left;height:26px !important;}
 
 .shaixuan .numberbox-f{width:140px;height:26px !important; padding-left:5px;line-height:26px; border:1px solid #E5E5E5; background:none; margin-left:5px;}
-/*
-.seachbox{border:1px solid #95B8E7;height:26px !important;}
-.seachbox input{padding-left:5px;margin:0 !important;border:0px;float:left;height:26px;background-color:white;line-height:26px;font-size:12px;}
-.seachbox span{float:left;width:22px;height:28px;border:0px; background:url(../../images/ui/sub1.png) 0 0 no-repeat;background-position:center;}
-*/
 .shaixuan  .combo:hover{border-color: #1fb5ad;}
 .shaixuan  input:hover,textarea:hover{border-color: #1fb5ad;}
 .shaixuan  .searchbox:hover{border-color: #1fb5ad;}
@@ -93,24 +88,6 @@
 .chuangkou_a2 a{color:#333333; font-size:12px; line-height:24px;  display:block;}
 .zhong{padding:50px 0 0 0;}
 .zhong a{display:block; color:#ffffff; font-size:14px; line-height:25px; width:25px; text-align:center; background-color:#666666; margin:10px 0;}
-
-
-/*选择部门弹窗    MG*/
-/*
-.chuangkou3{width:360px; height:360px; border:1px solid #00afe8; background-color:#ffffff; margin:20px auto;}
-.chuangkou3 .chuangkou_title{padding:0 10px; color:#ffffff; font-size:14px; height:38px; line-height:38px; background-color:#00afe8; position:relative;}
-.chuangkou3 .chuangkou_title .closed{position:absolute; top:15px; right:10px;}
-.chuangkou3 .chuangkou_word2{text-align:left; padding:10px;}
-*/
-/*信息提醒弹窗    MG*/
-/*
-.chuangkou_word3{text-align:center;}
-.chuangkou_word3 span{color:#474747; font-size:12px; line-height:30px; display:block; margin:30px auto 6px auto;}
-.chuangkou_word3 a{color:#ffffff; padding:4px 10px; font-size:12px; line-height:24px; background-color:#bbbbbb; border-radius:3px; margin:3px;}
-.chuangkou_word3 .cur{background-color:#ff6900;}
-.chuangkou_word3 p{color:#474747; font-size:12px; line-height:30px; margin-top:6px;}
-.chuangkou_word3 p input{margin:3px;}
-*/
 /*页面操作按钮    MG*/
 .center{padding:10px 0 0 0; text-align:center; font-size:12px; line-height:20px; color:#474747;}
 .center input{margin:0 10px;}
@@ -195,13 +172,10 @@
 .pages span,.pages a{color:#999999; font-size:12px; line-height:30px; width:30px; float:left; height:30px; display:inline-block; text-align:center; margin:0 2px; background-color:#ffffff;}
 
 /*额外自定义样式*/
-.gray_txt{color:#C6C6C6}
+.gray_txt{color:#C6C6C6 !important}
 .pd10_title .normal_title{color:#333; font-size:14px;}
 
 /**easyUI控件样式*/
-/*不明代码，并不能修改easyui的样式，如有使用请移到对应模块
-.row span span{ width: 18px; height:23px}
-.row2 span span{ width: 18px; height:23px}*/
 .searchbox-text{float:left}
 .searchbox span{margin:0px}
 .combo span{margin:0px}
@@ -216,9 +190,11 @@ a.l-btn{display:inline-table}
 .Edit-Table{}
 .Edit-Title1{width:120px; text-align:right;padding-right:8px;font-size: 12px;color:#3F3F3F /*#2e2d2d*/;font-family:simsun;}
 .Edit-Title2{width:150px; text-align:right;padding-right:8px;font-size: 12px;color:#3F3F3F;font-family:simsun;}
+.Edit-Title3{width:150px; text-align:right;padding-right:8px;font-size: 12px;color:#3F3F3F;font-family:simsun;}
 .Edit-Title{width:150px; text-align:right;padding-right:8px;font-size: 12px;color:#3F3F3F;font-family:simsun;}
 .Edit-Input1{width:280px;}
 .Edit-Input2{width:280px;}
+.Edit-Input3{width:280px;}
 .Edit-Input{width:280px;}
 .Edit-Input-Merge{}
 
@@ -236,8 +212,10 @@ a.l-btn{display:inline-table}
 	-webkit-box-shadow:0 0px 5px rgb(164,198,253);
 }
 .EditPanel input:hover ,.EditPanel textarea:hover{border-color: #1fb5ad;}
-.EditPanel textarea{float:left;margin:0px;width:635px;height:50px;border: 1px solid #E5E5E5;padding:0 5px;background-color:white;font-size:12px;}
+.EditPanel textarea{float:left;margin:0px;width:630px;height:50px;border: 1px solid #E5E5E5;padding:0 5px;background-color:white;font-size:12px;resize:none;overflow:hidden;}
+
 /*
+.EditPanel input[type=radio]{width:auto;height:auto;}
 .EditPanel input[type="button"]{width:60px;margin-left:8px;background:#1fb5ad;color:white;padding:0px 15px;text-indent:0px;border: 1px solid #1fb5ad;}
 */
 .EditPanel .combo:hover{border-color: #1fb5ad;}
@@ -273,3 +251,46 @@ a.l-btn{display:inline-table}
 .edit_body{background:rgb(247,247,247);padding:5px 10px 10px 10px;overflow:auto;}
 .list_body{background:rgb(247,247,247);padding:10px;}
 .view_body{background:rgb(247,247,247);padding:10px;}
+
+/*编辑区域信息*/
+.editItem{height:26px;line-height:26px;vertical-align:middle;}
+.editlogo{width:3px;height:20px;display:inline-block;background-color:#1fb5ad;margin-top:2px;margin-right:10px;float:left;}
+.editTitle{display:inline-block;float:left;margin-right:20px;width:60px;font-size:13px;}
+.editline{height:1px;border:none;border-top:1px solid rgb(210,210,210);position:relative;top:12px;}
+.editTips{color:#666666;padding-left:90px;position:relative;top:-9px;}
+
+/*保存、返回按钮*/
+.Editinput{
+	width:100%;
+	position:fixed;
+	bottom:38px;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:400px;
+	background-color:rgba(180,180,180,0.5);
+}
+/** 必填提示 **/
+.notnullTip{color:red;vertical-align: middle;width:8px;display:inline-block;}
+.Tip{width:8px;display:inline-block;}
+
+/** easyui搜索框优化 **/
+.searchbox .searchbox-prompt{color:inherit;}
+
+/** 基本搜索框的下拉面板样式 **/
+.searchboxbase-panel{
+	background-color:white;
+	z-index:100;
+	text-indent:5px;
+	border:1px solid #f0f0f0;
+	font-size:12px;
+	overflow:auto;
+}
+.searchboxbase-panel ul>li{
+	padding:3px 0px;
+	cursor:pointer;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	text-overflow:clip;
+}

@@ -335,7 +335,7 @@ a:focus { outline: none; }
 .combo-p .panel-body{border-color: #E5E5E5;}
 .combobox-item-selected{background:#1fb5ad !important; color:white}
 .combobox-item-hover{background:rgb(142,142,151);color:white}
-.combo-arrow{background-color:white;background: url(/gdczsam/core/style/images/ui/down_arrow.png) no-repeat center center;vertical-align:middle;}
+.combo-arrow{background-color:white;background: url(../../images/ui/down_arrow.png) no-repeat center center;vertical-align:middle;}
 /*easyui校验样式*/
 .validatebox-tip-content{
 	width:auto;

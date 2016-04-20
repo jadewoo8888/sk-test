@@ -42,6 +42,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="footer">研发单位：广州市盛祺计算机信息技术有限公司</div>
+	<div class="footer"></div>
 </body>
 </html>

@@ -101,16 +101,16 @@ function initAddDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},
-		{field:"imType",title:'类别编码',minwidth:80,hidden:true},
+		{field:"imName",title:'物品名称',minwidth:110},
+		/*{field:"imType",title:'类别编码',minwidth:80,hidden:true},*/
         {field:"imTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
-		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount,width:80},align:'right',fmType:'int'}},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""}}
+		{field:"imMetricUnit",title:'单位',minwidth:60},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:130,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount,width:80},align:'right',fmType:'int'}},
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell1};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell1};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -136,16 +136,15 @@ function initModifyDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"ipDName",title:'物品名称',minwidth:80},
-		{field:"ipDType",title:'类别编码',minwidth:80,hidden:true},
+		{field:"ipDName",title:'物品名称',minwidth:110},
         {field:"ipDTypeDisplay",title:'类别',minwidth:80},
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
-		{field:"ipDMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return ""; else return value;}}
+		{field:"ipDMetricUnit",title:'单位',minwidth:60},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:130,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}},
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""; else return value;}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell1};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell1};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -191,17 +190,16 @@ function initIssuePurchaseDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},
-		{field:"imType",title:'类别编码',minwidth:80},
+		{field:"imName",title:'物品名称',minwidth:120},
         {field:"imTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
-		{field:"imMetricUnit",title:'单位',minwidth:80},
+		{field:"imMetricUnit",title:'单位',minwidth:60},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}}
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:140},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:110,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell2};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell2};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);

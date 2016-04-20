@@ -42,28 +42,28 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
  * 初始化表格信息，跟进审批角色初始化
  **/
 function initDataGrid() {
-	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:80,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}};
+	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:130,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}};
 	if (approvalRole == 2) {//审核人
-		iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
+		iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:130,editor:{ type:'numberbox',options:{min:0,width:120},align:'right',fmType:'int'}};
 	}
-	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if (approveStep == 4) return value;else return '';}};
+	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:130,formatter:function(value){if (approveStep == 4) return value;else return '';}};
 	if (approvalRole == 3) {//核准人
-		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0,width:80},align:'right',fmType:'int'}};
+		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:130,editor:{ type:'numberbox',options:{min:0,width:120},align:'right',fmType:'int'}};
 	}
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},
-        {field:"imTypeDisplay",title:'类别',minwidth:80},
+		{field:"imName",title:'物品名称',minwidth:100},
+        {field:"imTypeDisplay",title:'类别',minwidth:60},
         {field:"imSpecification",title:'规格型号',minwidth:80},
-		{field:"imMetricUnit",title:'单位',minwidth:80},
+		{field:"imMetricUnit",title:'单位',minwidth:60},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
 		iamListerCheckCountField,
 		iamLeaderCheckCountField
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:670,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -88,7 +88,7 @@ function initEditCell(){
 		}
 		
 	}
-	//处理可编辑单元格输入框宽度
+	/*//处理可编辑单元格输入框宽度
 	if (approvalRole == 2) {
 		var width = $("td[field=iamListerCheckCount]").children("div.datagrid-cell")[0].clientWidth;
 		$(".datagrid-cell-c1-iamListerCheckCount").width(width);
@@ -96,7 +96,7 @@ function initEditCell(){
 	if (approvalRole == 3) {
 		var width = $("td[field=iamLeaderCheckCount]").children("div.datagrid-cell")[0].clientWidth;
 		$(".datagrid-cell-c1-iamLeaderCheckCount").width(width);
-	}
+	}*/
 	
 	
 }

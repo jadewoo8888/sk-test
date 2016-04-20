@@ -45,23 +45,24 @@ var business="${param.business}";
 								<td   class="Edit-Input2"><input  id="id_itemsApplyDate" class="disableText" fieldname="itemsApplyDate" readonly="readonly"/></td>
 							</tr>
 							
-					<tr>
+					<!-- <tr>
 						<td colspan="4">
-						<div class="biao" style="background-color: white;">
-							<table id="id_table_grid">
-							</table>
-						</div>
+						
 						</td>
-					</tr>
+					</tr> -->
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="disableText"  readonly="readonly"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:658px;resize: none' class="disableText"  readonly="readonly"></textarea></td>
 					</tr>
 					</table> 
 					
 					 <div style="height:50px;">
 					 </div>                           		
 			</div>
+			<div class="biao" style="background-color: white;margin-left: 270px; margin-bottom: 100px">
+							<table id="id_table_grid">
+							</table>
+						</div>
 		</div> 
 	     
 	      <div title="附件" id="attached">

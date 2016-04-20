@@ -24,7 +24,7 @@ function initDataGrid() {
 	 var _columns =  
 	 [[
 		{field:'option',title:'操作',minwidth:150,formatter:function(value,row,index){
-	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >查看</a>";
+	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
 	 		//审批按钮,状态为待审批or审批中，且审批人中包含当前用户时显示
 			if ((row.ipApprovalFlag == 'WPSLZT_002' || row.ipApprovalFlag == 'WPSLZT_003') && row.allowApprPerson.indexOf('|'+ top.strUserAccount +'|')!=-1) {
 				html += "<a href='javascript:void(0);' onclick='approval(\""+row.pk+"\",\""+row.ipCategoryPK+"\")' >审批</a>  ";
@@ -125,7 +125,7 @@ function approval(pk,categoryPk){
 /**
  * 查看
  **/
-function viewone(pk,categoryName){
+/*function viewone(pk,categoryName){
 	top.layer.open({
 		type:2,
 		title:'查看采购信息 ',
@@ -139,7 +139,27 @@ function viewone(pk,categoryName){
 		},
 		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&business='+STR_VIEW
 	});
+}*/
+
+/**
+ * 查看
+ **/
+function viewone(pk){
+	top.layer.open({
+		type:2,
+		title:'查看采购申请 ',
+		shift:1,
+		closeBtn :2,
+		area:['1024px','600px'],
+		shade:false,
+		zIndex:'2015', 
+		success:function(layero){
+	   		top.layer.setTop(layero); 
+		},
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&business='+STR_VIEW
+	});
 }
+
 /**
  * 状态选择下拉框
  */

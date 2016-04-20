@@ -42,23 +42,23 @@ function getCategoryByPk(categoryPk) {
 function initDataGrid() {
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
-	 var ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80};
+	 var ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150};
 		if (approvalRole == 3) {//核准人
-			ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80,editor:{ type:'numberbox',options:{min:0},align:'right',fmType:'int'}};
+			ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150,editor:{ type:'numberbox',options:{min:0},align:'right',fmType:'int'}};
 		}
 		
 	 var _columns =  
 		 [[
-			{field:"ipDName",title:'物品名称',minwidth:80},
-	        {field:"ipDType",title:'类别编码',minwidth:80,hidden:true},
-	        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
-	        {field:"ipDSpecification",title:'规格型号',minwidth:80},
+			{field:"ipDName",title:'物品名称',minwidth:110},
+	        /*{field:"ipDType",title:'类别编码',minwidth:80,hidden:true},*/
+	        {field:"ipDTypeDisplay",title:'类别',minwidth:100},
+	        {field:"ipDSpecification",title:'规格型号',minwidth:100},
 			{field:"ipDMetricUnit",title:'单位',minwidth:80},
-			{field:"ipDApplyCount",title:'申购数量',minwidth:80},
+			{field:"ipDApplyCount",title:'申购数量',minwidth:110},
 			ipDApproveCountField
 		]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);

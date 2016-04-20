@@ -29,14 +29,14 @@ function initDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},
+		{field:"imName",title:'物品名称',minwidth:100},
         {field:"imTypeDisplay",title:'类别',minwidth:80},
-        {field:"imSpecification",title:'规格型号',minwidth:80},
-		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamListerCheckCount",title:'经办人审核数量',minwidth:80},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80},
-		{field:"itemStoreCount",title:'库存',minwidth:80,formatter:function(value,row,index){
+        {field:"imSpecification",title:'规格型号',minwidth:60},
+		{field:"imMetricUnit",title:'单位',minwidth:50},
+		{field:"iamApplyCount",title:'申领数量',minwidth:70},
+		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:120},
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:120},
+		{field:"itemStoreCount",title:'库存',minwidth:50,formatter:function(value,row,index){
 			if (value < row.iamLeaderCheckCount) {
 				return '<span style="color: red">'+value+'</span>';
 			} else {
@@ -45,7 +45,7 @@ function initDataGrid() {
 		}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:ifShowIssueBtFn};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:670,height:'auto',onLoadSuccess:ifShowIssueBtFn};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);

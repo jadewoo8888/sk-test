@@ -120,15 +120,15 @@ function approval(pk){
 }
 
 /**
- * 查看页面
+ * 查看
  **/
 function viewone(pk){
 	top.layer.open({
 		type:2,
-		title:'查看登记信息 ',
+		title:'查看申领登记信息 ',
 		shift:1,
 		closeBtn :2,
-		area:['900px','628px'],
+		area:['1024px','600px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){
@@ -137,6 +137,7 @@ function viewone(pk){
 		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk+'&business='+STR_VIEW
 	});
 }
+
 
 function setItemStatus(){
 	 //申请单状态 查询条件控件初始化

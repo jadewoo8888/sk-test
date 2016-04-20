@@ -89,17 +89,17 @@ function initDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"ipDName",title:'物品名称',minwidth:80},
-        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
-        {field:"ipDSpecification",title:'规格型号',minwidth:80},
-		{field:"ipDMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:100,formatter:function(value){if (approveStep == 2) return value;else return '';}},
+		{field:"ipDName",title:'物品名称',minwidth:100},
+        {field:"ipDTypeDisplay",title:'类别',minwidth:60},
+        {field:"ipDSpecification",title:'规格型号',minwidth:60},
+		{field:"ipDMetricUnit",title:'单位',minwidth:60},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:60},
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:120,formatter:function(value){if (approveStep == 2) return value;else return '';}},
 		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80,formatter:function(value){if (approveStep == 2) return value;else return '';}},
 		{field:"ipDStoreCount",title:'已入库数量',minwidth:80,formatter:function(value){if (approveStep == 2) return value;else return '';}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:null};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -205,23 +205,26 @@ function getAppendData() {
 								<td   class="Edit-Input1"><input  id="id_ipPurchaseDate"  fieldname="ipPurchaseDate" class="disableText" readonly="readonly"/></td>
 							</tr>
 							
-					<tr>
+					<!-- <tr>
 						<td colspan="4">
-						<div class="biao" style="background-color: white;">
-							<table id="id_table_grid">
-							</table>
-						</div>
+						
 						</td>
-					</tr>
+					</tr> -->
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_ipRemark" fieldname="ipRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_ipRemark" fieldname="ipRemark" style='width:678px;resize: none' class="easyui-validatebox"   validType="length[1,250]"  invalidMessage="不能超过250个字符！"></textarea></td>
 					</tr>
 					</table> 
 					
-					 <div style="height:50px;">
+					 <div style="height:30px;">
 					 </div>                           		
 			</div>
+			
+			<div class="biao" style="background-color: white;margin-left: 216px; margin-bottom: 100px">
+							<table id="id_table_grid">
+							</table>
+						</div>
+						
 		</div> 
 	     
 	      <!-- <div title="附件" id="attached">

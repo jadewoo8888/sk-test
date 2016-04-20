@@ -27,7 +27,7 @@ function initDataGrid() {
 	 var _columns =  
 	 [[
 	 	{field:'option',title:'操作',minwidth:200,formatter:function(value,row,index){
-	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\",\""+row.ipCategoryPKDisplay+"\")' >查看</a>";
+	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
 			if (row.ipApprovalFlag == 'WPSLZT_001') {
 				html += "<a href='javascript:void(0);' onclick='modifyone(\""+row.pk+"\",\""+row.ipCategoryPK+"\",\""+row.ipCategoryPKDisplay+"\")' >修改</a>";
 				html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
@@ -210,13 +210,32 @@ function pushPurchaseStore(pk,ipCategoryPK){
 /**
  * 查看
  **/
-function viewone(pk,categoryName){
+/*function viewone(pk,categoryName){
 	top.layer.open({
 		type:2,
 		title:'查看采购申请 ',
 		shift:1,
 		closeBtn :2,
 		area:[(window.screen.width*0.6)+'px',(window.screen.height*0.8)+'px'],
+		shade:false,
+		zIndex:'2015', 
+		success:function(layero){
+	   		top.layer.setTop(layero); 
+		},
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/purchasemanage/purchaseapply/viewpurchaseapply.jsp?pk='+pk+'&business='+STR_VIEW
+	});
+}*/
+
+/**
+ * 查看
+ **/
+function viewone(pk){
+	top.layer.open({
+		type:2,
+		title:'查看采购申请 ',
+		shift:1,
+		closeBtn :2,
+		area:['1024px','600px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){

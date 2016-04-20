@@ -50,23 +50,26 @@ var pk="${param.pk}";
 								<td   class="Edit-Input1"><input  id="id_ipPurchaseDate"  fieldname="ipPurchaseDate" class="disableText" readonly="readonly"/></td>
 							</tr>
 							
-					<tr>
+					<!-- <tr>
 						<td colspan="4">
-						<div class="biao" style="background-color: white;">
-							<table id="id_table_grid">
-							</table>
-						</div>
+						
 						</td>
-					</tr>
+					</tr> -->
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea id="id_ipRemark" fieldname="ipRemark" class="disableText"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea id="id_ipRemark" fieldname="ipRemark" class="disableText" style='width:680px;resize: none'></textarea></td>
 					</tr>
 					</table> 
 					
 					 <div style="height:50px;">
 					 </div>                           		
 			</div>
+			
+			<div class="biao" style="background-color: white: white;margin-left: 220px; margin-bottom: 100px">
+				<table id="id_table_grid">
+				</table>
+			</div>
+						
 		</div> 
 	     
 	     <!--  <div title="附件" id="attached">

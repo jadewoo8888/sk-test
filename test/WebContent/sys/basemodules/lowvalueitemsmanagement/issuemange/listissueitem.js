@@ -43,7 +43,7 @@ function initDataGrid() {
 	 
 	 var dataGridOptions ={checkbox:false};
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyManagementBO',methodID:'getListForPageItemStatus',columns:_columns,sortInfo:_sortInfo,
-			 orgField:"orgCode"};	 
+			 orgField:"orgCode",customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 	 
 }
@@ -124,16 +124,16 @@ function issueone(pk,categoryPk,categoryName){
 function viewone(pk){
 	top.layer.open({
 		type:2,
-		title:'查看发放信息 ',
+		title:'查看物品发放信息 ',
 		shift:1,
 		closeBtn :2,
-		area:['900px','628px'],
+		area:['1024px','600px'],
 		shade:false,
 		zIndex:'2015', 
 		success:function(layero){
 	   		top.layer.setTop(layero); 
 		},
-		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk
+		content:contextPath+'/sys/basemodules/lowvalueitemsmanagement/applymanage/applyregister/viewapplyregister.jsp?pk='+pk+'&business='+STR_VIEW
 	});
 }
 
@@ -174,4 +174,16 @@ function setCheckStatus(){
 		width:140,
 		editable:false
 	});
+};
+
+//自定义查询条件
+function setCustomQueryCondition() {
+	var customQCArr = new Array();
+	//物品发放条件
+	var Qc = new Object();
+	Qc.fn = 'ItemsApplyFlag';
+	Qc.oper = ARY_STR_EQUAL[0];
+	Qc.value1 = 'WPSLZT_004';//已审批通过
+	customQCArr.push(Qc);
+    return customQCArr;
 }

@@ -67,7 +67,7 @@ var pk="${param.pk}";
 					</tr>
 					</table> 
 					
-					 <div style="height:50px;">
+					 <div style="height:30px;">
 					 </div>                           		
 			</div>
 			

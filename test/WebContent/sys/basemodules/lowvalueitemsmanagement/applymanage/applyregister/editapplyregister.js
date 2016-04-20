@@ -95,16 +95,16 @@ function initDataGrid() {//新增时，读取物品列表。修改时，读取�
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},//物品和物品申领管理明细表的字段一样
-        {field:"imTypeDisplay",title:'类别',minwidth:80},//物品和物品申领管理明细表的字段一样
+		{field:"imName",title:'物品名称',minwidth:100},//物品和物品申领管理明细表的字段一样
+        {field:"imTypeDisplay",title:'类别',minwidth:60},//物品和物品申领管理明细表的字段一样
         {field:"imSpecification",title:'规格型号',minwidth:80},//物品和物品申领管理明细表的字段一样
-		{field:"imMetricUnit",title:'单位',minwidth:80},//物品和物品申领管理明细表的字段一样
-		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount},align:'right',fmType:'int'}},
-		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:80,formatter:function(value){if(value == '0') return "";else return value;}}
+		{field:"imMetricUnit",title:'单位',minwidth:60},//物品和物品申领管理明细表的字段一样
+		{field:"iamApplyCount",title:'申领数量',minwidth:100,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount,width:60},align:'right',fmType:'int'}},
+		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:130,formatter:function(value){if(value == '0') return "";else return value;}},
+		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:120,formatter:function(value){if(value == '0') return "";else return value;}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};
 	 /**如果是新增，直接读取类目的所有物品**/
 	 var classID = 'ItemManageBO';
 	 var customQueryCondition = setCustomQueryCondition1;
@@ -123,9 +123,9 @@ function initEditCell(){
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
 	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
-	var width = $("td[field=iamApplyCount]").children("div.datagrid-cell")[0].clientWidth;
+	/*var width = $("td[field=iamApplyCount]").children("div.datagrid-cell")[0].clientWidth;
 	var cssWidth = 'width:'+width+'px!important;';
-	$(".datagrid-cell-c1-iamApplyCount").css("cssText",cssWidth);
+	$(".datagrid-cell-c1-iamApplyCount").css("cssText",cssWidth);*/
 }
 
 //新增的自定义查询条件

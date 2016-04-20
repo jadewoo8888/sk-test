@@ -187,7 +187,7 @@ function modifyone(itemsApplyMPK,categoryPk){
 function viewone(pk){
 	top.layer.open({
 		type:2,
-		title:'查看登记信息 ',
+		title:'查看申领登记信息 ',
 		shift:1,
 		closeBtn :2,
 		area:['1024px','600px'],

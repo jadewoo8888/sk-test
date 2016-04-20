@@ -53,23 +53,25 @@ var categoryName="";
 								<td   class="Edit-Input1"><input  id="id_itemsApplyDate" class="disableText" fieldname="itemsApplyDate" readonly="readonly"/></td>
 							</tr>
 							
-					<tr>
+					<!-- <tr>
 						<td colspan="4">
-						<div class="biao" style="background-color: white;">
-							<table id="id_table_grid">
-							</table>
-						</div>
+						
 						</td>
-					</tr>
+					</tr> -->
 					
 					<tr>
-						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:710px;resize: none' class="easyui-validatebox"   validType="length[1,125]"  invalidMessage="不能超过125个字符！"></textarea></td>
+						<td class="Edit-Title1">备注</td><td  class="Edit-Input1" colspan="3"><textarea  id="id_itemsApplyRemark" fieldname="itemsApplyRemark" style='width:680px;resize: none' class="easyui-validatebox"   validType="length[1,125]"  invalidMessage="不能超过125个字符！"></textarea></td>
 					</tr>
 					</table> 
 					
-					 <div style="height:50px;">
+					 <div style="height:30px;">
 					 </div>                           		
 			</div>
+			
+			<div class="biao" style="background-color: white;margin-left: 220px; margin-bottom: 100px">
+							<table id="id_table_grid">
+							</table>
+						</div>
 		</div> 
 	     
 	    

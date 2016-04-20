@@ -17,16 +17,16 @@ function initDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"ipDName",title:'物品名称',minwidth:80},
-        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
+		{field:"ipDName",title:'物品名称',minwidth:100},
+        {field:"ipDTypeDisplay",title:'类别',minwidth:60},
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
-		{field:"ipDMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80},
-		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80,editor:{ type:'numberbox',options:{width:80,value:'1'},align:'right',fmType:'int'}}
+		{field:"ipDMetricUnit",title:'单位',minwidth:60},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:100},
+		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:130},
+		{field:"ipDPurchaseCount",title:'采购数量',minwidth:100,editor:{ type:'numberbox',options:{width:100,value:'1'},align:'right',fmType:'int'}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -43,9 +43,9 @@ function initEditCell(){
 		}
 	}
 	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
-	var width = $("td[field=ipDPurchaseCount]").children("div.datagrid-cell")[0].clientWidth;
+	/*var width = $("td[field=ipDPurchaseCount]").children("div.datagrid-cell")[0].clientWidth;
 	var cssWidth = 'width:'+width+'px!important;';
-	$(".datagrid-cell-c1-ipDPurchaseCount").css("cssText",cssWidth);
+	$(".datagrid-cell-c1-ipDPurchaseCount").css("cssText",cssWidth);*/
 }
 
 //自定义查询条件

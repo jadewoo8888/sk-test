@@ -46,9 +46,6 @@ function initComBindFunc() {
 	$("#id_btn_popstorerecord").click(function () {
 		toPopstorerecordPage();
 	});
-	$("#id_btn_pushstore").click(function () {
-		pushstore();
-	});
 	//列选功能 
    	$("#selecteColumns").click(function(){
    		datagrid.showSelectListItem();

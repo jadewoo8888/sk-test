@@ -28,12 +28,23 @@ padding-bottom:5px;
 padding-left:400px;
 background-color:rgba(180,180,180,0.5);
 }
+.searchbox-text{width:182px;}
 .colorblack{color: #000000;}
 .notnullTip{color:red;vertical-align: middle;margin-left:3px;}
 .Edit-Title1{width:200px;}
 #id_unitAdress{width:638px;}
 .EditPanel{padding-left:10px;}
-
+.EditPanel textarea {
+    float: left;
+    margin: 0px;
+    width: 628px;
+    height: 50px;
+    border: 1px solid #E5E5E5;
+    padding: 0 5px;
+    background-color: white;
+    font-size: 12px;
+    resize: none;
+    overflow: hidden;
 .colorlink{color:#00afe8;cursor:pointer;}
 </style>
 <script>

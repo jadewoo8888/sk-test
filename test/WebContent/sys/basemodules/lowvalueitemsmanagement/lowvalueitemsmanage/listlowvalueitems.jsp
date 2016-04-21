@@ -17,7 +17,7 @@ var data_imType=${json:classify("STD_WPLB")};
 			class="head-tx">用于低值品仓库管理</span>
 	</div>
 	<div id="id_div_basequery" class="shaixuan clearfloat">
-		<div class="clearfloat">
+		<div class="clearfloat mleft5">
 			<input type="button" id="id_btn_pushstore" class="bt_list_function" value="入库" /> 
 			<input type="button" id="id_btn_issueitem" class="bt_list_function" value="发放" />
 			<input type="button" id="id_btn_pushstorerecord" class="bt_list_function" value="入库记录" />

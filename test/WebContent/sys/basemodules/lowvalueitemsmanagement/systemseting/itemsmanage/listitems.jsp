@@ -17,7 +17,7 @@ var data_imType=${json:classify("STD_WPLB")};
 			class="head-tx">${html:menudesc(null)}</span>
 	</div>
 	<div id="id_div_basequery" class="shaixuan clearfloat">
-		<div class="clearfloat">
+		<div class="clearfloat mleft5">
 			<input type="button" id="id_btn_addnew" class="bt_list_function"
 				value="+ 新建" /> <input type="button" id="id_btn_export"
 				class="bt_list_function" value="导出" />

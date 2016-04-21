@@ -42,10 +42,6 @@ function initEditCell(){
 			editors[0].target.numberbox('setValue',row[i].ipDApproveCount);
 		}
 	}
-	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
-	/*var width = $("td[field=ipDPurchaseCount]").children("div.datagrid-cell")[0].clientWidth;
-	var cssWidth = 'width:'+width+'px!important;';
-	$(".datagrid-cell-c1-ipDPurchaseCount").css("cssText",cssWidth);*/
 }
 
 //自定义查询条件

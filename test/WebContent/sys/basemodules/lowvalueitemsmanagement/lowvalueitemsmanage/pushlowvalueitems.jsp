@@ -11,7 +11,6 @@
 var business="${param.business}";
 var categoryPk="${param.categoryPk}";
 var pk="${param.pk}";
-//var categoryName="${param.categoryName}";
 var categoryName="";
 </script>
 <style type="text/css">
@@ -50,36 +49,19 @@ var categoryName="";
 								
 							</tr>
 							
-					<tr>
-						<td colspan="4">
-						<div class="biao" style="background-color: white;">
+					</table> 
+					
+					 <div style="height:30px;">
+					 </div>                           		
+			</div>
+			
+			<div class="biao" style="background-color: white;margin-left: 220px;">
 							<table id="id_table_grid">
 							</table>
 						</div>
-						</td>
-					</tr>
-					</table> 
-					
-					 <div style="height:50px;">
-					 </div>                           		
-			</div>
+						
 		</div> 
 	     
-	     <!-- <div title="附件" id="attached">
-			<div class="pd10">
-			   <div class="editItem">
-			   		<div class="editlogo"></div>
-	           		<div class="editTitle">入库附件</div>						           			
-					<hr  class="editline"/>
-	           	</div>
-	            <div   class="editTips"></div> 
-	
-				<div style="margin-top:8px;margin-left:30px;">
-					<iframe id='id_iframe_append' frameborder='no' border='0'  style='width:760px;height:350px'></iframe>
-				</div>	
-			</div>	
-	    </div>  --> 
-	    
 	    <div title="附件信息">
 		    <div id='id_div_appendarea' style="margin-top:8px;margin-left:30px;">
 		    </div>

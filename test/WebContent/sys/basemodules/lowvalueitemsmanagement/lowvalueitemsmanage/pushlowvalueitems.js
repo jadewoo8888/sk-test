@@ -51,13 +51,13 @@ function initDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:80},
-        {field:"imSpecification",title:'规格型号',minwidth:80},
+		{field:"imName",title:'物品名称',minwidth:180},
+        {field:"imSpecification",title:'规格型号',minwidth:120},
 		{field:"imMetricUnit",title:'单位',minwidth:80},
-		{field:"lviCount",title:'入库数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkLviCount,width:80},align:'right',fmType:'int'}}
+		{field:"lviCount",title:'入库数量',minwidth:120,editor:{ type:'numberbox',options:{onChange:checkLviCount,width:120},align:'right',fmType:'int'}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemManageBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -71,9 +71,9 @@ function initEditCell(){
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
 	//编辑单元格的宽带会被框架（审批的样式）样式覆盖，这里处理覆盖的样式
-	var width = $("td[field=lviCount]").children("div.datagrid-cell")[0].clientWidth;
-	var cssWidth = 'width:'+width+'px!important;';
-	$(".datagrid-cell-c1-lviCount").css("cssText",cssWidth);
+	//var width = $("td[field=lviCount]").children("div.datagrid-cell")[0].clientWidth;
+	//var cssWidth = 'width:'+width+'px!important;';
+	//$(".datagrid-cell-c1-lviCount").css("cssText",cssWidth);
 }
 
 //自定义查询条件

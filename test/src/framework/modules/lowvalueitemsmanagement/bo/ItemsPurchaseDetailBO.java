@@ -34,25 +34,27 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 		}
 	}
 	
+	/**
+	 * 
+	 * @param itemsPurchaseDetailList 提交过来的采购单的所有采购明细
+	 * @param ipDItemsPurchasePK采购单PK
+	 */
 	@MethodID("modifyPurchaseCount")
 	@LogOperate(operate = "修改物品采购数量")
 	public void modifyPurchaseCount_log_trans(List<ItemsPurchaseDetail> itemsPurchaseDetailList, String ipDItemsPurchasePK){
-		
-		int ipPurchaseCountSum = 0;//采购数量合计值
-		
-		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {
-			//查出原来的采购明细记录。1、更新采购数量。2、为采购数量合计值
-			ItemsPurchaseDetail dbItemsPurchaseDetail = entityDAO.findById(itemsPurchaseDetail.getPk());
-			
-			dbItemsPurchaseDetail.setIpDPurchaseCount(itemsPurchaseDetail.getIpDPurchaseCount());
-			entityDAO.attachDirty(dbItemsPurchaseDetail);
-			//后来的合计值=原来的合计值+修改采购数量差值（修改后的采购数量-原来的采购数量）
-			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount() - dbItemsPurchaseDetail.getIpDPurchaseCount();//采购数量合计
+		//采购数量合计值
+		int ipPurchaseCountSum = 0;
+		//更新采购明细数量
+		String strSql1 = "update tItemsPurchaseDetail t set t.IPDPurchaseCount = ? where t.pk = ? ";
+		for (ItemsPurchaseDetail itemsPurchaseDetail : itemsPurchaseDetailList) {//采购单的所有采购明细
+			//更新采购明细数量
+			entityDAO.executeSql(strSql1, itemsPurchaseDetail.getIpDPurchaseCount(),itemsPurchaseDetail.getPk());
+			//采购数量合计
+			ipPurchaseCountSum += itemsPurchaseDetail.getIpDPurchaseCount();
 		}
 		//更新物品申请单的合计采购数量
-		ItemsPurchase itemsPurchase = itemsPurchaseDAO.findById(ipDItemsPurchasePK);
-		itemsPurchase.setIpPurchaseCountSum(ipPurchaseCountSum);
-		itemsPurchaseDAO.attachDirty(itemsPurchase);
+		String strSql2 = "update titemsPurchase t set t.IPPurchaseCountSum = ? where t.pk = ?";
+		entityDAO.executeSql(strSql2, ipPurchaseCountSum,ipDItemsPurchasePK);
 	}
 	
 	@MethodID("getIpDetailLisByIPPK")

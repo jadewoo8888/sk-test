@@ -1,8 +1,8 @@
+var assetTypeIsLoaded = false;//固定资产分类代码查找框是否已经加载
 //加载完成执行 
 $(function(){	
 	initData();
 	initCategoryCombo();
-	
 });
 
 
@@ -266,6 +266,8 @@ function initAssetTypeBox(){
 	function acTreeCallBack(code,codeAndName){
 		$('#id_imAssetType').searchbox('setValue',codeAndName);
 		$('#id_imAssetType').attr('treevalue',code);
+		
+		assetTypeIsLoaded = true;
 	}
 }
 
@@ -273,29 +275,30 @@ function initAssetTypeBox(){
  * 类别选择：当是固定资产时，资产分类代码是必填
  */
 function imTypeChangeFn() {
-	initAssetTypeBox();
 	var type = $('#id_imType').combobox('getValue');
-	if (type == 'WPLB_002') {
+	if (type == 'WPLB_002') {//如果是固定资产，显示
+		if (!assetTypeIsLoaded) {
+			initAssetTypeBox();
+		}
 		$('.searchbox-button').show();
 		$('#span_imAssetType').show();
 		$('.searchbox-text').removeClass('disableText');
-		
-		/*$('.searchbox-text').addClass('easyui-validatebox');
-		$('.searchbox-text').attr('required',true);
-		$('.searchbox-text').attr('missingMessage','不能为空');*/
 		$('.searchbox-text').validatebox({
 		    required: true,
 		    missingMessage:'必填 ' 
 		});
 	} else {
-		$('.searchbox-button').hide();
+		$('.EditPanel .searchbox-button').hide();
 		$('#span_imAssetType').hide();
-		$('.searchbox-text').addClass('disableText');
+		$('.EditPanel .searchbox .searchbox-text').css('width',200);
+		$('.EditPanel .searchbox .searchbox-text').addClass('disableText');
 		$('#id_imAssetType').searchbox('setValue','');
 		$('#id_imAssetType').attr('treevalue','');
 		
-		$('.searchbox-text').removeClass('easyui-validatebox');
-		$('.searchbox-text').removeAttr('required');
-		$('.searchbox-text').removeAttr('missingMessage');
+		//移除必填
+		$('#id_imAssetType').searchbox('textbox').validatebox({required:false});
+		//清除加载时验证产生样式 	
+		$(".validatebox-invalid").removeClass("validatebox-invalid");
+		$(".validatebox-tip").remove();
 	}
 }

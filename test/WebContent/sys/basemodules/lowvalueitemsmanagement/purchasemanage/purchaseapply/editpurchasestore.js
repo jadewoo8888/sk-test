@@ -1,14 +1,42 @@
 //列表表格对象
 var datagrid = null;
 var approvalBusiType = "SPYWLX_015";//物品采购审批路径
+
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 //加载完成执行 
 $(function(){
 	initAppend();//加载附件页面
 	getInfo();				//获取信息 
 	getCategoryByPk(categoryPk);
-	initDataGrid();
+	//initDataGrid();
+	getApproveRoleName();
 	initComBindFunc();
 });
+
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
+}
+
 /**
  * 初始化表格信息
  **/
@@ -22,11 +50,11 @@ function initDataGrid() {
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
 		{field:"ipDMetricUnit",title:'单位',minwidth:60},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:100},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:130},
+		{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:130},
 		{field:"ipDPurchaseCount",title:'采购数量',minwidth:100,editor:{ type:'numberbox',options:{width:100,value:'1'},align:'right',fmType:'int'}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,selectedRowData:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
@@ -43,6 +71,17 @@ function initEditCell(){
 		}
 	}
 }
+
+/*function checkAll(data){                   
+	if(data){
+		$.each(data.rows, function(index, item){
+			if(item.checked){
+				datagrid.dataGridObj.datagrid('checkRow', index);
+	 		}
+	 	});
+	 }
+}*/           
+
 
 //自定义查询条件
 function setCustomQueryCondition() {

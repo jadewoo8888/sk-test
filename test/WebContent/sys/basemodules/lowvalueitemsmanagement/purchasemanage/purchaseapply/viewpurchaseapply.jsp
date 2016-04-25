@@ -25,6 +25,9 @@ var business=STR_VIEW;
 var categoryName="${param.categoryName}";
 var approvalBusiType = "SPYWLX_015";//物品采购审批路径
 
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 //加载完成执行 
 $(function(){
 	initComBindFunc();
@@ -73,12 +76,35 @@ function getItemsPurchasByPk(ipDItemsPurchasePK) {
 		  			approveStep =(linkers.split('|')).length - 1;
 	  			}
 	  			getCategoryByPk(obj.ipCategoryPK);
-	  			initDataGrid();
+	  			//initDataGrid();
+	  			getApproveRoleName();
 	  		},
 	  		function(data){
 	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
 	  		}
 	  	);
+}
+
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
 }
 
 /**
@@ -94,7 +120,7 @@ function initDataGrid() {
         {field:"ipDSpecification",title:'规格型号',minwidth:60},
 		{field:"ipDMetricUnit",title:'单位',minwidth:60},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:60},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:120,formatter:function(value){if (approveStep == 2) return value;else return '';}},
+		{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:120,formatter:function(value){if (approveStep == 2) return value;else return '';}},
 		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80,formatter:function(value){if (approveStep == 2) return value;else return '';}},
 		{field:"ipDStoreCount",title:'已入库数量',minwidth:80,formatter:function(value){if (approveStep == 2) return value;else return '';}}
 	]];
@@ -114,12 +140,12 @@ function setCustomQueryCondition() {
 	qc.oper = ARY_STR_EQUAL[0];
 	qc.value1 = pk;
 	customQCArr.push(qc);
-	//采购数量大于0
+	/* //采购数量大于0
 	var appCountQc = new Object();
 	appCountQc.fn = 'ipDApplyCount';
 	appCountQc.oper = ARY_STR_NOTEQUAL[0];
 	appCountQc.value1 = '0';
-	customQCArr.push(appCountQc);
+	customQCArr.push(appCountQc); */
     return customQCArr;
 }
 

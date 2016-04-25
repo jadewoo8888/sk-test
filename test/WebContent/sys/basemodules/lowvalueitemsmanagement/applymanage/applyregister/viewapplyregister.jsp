@@ -25,6 +25,9 @@ var business=STR_VIEW;
 //var mainObj = new Object();
 var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 //加载完成执行 
 $(function(){
 	initComBindFunc();
@@ -62,12 +65,34 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
 		  			//alert(approveStep)
 	  			}
 	  			
-	  			initDataGrid();
+	  			getApproveRoleName();
 	  		},
 	  		function(data){
 	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
 	  		}
 	  	);
+}
+
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
 }
 
 /**
@@ -82,8 +107,8 @@ function initDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:60},
 		{field:"imMetricUnit",title:'单位',minwidth:50},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:130,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:120,formatter:function(value){if (approveStep == 4) return value;else return '';}}
+		{field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:130,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}},
+		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:120,formatter:function(value){if (approveStep == 4) return value;else return '';}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:640,height:'auto',onLoadSuccess:null};
@@ -106,11 +131,6 @@ function setCustomQueryCondition() {
 	mpkQc.value1 = itemsApplyMPK;
 	customQCArr.push(mpkQc);
 	
-	var appCountQc = new Object();
-	appCountQc.fn = 'iamApplyCount';
-	appCountQc.oper = ARY_STR_NOTEQUAL[0];
-	appCountQc.value1 = '0';//
-	customQCArr.push(appCountQc);
     return customQCArr;
 }
 

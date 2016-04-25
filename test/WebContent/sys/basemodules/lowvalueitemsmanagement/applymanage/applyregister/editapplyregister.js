@@ -1,16 +1,20 @@
 //列表表格对象
 var datagrid = null;
 var mainObj = new Object();
-var approvalBusiType = "SPYWLX_014";
+var approvalBusiType = "SPYWLX_014";//物品申领审批路径
+
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 /**
  * 初始化方法
  **/ 
 $(function () { 
 	initDefaultValue();
-	initDataGrid();
+	getApproveRoleName();
+	//initDataGrid();
 	initComBindFunc(); 
 	initAppend();
-	//setAppenFrame();
 });
 
 /**
@@ -83,6 +87,28 @@ function dataFill(obj) {
 		$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
 }
 
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
+}
+
 function checkIamApplyCount(value) {
 	if(value < 1) {
 		top.layer.alert('申领数量不能小于1',{closeBtn :2,icon:7});
@@ -100,8 +126,8 @@ function initDataGrid() {//新增时，读取物品列表。修改时，读取�
         {field:"imSpecification",title:'规格型号',minwidth:80},//物品和物品申领管理明细表的字段一样
 		{field:"imMetricUnit",title:'单位',minwidth:60},//物品和物品申领管理明细表的字段一样
 		{field:"iamApplyCount",title:'申领数量',minwidth:100,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount,width:60},align:'right',fmType:'int'}},
-		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:130,formatter:function(value){if(value == '0') return "";else return value;}},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:120,formatter:function(value){if(value == '0') return "";else return value;}}
+		{field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:130,formatter:function(value){if(value == '0') return "";else return value;}},
+		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:120,formatter:function(value){if(value == '0') return "";else return value;}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};

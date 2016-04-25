@@ -2,6 +2,8 @@ var mainObj = new Object();
 var approvalModule;
 var approvalBusiType = "SPYWLX_015";//物品申领审批路径
 var approvalRole;//审批角色值 ，2：审核人，3：核准人
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
 //加载完成执行 
 $(function(){
 	initAppend(); 		//加载附件页面
@@ -42,9 +44,9 @@ function getCategoryByPk(categoryPk) {
 function initDataGrid() {
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
-	 var ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150};
+	 var ipDApproveCountField = {field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150};
 		if (approvalRole == 3) {//核准人
-			ipDApproveCountField = {field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150,editor:{ type:'numberbox',options:{min:0},align:'right',fmType:'int'}};
+			ipDApproveCountField = {field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150,editor:{ type:'numberbox',options:{min:0},align:'right',fmType:'int'}};
 		}
 		
 	 var _columns =  
@@ -129,11 +131,34 @@ function dataFill(obj){
 }
 
 /**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
+}
+
+/**
  * 获取审批角色
  */
 function getApprovalRoleFn() {
 	approvalRole = approvalModule.curNodeInfo.node.approvalRole;
-	initDataGrid();
+	//initDataGrid();
+	getApproveRoleName();
 }
 
 //审批数据初始化

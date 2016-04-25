@@ -2,11 +2,17 @@ var assetApplyItemAssetTypeArr = new Array();//固定资产类物品的资产类
 var assetApplyItemPkArr = new Array();//固定资产类物品PK数组
 var assetRegAssetNoArr = new Array();//被选择了的固定资产编码数组
 var assetRegAssetTypeQC = "";//固定资产查询条件:根据固定资产编码模糊查询 AND (assetRegAssetType like '固定资产编码1%' or assetRegAssetType like '固定资产编码2%' or assetRegAssetType like '固定资产编码3%')
+
+var approvalBusiType = "SPYWLX_014";//物品申领审批路径
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 //加载完成执行 
 $(function(){
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
-	initDataGrid();
+	getApproveRoleName();
+	//initDataGrid();
 	buttonBind();
 });
 
@@ -21,6 +27,29 @@ function buttonBind(){
 	//返回页面
 	$("#return").click(function(){history.go(-1);});
 }
+
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
+}
+
 /**
  * 初始化表格信息
  **/
@@ -30,13 +59,13 @@ function initDataGrid() {
 	 var _columns =  
 	 [[
 		{field:"imName",title:'物品名称',minwidth:100},
-        {field:"imTypeDisplay",title:'类别',minwidth:80},
+        {field:"imTypeDisplay",title:'类别',minwidth:60},
         {field:"imSpecification",title:'规格型号',minwidth:60},
-		{field:"imMetricUnit",title:'单位',minwidth:50},
+		{field:"imMetricUnit",title:'单位',minwidth:40},
 		{field:"iamApplyCount",title:'申领数量',minwidth:70},
-		{field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:120},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:120},
-		{field:"itemStoreCount",title:'库存',minwidth:50,formatter:function(value,row,index){
+		{field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:150},
+		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:130},
+		{field:"itemStoreCount",title:'库存',minwidth:40,formatter:function(value,row,index){
 			if (value < row.iamLeaderCheckCount) {
 				return '<span style="color: red">'+value+'</span>';
 			} else {
@@ -70,13 +99,13 @@ function setCustomQueryCondition() {
     return customQCArr;
 }
 /**
- *根据条件显示发放或者采购
+ *根据条件显示发放或者申购
  */
 function ifShowIssueBtFn() {
 	var ifIssue = true;
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	for (var i = 0; i < row.length; i++) {
-		if (row[i].itemStoreCount < row[i].iamLeaderCheckCount) {
+		if (row[i].itemStoreCount < row[i].iamLeaderCheckCount) {//如果库存小于审核数量，则显示申购
 			ifIssue = false;
 			break;
 		}

@@ -2,7 +2,10 @@ var mainObj = new Object();
 var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 var approvalModule;
 var approvalRole;//审批角色值 ，2：审核人，3：核准人
-var approveStep = 0;//审批步骤。2:部门审批完毕，3：经办人审批完毕，4：行装科领导完毕
+var approveStep = 0;//审批步骤。0、1为未审批，2:部门审批完毕，3：经办人审批完毕，4：行装科领导完毕
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 //加载完成执行 
 $(function(){
 	initAppend(); 		//加载附件页面
@@ -17,6 +20,11 @@ function buttonBind(){
 	$("#return").click(function(){history.go(-1);});
 }
 
+/**
+ * 1、根据物品申领表PK获取物品申领的历史审批人信息。
+ * 2、再根据历史审批人信息来判断审批步骤到了具体那一步。
+ * @param itemsApplyMPK
+ */
 function getItemsApplyManagementByPk(itemsApplyMPK) {
 	
 	Ajax.service(
@@ -29,7 +37,7 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
 		  			approveStep =(linkers.split('|')).length - 1;
 	  			}
 	  			
-	  			initDataGrid();
+	  			getApproveRoleName();
 	  		},
 	  		function(data){
 	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
@@ -37,18 +45,39 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
 	  	);
 }
 
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
+}
 
 /**
  * 初始化表格信息，跟进审批角色初始化
  **/
 function initDataGrid() {
-	var iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:130,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}};
+	var iamListerCheckCountField = {field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:130,formatter:function(value){if (approveStep == 3 || approveStep == 4) return value;else return '';}};
 	if (approvalRole == 2) {//审核人
-		iamListerCheckCountField = {field:"iamListerCheckCount",title:'行装科经办人审核数量',minwidth:130,editor:{ type:'numberbox',options:{min:0,width:120},align:'right',fmType:'int'}};
+		iamListerCheckCountField = {field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:130,editor:{ type:'numberbox',options:{min:0,width:120},align:'right',fmType:'int'}};
 	}
-	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:130,formatter:function(value){if (approveStep == 4) return value;else return '';}};
+	var iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:130,formatter:function(value){if (approveStep == 4) return value;else return '';}};
 	if (approvalRole == 3) {//核准人
-		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:130,editor:{ type:'numberbox',options:{min:0,width:120},align:'right',fmType:'int'}};
+		iamLeaderCheckCountField = {field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:130,editor:{ type:'numberbox',options:{min:0,width:120},align:'right',fmType:'int'}};
 	}
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};

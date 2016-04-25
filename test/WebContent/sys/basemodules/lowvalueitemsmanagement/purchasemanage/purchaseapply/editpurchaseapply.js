@@ -1,12 +1,17 @@
 //列表表格对象
 var datagrid = null;
 var approvalBusiType = "SPYWLX_015";
+
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 /**
  * 初始化方法
  **/ 
 $(function () { 
 	initDefaultValue();
-	initDataGrid();
+	getApproveRoleName();
+	//initDataGrid();
 	initComBindFunc(); 
 	initAppend();
 });
@@ -75,6 +80,28 @@ function dataFill(obj) {
 		$("#id_ipRemark").val(obj.ipRemark);
 }
 
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName() {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,top.strUserOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					initDataGrid();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
+}
+
 function checkIpDApplyCount(value) {
 	if(value < 1) {
 		top.layer.alert('申购数量不能小于1',{closeBtn :2,icon:7});
@@ -107,7 +134,7 @@ function initAddDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:60},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:130,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount,width:80},align:'right',fmType:'int'}},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""}}
+		{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell1};
@@ -141,7 +168,7 @@ function initModifyDataGrid() {
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
 		{field:"ipDMetricUnit",title:'单位',minwidth:60},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:130,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""; else return value;}}
+		{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""; else return value;}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell1};
@@ -195,7 +222,7 @@ function initIssuePurchaseDataGrid() {
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:60},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
-		{field:"iamLeaderCheckCount",title:'行装科领导审核数量',minwidth:140},
+		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:140},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:110,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}}
 	]];
 	 

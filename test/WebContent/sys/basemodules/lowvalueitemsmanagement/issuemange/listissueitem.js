@@ -27,7 +27,7 @@ function initDataGrid() {
 	 		var html = "<a class='table_a_css' href='javascript:viewone(\""+row.pk+"\")' >查看</a>";
 	 		//只有单据状态是“待发放”和“采购中”的才有【发放】操作
 			if ((row.iamCheckFlag == 'FSCCQWPFS_002' || row.iamCheckFlag == 'FSCCQWPFS_003')) {
-				html += "<a href='javascript:void(0);' onclick='issueone(\""+row.pk+"\",\""+row.categoryManagementPK+"\",\""+row.categoryName+"\")' >发放</a>  ";
+				html += "<a href='javascript:void(0);' onclick='issueone(\""+row.pk+"\",\""+row.categoryManagementPK+"\")' >发放</a>  ";
 			}
  			return html;
 		}}, 
@@ -115,7 +115,7 @@ function initCategoryCombo() {
 
 //发放
 function issueone(pk,categoryPk,categoryName){
-	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/issuemange/editissueitem.jsp?pk='+pk+'&categoryPk='+categoryPk+'&categoryName='+categoryName+'&business='+STR_REGISTER_ADDNEW;
+	location.href=contextPath+'/sys/basemodules/lowvalueitemsmanagement/issuemange/editissueitem.jsp?pk='+pk+'&categoryPk='+categoryPk+'&business='+STR_REGISTER_ADDNEW;
 }
 
 /**

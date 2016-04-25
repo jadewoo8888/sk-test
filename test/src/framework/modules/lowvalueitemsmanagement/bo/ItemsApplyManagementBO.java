@@ -258,25 +258,7 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 		if (totalCount > 0) {
 			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
 		}
-		if (rowList != null) {
-			for (ItemsApplyManagement itemsApplyManagement : rowList) {
-				if (itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_001")) {
-					itemsApplyManagement.setItemStatusDisplay("未上报");
-				} else if(itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_002")) {
-					itemsApplyManagement.setItemStatusDisplay("已上报");
-				} else if(itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_003")) {
-					itemsApplyManagement.setItemStatusDisplay("审批中");
-				} else if(itemsApplyManagement.getIamCheckFlag ().equals("FSCCQWPFS_001") || itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_004") || itemsApplyManagement.getItemsApplyFlag().equals("WPSLZT_005")) {
-					itemsApplyManagement.setItemStatusDisplay("已审批");
-				} else if(itemsApplyManagement.getIamCheckFlag().equals("FSCCQWPFS_003")) {
-					itemsApplyManagement.setItemStatusDisplay("采购中");
-				} else if(itemsApplyManagement.getIamCheckFlag().equals("FSCCQWPFS_002")) {
-					itemsApplyManagement.setItemStatusDisplay("待发放");
-				} else if(itemsApplyManagement.getIamCheckFlag().equals("FSCCQWPFS_004")) {
-					itemsApplyManagement.setItemStatusDisplay("已发放");
-				}
-			}
-		}
+		
 		listForPageBean.setTotal(totalCount);
 		FKOper.getInstance().setDisplay(rowList);
 		listForPageBean.setRows(rowList);

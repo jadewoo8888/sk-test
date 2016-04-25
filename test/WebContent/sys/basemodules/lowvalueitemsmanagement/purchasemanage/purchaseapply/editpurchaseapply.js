@@ -184,10 +184,6 @@ function initEditCell1(){
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
-	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
-	var width = $("td[field=ipDApplyCount]").children("div.datagrid-cell")[0].clientWidth;
-	var cssWidth = 'width:'+width+'px!important;';
-	$(".datagrid-cell-c1-ipDApplyCount").css("cssText",cssWidth);
 }
 
 /**
@@ -242,9 +238,6 @@ function initEditCell2(){
 		var v = rows[i]['iamLeaderCheckCount'];
 		editors[0].target.numberbox('setValue',v);
 	}
-	//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
-	var width = $("td[field=ipDApplyCount]").children("div.datagrid-cell")[0].clientWidth;
-	$(".datagrid-cell-c1-ipDApplyCount").width(width);
 }
 
 /**

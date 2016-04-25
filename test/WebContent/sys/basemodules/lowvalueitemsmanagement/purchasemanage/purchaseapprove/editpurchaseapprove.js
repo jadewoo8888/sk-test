@@ -1,7 +1,7 @@
 var mainObj = new Object();
 var approvalModule;
 var approvalBusiType = "SPYWLX_015";//物品申领审批路径
-var approvalRole;//审批角色值 ，2：审核人，3：核准人
+var approvalRole;//审批角色值 ，0：无，1：经办人，2：审核人，3：核准人
 var auditRoleName = '';//审核角色名称
 var checkRoleName = '';//核准角色名称
 //加载完成执行 
@@ -45,7 +45,7 @@ function initDataGrid() {
 	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var ipDApproveCountField = {field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150};
-		if (approvalRole == 3) {//核准人
+		if (approvalRole == 3) {//核准人。只有核准人才有审批权限
 			ipDApproveCountField = {field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150,editor:{ type:'numberbox',options:{min:0},align:'right',fmType:'int'}};
 		}
 		
@@ -79,12 +79,6 @@ function initEditCell(){
 			editors[0].target.numberbox('setValue','');
 		}
 		
-	}
-	if (approvalRole == 3) {
-		//编辑单元格的宽带会被框架样式（审批的样式）覆盖，这里处理覆盖的样式
-		var width = $("td[field=ipDApproveCount]").children("div.datagrid-cell")[0].clientWidth;
-		var cssWidth = 'width:'+width+'px!important;';
-		$(".datagrid-cell-c1-ipDApproveCount").css("cssText",cssWidth);
 	}
 }
 

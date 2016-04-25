@@ -70,10 +70,6 @@ function initEditCell(){
 	for (var i = 0; i < rowLen; i++) {
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 	}
-	//编辑单元格的宽带会被框架（审批的样式）样式覆盖，这里处理覆盖的样式
-	//var width = $("td[field=lviCount]").children("div.datagrid-cell")[0].clientWidth;
-	//var cssWidth = 'width:'+width+'px!important;';
-	//$(".datagrid-cell-c1-lviCount").css("cssText",cssWidth);
 }
 
 //自定义查询条件

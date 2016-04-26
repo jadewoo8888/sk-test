@@ -11,8 +11,8 @@
 
 	<body class="list_body"> 
 		<div class="head" id="id_div_desc">
-			<span class="head-title">${html:menuname(null)}</span>
-			<span class="head-tx">${html:menudesc(null)}</span>
+			<span class="head-title">物品发放管理</span>
+			<span class="head-tx">用于物品申领的发放管理</span>
 		</div>
 		<div id="id_div_basequery" class="shaixuan clearfloat">
 			<div class="clearfloat mleft5">

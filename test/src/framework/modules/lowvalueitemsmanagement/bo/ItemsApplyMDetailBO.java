@@ -2,6 +2,7 @@ package framework.modules.lowvalueitemsmanagement.bo;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -55,6 +56,76 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			}
 		}
 	}
+	
+	/*public void test(final int pageNumber, final int pageSize,
+			final List<QueryCondition> queryCond, final String sortCond) {
+		ListForPageBean listForPageBean = new ListForPageBean();
+		QueryConditionAssembler assembler = getQueryConditionAssembler(queryCond, sortCond);
+		int totalCount = entityDAO.getTotalCountForPage(assembler);
+		List<ItemsApplyMDetail> rowList = null;
+		if (totalCount > 0) {
+			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
+		}
+		if (rowList != null) {
+			//** 第一步：收集ItemManagePK，封装为数组 **//*
+			int rowLen = rowList.size();
+			String[] itemManagerPKArr = new String[rowList.size()];
+			for(int i=0;i<rowList.size();i++) {
+				itemManagerPKArr[i] = rowList.get(i).getItemManagePK();
+			}
+			
+			//**第二步：按上方封装的itemmanagepk，一次性查询相应的物品管理信息 **//*
+			//List<ItemManage> itemManageList = 根据上方pk数组查询
+			String pksInSql = DBOperation.mosaicInStrSql(itemManagerPKArr);
+			String itemsSql = "select * from tItemManage where pk in ( " + pksInSql + " ) and 1=?";
+			List<ItemManage> itemManageList = entityDAO.executeFindEntitys(ItemManage.class, itemsSql, "1");//所有物品
+
+			//** 第三步：遍历申领明细，按固定资产或低值品封装，方便下一步处理 **//*
+			List<ItemsApplyMDetail> gdItemApplyDetaiList = new ArrayList<ItemsApplyMDetail>();//固定资产申领明细列表
+			List<String> gdImAssetTypeList = new ArrayList<String>();//固定资产分类代码列表
+			List<ItemsApplyMDetail> dzpItemApplyDetaiList = new ArrayList<ItemsApplyMDetail>();//低值品申领明细列表
+			List<String> dzpItemApplyDetaiItemManagePKList = new ArrayList<String>();//低值品物品pk列表
+			
+			String itemSql = "select * from tItemManage where pk = ?";
+			
+			for(int i=0;i<rowLen;i++) {
+				ItemsApplyMDetail itemsApplyMDetail = (ItemsApplyMDetail)rowList.get(i);
+				
+				ItemManage itemManage = entityDAO.executeFindEntity(ItemManage.class, itemSql, itemsApplyMDetail.getItemManagePK());
+				
+				if(itemManage == null) {
+					continue;
+				}
+				if (itemManage.getImType().equals("WPLB_002")) {//固定资产
+					gdItemApplyDetaiList.add(rowList.get(i));
+					gdImAssetTypeList.add(itemManage.getImAssetType());
+				} else  {
+					dzpItemApplyDetaiList.add(rowList.get(i));
+					dzpItemApplyDetaiItemManagePKList.add(rowList.get(i).getItemManagePK());
+				}
+				}
+			
+			//** 第四步：按封装好的固定资产和低值品遍历查询相应的库存 **//*
+			int gdItemApplyDetaiListLen = gdItemApplyDetaiList.size();
+			String sqlBuf = "SELECT case ";
+			for (String )
+			
+			List<Object[]> gdRegistValueList = 编写方法，根据gdImAssetTypeList遍历，将其组装成case when 语句，一次性查询入库表。
+			//上方语句的思路大概如：
+			//若gdRegistValueList[0] = 001001,001002  gdRegistValueList[1] = 001003,001004,语句大概如下，请自行百度 group by case when
+		     //SELECT case when assetregassettype like '001001%' or assetregassettype like '001002' then '分组1' when   assetregassettype like '001003%' or assetregassettype like '001004' then ‘分组2’ end, SUM(assetRegAssetCurCount) FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='') AND assetRegEnprCode = ?  AND assetRegCheckFlag='SJZT_01'") group by  case when assetregassettype like '001001%' or assetregassettype like '001002' then '分组1' when   assetregassettype like '001003%' or assetregassettype like '001004' then '分组2' end ;
+			
+			for(int i=0;i<gdItemApplyDetaiListLen;i++) {
+				//编写方法,从gdRegistValueList根据分组名称，找到对应gdItemApplyDetaiList的数据，然后赋值
+			}
+			int dzpItemApplyDetaiListLen = dzpItemApplyDetaiList.size();
+			List<LowValueItems> lowValueItemsList = 编写方法，根据上方dzpItemApplyDetaiItemManagePKList一次性查询tLowValueItems
+			for(int i=0;i<dzpItemApplyDetaiListLen;i++) {
+				//编写方法根据dzpItemApplyDetaiList.get(i).getItemManagePK()从lowValueItemsList中找到对应的数据，然后将值setItemStoreCount
+			}
+		}
+		
+	}*/
 
 	@MethodID("getListForPage")
 	public ListForPageBean getListForPage(final int pageNumber, final int pageSize,
@@ -69,7 +140,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		if (rowList != null) {
 			/** 遍历申领明细，给每个申领明细库存赋值 
 			 * 1、查找申领明细的物品
-			 * 2、判断物品是固定资产还是地址品，如果是固定资产，就根据物品的资产分类代码查找固定资产的总库存。如果是低值品，从低值品仓库管理中查询库存。
+			 * 2、判断物品是固定资产还是低值品，如果是固定资产，就根据物品的资产分类代码查找固定资产的总库存。如果是低值品，从低值品仓库管理中查询库存。
 			 * 3、给申领明细（注意：是申领明细，而不是物品）库存。
 			 * 
 			 * **/
@@ -125,13 +196,13 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	public void issueItems_log_trans(String itemsApplyMPK,String ApplyPersonName, String[] itemsApplyMDetailPkArr,String[] assetRegAssetNoArr) {
 		
 		String[] updateInfo = DBOperation.getUpdateInfo();
-		//SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
-		//String now = sFormat.format(new Date());
 		
 		ItemsApplyManagement itemsApplyManagement = itemsApplyManagementDAO.executeFindEntity(ItemsApplyManagement.class, "select * from tItemsApplyManagement where pk = ?", itemsApplyMPK);
 		
 		//第一步：批量更新固定资产类物品对应资产的所属部门、机构及使用人。
-		this._updateIssueAsset_log_trans(ApplyPersonName, itemsApplyManagement.getApplyPerson(), itemsApplyManagement.getItemsApplyDeptCode(), itemsApplyManagement.getOrgCode(), assetRegAssetNoArr);
+		if (assetRegAssetNoArr != null && assetRegAssetNoArr.length > 0) {
+			this._updateIssueAsset_log_trans(ApplyPersonName, itemsApplyManagement.getApplyPerson(), itemsApplyManagement.getItemsApplyDeptCode(), itemsApplyManagement.getOrgCode(), assetRegAssetNoArr);
+		}
 		
 		//第二步：对申购单明细做处理
 		for (String itemsApplyMDetailPk : itemsApplyMDetailPkArr) {
@@ -144,20 +215,22 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 				lowValueItemsDAO.attachDirty(lowValueItems);
 				
 				//2）、每个低值品物品新增一条出库记录（发放数量等于行装科领导审核通过的数量）
-				LVIPopRecord lviPopRecord = new LVIPopRecord();
-				lviPopRecord.setLviPRApplyPerson(itemsApplyManagement.getApplyPerson());
-				lviPopRecord.setLviPRCategoryPK(itemsApplyManagement.getCategoryManagementPK());
-				lviPopRecord.setLviPRCount(itemsApplyMDetail.getIamLeaderCheckCount());
-				lviPopRecord.setLviPRDate(updateInfo[0].substring(0, 10));
-				lviPopRecord.setLviPRItemManagePK(itemsApplyMDetail.getIamItemManagePK());
-				lviPopRecord.setLviPRMetricUnit(itemsApplyMDetail.getImMetricUnit());
-				lviPopRecord.setLviPRName(itemsApplyMDetail.getImName());
-				lviPopRecord.setLviPRPerson(updateInfo[2]);
-				lviPopRecord.setLviPRRemark("");
-				lviPopRecord.setLviPRSpecification(itemsApplyMDetail.getImSpecification());
-				lviPopRecord.setLviPRType(itemsApplyMDetail.getImType());
-				lviPopRecord.setPk(UUID.randomUUID().toString());
-				lviPopRecordDAO.save(lviPopRecord);
+				if (itemsApplyMDetail.getIamLeaderCheckCount() > 0) {//发放申领单的时候，“行装科领导审核数量为0”的物品不需要生成“出库记录”
+					LVIPopRecord lviPopRecord = new LVIPopRecord();
+					lviPopRecord.setLviPRApplyPerson(itemsApplyManagement.getApplyPerson());
+					lviPopRecord.setLviPRCategoryPK(itemsApplyManagement.getCategoryManagementPK());
+					lviPopRecord.setLviPRCount(itemsApplyMDetail.getIamLeaderCheckCount());
+					lviPopRecord.setLviPRDate(updateInfo[0].substring(0, 10));
+					lviPopRecord.setLviPRItemManagePK(itemsApplyMDetail.getIamItemManagePK());
+					lviPopRecord.setLviPRMetricUnit(itemsApplyMDetail.getImMetricUnit());
+					lviPopRecord.setLviPRName(itemsApplyMDetail.getImName());
+					lviPopRecord.setLviPRPerson(updateInfo[2]);
+					lviPopRecord.setLviPRRemark("");
+					lviPopRecord.setLviPRSpecification(itemsApplyMDetail.getImSpecification());
+					lviPopRecord.setLviPRType(itemsApplyMDetail.getImType());
+					lviPopRecord.setPk(UUID.randomUUID().toString());
+					lviPopRecordDAO.save(lviPopRecord);
+				}
 			}
 		}
 		

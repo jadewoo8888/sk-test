@@ -177,7 +177,8 @@ function pushOneStore(itemsPurchaseDetaiPk) {
 
 /** 
  * 单类固定资产入库
- * 说明：入库后的更新数据由系统集成的固定资产入库功能去调用java接口：pushOneAssetStore_log_trans(String itemsPurchaseDetailPk, int assetCount)
+ * 说明：入库后的更新数据由系统集成的固定资产入库功能去调用java接口：
+ * ItemsPurchaseDetailBO类的pushOneAssetStore_log_trans(String itemsPurchaseDetailPk, int assetCount)
  **/
 function pushOneAssetStore(ipDItemManagePK,itemsPurchaseDetaiPk) {
 	Ajax.service(

@@ -31,7 +31,7 @@ var data_lviPRType=${json:classify("STD_WPLB")};
 			<input type="text" qc={fn:'lviPRCount',oper:'3'} placeholder="出库数量" class="shaixuan_txt float_left"/>
 			<input type="text" qc={fn:'lviPRPerson',oper:'3'} placeholder="发放人" class="shaixuan_txt float_left"/>
 			<input type="text" qc={fn:'lviPRApplyPerson',oper:'3'} placeholder="领用人" class="shaixuan_txt float_left"/>
-			<input type="text" qc={fn:'lviPRDate',oper:'3'} placeholder="发放日期" class="shaixuan_txt float_left"/>
+			<input type="text" qc={fn:'lviPRDate',oper:'3'} placeholder="发放日期" class="easyui-datebox" editable="fasle"/>
 			<input type="button" id="id_btn_query" value="查询" class="bt_query mleft5">
 		</div>
 	</div>

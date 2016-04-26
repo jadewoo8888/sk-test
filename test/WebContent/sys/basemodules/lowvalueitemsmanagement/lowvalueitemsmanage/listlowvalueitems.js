@@ -47,7 +47,7 @@ function initComBindFunc() {
 		toPopstorerecordPage();
 	});
 	//列选功能 
-   	$("#selecteColumns").click(function(){
+   	$("#id_btn_selecteColumns").click(function(){
    		datagrid.showSelectListItem();
    	})
 	//查询按钮处理事件

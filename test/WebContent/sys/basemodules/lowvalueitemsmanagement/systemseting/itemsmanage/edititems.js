@@ -1,8 +1,8 @@
 var assetTypeIsLoaded = false;//固定资产分类代码查找框是否已经加载
 //加载完成执行 
 $(function(){	
-	initData();
 	initCategoryCombo();
+	initData();
 });
 
 
@@ -30,9 +30,27 @@ function initData() {
 	
 	$('#span_imAssetType').hide();
 	
-	if(pk) {
-		getItemByPk(pk);
-	}
+}
+
+/**
+ * 类目下拉框
+ */
+function initCategoryCombo() {
+	Ajax.service(
+		'CategoryManagementBO',
+		'findAll', 
+		[],
+		function(result){
+			$('#id_imCategoryPK').combobox("loadData",result);  
+			 if (result.length > 0) {
+				 $('#id_imCategoryPK').combobox('select', result[0].pk);
+		     }
+			 
+			 if(pk) {
+					getItemByPk(pk);
+				}
+		}
+	);
 }
 
 /** 
@@ -75,10 +93,7 @@ function dataFill(obj){
 		  		 	$("#id_"+p).val(obj[p]);		  		 	
 			     }
 		  }
-	  }
-	  //修改赋值,加入隐藏字段(取数据库信息，不作修改)
-	  if(business==STR_REGISTER_MODIFY){
-		  dataPackage=obj;
+		 // $('#id_imCategoryPK').combobox('select', result[0].pk);
 	  }
 }
 
@@ -225,25 +240,6 @@ function submitModify(submitPackage){
  					top.layer.alert('保存错误',{closeBtn :2,icon:5});
  			}
  	  );
-}
-/**
- * 类目下拉框
- */
-function initCategoryCombo() {
-	Ajax.service(
-		'CategoryManagementBO',
-		'findAll', 
-		[],
-		initCategoryComboSuccFunc
-	);
-}
-
-function initCategoryComboSuccFunc(result) {
-	$('#id_imCategoryPK').combobox("loadData",result);  
-	 if (result.length > 0) {
-		 $('#id_imCategoryPK').combobox('select', result[0].pk);
-     }
-	 
 }
 
 /**

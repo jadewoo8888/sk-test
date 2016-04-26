@@ -64,9 +64,9 @@ public class ItemsPurchaseDetailBO extends BOBase<ItemsPurchaseDetailDAO, ItemsP
 	}
 	
 	/**
-	 * 单个固定资产物品入库（与单个低值品物品入库功能类似，只是需求不是很明确，故分开来写）
-	 * @param itemsPurchaseDetailPk
-	 * @param assetCount
+	 * 单个固定资产物品入库
+	 * @param itemsPurchaseDetailPk 物品采购申请明细表PK
+	 * @param assetCount 固定资产更新数量
 	 */
 	@MethodID("pushOneAssetStore")
 	@LogOperate(operate = "单个固定资产物品入库")

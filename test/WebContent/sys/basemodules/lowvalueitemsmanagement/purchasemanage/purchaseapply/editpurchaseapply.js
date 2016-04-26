@@ -213,16 +213,16 @@ function initIssuePurchaseDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:120},
+		{field:"imName",title:'物品名称',minwidth:110},
         {field:"imTypeDisplay",title:'类别',minwidth:80},
         {field:"imSpecification",title:'规格型号',minwidth:80},
 		{field:"imMetricUnit",title:'单位',minwidth:60},
 		{field:"iamApplyCount",title:'申领数量',minwidth:80},
 		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:140},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:110,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}}
+		{field:"ipDApplyCount",title:'申购数量',minwidth:100,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount},align:'right',fmType:'int'}}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell2};
+	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell2};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);

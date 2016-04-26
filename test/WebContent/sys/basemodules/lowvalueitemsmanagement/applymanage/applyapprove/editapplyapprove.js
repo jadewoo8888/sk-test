@@ -208,11 +208,12 @@ function setApprovalOption() {
 }
 
 /**
+ * （先留着以免需求变了又要恢复）
  * 验证
  * 1、当审批角色为“审核人”申领单中有物品的“经办人审核数量”没填时，点击“通过”弹出提示“确定后只保存已填写经办人审核数量的物品，是否确认此次操作？
  * 2、当审批角色为“核准人”申领单中有物品的“行政科领导审核数量”没填时，点击“通过”弹出提示“确定后只保存已填写行装科领导审核数量的物品，是否确认此次操作？
  */
-function checkApproveCount() {
+/*function checkApproveCount() {
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;
     var rowsData = new Array();
@@ -229,7 +230,7 @@ function checkApproveCount() {
 	};
 	
 	return true;
-}
+}*/
 
 /**
  * 执行审批操作
@@ -276,8 +277,8 @@ function doApprovalsave(type,data,approvalItemMDtailList) {
 
 }
 
-//审批操作
-function approvalsave(type,data){
+//审批操作（先留着以免需求变了又要恢复）
+/*function approvalsave(type,data){
 	var approvalItemMDtailList = packageApprovalItemMDtail();
 	
 	if (!checkApproveCount()) {
@@ -318,8 +319,16 @@ function approvalsave(type,data){
 	} else {
 		doApprovalsave(type,data,approvalItemMDtailList);
 	}
-}
+}*/
 
+/**
+ * 审批操作
+ * **/
+function approvalsave(type,data){
+	var approvalItemMDtailList = packageApprovalItemMDtail();
+	doApprovalsave(type,data,approvalItemMDtailList);
+	
+}
 function packageApprovalItemMDtail() {
 	var row = datagrid.dataGridObj.datagrid('getRows');
 	var rowLen = row.length;

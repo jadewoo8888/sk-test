@@ -118,9 +118,9 @@ public class ItemsApplyManagementBO extends BOBase<ItemsApplyManagementDAO, Item
 	@MethodID("deleteItemApply")
 	@LogOperate(operate = "删除一条物品申领登记")
 	public String deleteItemApply_log_trans(String pk) {
-		/** 第一步：删除物品申领 * */
-		entityDAO.executeSql("delete from tItemManage t where t.pk = ?", pk);
-		/** 第二步：删除对应的物品申领明细 * */
+		/** 第一步：删除物品申领单 * */
+		entityDAO.executeSql("delete from tItemsApplyManagement t where t.pk = ?", pk);
+		/** 第二步：删除对应的物品申领单明细 * */
 		entityDAO.executeSql("delete from tItemsApplyMDetail t where t.itemsapplympk=?", pk);
 		
 		/** 第三步：删除对应的附件信息 * */

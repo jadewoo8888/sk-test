@@ -22,7 +22,7 @@ function initDataGrid() {
 			html += "<a class='table_a_css' href='javascript:deleteone(\""+row.pk+"\")' >删除</a>";
  			return html;
 		}}, 
-		{field:"pk",title:'主键',minwidth:200, hidden:true},
+		//{field:"pk",title:'主键',minwidth:200, hidden:true},
 		{field:"imCategoryPKDisplay",title:'类目',minwidth:150},
         {field:"imTypeDisplay",title:'类别',minwidth:160},
         {field:"imName",title:'物品名称',minwidth:200},

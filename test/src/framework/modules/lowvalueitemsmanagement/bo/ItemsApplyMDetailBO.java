@@ -57,7 +57,17 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 		}
 	}
 	
-	/*public void test(final int pageNumber, final int pageSize,
+	/**
+	 * 获取发放申领明细（包含库存）
+	 * 盛祺公司的代码做法
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param queryCond
+	 * @param sortCond
+	 * @return
+	 */
+	@MethodID("getListForPage")
+	public ListForPageBean getListForPage(final int pageNumber, final int pageSize,
 			final List<QueryCondition> queryCond, final String sortCond) {
 		ListForPageBean listForPageBean = new ListForPageBean();
 		QueryConditionAssembler assembler = getQueryConditionAssembler(queryCond, sortCond);
@@ -67,23 +77,23 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			rowList = entityDAO.getListForPage(" * ", pageNumber, pageSize, assembler);
 		}
 		if (rowList != null) {
-			//** 第一步：收集ItemManagePK，封装为数组 **//*
+			/** 第一步：收集ItemManagePK，封装为数组 **/
 			int rowLen = rowList.size();
 			String[] itemManagerPKArr = new String[rowList.size()];
 			for(int i=0;i<rowList.size();i++) {
 				itemManagerPKArr[i] = rowList.get(i).getItemManagePK();
 			}
 			
-			//**第二步：按上方封装的itemmanagepk，一次性查询相应的物品管理信息 **//*
+			/**第二步：按上方封装的itemmanagepk，一次性查询相应的物品管理信息 **/
 			//List<ItemManage> itemManageList = 根据上方pk数组查询
 			String pksInSql = DBOperation.mosaicInStrSql(itemManagerPKArr);
 			String itemsSql = "select * from tItemManage where pk in ( " + pksInSql + " ) and 1=?";
 			List<ItemManage> itemManageList = entityDAO.executeFindEntitys(ItemManage.class, itemsSql, "1");//所有物品
 
-			//** 第三步：遍历申领明细，按固定资产或低值品封装，方便下一步处理 **//*
+			/** 第三步：遍历申领明细，按固定资产或低值品封装，方便下一步处理 **/
 			List<ItemsApplyMDetail> gdItemApplyDetaiList = new ArrayList<ItemsApplyMDetail>();//固定资产申领明细列表
 			List<String> gdImAssetTypeList = new ArrayList<String>();//固定资产分类代码列表
-			List<ItemsApplyMDetail> dzpItemApplyDetaiList = new ArrayList<ItemsApplyMDetail>();//低值品申领明细列表
+			List<ItemsApplyMDetail> dzpItemApplyDetailList = new ArrayList<ItemsApplyMDetail>();//低值品申领明细列表
 			List<String> dzpItemApplyDetaiItemManagePKList = new ArrayList<String>();//低值品物品pk列表
 			
 			String itemSql = "select * from tItemManage where pk = ?";
@@ -91,8 +101,8 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			for(int i=0;i<rowLen;i++) {
 				ItemsApplyMDetail itemsApplyMDetail = (ItemsApplyMDetail)rowList.get(i);
 				
-				ItemManage itemManage = entityDAO.executeFindEntity(ItemManage.class, itemSql, itemsApplyMDetail.getItemManagePK());
-				
+				//ItemManage itemManage = entityDAO.executeFindEntity(ItemManage.class, itemSql, itemsApplyMDetail.getItemManagePK());
+				ItemManage itemManage = itemManageList.get(i);
 				if(itemManage == null) {
 					continue;
 				}
@@ -100,35 +110,91 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 					gdItemApplyDetaiList.add(rowList.get(i));
 					gdImAssetTypeList.add(itemManage.getImAssetType());
 				} else  {
-					dzpItemApplyDetaiList.add(rowList.get(i));
+					dzpItemApplyDetailList.add(rowList.get(i));
 					dzpItemApplyDetaiItemManagePKList.add(rowList.get(i).getItemManagePK());
 				}
 				}
 			
-			//** 第四步：按封装好的固定资产和低值品遍历查询相应的库存 **//*
+			/** 第四步：按封装好的固定资产和低值品遍历查询相应的库存 **/
+			/**给固定资产设置库存**/
 			int gdItemApplyDetaiListLen = gdItemApplyDetaiList.size();
-			String sqlBuf = "SELECT case ";
-			for (String )
+			StringBuffer caseSqlBuf = new StringBuffer("case ");
 			
-			List<Object[]> gdRegistValueList = 编写方法，根据gdImAssetTypeList遍历，将其组装成case when 语句，一次性查询入库表。
-			//上方语句的思路大概如：
-			//若gdRegistValueList[0] = 001001,001002  gdRegistValueList[1] = 001003,001004,语句大概如下，请自行百度 group by case when
-		     //SELECT case when assetregassettype like '001001%' or assetregassettype like '001002' then '分组1' when   assetregassettype like '001003%' or assetregassettype like '001004' then ‘分组2’ end, SUM(assetRegAssetCurCount) FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId='') AND (assetRegUser IS NULL OR assetRegUser='') AND assetRegEnprCode = ?  AND assetRegCheckFlag='SJZT_01'") group by  case when assetregassettype like '001001%' or assetregassettype like '001002' then '分组1' when   assetregassettype like '001003%' or assetregassettype like '001004' then '分组2' end ;
+			for (int k = 0; k < gdImAssetTypeList.size(); k++) {
+				String[] imAssetTypeArr = ((String)gdImAssetTypeList.get(k)).split(",");
+				caseSqlBuf.append("when ");
+				for (int i = 0; i < imAssetTypeArr.length; i++) {
+					
+					if (i < imAssetTypeArr.length - 1) {
+						caseSqlBuf.append("assetregassettype like '"+imAssetTypeArr[i]+"%' or ");
+					} else {
+						caseSqlBuf.append("assetregassettype like '"+imAssetTypeArr[i]+"%' then '"+k+"'");
+					}
+				}
+			}
+			caseSqlBuf.append(" end");
 			
+			String strSql = "select " + caseSqlBuf.toString() + ",SUM(assetRegAssetCurCount)  FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId = '') AND (assetRegUser IS NULL OR assetRegUser = '') AND assetRegEnprCode = ?  AND assetRegCheckFlag = 'SJZT_01'  group by " + caseSqlBuf.toString();
+			System.out.println(strSql);
+			String assetRegEnprCode = rowList.get(0).getOrgCode();
+			List<Object[]> gdRegistValueList = entityDAO.executeFind(strSql, assetRegEnprCode);
+			
+			BigDecimal gdStoreCount = null;//固定资产库存
 			for(int i=0;i<gdItemApplyDetaiListLen;i++) {
 				//编写方法,从gdRegistValueList根据分组名称，找到对应gdItemApplyDetaiList的数据，然后赋值
+				ItemsApplyMDetail gdItemsApplyMDetail = gdItemApplyDetaiList.get(i);
+				for (int j = 0; j < gdRegistValueList.size(); j++) {
+					Object[] o = gdRegistValueList.get(j);
+					if (o[0] != null) {
+						int index = Integer.parseInt(o[0].toString());
+						if (index == i) {
+							gdStoreCount = (BigDecimal)o[1];
+							gdItemsApplyMDetail.setItemStoreCount(gdStoreCount == null ? 0 : Integer.parseInt(gdStoreCount + ""));
+							break;
+						}
+						
+					}
+					
+				}
+				
 			}
-			int dzpItemApplyDetaiListLen = dzpItemApplyDetaiList.size();
-			List<LowValueItems> lowValueItemsList = 编写方法，根据上方dzpItemApplyDetaiItemManagePKList一次性查询tLowValueItems
+			/**给低值品设置库存**/
+			int dzpItemApplyDetaiListLen = dzpItemApplyDetailList.size();
+			//List<LowValueItems> lowValueItemsList = 编写方法，根据上方dzpItemApplyDetaiItemManagePKList一次性查询tLowValueItems
+			String mpksInSql = DBOperation.mosaicInStrSql((String[])dzpItemApplyDetaiItemManagePKList.toArray(new String[dzpItemApplyDetaiItemManagePKList.size()]));
+			String lvisSql = "select * from tLowValueItems where LVIItemManagePK in ( " + mpksInSql + " ) and 1=?";
+			List<LowValueItems> lowValueItemsList = entityDAO.executeFindEntitys(LowValueItems.class, lvisSql, "1");
+			//编写方法根据dzpItemApplyDetaiList.get(i).getItemManagePK()从lowValueItemsList中找到对应的数据，然后将值setItemStoreCount
 			for(int i=0;i<dzpItemApplyDetaiListLen;i++) {
-				//编写方法根据dzpItemApplyDetaiList.get(i).getItemManagePK()从lowValueItemsList中找到对应的数据，然后将值setItemStoreCount
+				ItemsApplyMDetail dzpItemApplyDetail = dzpItemApplyDetailList.get(i);
+				for (LowValueItems lowValueItems: lowValueItemsList) {
+					if (dzpItemApplyDetail.getItemManagePK().equals(lowValueItems.getLviItemManagePK())) {//找出低值品对应的仓库库存
+						dzpItemApplyDetail.setItemStoreCount(lowValueItems.getLviCount());
+						break;
+					}
+				}
 			}
+			
 		}
 		
-	}*/
-
-	@MethodID("getListForPage")
-	public ListForPageBean getListForPage(final int pageNumber, final int pageSize,
+		listForPageBean.setTotal(totalCount);
+		FKOper.getInstance().setDisplay(rowList);
+		listForPageBean.setRows(rowList);
+		return listForPageBean;
+		
+	}
+	
+/**
+ * 获取发放申领明细（包含库存）
+ * 外包开发方的做法（getListForPage是盛祺公司的代码思路，我们担心有问题，故先保留。上线之后可删除）
+ * @param pageNumber
+ * @param pageSize
+ * @param queryCond
+ * @param sortCond
+ * @return
+ */
+	@MethodID("getListForPage_bak")
+	public ListForPageBean getListForPage_bak(final int pageNumber, final int pageSize,
 			final List<QueryCondition> queryCond, final String sortCond) {
 		ListForPageBean listForPageBean = new ListForPageBean();
 		QueryConditionAssembler assembler = getQueryConditionAssembler(queryCond, sortCond);

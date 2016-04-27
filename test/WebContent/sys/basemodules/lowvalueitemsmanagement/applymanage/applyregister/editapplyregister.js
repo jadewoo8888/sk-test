@@ -121,13 +121,13 @@ function initDataGrid() {//新增时，读取物品列表。修改时，读取�
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:100},//物品和物品申领管理明细表的字段一样
+		{field:"imName",title:'物品名称',minwidth:90},//物品和物品申领管理明细表的字段一样
         {field:"imTypeDisplay",title:'类别',minwidth:60},//物品和物品申领管理明细表的字段一样
-        {field:"imSpecification",title:'规格型号',minwidth:80},//物品和物品申领管理明细表的字段一样
-		{field:"imMetricUnit",title:'单位',minwidth:60},//物品和物品申领管理明细表的字段一样
-		{field:"iamApplyCount",title:'申领数量',minwidth:100,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount,width:60},align:'right',fmType:'int'}},
-		{field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:130,formatter:function(value){if(value == '0') return "";else return value;}},
-		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:120,formatter:function(value){if(value == '0') return "";else return value;}}
+        {field:"imSpecification",title:'规格型号',minwidth:70},//物品和物品申领管理明细表的字段一样
+		{field:"imMetricUnit",title:'单位',minwidth:50},//物品和物品申领管理明细表的字段一样
+		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount,width:60},align:'right',fmType:'int'}},
+		{field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:140,formatter:function(value){if(value == '0') return "";else return value;}},
+		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:130,formatter:function(value){if(value == '0') return "";else return value;}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};

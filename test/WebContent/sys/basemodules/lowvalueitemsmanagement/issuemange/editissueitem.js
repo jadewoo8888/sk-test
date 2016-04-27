@@ -2,7 +2,8 @@ var assetApplyItemAssetTypeArr = new Array();//固定资产类物品的资产类
 var assetApplyItemPkArr = new Array();//固定资产类物品PK数组
 var assetRegAssetNoArr = new Array();//被选择了的固定资产编码数组
 var assetRegAssetTypeQC = "";//固定资产查询条件:根据固定资产编码模糊查询 AND (assetRegAssetType like '固定资产编码1%' or assetRegAssetType like '固定资产编码2%' or assetRegAssetType like '固定资产编码3%')
-
+var gdIamLeaderCheckCountArr =  new Array();//固定资产行装科领导审批数量数值。
+var gdIamLeaderCheckCountArrIndex = 0;//固定资产行装科领导审批数量数值下标。
 var approvalBusiType = "SPYWLX_014";//物品申领审批路径
 var auditRoleName = '';//审核角色名称
 var checkRoleName = '';//核准角色名称
@@ -157,6 +158,7 @@ function packageItemsApplyMDetailData() {
 	 	itemsApplyMDetail.pk = row[i].pk;
 	 	itemsApplyMDetail.imType = row[i].imType;
 	 	itemsApplyMDetail.imAssetType = row[i].imAssetType;
+	 	itemsApplyMDetail.iamLeaderCheckCount = row[i].iamLeaderCheckCount;
    		rowsData.push(itemsApplyMDetail);
 	}
 	return rowsData;
@@ -203,9 +205,12 @@ function issueButtonOper() {
 		yes: function(index){
 				$('body').addLoading({msg:'正在保存数据，请等待...'});			    //打开遮挡层		
 				
+				/**初始化值**/
 				assetApplyItemAssetTypeArr.length = 0;//固定资产类物品的资产类别编码数组
 				assetApplyItemPkArr.length = 0;//固定资产类物品PK数组
 				assetRegAssetNoArr.length = 0;//被选择了的固定资产编码数组
+				gdIamLeaderCheckCountArr.length = 0;//固定资产行装科领导审批数量数值。
+				gdIamLeaderCheckCountArrIndex = 0;//固定资产行装科领导审批数量数值下标。
 				assetRegAssetTypeQC = "";//固定资产查询条件
 				
 				var rowsData = packageItemsApplyMDetailData();
@@ -213,11 +218,16 @@ function issueButtonOper() {
 					if (rowsData[i].imType == 'WPLB_002') {//如果是固定资产
 						assetApplyItemPkArr.push(rowsData[i].pk);//固定资产类物品PK数值
 						assetApplyItemAssetTypeArr.push(rowsData[i].imAssetType);//固定资产类物品的资产类别编码
+						gdIamLeaderCheckCountArr.push(rowsData[i].iamLeaderCheckCount);
 					}
 				}
 				
 				showAssetSelPage();
 
+				top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+				
+				$('body').removeLoading();     // 关闭遮挡层
+				$("#id_bt_issue").attr("disabled", false); // 按钮可点击
 	    },
 	    cancel: function(index){
 			$("#id_bt_issue").attr("disabled", false);
@@ -237,8 +247,8 @@ function showAssetSelPage() {
 	} else {//固定资产选择完成后，就调用后台，更新后台信息
 		issueItems();
 	}
-	$('body').removeLoading();     // 关闭遮挡层
-	$("#id_bt_issue").attr("disabled", false); // 按钮可点击
+	//$('body').removeLoading();     // 关闭遮挡层
+	//$("#id_bt_issue").attr("disabled", false); // 按钮可点击
 }
 /**
  * 根据资产分类值拼接资产查询条件（框架提供的函数名）
@@ -274,17 +284,40 @@ var customQCArr = new Array();
 	
 }
 /**
+ * （框架提供的函数名）
  *  选择资产分类后的回调函数
- * @param selectRowData
+ * @param selectRowData 合计:AssetRegAssetCurCount
  */
 function updateAssetSelectedData(selectRowData) {
+	var sum = 0;
 	for (var i = 0; i < selectRowData.length; i++) {
 		assetRegAssetNoArr.push(selectRowData[i].assetRegAssetNo);//把选择了的固定资产编码存放起来，以便更新
+		sum += selectRowData[i].assetRegAssetCurCount;
 	}
 	
-	assetApplyItemAssetTypeArr.shift();//选择确定完成之后，就删除固定资产类物品的资产类别编码数组的当前值（即第一个元素）
-	assetApplyItemPkArr.shift();//选择确定完成之后，就删除固定资产类物品的PK数组的当前值（即第一个元素）
-	showAssetSelPage();//选择确定完成之后，接着显示第二个页面选择，直到所有固定资产类物品选择资产完成
+	
+	if(gdIamLeaderCheckCountArr[gdIamLeaderCheckCountArrIndex] == sum) {//如果行装科审批数量大于等于资产总和
+		gdIamLeaderCheckCountArrIndex++;
+		
+		assetApplyItemAssetTypeArr.shift();//选择确定完成之后，就删除固定资产类物品的资产类别编码数组的当前值（即第一个元素）
+		assetApplyItemPkArr.shift();//选择确定完成之后，就删除固定资产类物品的PK数组的当前值（即第一个元素）
+		showAssetSelPage();//选择确定完成之后，接着显示第二个页面选择，直到所有固定资产类物品选择资产完成
+	} else {//如果固定资产总和少于审批数量，则提示
+		if (gdIamLeaderCheckCountArr[gdIamLeaderCheckCountArrIndex] < sum) {
+			 top.layer.alert('所选发放资产多于行装科领导审核数量，请重新选择！',{icon: 6, closeBtn:2},function(index){
+				 	top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+					showAssetSelPage();
+				});
+		} else {
+			top.layer.alert('所选发放资产少于行装科领导审核数量，请重新选择!',{icon: 6, closeBtn:2},function(index){
+				top.layer.close(index);	//一般设定yes回调，必须进行手工关闭
+				showAssetSelPage();
+			});
+		}
+		
+	}
+	
+	
 }
 
 /**申购**/

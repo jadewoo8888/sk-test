@@ -28,15 +28,41 @@ public class ItemManageBO extends BOBase<ItemManageDAO, ItemManage> {
 	@MethodID("modifyItem")
 	@LogOperate(operate = "修改物品")
 	public String modifyItem_log_trans(ItemManage itemManage) {
+		
 		boolean flag = entityDAO.executeFindExists("select 1 from tItemManage where imName = ? and pk != ?", itemManage.getImName(),itemManage.getPk());
 		if (flag) {
 			LogOperateManager.unlog();
 			return "物品名称已经存在，请重新输入";
 		}
+		
+		//更新物品管理表
 		entityDAO.attachDirty(itemManage);
 		
-		return "";
+		String categoryPK = itemManage.getImCategoryPK();
+		String imName = itemManage.getImName();
+		String type = itemManage.getImType();
+		String specification = itemManage.getImSpecification();
+		String metricUnit = itemManage.getImMetricUnit();
+		String imPk = itemManage.getPk();
 		
+		//更新低值品仓库管理
+		String lviUpdSql = "update tLowValueItems t set t.LVICategoryPK = ?, t.LVIName = ? ,t.LVIType = ?, t.LVISpecification = ?,t.LVIMetricUnit = ? where t.LVIItemManagePK = ?";
+		entityDAO.executeSql(lviUpdSql, categoryPK, imName, type, specification, metricUnit, imPk);
+		//更新出库记录
+		String popUpdSql = "update tLVIPopRecord t set t.LVIPRCategoryPK = ?, t.LVIPRName = ? ,t.LVIPRType = ?, t.LVIPRSpecification = ?,t.LVIPRMetricUnit = ? where t.LVIPRItemManagePK = ?";
+		entityDAO.executeSql(popUpdSql, categoryPK, imName, type, specification, metricUnit, imPk);
+		//更新入库记录
+		String istUpdSql = "update tLVIStoreRecord t set t.LVISRCategoryPK = ?, t.LVISRName = ? ,t.LVISRType = ?, t.LVISRSpecification = ?,t.LVISRMetricUnit = ? where t.LVISRItemManagePK = ?";
+		entityDAO.executeSql(istUpdSql, categoryPK, imName, type, specification, metricUnit, imPk);
+		//更新申领明细
+		String iamdUpdSql = "update tItemsApplyMDetail t set t.CategoryManagementPK = ?, t.IMName = ? ,t.IMAssetType = ?,t.IMType = ?, t.IMSpecification = ?,t.IMMetricUnit = ? where t.ItemManagePK = ?";
+		String imAssetType = itemManage.getImAssetType();
+		entityDAO.executeSql(iamdUpdSql, categoryPK, imName, imAssetType, type, specification, metricUnit, imPk);
+		//更新采购明细
+		String ipUpdSql = "update tItemsPurchaseDetail t set t.IPDName = ? ,t.IPDType = ?, t.IPDSpecification = ?,t.IPDMetricUnit = ? where t.IPDItemManagePK = ?";
+		entityDAO.executeSql(ipUpdSql, imName, type, specification, metricUnit, imPk);
+		
+		return "";
 		
 	}
 

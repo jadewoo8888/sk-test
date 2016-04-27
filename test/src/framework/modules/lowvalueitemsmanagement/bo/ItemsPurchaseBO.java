@@ -30,7 +30,7 @@ public class ItemsPurchaseBO  extends BOBase<ItemsPurchaseDAO, ItemsPurchase> {
 	private ApprovalBO approvalBO;
 	private ApprovalDAO approvalDAO;
 	
-	public static String Menu_ItemsPurchaseMan_Check = "MENU_10_03_02";//采购申请审批菜单
+	public static String Menu_ItemsPurchaseMan_Check = "M160113CB";//采购申请审批菜单
 	
 	@MethodID("addItemPurchase")
 	@LogOperate(operate = "新增物品采购申请")

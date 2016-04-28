@@ -73,11 +73,14 @@ function initEditCell(){
 		datagrid.dataGridObj.datagrid('beginEdit', i);
 		
 		var editors = datagrid.dataGridObj.datagrid('getEditors', i);	
-		//去掉审批数量默认为“0”
-		var v = editors[0].target.numberbox('getValue');
-		if (v == 0) {
-			editors[0].target.numberbox('setValue','');
+		if (editors != null && editors.length > 0) {
+			//去掉审批数量默认为“0”
+			var v = editors[0].target.numberbox('getValue');
+			if (v == 0) {
+				editors[0].target.numberbox('setValue','');
+			}
 		}
+		
 		
 	}
 }

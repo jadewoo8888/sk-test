@@ -8,6 +8,18 @@
 <script>
 var data_lviPRType=${json:classify("STD_WPLB")};
 </script>
+<style>
+.shaixuan .shaixuan_txt {
+	float: left;
+    width: 126px;
+    height: 26px !important;
+    padding-left: 5px;
+    font-size: 12px;
+    line-height: 26px;
+    background: none;
+    margin-left: 5px;
+    }
+</style>
 </head>
 
 <body class="list_body">
@@ -24,7 +36,7 @@ var data_lviPRType=${json:classify("STD_WPLB")};
 				class="bt_list_function" value="导出" />
 		</div>
 		<div class="clearfloat mtop10">
-			<input id="category" class="easyui-combobox" placeholder="类目" qc={fn:'lviPRCategoryPK',oper:'0'} name="category"/>
+			<input id="category" class="easyui-combobox" placeholder="类目" qc={fn:'lviPRCategoryPK',oper:'0'} name="category" width="100"/>
 			<input type="text" qc={fn:'lviPRType',oper:'5'}  placeholder="类别"  id="itemType"/> 
 			<input type="text" qc={fn:'lviPRName',oper:'3'} placeholder="物品名称" class="shaixuan_txt float_left"/>
 			<input type="text" qc={fn:'lviPRSpecification',oper:'3'} placeholder="规格" class="shaixuan_txt float_left"/>

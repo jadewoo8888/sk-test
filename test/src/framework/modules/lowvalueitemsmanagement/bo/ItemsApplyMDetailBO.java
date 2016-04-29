@@ -66,8 +66,8 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 	 * @param sortCond
 	 * @return
 	 */
-	@MethodID("getListForPage")
-	public ListForPageBean getListForPage(final int pageNumber, final int pageSize,
+	@MethodID("getIuseListForPage")
+	public ListForPageBean getIuseListForPage(final int pageNumber, final int pageSize,
 			final List<QueryCondition> queryCond, final String sortCond) {
 		ListForPageBean listForPageBean = new ListForPageBean();
 		QueryConditionAssembler assembler = getQueryConditionAssembler(queryCond, sortCond);
@@ -193,7 +193,7 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
  * @param sortCond
  * @return
  */
-	@MethodID("getListForPage_bak")
+	@MethodID("getIuseListForPage_bak")
 	public ListForPageBean getListForPage_bak(final int pageNumber, final int pageSize,
 			final List<QueryCondition> queryCond, final String sortCond) {
 		ListForPageBean listForPageBean = new ListForPageBean();

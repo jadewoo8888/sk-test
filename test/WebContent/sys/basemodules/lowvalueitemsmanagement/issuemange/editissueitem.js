@@ -77,7 +77,7 @@ function initDataGrid() {
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,width:670,height:'auto',onLoadSuccess:ifShowIssueBtFn};
 	 
-	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
+	 var customOptions = {tableID:'id_table_grid',classID:'ItemsApplyMDetailBO',methodID:'getIuseListForPage',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
 }
 

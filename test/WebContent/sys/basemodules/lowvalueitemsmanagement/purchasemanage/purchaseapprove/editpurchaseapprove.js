@@ -4,6 +4,7 @@ var approvalBusiType = "SPYWLX_015";//物品申领审批路径
 var approvalRole;//审批角色值 ，0：无，1：经办人，2：审核人，3：核准人
 var auditRoleName = '';//审核角色名称
 var checkRoleName = '';//核准角色名称
+var ipOrgCode = '';//单据单位
 //加载完成执行 
 $(function(){
 	initAppend(); 		//加载附件页面
@@ -110,7 +111,7 @@ function getInfo(){
 				mainObj = obj;
 				//数据填充 
 	      	 	dataFill(obj);
-				
+	      	 	ipOrgCode = obj.ipOrgCode;
 	      		//审批数据初始化
 	      	 	setApprovalOption();
 			},function(){
@@ -134,7 +135,7 @@ function getApproveRoleName() {
 	Ajax.service(
 				'InApprovalProcessBO',
 				 'getApprovalRole',
-				[approvalBusiType,top.strUserOrgCode],			
+				[approvalBusiType,ipOrgCode],			
 			function(data){
 					if (data != null & data.length > 0) {
 						auditRoleName = data[0];//审核角色名称

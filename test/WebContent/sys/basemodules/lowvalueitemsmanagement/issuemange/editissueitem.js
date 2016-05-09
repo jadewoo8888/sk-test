@@ -12,7 +12,7 @@ var checkRoleName = '';//核准角色名称
 $(function(){
 	setAppenFrame(); 		//加载附件页面
 	getInfo();				//获取信息 
-	getApproveRoleName();
+	//getApproveRoleName();
 	//initDataGrid();
 	buttonBind();
 });
@@ -32,11 +32,11 @@ function buttonBind(){
 /**
  * 获取审批路径名称
  */
-function getApproveRoleName() {
+function getApproveRoleName(imOrgcode) {
 	Ajax.service(
 				'InApprovalProcessBO',
 				 'getApprovalRole',
-				[approvalBusiType,top.strUserOrgCode],			
+				[approvalBusiType,imOrgcode],			
 			function(data){
 					if (data != null & data.length > 0) {
 						auditRoleName = data[0];//审核角色名称
@@ -140,6 +140,8 @@ function dataFill(obj){
 	$("#id_applyPerson").val(obj.applyPersonDisplay);
 	$("#id_itemsApplyDate").val(obj.itemsApplyDate);
 	$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
+	
+	getApproveRoleName(obj.orgCode);
 }
 
 /**

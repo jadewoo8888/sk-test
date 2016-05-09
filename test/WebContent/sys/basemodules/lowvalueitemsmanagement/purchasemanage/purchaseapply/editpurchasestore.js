@@ -11,18 +11,18 @@ $(function(){
 	getInfo();				//获取信息 
 	getCategoryByPk(categoryPk);
 	//initDataGrid();
-	getApproveRoleName();
+	//getApproveRoleName();
 	initComBindFunc();
 });
 
 /**
  * 获取审批路径名称
  */
-function getApproveRoleName() {
+function getApproveRoleName(ipOrgCode) {
 	Ajax.service(
 				'InApprovalProcessBO',
 				 'getApprovalRole',
-				[approvalBusiType,top.strUserOrgCode],			
+				[approvalBusiType,ipOrgCode],			
 			function(data){
 					if (data != null & data.length > 0) {
 						auditRoleName = data[0];//审核角色名称
@@ -135,6 +135,8 @@ function dataFill(obj){
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);
 	$("#id_ipRemark").val(obj.ipRemark);
+	
+	getApproveRoleName(obj.ipOrgCode);
 }
 
 /**

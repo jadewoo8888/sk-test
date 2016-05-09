@@ -10,7 +10,7 @@ var checkRoleName = '';//核准角色名称
  **/ 
 $(function () { 
 	initDefaultValue();
-	getApproveRoleName();
+	//getApproveRoleName();
 	//initDataGrid();
 	initComBindFunc(); 
 	initAppend();
@@ -32,6 +32,8 @@ function initDefaultValue() {
 		$("#id_ipDeptCode").val(top.strUserDeptName);
 		$("#id_ipApplyPerson").val(top.strUserName);
 		$("#id_ipPurchaseDate").val(serverDate);
+		
+		initDataGrid();
 	}
 }
 
@@ -78,16 +80,18 @@ function dataFill(obj) {
 		$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 		$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);
 		$("#id_ipRemark").val(obj.ipRemark);
+		
+		getApproveRoleName(obj.ipOrgCode);
 }
 
 /**
  * 获取审批路径名称
  */
-function getApproveRoleName() {
+function getApproveRoleName(ipOrgCode) {
 	Ajax.service(
 				'InApprovalProcessBO',
 				 'getApprovalRole',
-				[approvalBusiType,top.strUserOrgCode],			
+				[approvalBusiType,ipOrgCode],			
 			function(data){
 					if (data != null & data.length > 0) {
 						auditRoleName = data[0];//审核角色名称
@@ -128,13 +132,13 @@ function initAddDataGrid() {
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:110},
+		{field:"imName",title:'物品名称',minwidth:140},
 		/*{field:"imType",title:'类别编码',minwidth:80,hidden:true},*/
-        {field:"imTypeDisplay",title:'类别',minwidth:80},
-        {field:"imSpecification",title:'规格型号',minwidth:80},
-		{field:"imMetricUnit",title:'单位',minwidth:60},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:130,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount,width:80},align:'right',fmType:'int'}},
-		{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""}}
+        {field:"imTypeDisplay",title:'类别',minwidth:110},
+        {field:"imSpecification",title:'规格型号',minwidth:110},
+		{field:"imMetricUnit",title:'单位',minwidth:90},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:160,editor:{ type:'numberbox',options:{onChange:checkIpDApplyCount,width:80},align:'right',fmType:'int'}}
+		//{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:150,formatter:function(value){if(value == '0') return ""}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell1};

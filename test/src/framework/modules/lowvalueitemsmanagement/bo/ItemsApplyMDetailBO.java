@@ -118,46 +118,49 @@ public class ItemsApplyMDetailBO extends BOBase<ItemsApplyMDetailDAO, ItemsApply
 			/** 第四步：按封装好的固定资产和低值品遍历查询相应的库存 **/
 			/**给固定资产设置库存**/
 			int gdItemApplyDetaiListLen = gdItemApplyDetaiList.size();
-			StringBuffer caseSqlBuf = new StringBuffer("case ");
-			
-			for (int k = 0; k < gdImAssetTypeList.size(); k++) {
-				String[] imAssetTypeArr = ((String)gdImAssetTypeList.get(k)).split(",");
-				caseSqlBuf.append("when ");
-				for (int i = 0; i < imAssetTypeArr.length; i++) {
-					
-					if (i < imAssetTypeArr.length - 1) {
-						caseSqlBuf.append("assetregassettype like '"+imAssetTypeArr[i]+"%' or ");
-					} else {
-						caseSqlBuf.append("assetregassettype like '"+imAssetTypeArr[i]+"%' then '"+k+"'");
+			if (gdItemApplyDetaiListLen > 0) {
+				StringBuffer caseSqlBuf = new StringBuffer("case ");
+				
+				for (int k = 0; k < gdImAssetTypeList.size(); k++) {
+					String[] imAssetTypeArr = ((String)gdImAssetTypeList.get(k)).split(",");
+					caseSqlBuf.append("when ");
+					for (int i = 0; i < imAssetTypeArr.length; i++) {
+						
+						if (i < imAssetTypeArr.length - 1) {
+							caseSqlBuf.append("assetregassettype like '"+imAssetTypeArr[i]+"%' or ");
+						} else {
+							caseSqlBuf.append("assetregassettype like '"+imAssetTypeArr[i]+"%' then '"+k+"'");
+						}
 					}
 				}
-			}
-			caseSqlBuf.append(" end");
-			
-			String strSql = "select " + caseSqlBuf.toString() + ",SUM(assetRegAssetCurCount)  FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId = '') AND (assetRegUser IS NULL OR assetRegUser = '') AND assetRegEnprCode = ?  AND assetRegCheckFlag = 'SJZT_01'  group by " + caseSqlBuf.toString();
-			System.out.println(strSql);
-			String assetRegEnprCode = rowList.get(0).getOrgCode();
-			List<Object[]> gdRegistValueList = entityDAO.executeFind(strSql, assetRegEnprCode);
-			
-			BigDecimal gdStoreCount = null;//固定资产库存
-			for(int i=0;i<gdItemApplyDetaiListLen;i++) {
-				//编写方法,从gdRegistValueList根据分组名称，找到对应gdItemApplyDetaiList的数据，然后赋值
-				ItemsApplyMDetail gdItemsApplyMDetail = gdItemApplyDetaiList.get(i);
-				for (int j = 0; j < gdRegistValueList.size(); j++) {
-					Object[] o = gdRegistValueList.get(j);
-					if (o[0] != null) {
-						int index = Integer.parseInt(o[0].toString());
-						if (index == i) {
-							gdStoreCount = (BigDecimal)o[1];
-							gdItemsApplyMDetail.setItemStoreCount(gdStoreCount == null ? 0 : Integer.parseInt(gdStoreCount + ""));
-							break;
+				caseSqlBuf.append(" end");
+				
+				String strSql = "select " + caseSqlBuf.toString() + ",SUM(assetRegAssetCurCount)  FROM tAssetRegist WHERE (assetRegUserId IS NULL OR assetRegUserId = '') AND (assetRegUser IS NULL OR assetRegUser = '') AND assetRegEnprCode = ?  AND assetRegCheckFlag = 'SJZT_01'  group by " + caseSqlBuf.toString();
+				System.out.println("case sum Test====="+strSql);
+				String assetRegEnprCode = rowList.get(0).getOrgCode();
+				List<Object[]> gdRegistValueList = entityDAO.executeFind(strSql, assetRegEnprCode);
+				
+				BigDecimal gdStoreCount = null;//固定资产库存
+				for(int i=0;i<gdItemApplyDetaiListLen;i++) {
+					//编写方法,从gdRegistValueList根据分组名称，找到对应gdItemApplyDetaiList的数据，然后赋值
+					ItemsApplyMDetail gdItemsApplyMDetail = gdItemApplyDetaiList.get(i);
+					for (int j = 0; j < gdRegistValueList.size(); j++) {
+						Object[] o = gdRegistValueList.get(j);
+						if (o[0] != null) {
+							int index = Integer.parseInt(o[0].toString());
+							if (index == i) {
+								gdStoreCount = (BigDecimal)o[1];
+								gdItemsApplyMDetail.setItemStoreCount(gdStoreCount == null ? 0 : Integer.parseInt(gdStoreCount + ""));
+								break;
+							}
+							
 						}
 						
 					}
 					
 				}
-				
 			}
+
 			/**给低值品设置库存**/
 			int dzpItemApplyDetaiListLen = dzpItemApplyDetailList.size();
 			//List<LowValueItems> lowValueItemsList = 编写方法，根据上方dzpItemApplyDetaiItemManagePKList一次性查询tLowValueItems

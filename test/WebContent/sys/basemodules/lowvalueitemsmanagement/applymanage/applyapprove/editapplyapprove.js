@@ -37,7 +37,7 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
 		  			approveStep =(linkers.split('|')).length - 1;
 	  			}
 	  			
-	  			getApproveRoleName();
+	  			getApproveRoleName(obj.orgCode);
 	  		},
 	  		function(data){
 	  			top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
@@ -47,12 +47,13 @@ function getItemsApplyManagementByPk(itemsApplyMPK) {
 
 /**
  * 获取审批路径名称
+ * imOrgcode 单据的单位
  */
-function getApproveRoleName() {
+function getApproveRoleName(imOrgcode) {
 	Ajax.service(
 				'InApprovalProcessBO',
 				 'getApprovalRole',
-				[approvalBusiType,top.strUserOrgCode],			
+				[approvalBusiType,imOrgcode],			
 			function(data){
 					if (data != null & data.length > 0) {
 						auditRoleName = data[0];//审核角色名称

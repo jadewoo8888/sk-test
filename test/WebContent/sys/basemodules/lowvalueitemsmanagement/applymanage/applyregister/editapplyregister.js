@@ -11,7 +11,7 @@ var checkRoleName = '';//核准角色名称
  **/ 
 $(function () { 
 	initDefaultValue();
-	getApproveRoleName();
+	//getApproveRoleName();
 	//initDataGrid();
 	initComBindFunc(); 
 	initAppend();
@@ -28,6 +28,7 @@ function initDefaultValue() {
 	} else {
 		$('#id_div_desc .head-title').html('新增申领登记');
 		getCategoryByPk(categoryPk);
+		initDataGrid(false);
 	}
 }
 
@@ -85,22 +86,23 @@ function dataFill(obj) {
 		$("#id_applyPerson").val(obj.applyPersonDisplay);
 		$("#id_itemsApplyDate").val(obj.itemsApplyDate);
 		$("#id_itemsApplyRemark").val(obj.itemsApplyRemark);
+		getApproveRoleName(obj.orgCode);
 }
 
 /**
  * 获取审批路径名称
  */
-function getApproveRoleName() {
+function getApproveRoleName(imOrgcode) {
 	Ajax.service(
 				'InApprovalProcessBO',
 				 'getApprovalRole',
-				[approvalBusiType,top.strUserOrgCode],			
+				[approvalBusiType,imOrgcode],			
 			function(data){
 					if (data != null & data.length > 0) {
 						auditRoleName = data[0];//审核角色名称
 						checkRoleName = data[1];//核准角色名称
 					}
-					initDataGrid();
+					initDataGrid(true);
 			  },
 			function(){
 				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
@@ -116,18 +118,20 @@ function checkIamApplyCount(value) {
 }
 /**
  * 初始化表格信息
+ * isItemOrg 是否有单据单位
  **/
-function initDataGrid() {//新增时，读取物品列表。修改时，读取的是物品申领管理明细表
+function initDataGrid(isItemOrg) {//新增时，读取物品列表。修改时，读取的是物品申领管理明细表
+	
 	 var _sortInfo = {"sortPK" : "pk","sortSql" : "lastestUpdate Desc"};
 	 var _columns =  
 	 [[
-		{field:"imName",title:'物品名称',minwidth:90},//物品和物品申领管理明细表的字段一样
-        {field:"imTypeDisplay",title:'类别',minwidth:60},//物品和物品申领管理明细表的字段一样
-        {field:"imSpecification",title:'规格型号',minwidth:70},//物品和物品申领管理明细表的字段一样
-		{field:"imMetricUnit",title:'单位',minwidth:50},//物品和物品申领管理明细表的字段一样
-		{field:"iamApplyCount",title:'申领数量',minwidth:80,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount,width:60},align:'right',fmType:'int'}},
-		{field:"iamListerCheckCount",title:auditRoleName+'审核数量',minwidth:140,formatter:function(value){if(value == '0') return "";else return value;}},
-		{field:"iamLeaderCheckCount",title:checkRoleName+'审核数量',minwidth:130,formatter:function(value){if(value == '0') return "";else return value;}}
+		{field:"imName",title:'物品名称',minwidth:isItemOrg ? 90:150},//物品和物品申领管理明细表的字段一样
+        {field:"imTypeDisplay",title:'类别',minwidth:isItemOrg ? 60:120},//物品和物品申领管理明细表的字段一样
+        {field:"imSpecification",title:'规格型号',minwidth:isItemOrg ? 70:120},//物品和物品申领管理明细表的字段一样
+		{field:"imMetricUnit",title:'单位',minwidth:isItemOrg ? 50: 100},//物品和物品申领管理明细表的字段一样
+		{field:"iamApplyCount",title:'申领数量',minwidth:isItemOrg ? 80 : 150,editor:{ type:'numberbox',options:{onChange:checkIamApplyCount,width:60},align:'right',fmType:'int'}},
+		{field:"iamListerCheckCount",hidden:!isItemOrg,title:auditRoleName+'审核数量',minwidth:140,formatter:function(value){if(value == '0') return "";else return value;}},
+		{field:"iamLeaderCheckCount",hidden:!isItemOrg,title:checkRoleName+'审核数量',minwidth:130,formatter:function(value){if(value == '0') return "";else return value;}}
 	]];
 	 
 	 var dataGridOptions ={rownumbers:false,checkbox:true,isQuery:true,pagination:false,width:690,height:'auto',onLoadSuccess:initEditCell};

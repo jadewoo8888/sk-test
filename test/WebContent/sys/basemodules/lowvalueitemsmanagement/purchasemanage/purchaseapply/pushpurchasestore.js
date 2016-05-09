@@ -1,12 +1,16 @@
 //列表表格对象
 var datagrid = null;
 var approvalBusiType = "SPYWLX_015";//物品采购审批路径
-var isIncludeAsset = false;
+var isIncludeAsset = false;//是否包含固定资产
+
+var auditRoleName = '';//审核角色名称
+var checkRoleName = '';//核准角色名称
+
 //加载完成执行 
 $(function(){
 	initAppend();//加载附件页面
 	getInfo();				//获取信息 
-	isIncludeAssetFn();
+	//isIncludeAssetFn();
 	initComBindFunc();
 	getCategoryByPk(ipCategoryPK);
 });
@@ -34,6 +38,7 @@ function isIncludeAssetFn() {
 		);
 	
 }
+
 /**
  * 初始化表格信息
  **/
@@ -55,7 +60,7 @@ function initDataGrid() {
         {field:"ipDSpecification",title:'规格型号',minwidth:80},
 		{field:"ipDMetricUnit",title:'单位',minwidth:80},
 		{field:"ipDApplyCount",title:'申购数量',minwidth:80},
-		{field:"ipDApproveCount",title:'行装科领导审核数量',minwidth:80},
+		{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:80},
 		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80},
 		{field:"ipDStoreCount",title:'已入库数量',minwidth:80}
 	]];
@@ -116,6 +121,30 @@ function dataFill(obj){
 	$("#id_ipApplyPerson").val(obj.ipApplyPersonDisplay);
 	$("#id_ipPurchaseDate").val(obj.ipPurchaseDate);
 	$("#id_ipRemark").val(obj.ipRemark);
+	
+	getApproveRoleName(obj.ipOrgCode);
+}
+
+/**
+ * 获取审批路径名称
+ */
+function getApproveRoleName(ipOrgCode) {
+	Ajax.service(
+				'InApprovalProcessBO',
+				 'getApprovalRole',
+				[approvalBusiType,ipOrgCode],			
+			function(data){
+					if (data != null & data.length > 0) {
+						auditRoleName = data[0];//审核角色名称
+						checkRoleName = data[1];//核准角色名称
+					}
+					isIncludeAssetFn();
+			  },
+			function(){
+				  top.layer.alert('数据异常！', {icon: 5,closeBtn :2});
+			}
+		);
+
 }
 
 /**

@@ -13,7 +13,7 @@
 .editTips{text-align:left;}
 #id_unitAdress{width:638px;}
 .EditPanel{padding-left:10px;}
-
+.datagrid-cell{height: 24px;line-height: 24px;}
 .bt_ensure[type="button"]{
 	width:auto;
     height: 26px;

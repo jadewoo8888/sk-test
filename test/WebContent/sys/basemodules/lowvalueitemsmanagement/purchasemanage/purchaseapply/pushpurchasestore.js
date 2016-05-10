@@ -56,16 +56,16 @@ function initDataGrid() {
  			return html;
 		}}, 
 		{field:"ipDName",title:'物品名称',minwidth:80},
-        {field:"ipDTypeDisplay",title:'类别',minwidth:80},
-        {field:"ipDSpecification",title:'规格型号',minwidth:80},
-		{field:"ipDMetricUnit",title:'单位',minwidth:80},
-		{field:"ipDApplyCount",title:'申购数量',minwidth:80},
-		{field:"ipDApproveCount",title:checkRoleName+'审核数量',minwidth:80},
-		{field:"ipDPurchaseCount",title:'采购数量',minwidth:80},
+        {field:"ipDTypeDisplay",title:'类别',minwidth:60},
+        {field:"ipDSpecification",title:'规格型号',minwidth:60},
+		{field:"ipDMetricUnit",title:'单位',minwidth:50},
+		{field:"ipDApplyCount",title:'申购数量',minwidth:60},
+		{field:"ipDApproveCount",title:checkRoleName+'数量',minwidth:120},
+		{field:"ipDPurchaseCount",title:'采购数量',minwidth:60},
 		{field:"ipDStoreCount",title:'已入库数量',minwidth:80}
 	]];
 	 
-	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',onLoadSuccess:null};
+	 var dataGridOptions ={rownumbers:false,checkbox:false,isQuery:true,pagination:false,height:'auto',width:690,onLoadSuccess:null};
 	 
 	 var customOptions = {tableID:'id_table_grid',classID:'ItemsPurchaseDetailBO',columns:_columns,sortInfo:_sortInfo,customQCFunc:setCustomQueryCondition};	 
 	 datagrid = new DataGrid(customOptions,dataGridOptions);
